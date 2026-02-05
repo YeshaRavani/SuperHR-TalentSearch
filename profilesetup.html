@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Profile Setup — Talent Search</title>
+    <style>
+      :root {
+        --sky-500: #9ecae1;
+        --sky-400: #add8e6;
+        --sky-100: #eaf6fb;
+        --ink-900: #0f1f2b;
+        --ink-700: #2a3f52;
+        --ink-500: #5a6c7b;
+        --white: #ffffff;
+        --shadow-sm: 0 6px 18px rgba(16, 30, 43, 0.08);
+        --shadow-xs: 0 2px 10px rgba(16, 30, 43, 0.06);
+        --radius-lg: 22px;
+        --radius-md: 16px;
+      }
+
+      * { box-sizing: border-box; }
+      body { margin:0; font-family: "Inter", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color:var(--ink-900); background: linear-gradient(180deg, #f7fcff 0%, #ffffff 42%, #f8fbfd 100%); }
+
+      /* Topbar (copied from index (1).html) */
+      .topbar { position: sticky; top:0; z-index:20; background: rgba(255,255,255,0.92); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(16,30,43,0.06); }
+      .nav { max-width:1200px; margin:0 auto; padding:18px 24px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+      .logo { display:flex; align-items:center; gap:12px; font-weight:600; font-size:1.3rem; }
+      .logo-img { width:60px; height:60px; border-radius:50%; box-shadow:var(--shadow-xs); object-fit:cover; }
+      a { text-decoration:none; color:inherit; }
+      .menu { display:flex; align-items:center; gap:20px; color:var(--ink-700); font-size:0.95rem; }
+      .menu a { display:inline-flex; align-items:center; justify-content:center; min-height:40px; padding:0 14px; border-radius:999px; transition:background .2s ease, color .2s ease; }
+      .menu a:hover { background:var(--sky-100); color:var(--ink-900); }
+      .nav-actions { display:flex; align-items:center; gap:14px; }
+      .icon-btn { width:40px; height:40px; border-radius:50%; border:1px solid rgba(16,30,43,0.08); display:grid; place-items:center; background:var(--white); box-shadow:var(--shadow-xs); position:relative; }
+      .icon-dot { width:10px; height:10px; border-radius:50%; background:var(--sky-500); position:absolute; top:11px; right:11px; }
+      .notification-wrap { position:relative; }
+      .notification-panel { position:absolute; top:calc(100% + 10px); right:0; width:min(92vw,340px); padding:14px; border-radius:var(--radius-md); background:var(--white); box-shadow:var(--shadow-sm); border:1px solid rgba(16,30,43,0.08); display:none; z-index:40; }
+      .notification-panel.open { display:block; }
+      .notification-head { margin:0 0 10px; font-size:0.95rem; }
+      .notification-item { padding:10px; border-radius:12px; background:var(--sky-100); margin-bottom:8px; }
+      .notification-item p { margin:0; color:var(--ink-700); font-size:0.9rem; }
+      .notification-actions { margin-top:8px; display:flex; gap:8px; }
+      .notif-btn { border:none; border-radius:999px; padding:6px 12px; font-size:0.82rem; cursor:pointer; background:linear-gradient(135deg,var(--sky-500),var(--sky-400)); color:var(--white); }
+      .notif-btn.secondary { background:var(--white); color:var(--ink-700); border:1px solid rgba(16,30,43,0.1); }
+      .login-btn { height:40px; padding:0 18px; display:inline-flex; align-items:center; justify-content:center; border-radius:999px; border:none; background:var(--sky-500); color:var(--white); font-weight:600; font-size:1.05rem; box-shadow:var(--shadow-sm); cursor:pointer; }
+
+      /* Centered card */
+      .container { min-height: calc(100vh - 120px); display:grid; place-items:center; padding:40px 24px; }
+      .card { width:560px; max-width:94vw; background:var(--white); border-radius:var(--radius-lg); padding:28px; box-shadow:var(--shadow-sm); display:flex; flex-direction:column; gap:14px; }
+      .title { font-size:1.25rem; font-weight:700; }
+      .subtitle { color:var(--ink-500); font-size:0.95rem; }
+
+      .form { display:flex; flex-direction:column; gap:12px; margin-top:6px; }
+      .text-input, select, textarea { width:100%; padding:12px 14px; border-radius:12px; border:1px solid rgba(16,30,43,0.08); box-shadow:var(--shadow-xs); font-size:1rem; }
+      textarea { min-height:120px; resize:vertical; }
+
+      .actions { display:flex; justify-content:flex-end; gap:12px; margin-top:8px; }
+      .primary-btn { display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:12px 22px; border-radius:999px; background:linear-gradient(135deg,var(--sky-500),var(--sky-400)); color:var(--white); font-weight:600; font-size:1.05rem; border:none; box-shadow:var(--shadow-sm); cursor:pointer; }
+
+      @media (max-width:560px){ .card{padding:20px;} }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="nav">
+        <div class="logo">
+          <img class="logo-img" src="logo.png" alt="Talent Search logo" />
+          Talent Search
+        </div>
+        <nav class="menu">
+          <a href="index (1).html">Home</a>
+          <a href="initiatives.html">Initiatives</a>
+          <a href="workshops.html">Workshops</a>
+          <a href="events.html">Events</a>
+            <a href="posted-opportunities.html">Posted Opportunities</a>
+            <a href="aboutus.html">About Us</a>
+        </nav>
+        <div class="nav-actions">
+          <div class="notification-wrap">
+            <button class="icon-btn notification-toggle" aria-label="Notifications" aria-haspopup="true" aria-expanded="false">
+              <span class="icon-dot"></span>
+              <span>🔔</span>
+            </button>
+            <div class="notification-panel" role="menu" aria-label="Notifications">
+              <h3 class="notification-head">Notifications</h3>
+              <div class="notification-item">
+                <p>Interest matched: "Campus Sustainability Sprint". Do you want to enroll?</p>
+                <div class="notification-actions">
+                  <button class="notif-btn">Enroll</button>
+                  <button class="notif-btn secondary">Later</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a href="login.html" class="login-btn">Login</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="card">
+        <div>
+          <div class="title">Profile Setup</div>
+          <div class="subtitle">Set up your profile to get better recommendations</div>
+        </div>
+
+        <form class="form" id="setupForm" onsubmit="return false;">
+          <div>
+            <label for="profilePhoto" style="display:block; margin-bottom:8px; color:var(--ink-700);">Upload your profile picture</label>
+            <input id="profilePhoto" type="file" accept="image/*" class="text-input" style="padding:8px;" />
+          </div>
+          <input id="team" class="text-input" placeholder="What team do you currently work with?" />
+          <textarea id="job" class="text-input" placeholder="What is your job description?"></textarea>
+          <div>
+            <label for="resume" style="display:block; margin-bottom:8px; color:var(--ink-700);">Upload your resume</label>
+            <input id="resume" type="file" accept=".pdf,.doc,.docx" class="text-input" style="padding:8px;" />
+          </div>
+
+          <div class="actions">
+            <button id="finishBtn" type="button" class="primary-btn">Finish</button>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <script>
+      (function(){
+        // notification dropdown behaviour
+        document.querySelectorAll('.notification-wrap').forEach(function(wrap){
+          var toggle = wrap.querySelector('.notification-toggle');
+          var panel = wrap.querySelector('.notification-panel');
+          if(!toggle || !panel) return;
+          toggle.addEventListener('click', function(e){ e.stopPropagation(); var isOpen = panel.classList.toggle('open'); toggle.setAttribute('aria-expanded', isOpen? 'true':'false'); });
+          panel.addEventListener('click', function(e){ e.stopPropagation(); });
+          document.addEventListener('click', function(){ panel.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); });
+          document.addEventListener('keydown', function(event){ if(event.key === 'Escape'){ panel.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); } });
+        });
+
+        var finishBtn = document.getElementById('finishBtn');
+        finishBtn.addEventListener('click', function(){ window.location.href = 'index (1).html'; });
+      })();
+    </script>
+  </body>
+</html>

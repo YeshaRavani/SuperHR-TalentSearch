@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Posted Opportunities — Talent Search</title>
+    <style>
+      :root {
+        --sky-500: #9ecae1;
+        --sky-400: #add8e6;
+        --sky-100: #eaf6fb;
+        --ink-900: #0f1f2b;
+        --ink-700: #2a3f52;
+        --ink-500: #5a6c7b;
+        --white: #ffffff;
+        --shadow-sm: 0 6px 18px rgba(16, 30, 43, 0.08);
+        --shadow-xs: 0 2px 10px rgba(16, 30, 43, 0.06);
+        --radius-lg: 22px;
+        --radius-md: 16px;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        font-family: "Inter", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--ink-900);
+        background: linear-gradient(180deg, #f7fcff 0%, #ffffff 42%, #f8fbfd 100%);
+      }
+
+      a { text-decoration: none; color: inherit; }
+
+      /* Topbar */
+      .topbar { position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,0.92); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(16,30,43,0.06); }
+      .nav { max-width: 1200px; margin: 0 auto; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+      .logo { display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 1.3rem; }
+      .logo-img { width: 60px; height: 60px; border-radius: 50%; box-shadow: var(--shadow-xs); object-fit: cover; }
+      .menu { display: flex; align-items: center; gap: 20px; color: var(--ink-700); font-size: 0.95rem; }
+      .menu a { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 0 14px; border-radius: 999px; transition: background .2s ease, color .2s ease; }
+      .menu a:hover { background: var(--sky-100); color: var(--ink-900); }
+      .nav-actions { display: flex; align-items: center; gap: 14px; }
+      .icon-btn { width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(16,30,43,0.08); display: grid; place-items: center; background: var(--white); box-shadow: var(--shadow-xs); position: relative; }
+      .icon-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--sky-500); position: absolute; top: 11px; right: 11px; }
+      .notification-wrap { position: relative; }
+      .notification-panel { position: absolute; top: calc(100% + 10px); right: 0; width: min(92vw, 340px); padding: 14px; border-radius: var(--radius-md); background: var(--white); box-shadow: var(--shadow-sm); border: 1px solid rgba(16,30,43,0.08); display: none; z-index: 40; }
+      .notification-panel.open { display: block; }
+      .notification-head { margin: 0 0 10px; font-size: 0.95rem; }
+      .notification-item { padding: 10px; border-radius: 12px; background: var(--sky-100); margin-bottom: 8px; }
+      .notification-item p { margin: 0; color: var(--ink-700); font-size: 0.9rem; line-height: 1.45; }
+      .notif-btn { border: none; border-radius: 999px; padding: 6px 12px; font-size: 0.82rem; cursor: pointer; background: linear-gradient(135deg, var(--sky-500), var(--sky-400)); color: var(--white); }
+      .notif-btn.secondary { background: var(--white); color: var(--ink-700); border: 1px solid rgba(16,30,43,0.1); }
+      .profile { width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(16,30,43,0.08); display: grid; place-items: center; background: var(--white); box-shadow: var(--shadow-xs); }
+
+      /* Page */
+      .page { padding: 40px 24px 64px; }
+      .section { max-width: 1200px; margin: 0 auto; }
+      .page-title { font-size: 1.6rem; margin: 0 0 6px; }
+      .page-subtitle { margin: 0 0 24px; color: var(--ink-500); }
+
+      .opportunity-card { background: var(--white); border-radius: var(--radius-lg); padding: 22px; box-shadow: var(--shadow-sm); margin-bottom: 20px; }
+      .opportunity-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+      .opportunity-title { font-size: 1.2rem; font-weight: 700; margin: 0; }
+      .opportunity-meta { color: var(--ink-500); font-size: 0.95rem; }
+
+      .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+      .panel { border: 1px solid rgba(16,30,43,0.08); border-radius: 16px; padding: 16px; background: var(--sky-100); }
+      .panel h4 { margin: 0 0 12px; font-size: 1rem; }
+
+      .person-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(16,30,43,0.08); }
+      .person-row:last-child { border-bottom: none; }
+
+      .person { display: flex; align-items: center; gap: 12px; }
+      .avatar { width: 42px; height: 42px; border-radius: 50%; background: #ffffff; border: 1px solid rgba(16,30,43,0.08); display: grid; place-items: center; font-weight: 600; color: var(--ink-700); }
+      .person-name { font-weight: 600; }
+      .person-meta { color: var(--ink-500); font-size: 0.9rem; }
+
+      .match { text-align: right; min-width: 120px; }
+      .match-score { font-weight: 700; }
+      .match-bar { height: 6px; background: rgba(16,30,43,0.08); border-radius: 999px; overflow: hidden; margin-top: 6px; }
+      .match-bar span { display: block; height: 100%; background: linear-gradient(135deg, var(--sky-500), var(--sky-400)); }
+
+      .actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 8px; }
+      .primary-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: linear-gradient(135deg, var(--sky-500), var(--sky-400)); color: var(--white); font-weight: 600; font-size: 0.9rem; border: none; cursor: pointer; }
+      .secondary-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: var(--white); color: var(--ink-700); border: 1px solid rgba(16,30,43,0.1); font-weight: 600; font-size: 0.9rem; cursor: pointer; }
+
+      @media (max-width: 960px) { .grid { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="nav">
+        <div class="logo">
+          <img class="logo-img" src="logo.png" alt="Talent Search logo" />
+          Talent Search
+        </div>
+        <nav class="menu">
+          <a href="index (1).html">Home</a>
+          <a href="initiatives.html">Initiatives</a>
+          <a href="workshops.html">Workshops</a>
+          <a href="events.html">Events</a>
+            <a href="posted-opportunities.html">Posted Opportunities</a>
+            <a href="aboutus.html">About Us</a>
+        </nav>
+        <div class="nav-actions">
+          <div class="notification-wrap">
+            <button class="icon-btn notification-toggle" aria-label="Notifications" aria-haspopup="true" aria-expanded="false">
+              <span class="icon-dot"></span>
+              <span>🔔</span>
+            </button>
+            <div class="notification-panel" role="menu" aria-label="Notifications">
+              <h3 class="notification-head">Notifications</h3>
+              <div class="notification-item">
+                <p>Interest matched: "Campus Sustainability Sprint". Do you want to enroll?</p>
+              </div>
+            </div>
+          </div>
+          <a class="profile" aria-label="Profile" href="profile.html">👤</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="section">
+        <h1 class="page-title">Posted Opportunities</h1>
+        <p class="page-subtitle">Track interest, invite candidates, and view match scores for each opportunity.</p>
+
+        <div class="opportunity-card">
+          <div class="opportunity-head">
+            <div>
+              <h2 class="opportunity-title">Campus Sustainability Sprint</h2>
+              <div class="opportunity-meta">Posted Jan 18, 2026 • Points: 300</div>
+            </div>
+          </div>
+          <div class="grid">
+            <div class="panel">
+              <h4>Interested (3)</h4>
+              <div class="person-row">
+                <div class="person">
+                  <div class="avatar">AR</div>
+                  <div>
+                    <div class="person-name">Aarav R.</div>
+                    <div class="person-meta">Data Analysis • 2 projects</div>
+                  </div>
+                </div>
+                <div class="match">
+                  <div class="match-score">92% match</div>
+                  <div class="match-bar"><span style="width:92%"></span></div>
+                  <div class="actions">
+                    <button class="primary-btn" type="button">Invite</button>
+                    <button class="secondary-btn" type="button">Message</button>
+                  </div>
+                </div>
+              </div>
+              <div class="person-row">
+                <div class="person">
+                  <div class="avatar">SK</div>
+                  <div>
+                    <div class="person-name">Sana K.</div>
+                    <div class="person-meta">UX Design • 5 workshops</div>
+                  </div>
+                </div>
+                <div class="match">
+                  <div class="match-score">86% match</div>
+                  <div class="match-bar"><span style="width:86%"></span></div>
+                  <div class="actions">
+                    <button class="primary-btn" type="button">Invite</button>
+                    <button class="secondary-btn" type="button">Message</button>
+                  </div>
+                </div>
+              </div>
+              <div class="person-row">
+                <div class="person">
+                  <div class="avatar">NJ</div>
+                  <div>
+                    <div class="person-name">Nikhil J.</div>
+                    <div class="person-meta">Research • 1 initiative</div>
+                  </div>
+                </div>
+                <div class="match">
+                  <div class="match-score">78% match</div>
+                  <div class="match-bar"><span style="width:78%"></span></div>
+                  <div class="actions">
+                    <button class="primary-btn" type="button">Invite</button>
+                    <button class="secondary-btn" type="button">Message</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <h4>Enrolled (2)</h4>
+              <div class="person-row">
+                <div class="person">
+                  <div class="avatar">MA</div>
+                  <div>
+                    <div class="person-name">Maya A.</div>
+                    <div class="person-meta">Project Lead • Joined Jan 22</div>
+                  </div>
+                </div>
+                <div class="match">
+                  <div class="match-score">95% match</div>
+                  <div class="match-bar"><span style="width:95%"></span></div>
+                  <div class="actions">
+                    <button class="secondary-btn" type="button">Message</button>
+                  </div>
+                </div>
+              </div>
+              <div class="person-row">
+                <div class="person">
+                  <div class="avatar">DB</div>
+                  <div>
+                    <div class="person-name">Dev B.</div>
+                    <div class="person-meta">Engineering • Joined Jan 24</div>
+                  </div>
+                </div>
+                <div class="match">
+                  <div class="match-score">90% match</div>
+                  <div class="match-bar"><span style="width:90%"></span></div>
+                  <div class="actions">
+                    <button class="secondary-btn" type="button">Message</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="opportunity-card">
+          <div class="opportunity-head">
+            <div>
+              <h2 class="opportunity-title">Design for Impact Workshop</h2>
+              <div class="opportunity-meta">Posted Dec 02, 2025 • Points: 180</div>
+            </div>
+          </div>
+          <div class="grid">
+            <div class="panel">
+              <h4>Interested (2)</h4>
+              <div class="person-row">
+                <div class="person">
+                  <div class="avatar">PG</div>
+                  <div>
+                    <div class="person-name">Priya G.</div>
+                    <div class="person-meta">UX Research • 3 workshops</div>
+                  </div>
+                </div>
+                <div class="match">
+                  <div class="match-score">89% match</div>
+                  <div class="match-bar"><span style="width:89%"></span></div>
+                  <div class="actions">
+                    <button class="primary-btn" type="button">Invite</button>
+                    <button class="secondary-btn" type="button">Message</button>
+                  </div>
+                </div>
+              </div>
+              <div class="person-row">
+                <div class="person">
+                  <div class="avatar">RT</div>
+                  <div>
+                    <div class="person-name">Rohan T.</div>
+                    <div class="person-meta">Graphic Design • 2 events</div>
+                  </div>
+                </div>
+                <div class="match">
+                  <div class="match-score">81% match</div>
+                  <div class="match-bar"><span style="width:81%"></span></div>
+                  <div class="actions">
+                    <button class="primary-btn" type="button">Invite</button>
+                    <button class="secondary-btn" type="button">Message</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <h4>Enrolled (1)</h4>
+              <div class="person-row">
+                <div class="person">
+                  <div class="avatar">SL</div>
+                  <div>
+                    <div class="person-name">Sneha L.</div>
+                    <div class="person-meta">Workshop Mentor • Joined Dec 06</div>
+                  </div>
+                </div>
+                <div class="match">
+                  <div class="match-score">94% match</div>
+                  <div class="match-bar"><span style="width:94%"></span></div>
+                  <div class="actions">
+                    <button class="secondary-btn" type="button">Message</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      (function(){
+        document.querySelectorAll('.notification-wrap').forEach(function(wrap){
+          var toggle = wrap.querySelector('.notification-toggle');
+          var panel = wrap.querySelector('.notification-panel');
+          if(!toggle || !panel) return;
+          toggle.addEventListener('click', function(e){ e.stopPropagation(); var isOpen = panel.classList.toggle('open'); toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false'); });
+          panel.addEventListener('click', function(e){ e.stopPropagation(); });
+          document.addEventListener('click', function(){ panel.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); });
+          document.addEventListener('keydown', function(event){ if(event.key === 'Escape'){ panel.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); } });
+        });
+      })();
+    </script>
+  </body>
+</html>
