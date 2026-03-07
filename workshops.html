@@ -1,0 +1,911 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Talent Search - Workshops</title>
+  <style>
+    :root {
+      --sky-600: #7eb3ce;
+      --sky-500: #9ecae1;
+      --sky-400: #add8e6;
+      --sky-200: #d6f0fa;
+      --sky-100: #eaf6fb;
+      --sky-50: #f4fafe;
+      --ink-900: #0f1f2b;
+      --ink-800: #1b2f40;
+      --ink-700: #2a3f52;
+      --ink-500: #647b8f;
+      --ink-400: #8c9fae;
+      --white: #ffffff;
+
+      --shadow-sm: 0 4px 12px rgba(15, 31, 43, 0.05);
+      --shadow-md: 0 10px 30px rgba(15, 31, 43, 0.08);
+      --shadow-lg: 0 20px 40px rgba(15, 31, 43, 0.12);
+      --shadow-glow: 0 0 20px rgba(158, 202, 225, 0.4);
+
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+
+      --transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --transition-bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--ink-900);
+      background: var(--white);
+      line-height: 1.6;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    /* Scroll Bar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--white);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--sky-200);
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--sky-400);
+    }
+
+    /* Scroll Progress */
+    .progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.1);
+      z-index: 100;
+    }
+
+    .progress-bar-scroll {
+      height: 100%;
+      background: linear-gradient(90deg, var(--sky-400), var(--sky-600));
+      width: 0%;
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(158, 202, 225, 0.7);
+      }
+
+      70% {
+        box-shadow: 0 0 0 15px rgba(158, 202, 225, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(158, 202, 225, 0);
+      }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Background Visuals */
+    .page-wrap {
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+      padding-bottom: 60px;
+    }
+
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      overflow: hidden;
+      background: linear-gradient(180deg, #f9fdff 0%, #ffffff 100%);
+    }
+
+    .bg-blob {
+      position: absolute;
+      filter: blur(80px);
+      opacity: 0.5;
+      border-radius: 50%;
+    }
+
+    .blob-1 {
+      top: -10%;
+      right: -5%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--sky-200) 0%, transparent 70%);
+    }
+
+    .blob-2 {
+      bottom: 20%;
+      left: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, var(--sky-100) 0%, transparent 70%);
+    }
+
+    /* Navbar */
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      transition: all var(--transition);
+    }
+
+    .topbar.scrolled {
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: var(--shadow-sm);
+      border-bottom-color: rgba(15, 31, 43, 0.05);
+      padding: 5px 0;
+    }
+
+    .nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: padding var(--transition);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 1.5rem;
+      letter-spacing: -0.03em;
+      color: var(--ink-900);
+    }
+
+    .logo-img {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      box-shadow: var(--shadow-sm);
+      object-fit: cover;
+    }
+
+    .menu {
+      display: flex;
+      gap: 4px;
+    }
+
+    .menu a {
+      position: relative;
+      padding: 10px 16px;
+      color: var(--ink-700);
+      font-weight: 500;
+      font-size: 0.95rem;
+      border-radius: 999px;
+      transition: all var(--transition);
+      z-index: 1;
+    }
+
+    .menu a.active {
+      color: var(--sky-600);
+      background: var(--sky-50);
+    }
+
+    .menu a::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--sky-50);
+      border-radius: 999px;
+      z-index: -1;
+      transform: scale(0.8);
+      opacity: 0;
+      transition: all var(--transition-bounce);
+    }
+
+    .menu a:hover {
+      color: var(--sky-600);
+    }
+
+    .menu a:hover::before {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .icon-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(15, 31, 43, 0.08);
+      background: var(--white);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: all var(--transition-bounce);
+      position: relative;
+      color: var(--ink-700);
+    }
+
+    .icon-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--sky-200);
+      color: var(--sky-600);
+    }
+
+    .icon-btn svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .icon-dot {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 10px;
+      height: 10px;
+      background: #ff4757;
+      border-radius: 50%;
+      box-shadow: 0 0 0 2px var(--white);
+      animation: pulse 2s infinite;
+    }
+
+    .profile {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(15, 31, 43, 0.08);
+      display: grid;
+      place-items: center;
+      background: var(--white);
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-bounce);
+    }
+
+    .profile:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--sky-200);
+    }
+
+    /* Notification Dropdown */
+    .notif-dropdown {
+      position: absolute;
+      top: calc(100% + 16px);
+      right: 0;
+      width: 380px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      transform: translateY(15px) scale(0.95);
+      opacity: 0;
+      visibility: hidden;
+      transition: all var(--transition-bounce);
+      transform-origin: top right;
+      z-index: 40;
+    }
+
+    .notif-dropdown.active {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .notif-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .notif-header h4 {
+      font-size: 1.2rem;
+    }
+
+    .notif-clear {
+      font-size: 0.85rem;
+      color: var(--sky-600);
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .notif-item {
+      padding: 16px;
+      background: var(--sky-50);
+      border-radius: var(--radius-md);
+      margin-bottom: 12px;
+      border: 1px solid var(--sky-100);
+      transition: all 0.2s;
+    }
+
+    .notif-item:hover {
+      background: var(--sky-100);
+      transform: translateX(5px);
+    }
+
+    .notif-item p {
+      font-size: 0.9rem;
+      color: var(--ink-800);
+      margin-bottom: 12px;
+    }
+
+    .notif-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      height: 40px;
+      padding: 0 24px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: none;
+      cursor: pointer;
+      transition: all var(--transition-bounce);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(rgba(255, 255, 255, 0.2), transparent);
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+
+    .btn:hover::after {
+      opacity: 1;
+    }
+
+    .btn-sky {
+      background: linear-gradient(135deg, var(--sky-500), var(--sky-400));
+      color: var(--ink-900);
+      box-shadow: var(--shadow-glow), var(--shadow-sm);
+    }
+
+    .btn-sky:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 30px rgba(158, 202, 225, 0.6), var(--shadow-md);
+    }
+
+    .btn-secondary {
+      background: var(--white);
+      color: var(--ink-900);
+      border: 1px solid rgba(15, 31, 43, 0.1);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--sky-400);
+    }
+
+    /* Page Layout */
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 24px 60px;
+    }
+
+    .page-head {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: var(--radius-xl);
+      padding: 48px;
+      box-shadow: var(--shadow-lg);
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+      animation: fadeUp 0.8s ease-out;
+    }
+
+    .page-head::after {
+      content: "";
+      position: absolute;
+      inset: auto -12% -42% auto;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(158, 202, 225, 0.2), transparent);
+      z-index: -1;
+    }
+
+    .page-head h1 {
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      font-weight: 800;
+      margin-bottom: 16px;
+      color: var(--ink-900);
+    }
+
+    .page-head .head-subtext {
+      font-size: 1.15rem;
+      color: var(--ink-500);
+      max-width: 600px;
+    }
+
+    /* Initiatives Grid */
+    .initiatives-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 30px;
+    }
+
+    .initiative-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(15, 31, 43, 0.05);
+      transition: all var(--transition-bounce);
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .initiative-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: var(--shadow-lg), var(--shadow-glow);
+      border-color: var(--sky-200);
+    }
+
+    .card-image {
+      height: 180px;
+      background: linear-gradient(140deg, var(--sky-50), var(--sky-200));
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-image::before {
+      content: "";
+      position: absolute;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      top: 20px;
+      right: -20px;
+      transition: transform var(--transition);
+    }
+
+    .card-image::after {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: rgba(158, 202, 225, 0.3);
+      bottom: -60px;
+      left: -40px;
+      transition: transform var(--transition);
+    }
+
+    .initiative-card:hover .card-image::before {
+      transform: translate(-20px, 20px) scale(1.2);
+    }
+
+    .initiative-card:hover .card-image::after {
+      transform: translate(20px, -20px) scale(1.1);
+    }
+
+    .card-icon-overlay {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      background: var(--white);
+      display: grid;
+      place-items: center;
+      color: var(--sky-600);
+      box-shadow: var(--shadow-md);
+      position: relative;
+      z-index: 5;
+      transition: transform var(--transition-bounce);
+    }
+
+    .initiative-card:hover .card-icon-overlay {
+      transform: scale(1.1) rotate(5deg);
+      background: var(--sky-500);
+      color: var(--white);
+    }
+
+    .card-content {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .card-content h3 {
+      margin: 0 0 12px;
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .card-content p {
+      margin: 0 0 20px;
+      color: var(--ink-500);
+      line-height: 1.6;
+      flex-grow: 1;
+      font-size: 0.95rem;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--sky-50);
+      color: var(--sky-600);
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid var(--sky-100);
+      width: fit-content;
+    }
+
+    /* Footer CTA Card */
+    .footer-cta {
+      margin-top: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 32px 40px;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(135deg, var(--sky-50) 0%, var(--white) 100%);
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--sky-100);
+    }
+
+    .footer-cta span {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--ink-800);
+    }
+
+    @media (max-width: 980px) {
+      .menu {
+        display: none;
+      }
+
+      .initiatives-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .footer-cta {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        padding-top: 100px;
+      }
+
+      .page-head {
+        padding: 32px 24px;
+      }
+
+      .initiatives-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="progress-container">
+    <div class="progress-bar-scroll" id="scrollProgress"></div>
+  </div>
+
+  <div class="bg-layer">
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+  </div>
+
+  <div class="page-wrap">
+    <header class="topbar" id="navbar">
+      <div class="nav">
+        <div class="logo">
+          <img class="logo-img" src="logo.png" onerror="this.src='https://via.placeholder.com/88/9ecae1/ffffff?text=TS'"
+            alt="Logo" />
+          Talent Search
+        </div>
+        <nav class="menu">
+          <a href="index (1).html">Home</a>
+          <a href="initiatives.html">Initiatives</a>
+          <a href="workshops.html" class="active">Workshops</a>
+          <a href="events.html">Events</a>
+          <a href="posted-opportunities.html">Posted Opportunities</a>
+          <a href="aboutus.html">About Us</a>
+        </nav>
+        <div class="nav-actions">
+          <div style="position: relative;">
+            <button class="icon-btn" id="notifToggle">
+              <span class="icon-dot"></span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+            </button>
+            <div class="notif-dropdown" id="notifDropdown">
+              <div class="notif-header">
+                <h4>Notifications</h4>
+                <span class="notif-clear">Mark all read</span>
+              </div>
+              <div class="notif-item">
+                <p><strong>Match found:</strong> "Campus Sustainability Sprint". Do you want to enroll?</p>
+                <div class="notif-actions">
+                  <button class="btn btn-sky" style="height:32px; padding:0 16px; font-size:0.8rem;">Enroll</button>
+                  <button class="btn btn-secondary"
+                    style="height:32px; padding:0 16px; font-size:0.8rem;">Later</button>
+                </div>
+              </div>
+              <div class="notif-item">
+                <p>You have a new workshop recommendation based on your recent activity.</p>
+              </div>
+              <div class="notif-item">
+                <p>Reminder: Foundation Day event registration closes tomorrow.</p>
+              </div>
+            </div>
+          </div>
+          <a class="profile" aria-label="Profile" href="profile.html">👤</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="page-head">
+        <h1>Explore Workshops</h1>
+        <p class="head-subtext">Join practical learning sessions designed to build skills through collaboration and
+          action.</p>
+      </section>
+
+      <section class="initiatives-grid">
+        <article class="initiative-card reveal">
+          <div class="card-image" aria-hidden="true">
+            <div class="card-icon-overlay"><svg width="32" height="32" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2">
+                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg></div>
+          </div>
+          <div class="card-content">
+            <h3>Design Thinking Fundamentals</h3>
+            <p>Build user-first problem-solving skills with guided exercises and team critique.</p>
+            <span class="tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg> Tue, 3:30 PM</span>
+          </div>
+        </article>
+        <article class="initiative-card reveal delay-1" style="transition-delay: 0.1s;">
+          <div class="card-image" aria-hidden="true" style="background: linear-gradient(140deg, #eff6ff, #bfdbfe);">
+            <div class="card-icon-overlay" style="color:#3b82f6;"><svg width="32" height="32" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg></div>
+          </div>
+          <div class="card-content">
+            <h3>Public Speaking Lab</h3>
+            <p>Practice storytelling and speaking confidence with live feedback in a small group format.</p>
+            <span class="tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg> Thu, 5:30 PM</span>
+          </div>
+        </article>
+        <article class="initiative-card reveal delay-2" style="transition-delay: 0.2s;">
+          <div class="card-image" aria-hidden="true" style="background: linear-gradient(140deg, #fefce8, #fef08a);">
+            <div class="card-icon-overlay" style="color:#eab308;"><svg width="32" height="32" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="20" x2="18" y2="10"></line>
+                <line x1="12" y1="20" x2="12" y2="4"></line>
+                <line x1="6" y1="20" x2="6" y2="14"></line>
+              </svg></div>
+          </div>
+          <div class="card-content">
+            <h3>Data Skills Bootcamp</h3>
+            <p>Learn data cleaning, dashboards, and quick analysis techniques for real campus use cases.</p>
+            <span class="tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg> Wed, 6:00 PM</span>
+          </div>
+        </article>
+        <article class="initiative-card reveal delay-3" style="transition-delay: 0.3s;">
+          <div class="card-image" aria-hidden="true" style="background: linear-gradient(140deg, #f0fdf4, #bbf7d0);">
+            <div class="card-icon-overlay" style="color:#22c55e;"><svg width="32" height="32" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="4 14 10 14 10 20"></polyline>
+                <polyline points="20 10 14 10 14 4"></polyline>
+                <line x1="14" y1="10" x2="21" y2="3"></line>
+                <line x1="3" y1="21" x2="10" y2="14"></line>
+              </svg></div>
+          </div>
+          <div class="card-content">
+            <h3>AI Tools for Productivity</h3>
+            <p>Explore practical AI workflows for research, writing, and project execution.</p>
+            <span class="tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg> Mon, 4:15 PM</span>
+          </div>
+        </article>
+        <article class="initiative-card reveal" style="transition-delay: 0.1s;">
+          <div class="card-image" aria-hidden="true" style="background: linear-gradient(140deg, #fdf4ff, #fbcfe8);">
+            <div class="card-icon-overlay" style="color:#ec4899;"><svg width="32" height="32" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg></div>
+          </div>
+          <div class="card-content">
+            <h3>Leadership in Action</h3>
+            <p>Develop leadership habits through scenario-based activities and peer reflection.</p>
+            <span class="tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg> Fri, 2:00 PM</span>
+          </div>
+        </article>
+        <article class="initiative-card reveal" style="transition-delay: 0.2s;">
+          <div class="card-image" aria-hidden="true" style="background: linear-gradient(140deg, #faf5ff, #e9d5ff);">
+            <div class="card-icon-overlay" style="color:#a855f7;"><svg width="32" height="32" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg></div>
+          </div>
+          <div class="card-content">
+            <h3>Portfolio Review Studio</h3>
+            <p>Bring your work, get structured feedback, and improve how you present your strengths.</p>
+            <span class="tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg> Sat, 10:30 AM</span>
+          </div>
+        </article>
+      </section>
+
+      <section class="footer-cta reveal">
+        <span>No workshop interests matched? We can help you find something.</span>
+        <a href="appointment.html" class="btn btn-sky" style="height: 48px; padding: 0 32px; font-size: 1.05rem;">Book
+          an appointment</a>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Navbar Scroll
+      const navbar = document.getElementById('navbar');
+      const scrollProgress = document.getElementById('scrollProgress');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) navbar.classList.add('scrolled');
+        else navbar.classList.remove('scrolled');
+
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (height > 0) ? (winScroll / height) * 100 : 0;
+        scrollProgress.style.width = scrolled + "%";
+      });
+
+      // Notifications
+      const notifToggle = document.getElementById('notifToggle');
+      const notifDropdown = document.getElementById('notifDropdown');
+      notifToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        notifDropdown.classList.toggle('active');
+      });
+      window.addEventListener('click', () => {
+        if (notifDropdown.classList.contains('active')) notifDropdown.classList.remove('active');
+      });
+      notifDropdown.addEventListener('click', e => e.stopPropagation());
+
+      // Reveal Animation
+      const revealElements = document.querySelectorAll('.reveal');
+      const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, revealOptions);
+      revealElements.forEach(el => revealObserver.observe(el));
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,673 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Talent Search - Book an Appointment</title>
+  <style>
+    :root {
+      --sky-600: #7eb3ce;
+      --sky-500: #9ecae1;
+      --sky-400: #add8e6;
+      --sky-200: #d6f0fa;
+      --sky-100: #eaf6fb;
+      --sky-50: #f4fafe;
+      --ink-900: #0f1f2b;
+      --ink-800: #1b2f40;
+      --ink-700: #2a3f52;
+      --ink-500: #647b8f;
+      --ink-400: #8c9fae;
+      --white: #ffffff;
+
+      --shadow-sm: 0 4px 12px rgba(15, 31, 43, 0.05);
+      --shadow-md: 0 10px 30px rgba(15, 31, 43, 0.08);
+      --shadow-lg: 0 20px 40px rgba(15, 31, 43, 0.12);
+      --shadow-glow: 0 0 20px rgba(158, 202, 225, 0.4);
+
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+
+      --transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --transition-bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--ink-900);
+      background: var(--white);
+      line-height: 1.6;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* Scroll Progress */
+    .progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.1);
+      z-index: 100;
+    }
+
+    .progress-bar-scroll {
+      height: 100%;
+      background: linear-gradient(90deg, var(--sky-400), var(--sky-600));
+      width: 0%;
+    }
+
+    /* Background Visuals */
+    .page-wrap {
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+      padding-bottom: 60px;
+    }
+
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      overflow: hidden;
+      background: linear-gradient(180deg, #f9fdff 0%, #ffffff 100%);
+    }
+
+    .bg-blob {
+      position: absolute;
+      filter: blur(80px);
+      opacity: 0.5;
+      border-radius: 50%;
+    }
+
+    .blob-1 {
+      top: -10%;
+      right: -5%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--sky-200) 0%, transparent 70%);
+    }
+
+    .blob-2 {
+      bottom: 20%;
+      left: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, var(--sky-100) 0%, transparent 70%);
+    }
+
+    /* Navbar */
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      transition: all var(--transition);
+    }
+
+    .topbar.scrolled {
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: var(--shadow-sm);
+      border-bottom-color: rgba(15, 31, 43, 0.05);
+      padding: 5px 0;
+    }
+
+    .nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: padding var(--transition);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 1.5rem;
+      letter-spacing: -0.03em;
+      color: var(--ink-900);
+    }
+
+    .logo-img {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      box-shadow: var(--shadow-sm);
+      object-fit: cover;
+    }
+
+    .menu {
+      display: flex;
+      gap: 4px;
+    }
+
+    .menu a {
+      position: relative;
+      padding: 10px 16px;
+      color: var(--ink-700);
+      font-weight: 500;
+      font-size: 0.95rem;
+      border-radius: 999px;
+      transition: all var(--transition);
+      z-index: 1;
+    }
+
+    .menu a.active {
+      color: var(--sky-600);
+      background: var(--sky-50);
+    }
+
+    .menu a::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--sky-50);
+      border-radius: 999px;
+      z-index: -1;
+      transform: scale(0.8);
+      opacity: 0;
+      transition: all var(--transition-bounce);
+    }
+
+    .menu a:hover {
+      color: var(--sky-600);
+    }
+
+    .menu a:hover::before {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .icon-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(15, 31, 43, 0.08);
+      background: var(--white);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: all var(--transition-bounce);
+      position: relative;
+      color: var(--ink-700);
+    }
+
+    .icon-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--sky-200);
+      color: var(--sky-600);
+    }
+
+    .icon-btn svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .profile {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(15, 31, 43, 0.08);
+      display: grid;
+      place-items: center;
+      background: var(--white);
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-bounce);
+    }
+
+    .profile:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--sky-200);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      height: 48px;
+      padding: 0 24px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      transition: all var(--transition-bounce);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-sky {
+      background: linear-gradient(135deg, var(--sky-500), var(--sky-400));
+      color: var(--ink-900);
+      box-shadow: var(--shadow-glow), var(--shadow-sm);
+    }
+
+    .btn-sky:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 30px rgba(158, 202, 225, 0.6), var(--shadow-md);
+    }
+
+    /* Page Layout */
+    .page {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 140px 24px 60px;
+    }
+
+    .page-head {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: var(--radius-xl);
+      padding: 48px;
+      box-shadow: var(--shadow-lg);
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .page-head::after {
+      content: "";
+      position: absolute;
+      inset: auto -12% -42% auto;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(158, 202, 225, 0.2), transparent);
+      z-index: -1;
+    }
+
+    .page-head h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      margin-bottom: 12px;
+      color: var(--ink-900);
+    }
+
+    .page-head p {
+      font-size: 1.15rem;
+      color: var(--ink-500);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Form Card */
+    .form-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: var(--radius-xl);
+      padding: 40px;
+      box-shadow: var(--shadow-lg);
+      transition: all var(--transition-bounce);
+    }
+
+    .form-card h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: var(--ink-900);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    label {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--ink-800);
+    }
+
+    input,
+    select {
+      height: 52px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(15, 31, 43, 0.15);
+      padding: 0 16px;
+      font-size: 1rem;
+      font-family: inherit;
+      color: var(--ink-900);
+      background: var(--white);
+      transition: all 0.2s;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--sky-500);
+      box-shadow: 0 0 0 4px var(--sky-100);
+    }
+
+    .people-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .person-card {
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(15, 31, 43, 0.08);
+      background: var(--white);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: pointer;
+      transition: all var(--transition-bounce);
+    }
+
+    .person-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-sm);
+      border-color: var(--sky-400);
+    }
+
+    .person-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .person-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--sky-100), var(--sky-200));
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      color: var(--sky-600);
+    }
+
+    .person-meta {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .person-meta strong {
+      font-size: 1rem;
+      color: var(--ink-900);
+    }
+
+    .person-meta span {
+      color: var(--ink-500);
+      font-size: 0.85rem;
+    }
+
+    .badge {
+      background: var(--sky-50);
+      color: var(--sky-600);
+      border: 1px solid var(--sky-100);
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .badge.busy {
+      background: #fef2f2;
+      color: #ef4444;
+      border-color: #fee2e2;
+    }
+
+    .badge.limited {
+      background: #fffbeb;
+      color: #f59e0b;
+      border-color: #fef3c7;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .invite-status {
+      margin-top: 16px;
+      font-weight: 600;
+      color: #10b981;
+      font-size: 1rem;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.3s ease;
+    }
+
+    .invite-status.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 768px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .menu {
+        display: none;
+      }
+
+      .page {
+        padding-top: 100px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="progress-container">
+    <div class="progress-bar-scroll" id="scrollProgress"></div>
+  </div>
+
+  <div class="bg-layer">
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+  </div>
+
+  <div class="page-wrap">
+    <header class="topbar" id="navbar">
+      <div class="nav">
+        <div class="logo">
+          <img class="logo-img" src="logo.png" onerror="this.src='https://via.placeholder.com/88/9ecae1/ffffff?text=TS'"
+            alt="Logo" />
+          Talent Search
+        </div>
+        <nav class="menu">
+          <a href="index (1).html">Home</a>
+          <a href="initiatives.html">Initiatives</a>
+          <a href="workshops.html">Workshops</a>
+          <a href="events.html">Events</a>
+          <a href="posted-opportunities.html">Posted Opportunities</a>
+          <a href="aboutus.html">About Us</a>
+        </nav>
+        <div class="nav-actions">
+          <a class="profile" aria-label="Profile" href="profile.html">👤</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="page-head">
+        <h1>Book an Appointment</h1>
+        <p>Find the right mentor or guide, pick a time, and send an invite — all in one place.</p>
+      </section>
+
+      <section class="form-card">
+        <h2>Invite Details</h2>
+
+        <div class="form-group">
+          <label for="person-search">Search person</label>
+          <div style="position: relative;">
+            <input id="person-search" type="text" placeholder="Type a name or role"
+              style="width: 100%; padding-left: 44px;" />
+            <svg style="position: absolute; left: 14px; top: 14px; color: var(--ink-400);" width="20" height="20"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </div>
+          <div class="people-list" id="people-list"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="meeting-date">Meeting date</label>
+          <input id="meeting-date" type="date" />
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="meeting-start">Start time</label>
+            <input id="meeting-start" type="time" />
+          </div>
+
+          <div class="form-group">
+            <label for="meeting-end">End time</label>
+            <input id="meeting-end" type="time" />
+          </div>
+        </div>
+
+        <button class="btn btn-sky" id="invite-btn" style="width: 100%; margin-top: 16px;">
+          Send Invite
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+        <div class="invite-status" id="invite-status">✓ Invite sent successfully</div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Navbar Scroll
+      const navbar = document.getElementById('navbar');
+      const scrollProgress = document.getElementById('scrollProgress');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) navbar.classList.add('scrolled');
+        else navbar.classList.remove('scrolled');
+
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (height > 0) ? (winScroll / height) * 100 : 0;
+        scrollProgress.style.width = scrolled + "%";
+      });
+
+      // Form Logic
+      const people = [
+        { name: "Aarav Mehta", role: "Startup Mentor", status: "Available", statusClass: "" },
+        { name: "Diya Kapoor", role: "Program Lead", status: "Available", statusClass: "" },
+        { name: "Rohan Iyer", role: "Industry Advisor", status: "Limited", statusClass: "limited" },
+        { name: "Meera Singh", role: "Career Coach", status: "Available", statusClass: "" },
+        { name: "Nikhil Rao", role: "Product Guide", status: "Busy", statusClass: "busy" },
+      ];
+
+      const peopleList = document.getElementById("people-list");
+      const searchInput = document.getElementById("person-search");
+
+      function renderPeople(filter) {
+        peopleList.innerHTML = "";
+        const normalized = (filter || "").toLowerCase();
+        const filtered = people.filter(p =>
+          p.name.toLowerCase().includes(normalized) ||
+          p.role.toLowerCase().includes(normalized)
+        );
+
+        if (filtered.length === 0 && filter !== "") {
+          peopleList.innerHTML = '<div style="color:var(--ink-500); padding:10px 16px; font-size:0.9rem;">No matches found</div>';
+          return;
+        }
+
+        filtered.forEach(person => {
+          const initials = person.name.split(' ').map(n => n[0]).join('');
+          const card = document.createElement("div");
+          card.className = "person-card";
+          card.innerHTML = `
+                        <div class="person-info">
+                            <div class="person-avatar">${initials}</div>
+                            <div class="person-meta">
+                                <strong>${person.name}</strong>
+                                <span>${person.role}</span>
+                            </div>
+                        </div>
+                        <span class="badge ${person.statusClass}">${person.status}</span>
+                    `;
+          card.addEventListener("click", () => {
+            searchInput.value = person.name;
+            peopleList.innerHTML = ""; // Hide list after selection
+          });
+          peopleList.appendChild(card);
+        });
+      }
+
+      renderPeople("");
+      searchInput.addEventListener("input", e => renderPeople(e.target.value));
+      searchInput.addEventListener("focus", e => renderPeople(e.target.value));
+
+      const inviteButton = document.getElementById("invite-btn");
+      const inviteStatus = document.getElementById("invite-status");
+
+      inviteButton.addEventListener("click", () => {
+        inviteButton.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg> Sending...';
+        inviteButton.style.opacity = '0.8';
+
+        setTimeout(() => {
+          inviteButton.innerHTML = 'Send Invite <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>';
+          inviteButton.style.opacity = '1';
+          inviteStatus.classList.add('show');
+          setTimeout(() => inviteStatus.classList.remove('show'), 3000);
+        }, 1000);
+      });
+    });
+  </script>
+</body>
+
+</html>

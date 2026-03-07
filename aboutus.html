@@ -1,0 +1,741 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>About Talent Search</title>
+  <style>
+    :root {
+      --sky-600: #7eb3ce;
+      --sky-500: #9ecae1;
+      --sky-400: #add8e6;
+      --sky-200: #d6f0fa;
+      --sky-100: #eaf6fb;
+      --sky-50: #f4fafe;
+      --ink-900: #0f1f2b;
+      --ink-800: #1b2f40;
+      --ink-700: #2a3f52;
+      --ink-500: #647b8f;
+      --ink-400: #8c9fae;
+      --white: #ffffff;
+
+      --shadow-sm: 0 4px 12px rgba(15, 31, 43, 0.05);
+      --shadow-md: 0 10px 30px rgba(15, 31, 43, 0.08);
+      --shadow-lg: 0 20px 40px rgba(15, 31, 43, 0.12);
+      --shadow-glow: 0 0 20px rgba(158, 202, 225, 0.4);
+
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+
+      --transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --transition-bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--ink-900);
+      background: var(--white);
+      line-height: 1.6;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    /* Scroll Progress */
+    .progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.1);
+      z-index: 100;
+    }
+
+    .progress-bar-scroll {
+      height: 100%;
+      background: linear-gradient(90deg, var(--sky-400), var(--sky-600));
+      width: 0%;
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(158, 202, 225, 0.7);
+      }
+
+      70% {
+        box-shadow: 0 0 0 15px rgba(158, 202, 225, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(158, 202, 225, 0);
+      }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Background Visuals */
+    .page-wrap {
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+      padding-bottom: 60px;
+    }
+
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      overflow: hidden;
+      background: linear-gradient(180deg, #f9fdff 0%, #ffffff 100%);
+    }
+
+    .bg-blob {
+      position: absolute;
+      filter: blur(80px);
+      opacity: 0.5;
+      border-radius: 50%;
+    }
+
+    .blob-1 {
+      top: -10%;
+      right: -5%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--sky-200) 0%, transparent 70%);
+    }
+
+    .blob-2 {
+      bottom: 20%;
+      left: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, var(--sky-100) 0%, transparent 70%);
+    }
+
+    /* Navbar */
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      transition: all var(--transition);
+    }
+
+    .topbar.scrolled {
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: var(--shadow-sm);
+      border-bottom-color: rgba(15, 31, 43, 0.05);
+      padding: 5px 0;
+    }
+
+    .nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: padding var(--transition);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 1.5rem;
+      letter-spacing: -0.03em;
+      color: var(--ink-900);
+    }
+
+    .logo-img {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      box-shadow: var(--shadow-sm);
+      object-fit: cover;
+    }
+
+    .menu {
+      display: flex;
+      gap: 4px;
+    }
+
+    .menu a {
+      position: relative;
+      padding: 10px 16px;
+      color: var(--ink-700);
+      font-weight: 500;
+      font-size: 0.95rem;
+      border-radius: 999px;
+      transition: all var(--transition);
+      z-index: 1;
+    }
+
+    .menu a.active {
+      color: var(--sky-600);
+      background: var(--sky-50);
+    }
+
+    .menu a::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--sky-50);
+      border-radius: 999px;
+      z-index: -1;
+      transform: scale(0.8);
+      opacity: 0;
+      transition: all var(--transition-bounce);
+    }
+
+    .menu a:hover {
+      color: var(--sky-600);
+    }
+
+    .menu a:hover::before {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .icon-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(15, 31, 43, 0.08);
+      background: var(--white);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: all var(--transition-bounce);
+      position: relative;
+      color: var(--ink-700);
+    }
+
+    .icon-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--sky-200);
+      color: var(--sky-600);
+    }
+
+    .icon-btn svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .icon-dot {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 10px;
+      height: 10px;
+      background: #ff4757;
+      border-radius: 50%;
+      box-shadow: 0 0 0 2px var(--white);
+      animation: pulse 2s infinite;
+    }
+
+    /* Notification Dropdown */
+    .notif-dropdown {
+      position: absolute;
+      top: calc(100% + 16px);
+      right: 0;
+      width: 380px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      transform: translateY(15px) scale(0.95);
+      opacity: 0;
+      visibility: hidden;
+      transition: all var(--transition-bounce);
+      transform-origin: top right;
+      z-index: 40;
+    }
+
+    .notif-dropdown.active {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .notif-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .notif-header h4 {
+      font-size: 1.2rem;
+    }
+
+    .notif-clear {
+      font-size: 0.85rem;
+      color: var(--sky-600);
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .notif-item {
+      padding: 16px;
+      background: var(--sky-50);
+      border-radius: var(--radius-md);
+      margin-bottom: 12px;
+      border: 1px solid var(--sky-100);
+      transition: all 0.2s;
+    }
+
+    .notif-item:hover {
+      background: var(--sky-100);
+      transform: translateX(5px);
+    }
+
+    .notif-item p {
+      font-size: 0.9rem;
+      color: var(--ink-800);
+      margin-bottom: 12px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      height: 40px;
+      padding: 0 24px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: none;
+      cursor: pointer;
+      transition: all var(--transition-bounce);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-sky {
+      background: linear-gradient(135deg, var(--sky-500), var(--sky-400));
+      color: var(--ink-900);
+      box-shadow: var(--shadow-glow), var(--shadow-sm);
+    }
+
+    .btn-sky:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 30px rgba(158, 202, 225, 0.6), var(--shadow-md);
+    }
+
+    .btn-secondary {
+      background: var(--white);
+      color: var(--ink-900);
+      border: 1px solid rgba(15, 31, 43, 0.1);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--sky-400);
+    }
+
+    /* Page Layout */
+    .page {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 140px 24px 60px;
+    }
+
+    .about-hero {
+      background: linear-gradient(135deg, rgba(158, 202, 225, 0.2), rgba(214, 240, 250, 0.6));
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: var(--radius-xl);
+      padding: 60px;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 40px;
+      text-align: center;
+      animation: fadeUp 0.8s ease-out;
+    }
+
+    .about-hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -12% -42% auto;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(158, 202, 225, 0.3), transparent);
+      z-index: -1;
+    }
+
+    .about-hero::before {
+      content: "";
+      position: absolute;
+      left: -10%;
+      top: -20%;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.6), transparent);
+      z-index: -1;
+    }
+
+    .about-hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      margin-bottom: 24px;
+      color: var(--ink-900);
+    }
+
+    .about-hero p {
+      font-size: 1.25rem;
+      color: var(--ink-700);
+      max-width: 760px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Content Sections */
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+    }
+
+    .about-card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      box-shadow: var(--shadow-md);
+      transition: all var(--transition-bounce);
+    }
+
+    .about-card.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .about-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg), var(--shadow-glow);
+      border-color: var(--sky-200);
+    }
+
+    .icon-box {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--sky-100), var(--sky-200));
+      display: grid;
+      place-items: center;
+      color: var(--sky-600);
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+      border: 2px solid var(--white);
+    }
+
+    .about-card h3 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+      color: var(--ink-900);
+    }
+
+    .about-card p {
+      font-size: 1.05rem;
+      color: var(--ink-700);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .feature-list li {
+      position: relative;
+      padding-left: 36px;
+      font-size: 1.05rem;
+      color: var(--ink-800);
+      font-weight: 500;
+    }
+
+    .feature-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: 2px;
+      width: 24px;
+      height: 24px;
+      background: var(--sky-100);
+      color: var(--sky-600);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 0.8rem;
+      font-weight: 800;
+    }
+
+    @media (max-width: 980px) {
+      .menu {
+        display: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-hero {
+        padding: 40px 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="progress-container">
+    <div class="progress-bar-scroll" id="scrollProgress"></div>
+  </div>
+
+  <div class="bg-layer">
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+  </div>
+
+  <div class="page-wrap">
+    <header class="topbar" id="navbar">
+      <div class="nav">
+        <div class="logo">
+          <img class="logo-img" src="logo.png" onerror="this.src='https://via.placeholder.com/88/9ecae1/ffffff?text=TS'"
+            alt="Logo" />
+          Talent Search
+        </div>
+        <nav class="menu">
+          <a href="index (1).html">Home</a>
+          <a href="initiatives.html">Initiatives</a>
+          <a href="workshops.html">Workshops</a>
+          <a href="events.html">Events</a>
+          <a href="posted-opportunities.html">Posted Opportunities</a>
+          <a href="aboutus.html" class="active">About Us</a>
+        </nav>
+        <div class="nav-actions">
+          <div style="position: relative;">
+            <button class="icon-btn" id="notifToggle">
+              <span class="icon-dot"></span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+            </button>
+            <div class="notif-dropdown" id="notifDropdown">
+              <div class="notif-header">
+                <h4>Notifications</h4>
+                <span class="notif-clear">Mark all read</span>
+              </div>
+              <div class="notif-item">
+                <p><strong>Match found:</strong> "Campus Sustainability Sprint". Do you want to enroll?</p>
+                <div style="display:flex; gap:8px;">
+                  <button class="btn btn-sky" style="height:32px; padding:0 16px; font-size:0.8rem;">Enroll</button>
+                  <button class="btn btn-secondary"
+                    style="height:32px; padding:0 16px; font-size:0.8rem;">Later</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a href="login.html" class="btn btn-sky" style="padding: 0 20px;">Login</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="about-hero">
+        <h1>About Talent Search</h1>
+        <p>Talent Search connects people with short-term opportunities across initiatives, workshops, events, and
+          collaborations.</p>
+      </section>
+
+      <div class="about-grid">
+        <div class="about-card reveal">
+          <div class="icon-box">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+          </div>
+          <h3>What is Talent Search?</h3>
+          <p>Talent Search is an internal platform designed to discover, post, and participate in short-term
+            opportunities such as initiatives, workshops, events, and collaborations based entirely on skills and
+            interests.</p>
+        </div>
+
+        <div class="about-card reveal" style="transition-delay: 0.1s;">
+          <div class="icon-box">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+              </path>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+              <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+          </div>
+          <h3>Why we built this</h3>
+          <p>We built this to address fragmented opportunities, underutilized skills, and limited cross-team
+            collaboration. The platform lowers barriers to participation and encourages organic collaboration across
+            teams and disciplines.</p>
+        </div>
+
+        <div class="about-card full-width reveal" style="transition-delay: 0.2s;">
+          <div class="icon-box">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </div>
+          <h3>What you can do on the platform</h3>
+          <ul class="feature-list">
+            <li>Discover initiatives, workshops, and events tailored to your profile</li>
+            <li>Contribute efficiently based on your unique skills and availability</li>
+            <li>Post new opportunities and effortlessly find perfect collaborators</li>
+            <li>Earn experience points (XP) and peer recognition through active participation</li>
+          </ul>
+        </div>
+
+        <div class="about-card full-width reveal"
+          style="transition-delay: 0.3s; background: linear-gradient(135deg, rgba(234, 246, 251, 0.6), rgba(255, 255, 255, 0.9));">
+          <div class="icon-box"
+            style="background: var(--sky-500); color: var(--white); box-shadow: var(--shadow-glow);">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </div>
+          <h3>Our Vision</h3>
+          <p style="font-size: 1.15rem; font-weight: 500; color: var(--ink-900);">We aim to build a culture of
+            involvement, shared ownership, and continuous learning — where everyone can contribute, discover hidden
+            talents, and grow through short-term collaborative opportunities.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Navbar Scroll
+      const navbar = document.getElementById('navbar');
+      const scrollProgress = document.getElementById('scrollProgress');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) navbar.classList.add('scrolled');
+        else navbar.classList.remove('scrolled');
+
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (height > 0) ? (winScroll / height) * 100 : 0;
+        scrollProgress.style.width = scrolled + "%";
+      });
+
+      // Notifications
+      const notifToggle = document.getElementById('notifToggle');
+      const notifDropdown = document.getElementById('notifDropdown');
+      notifToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        notifDropdown.classList.toggle('active');
+      });
+      window.addEventListener('click', () => {
+        if (notifDropdown.classList.contains('active')) notifDropdown.classList.remove('active');
+      });
+      notifDropdown.addEventListener('click', e => e.stopPropagation());
+
+      // Reveal Animation
+      const revealElements = document.querySelectorAll('.reveal');
+      const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, revealOptions);
+      revealElements.forEach(el => revealObserver.observe(el));
+    });
+  </script>
+</body>
+
+</html>

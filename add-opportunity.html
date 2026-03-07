@@ -1,0 +1,896 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Post Opportunity — Talent Search</title>
+  <style>
+    :root {
+      --sky-600: #7eb3ce;
+      --sky-500: #9ecae1;
+      --sky-400: #add8e6;
+      --sky-200: #d6f0fa;
+      --sky-100: #eaf6fb;
+      --sky-50: #f4fafe;
+      --ink-900: #0f1f2b;
+      --ink-800: #1b2f40;
+      --ink-700: #2a3f52;
+      --ink-500: #647b8f;
+      --ink-400: #8c9fae;
+      --white: #ffffff;
+
+      --shadow-sm: 0 4px 12px rgba(15, 31, 43, 0.05);
+      --shadow-md: 0 10px 30px rgba(15, 31, 43, 0.08);
+      --shadow-lg: 0 20px 40px rgba(15, 31, 43, 0.12);
+      --shadow-glow: 0 0 20px rgba(158, 202, 225, 0.4);
+
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+
+      --transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --transition-bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--ink-900);
+      background: var(--white);
+      line-height: 1.6;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    /* Scroll Progress */
+    .progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.1);
+      z-index: 100;
+    }
+
+    .progress-bar-scroll {
+      height: 100%;
+      background: linear-gradient(90deg, var(--sky-400), var(--sky-600));
+      width: 0%;
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(158, 202, 225, 0.7);
+      }
+
+      70% {
+        box-shadow: 0 0 0 15px rgba(158, 202, 225, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(158, 202, 225, 0);
+      }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Background Visuals */
+    .page-wrap {
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+      padding-bottom: 60px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      overflow: hidden;
+      background: linear-gradient(180deg, #f9fdff 0%, #ffffff 100%);
+    }
+
+    .bg-blob {
+      position: absolute;
+      filter: blur(80px);
+      opacity: 0.5;
+      border-radius: 50%;
+    }
+
+    .blob-1 {
+      top: -10%;
+      right: -5%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--sky-200) 0%, transparent 70%);
+    }
+
+    .blob-2 {
+      bottom: 20%;
+      left: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, var(--sky-100) 0%, transparent 70%);
+    }
+
+    /* Navbar */
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      transition: all var(--transition);
+    }
+
+    .topbar.scrolled {
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: var(--shadow-sm);
+      border-bottom-color: rgba(15, 31, 43, 0.05);
+      padding: 5px 0;
+    }
+
+    .nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: padding var(--transition);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 1.5rem;
+      letter-spacing: -0.03em;
+      color: var(--ink-900);
+    }
+
+    .logo-img {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      box-shadow: var(--shadow-sm);
+      object-fit: cover;
+    }
+
+    .menu {
+      display: flex;
+      gap: 4px;
+    }
+
+    .menu a {
+      position: relative;
+      padding: 10px 16px;
+      color: var(--ink-700);
+      font-weight: 500;
+      font-size: 0.95rem;
+      border-radius: 999px;
+      transition: all var(--transition);
+      z-index: 1;
+    }
+
+    .menu a.active {
+      color: var(--sky-600);
+      background: var(--sky-50);
+    }
+
+    .menu a::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--sky-50);
+      border-radius: 999px;
+      z-index: -1;
+      transform: scale(0.8);
+      opacity: 0;
+      transition: all var(--transition-bounce);
+    }
+
+    .menu a:hover {
+      color: var(--sky-600);
+    }
+
+    .menu a:hover::before {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .icon-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(15, 31, 43, 0.08);
+      background: var(--white);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: all var(--transition-bounce);
+      position: relative;
+      color: var(--ink-700);
+    }
+
+    .icon-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--sky-200);
+      color: var(--sky-600);
+    }
+
+    .icon-btn svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .icon-dot {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 10px;
+      height: 10px;
+      background: #ff4757;
+      border-radius: 50%;
+      box-shadow: 0 0 0 2px var(--white);
+      animation: pulse 2s infinite;
+    }
+
+    .profile {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(15, 31, 43, 0.08);
+      display: grid;
+      place-items: center;
+      background: var(--white);
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-bounce);
+    }
+
+    .profile:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--sky-200);
+    }
+
+    /* Notification Dropdown */
+    .notif-dropdown {
+      position: absolute;
+      top: calc(100% + 16px);
+      right: 0;
+      width: 380px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      transform: translateY(15px) scale(0.95);
+      opacity: 0;
+      visibility: hidden;
+      transition: all var(--transition-bounce);
+      transform-origin: top right;
+      z-index: 40;
+    }
+
+    .notif-dropdown.active {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .notif-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .notif-header h4 {
+      font-size: 1.2rem;
+    }
+
+    .notif-clear {
+      font-size: 0.85rem;
+      color: var(--sky-600);
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .notif-item {
+      padding: 16px;
+      background: var(--sky-50);
+      border-radius: var(--radius-md);
+      margin-bottom: 12px;
+      border: 1px solid var(--sky-100);
+      transition: all 0.2s;
+    }
+
+    .notif-item:hover {
+      background: var(--sky-100);
+      transform: translateX(5px);
+    }
+
+    .notif-item p {
+      font-size: 0.9rem;
+      color: var(--ink-800);
+      margin-bottom: 12px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      height: 48px;
+      padding: 0 28px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 1.05rem;
+      border: none;
+      cursor: pointer;
+      transition: all var(--transition-bounce);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-sky {
+      background: linear-gradient(135deg, var(--sky-500), var(--sky-400));
+      color: var(--ink-900);
+      box-shadow: var(--shadow-glow), var(--shadow-sm);
+    }
+
+    .btn-sky:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 30px rgba(158, 202, 225, 0.6), var(--shadow-md);
+    }
+
+    .btn-secondary {
+      background: var(--white);
+      color: var(--ink-900);
+      border: 1px solid rgba(15, 31, 43, 0.1);
+      box-shadow: var(--shadow-sm);
+      height: 40px;
+      padding: 0 16px;
+      font-size: 0.9rem;
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--sky-400);
+    }
+
+    /* Container Layout */
+    .container {
+      flex: 1;
+      display: grid;
+      place-items: center;
+      padding: 140px 24px 80px;
+    }
+
+    .form-card {
+      width: 100%;
+      max-width: 800px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: var(--radius-xl);
+      padding: 48px;
+      box-shadow: var(--shadow-lg);
+      transition: all var(--transition-bounce);
+      animation: fadeUp 0.8s ease-out;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .form-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -10% -20% auto;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(158, 202, 225, 0.2), transparent);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .form-header {
+      margin-bottom: 32px;
+      text-align: center;
+    }
+
+    .title {
+      font-size: clamp(2rem, 3vw, 2.5rem);
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: var(--ink-900);
+    }
+
+    .subtitle {
+      color: var(--ink-500);
+      font-size: 1.15rem;
+    }
+
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .form-group {
+      position: relative;
+    }
+
+    label {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--ink-800);
+      margin-bottom: 8px;
+    }
+
+    .text-input,
+    textarea,
+    select {
+      width: 100%;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(15, 31, 43, 0.15);
+      padding: 14px 16px;
+      font-size: 1rem;
+      font-family: inherit;
+      color: var(--ink-900);
+      background: var(--white);
+      transition: all 0.2s;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+    }
+
+    textarea {
+      min-height: 140px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+
+    .text-input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--sky-500);
+      box-shadow: 0 0 0 4px var(--sky-100);
+    }
+
+    /* Floating label effect for title */
+    .floating-group {
+      position: relative;
+    }
+
+    .floating-input {
+      width: 100%;
+      padding: 28px 16px 12px;
+      font-size: 1.25rem;
+      font-weight: 600;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(15, 31, 43, 0.15);
+      background: var(--white);
+      transition: all 0.2s;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+    }
+
+    .floating-label {
+      position: absolute;
+      left: 16px;
+      top: 18px;
+      color: var(--ink-400);
+      font-size: 1.1rem;
+      transition: all 0.2s;
+      pointer-events: none;
+    }
+
+    .floating-input:focus,
+    .floating-input:not(:placeholder-shown) {
+      outline: none;
+      border-color: var(--sky-500);
+      box-shadow: 0 0 0 4px var(--sky-100);
+    }
+
+    .floating-input:focus+.floating-label,
+    .floating-input:not(:placeholder-shown)+.floating-label {
+      top: 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--sky-600);
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .skills-wrap {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      padding: 12px;
+      border-radius: var(--radius-md);
+      border: 2px dashed rgba(15, 31, 43, 0.1);
+      background: rgba(255, 255, 255, 0.5);
+      min-height: 60px;
+      transition: all 0.2s ease;
+    }
+
+    .skills-wrap:focus-within {
+      border-color: var(--sky-400);
+      background: var(--white);
+    }
+
+    #skillInput {
+      flex: 1;
+      border: none;
+      padding: 4px;
+      min-width: 140px;
+      box-shadow: none;
+      height: auto;
+      font-size: 1rem;
+      background: transparent;
+    }
+
+    #skillInput:focus {
+      outline: none;
+      box-shadow: none;
+      border: none;
+    }
+
+    .skill-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--sky-100);
+      color: var(--sky-600);
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: 1px solid var(--sky-200);
+      box-shadow: var(--shadow-sm);
+      animation: fadeUp 0.3s ease-out backwards;
+    }
+
+    .skill-pill button {
+      background: none;
+      border: none;
+      color: var(--sky-600);
+      cursor: pointer;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      transition: all 0.2s;
+    }
+
+    .skill-pill button:hover {
+      background: rgba(0, 0, 0, 0.05);
+      color: #ef4444;
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 16px;
+      border-top: 1px solid rgba(15, 31, 43, 0.05);
+      padding-top: 32px;
+      gap: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .menu {
+        display: none;
+      }
+
+      .row {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .form-card {
+        padding: 32px 24px;
+      }
+
+      .form-actions {
+        flex-direction: column-reverse;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="progress-container">
+    <div class="progress-bar-scroll" id="scrollProgress"></div>
+  </div>
+
+  <div class="bg-layer">
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+  </div>
+
+  <div class="page-wrap">
+    <header class="topbar" id="navbar">
+      <div class="nav">
+        <div class="logo">
+          <img class="logo-img" src="logo.png" onerror="this.src='https://via.placeholder.com/88/9ecae1/ffffff?text=TS'"
+            alt="Logo" />
+          Talent Search
+        </div>
+        <nav class="menu">
+          <a href="index (1).html">Home</a>
+          <a href="initiatives.html">Initiatives</a>
+          <a href="workshops.html">Workshops</a>
+          <a href="events.html">Events</a>
+          <a href="posted-opportunities.html">Posted Opportunities</a>
+          <a href="aboutus.html">About Us</a>
+        </nav>
+        <div class="nav-actions">
+          <div style="position: relative;">
+            <button class="icon-btn" id="notifToggle">
+              <span class="icon-dot"></span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+            </button>
+            <div class="notif-dropdown" id="notifDropdown">
+              <div class="notif-header">
+                <h4>Notifications</h4>
+                <span class="notif-clear">Mark all read</span>
+              </div>
+              <div class="notif-item">
+                <p><strong>Match found:</strong> "Campus Sustainability Sprint". Do you want to enroll?</p>
+                <div style="display:flex; gap:8px;">
+                  <button class="btn btn-sky" style="height:32px; padding:0 16px; font-size:0.8rem;">Enroll</button>
+                  <button class="btn btn-secondary"
+                    style="height:32px; padding:0 16px; font-size:0.8rem;">Later</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a class="profile" aria-label="Profile" href="profile.html">👤</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="form-card">
+        <div class="form-header">
+          <h1 class="title">Post an Opportunity</h1>
+          <p class="subtitle">Share short-term projects and reward top contributors across campus.</p>
+        </div>
+
+        <form class="form" id="opportunityForm" onsubmit="return false;">
+
+          <div class="floating-group">
+            <input id="title" class="floating-input" placeholder=" " required />
+            <label for="title" class="floating-label">Opportunity Title</label>
+          </div>
+
+          <div class="form-group">
+            <label for="description">Detailed Description</label>
+            <textarea id="description"
+              placeholder="What are you trying to accomplish? What role will the contributor play?" required></textarea>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label for="schedule">Schedule / Timeline</label>
+              <input id="schedule" class="text-input" placeholder="e.g. Next Tuesday, or 2 weeks" required />
+            </div>
+            <div class="form-group">
+              <label for="bounty">XP Points Bounty</label>
+              <div style="position: relative;">
+                <input id="bounty" class="text-input" type="number" placeholder="Value based on effort"
+                  style="padding-left: 44px;" required />
+                <svg style="position: absolute; left: 14px; top: 16px; color: #eab308;" width="20" height="20"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon
+                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                  </polygon>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label for="timePerWeek">Time Commitment</label>
+              <select id="timePerWeek" class="text-input" required>
+                <option value="" disabled selected>Select expected effort</option>
+                <option>Less than 1 hour</option>
+                <option>1-2 hours / week</option>
+                <option>3-5 hours / week</option>
+                <option>5-10 hours / week</option>
+                <option>Full Sprint</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Skills Required</label>
+            <p style="font-size: 0.85rem; color: var(--ink-500); margin-top: -4px; margin-bottom: 8px;">Add relevant
+              skills to target the right talent matches.</p>
+            <div class="skills-wrap" id="skillsWrap">
+              <input id="skillInput" class="text-input" placeholder="Type a skill and press Enter" />
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <a href="index (1).html" class="btn btn-secondary"
+              style="height: 48px; font-size: 1.05rem; display: flex;">Cancel</a>
+            <button id="postBtn" class="btn btn-sky">Post Opportunity</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Navbar Scroll
+      const navbar = document.getElementById('navbar');
+      const scrollProgress = document.getElementById('scrollProgress');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) navbar.classList.add('scrolled');
+        else navbar.classList.remove('scrolled');
+
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (height > 0) ? (winScroll / height) * 100 : 0;
+        scrollProgress.style.width = scrolled + "%";
+      });
+
+      // Notifications
+      const notifToggle = document.getElementById('notifToggle');
+      const notifDropdown = document.getElementById('notifDropdown');
+      notifToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        notifDropdown.classList.toggle('active');
+      });
+      window.addEventListener('click', () => {
+        if (notifDropdown.classList.contains('active')) notifDropdown.classList.remove('active');
+      });
+      notifDropdown.addEventListener('click', e => e.stopPropagation());
+
+      // Skills Tag Input
+      let skills = ["Design Thinking"];
+      const skillsWrap = document.getElementById('skillsWrap');
+      const skillInput = document.getElementById('skillInput');
+
+      function renderSkills() {
+        // remove existing pills
+        Array.from(skillsWrap.children).forEach(c => { if (c !== skillInput) skillsWrap.removeChild(c); });
+
+        // insert pills before the input
+        skills.forEach((s, idx) => {
+          const pill = document.createElement('span');
+          pill.className = 'skill-pill';
+          pill.innerHTML = `${s} <button type="button">✕</button>`;
+          pill.querySelector('button').addEventListener('click', () => {
+            skills.splice(idx, 1);
+            renderSkills();
+          });
+          skillsWrap.insertBefore(pill, skillInput);
+        });
+      }
+
+      renderSkills();
+
+      skillInput.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ',') {
+          e.preventDefault();
+          const v = skillInput.value.trim();
+          if (v && !skills.includes(v)) skills.push(v);
+          skillInput.value = '';
+          renderSkills();
+        }
+        if (e.key === 'Backspace' && skillInput.value === '' && skills.length > 0) {
+          skills.pop();
+          renderSkills();
+        }
+      });
+
+      skillInput.addEventListener('blur', () => {
+        const v = skillInput.value.trim();
+        if (v && !skills.includes(v)) {
+          skills.push(v);
+          skillInput.value = '';
+          renderSkills();
+        }
+      });
+
+      // Post Form
+      document.getElementById('postBtn').addEventListener('click', function (e) {
+        const form = document.getElementById('opportunityForm');
+        if (form.checkValidity()) {
+          const btn = this;
+          btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg> Posting...';
+          setTimeout(() => window.location.href = 'posted-opportunities.html', 800);
+        } else {
+          form.reportValidity();
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

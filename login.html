@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login — Talent Search</title>
+  <style>
+    :root {
+      --sky-600: #7eb3ce;
+      --sky-500: #9ecae1;
+      --sky-400: #add8e6;
+      --sky-200: #d6f0fa;
+      --sky-100: #eaf6fb;
+      --sky-50: #f4fafe;
+      --ink-900: #0f1f2b;
+      --ink-800: #1b2f40;
+      --ink-700: #2a3f52;
+      --ink-500: #647b8f;
+      --ink-400: #8c9fae;
+      --white: #ffffff;
+
+      --shadow-sm: 0 4px 12px rgba(15, 31, 43, 0.05);
+      --shadow-md: 0 10px 30px rgba(15, 31, 43, 0.08);
+      --shadow-lg: 0 20px 40px rgba(15, 31, 43, 0.12);
+      --shadow-glow: 0 0 20px rgba(158, 202, 225, 0.4);
+
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+
+      --transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --transition-bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--ink-900);
+      background: var(--white);
+      line-height: 1.6;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Background Visuals */
+    .page-wrap {
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+      padding-bottom: 60px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      overflow: hidden;
+      background: linear-gradient(135deg, #f0f8fb 0%, #ffffff 100%);
+    }
+
+    .bg-blob {
+      position: absolute;
+      filter: blur(80px);
+      opacity: 0.5;
+      border-radius: 50%;
+      animation: float 10s ease-in-out infinite alternate;
+    }
+
+    .blob-1 {
+      top: -10%;
+      right: -5%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--sky-200) 0%, transparent 70%);
+    }
+
+    .blob-2 {
+      bottom: -10%;
+      left: -10%;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, var(--sky-100) 0%, transparent 70%);
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) scale(1);
+      }
+
+      100% {
+        transform: translateY(30px) scale(1.05);
+      }
+    }
+
+    /* Navbar */
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 1.5rem;
+      letter-spacing: -0.03em;
+      color: var(--ink-900);
+    }
+
+    .logo-img {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      box-shadow: var(--shadow-sm);
+      object-fit: cover;
+    }
+
+    .menu {
+      display: flex;
+      gap: 4px;
+    }
+
+    .menu a {
+      position: relative;
+      padding: 10px 16px;
+      color: var(--ink-700);
+      font-weight: 500;
+      font-size: 0.95rem;
+      border-radius: 999px;
+      transition: all var(--transition);
+      z-index: 1;
+    }
+
+    .menu a::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--sky-50);
+      border-radius: 999px;
+      z-index: -1;
+      transform: scale(0.8);
+      opacity: 0;
+      transition: all var(--transition-bounce);
+    }
+
+    .menu a:hover {
+      color: var(--sky-600);
+    }
+
+    .menu a:hover::before {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      height: 48px;
+      padding: 0 24px;
+      width: 100%;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 1.05rem;
+      border: none;
+      cursor: pointer;
+      transition: all var(--transition-bounce);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-sky {
+      background: linear-gradient(135deg, var(--sky-500), var(--sky-400));
+      color: var(--ink-900);
+      box-shadow: var(--shadow-glow), var(--shadow-sm);
+    }
+
+    .btn-sky:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 30px rgba(158, 202, 225, 0.6), var(--shadow-md);
+    }
+
+    .btn-secondary {
+      background: var(--white);
+      color: var(--ink-900);
+      border: 1px solid rgba(15, 31, 43, 0.1);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--sky-400);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--ink-700);
+      border: 1px solid transparent;
+    }
+
+    .btn-outline:hover {
+      color: var(--ink-900);
+      background: var(--sky-50);
+    }
+
+    /* Container Layout */
+    .container {
+      flex: 1;
+      display: grid;
+      place-items: center;
+      padding: 100px 24px;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 440px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: var(--radius-xl);
+      padding: 48px 40px;
+      box-shadow: var(--shadow-lg);
+      transition: all var(--transition-bounce);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      animation: fadeUp 0.8s ease-out;
+    }
+
+    .auth-card::before {
+      content: "";
+      position: absolute;
+      inset: -50px -50px auto auto;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(158, 202, 225, 0.3), transparent);
+      pointer-events: none;
+    }
+
+    .avatar-lg {
+      width: 88px;
+      height: 88px;
+      border-radius: 24px;
+      margin: 0 auto 24px;
+      background: linear-gradient(135deg, var(--sky-500), var(--sky-400));
+      display: grid;
+      place-items: center;
+      color: var(--white);
+      box-shadow: var(--shadow-md), var(--shadow-glow);
+      transform: rotate(-10deg);
+      transition: all var(--transition-bounce);
+    }
+
+    .auth-card:hover .avatar-lg {
+      transform: rotate(0deg) scale(1.05);
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--ink-900);
+      margin-bottom: 8px;
+    }
+
+    p.subtitle {
+      color: var(--ink-500);
+      font-size: 1.05rem;
+      margin-bottom: 32px;
+    }
+
+    .stack {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      width: 100%;
+    }
+
+    /* Form Inputs */
+    .floating-group {
+      position: relative;
+      text-align: left;
+      margin-bottom: 16px;
+    }
+
+    .floating-input {
+      width: 100%;
+      padding: 24px 16px 10px;
+      font-size: 1.05rem;
+      font-weight: 500;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(15, 31, 43, 0.15);
+      background: var(--white);
+      transition: all 0.2s;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+      color: var(--ink-900);
+    }
+
+    .floating-label {
+      position: absolute;
+      left: 16px;
+      top: 18px;
+      color: var(--ink-500);
+      font-size: 1rem;
+      transition: all 0.2s;
+      pointer-events: none;
+    }
+
+    .floating-input:focus,
+    .floating-input:not(:placeholder-shown) {
+      outline: none;
+      border-color: var(--sky-500);
+      box-shadow: 0 0 0 4px var(--sky-100);
+    }
+
+    .floating-input:focus+.floating-label,
+    .floating-input:not(:placeholder-shown)+.floating-label {
+      top: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--sky-600);
+    }
+
+    /* View Transitions */
+    .view {
+      transition: all 0.4s ease;
+      width: 100%;
+    }
+
+    .view.hidden {
+      display: none;
+      opacity: 0;
+    }
+
+    .view.active {
+      display: block;
+      opacity: 1;
+      animation: fadeIn 0.4s ease forwards;
+    }
+
+    @media (max-width: 768px) {
+      .menu {
+        display: none;
+      }
+
+      .auth-card {
+        padding: 40px 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg-layer">
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+  </div>
+
+  <div class="page-wrap">
+    <header class="topbar">
+      <div class="nav">
+        <div class="logo">
+          <img class="logo-img" src="logo.png" onerror="this.src='https://via.placeholder.com/88/9ecae1/ffffff?text=TS'"
+            alt="Logo" />
+          Talent Search
+        </div>
+        <nav class="menu">
+          <a href="index (1).html">Home</a>
+          <a href="initiatives.html">Initiatives</a>
+          <a href="workshops.html">Workshops</a>
+          <a href="events.html">Events</a>
+          <a href="posted-opportunities.html">Posted Opportunities</a>
+          <a href="aboutus.html">About Us</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="auth-card" id="card">
+
+        <!-- Initial View -->
+        <div id="initialView" class="view active">
+          <div class="avatar-lg">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <h2>Welcome back</h2>
+          <p class="subtitle">Access your opportunities and matches.</p>
+
+          <div class="stack">
+            <button id="openLoginBtn" class="btn btn-sky">Login</button>
+            <a href="signup.html" class="btn btn-secondary">Create an account</a>
+          </div>
+        </div>
+
+        <!-- Form View -->
+        <div id="formView" class="view hidden">
+          <h2>Sign in</h2>
+          <p class="subtitle" style="margin-bottom: 24px;">Enter your details to continue.</p>
+
+          <div class="stack">
+            <div class="floating-group">
+              <input id="username" class="floating-input" type="text" placeholder=" " />
+              <label for="username" class="floating-label">Username or Email</label>
+            </div>
+
+            <div class="floating-group">
+              <input id="password" class="floating-input" type="password" placeholder=" " />
+              <label for="password" class="floating-label">Password</label>
+            </div>
+
+            <button id="formLoginBtn" class="btn btn-sky" style="margin-top: 8px;">Login</button>
+            <button id="backBtn" class="btn btn-outline" style="height: 40px;">← Back</button>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const initialView = document.getElementById('initialView');
+      const formView = document.getElementById('formView');
+
+      document.getElementById('openLoginBtn').addEventListener('click', () => {
+        initialView.classList.remove('active');
+        initialView.classList.add('hidden');
+        setTimeout(() => {
+          formView.classList.remove('hidden');
+          formView.classList.add('active');
+        }, 50);
+      });
+
+      document.getElementById('backBtn').addEventListener('click', () => {
+        formView.classList.remove('active');
+        formView.classList.add('hidden');
+        setTimeout(() => {
+          initialView.classList.remove('hidden');
+          initialView.classList.add('active');
+        }, 50);
+      });
+
+      document.getElementById('formLoginBtn').addEventListener('click', function () {
+        this.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg> Authenticating...';
+        setTimeout(() => window.location.href = 'index (1).html', 800);
+      });
+    });
+  </script>
+</body>
+
+</html>

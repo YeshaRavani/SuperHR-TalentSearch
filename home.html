@@ -1,0 +1,1720 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Talent Search — Home</title>
+    <style>
+        :root {
+            --sky-600: #7eb3ce;
+            --sky-500: #9ecae1;
+            --sky-400: #add8e6;
+            --sky-200: #d6f0fa;
+            --sky-100: #eaf6fb;
+            --sky-50: #f4fafe;
+            --ink-900: #0f1f2b;
+            --ink-800: #1b2f40;
+            --ink-700: #2a3f52;
+            --ink-500: #647b8f;
+            --ink-400: #8c9fae;
+            --white: #ffffff;
+
+            --shadow-sm: 0 4px 12px rgba(15, 31, 43, 0.05);
+            --shadow-md: 0 10px 30px rgba(15, 31, 43, 0.08);
+            --shadow-lg: 0 20px 40px rgba(15, 31, 43, 0.12);
+            --shadow-glow: 0 0 20px rgba(158, 202, 225, 0.4);
+
+            --radius-xl: 32px;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+
+            --transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --transition-bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: var(--ink-900);
+            background: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+            border-radius: var(--radius-md);
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        /* Scroll Bar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--white);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--sky-200);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--sky-400);
+        }
+
+        /* Scroll Progress */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 100;
+        }
+
+        .progress-bar-scroll {
+            height: 100%;
+            background: linear-gradient(90deg, var(--sky-400), var(--sky-600));
+            width: 0%;
+        }
+
+        /* Animations */
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes float-reverse {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(20px);
+            }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(158, 202, 225, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(158, 202, 225, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(158, 202, 225, 0);
+            }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Background Visuals */
+        .bg-layer {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+            background: #ffffff;
+        }
+
+        .bg-blob {
+            position: absolute;
+            filter: blur(100px);
+            opacity: 0.6;
+            border-radius: 50%;
+            animation: float 15s ease-in-out infinite;
+        }
+
+        .blob-1 {
+            top: -10%;
+            right: -5%;
+            width: 600px;
+            height: 600px;
+            background: var(--sky-100);
+        }
+
+        .blob-2 {
+            bottom: 10%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: var(--sky-50);
+            animation: float-reverse 18s ease-in-out infinite;
+        }
+
+        .blob-3 {
+            top: 40%;
+            right: 20%;
+            width: 400px;
+            height: 400px;
+            background: var(--sky-200);
+            opacity: 0.3;
+            animation: float 20s ease-in-out infinite alternate;
+        }
+
+        /* Navbar */
+        .topbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all var(--transition);
+        }
+
+        .topbar.scrolled {
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: var(--shadow-sm);
+            border-bottom-color: rgba(15, 31, 43, 0.05);
+            padding: 5px 0;
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: padding var(--transition);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -0.03em;
+            color: var(--ink-900);
+        }
+
+        .logo-img {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            box-shadow: var(--shadow-sm);
+            object-fit: cover;
+        }
+
+        .menu {
+            display: flex;
+            gap: 4px;
+        }
+
+        .menu a {
+            position: relative;
+            padding: 10px 16px;
+            color: var(--ink-700);
+            font-weight: 500;
+            font-size: 0.95rem;
+            border-radius: 999px;
+            transition: all var(--transition);
+            z-index: 1;
+        }
+
+        .menu a::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--sky-50);
+            border-radius: 999px;
+            z-index: -1;
+            transform: scale(0.8);
+            opacity: 0;
+            transition: all var(--transition-bounce);
+        }
+
+        .menu a:hover {
+            color: var(--sky-600);
+        }
+
+        .menu a:hover::before {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .icon-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid rgba(15, 31, 43, 0.08);
+            background: var(--white);
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            transition: all var(--transition-bounce);
+            position: relative;
+        }
+
+        .icon-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--sky-200);
+            color: var(--sky-600);
+        }
+
+        .icon-btn svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .icon-dot {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 10px;
+            height: 10px;
+            background: #ff4757;
+            border-radius: 50%;
+            box-shadow: 0 0 0 2px var(--white);
+            animation: pulse 2s infinite;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            height: 48px;
+            padding: 0 28px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: all var(--transition-bounce);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(255, 255, 255, 0.2), transparent);
+            opacity: 0;
+            transition: opacity var(--transition);
+        }
+
+        .btn:hover::after {
+            opacity: 1;
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        .btn-primary {
+            background: var(--ink-900);
+            color: var(--white);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 24px -8px rgba(15, 31, 43, 0.4);
+            background: var(--ink-800);
+        }
+
+        .btn-sky {
+            background: linear-gradient(135deg, var(--sky-500), var(--sky-400));
+            color: var(--ink-900);
+            box-shadow: var(--shadow-glow), var(--shadow-sm);
+        }
+
+        .btn-sky:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 30px rgba(158, 202, 225, 0.6), var(--shadow-md);
+            background: linear-gradient(135deg, var(--sky-400), var(--sky-400));
+            color: var(--ink-900);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: var(--ink-900);
+            border: 1px solid rgba(15, 31, 43, 0.1);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--sky-400);
+        }
+
+        /* General Section */
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 24px 60px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .section-desc {
+            font-size: 1.15rem;
+            color: var(--ink-500);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: var(--sky-600);
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            border: 1px solid var(--sky-100);
+            box-shadow: var(--shadow-sm);
+            animation: fadeUp 0.8s ease-out;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 5vw, 4.5rem);
+            font-weight: 900;
+            margin-bottom: 24px;
+            line-height: 1.05;
+            animation: fadeUp 0.8s ease-out 0.1s both;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--sky-600), var(--sky-400));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero h1 span::after {
+            content: '';
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            width: 100%;
+            height: 12px;
+            background: var(--sky-200);
+            z-index: -1;
+            opacity: 0.5;
+            transform: rotate(-2deg);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--ink-500);
+            margin-bottom: 40px;
+            max-width: 500px;
+            animation: fadeUp 0.8s ease-out 0.2s both;
+            line-height: 1.5;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            animation: fadeUp 0.8s ease-out 0.3s both;
+        }
+
+        .hero-visual {
+            position: relative;
+            perspective: 2000px;
+            animation: scaleIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+        }
+
+        .dashboard-widget {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: var(--radius-xl);
+            padding: 40px;
+            box-shadow: var(--shadow-lg), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+            transform-style: preserve-3d;
+            transition: transform 0.2s ease-out;
+            transform: rotateX(5deg) rotateY(-10deg);
+        }
+
+        /* Interactive parallax handled by JS */
+
+        .widget-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(15, 31, 43, 0.06);
+            padding-bottom: 20px;
+        }
+
+        .widget-header h3 {
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stat-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .stat-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px;
+            border-radius: var(--radius-md);
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(255, 255, 255, 1);
+            transition: all var(--transition-bounce);
+            transform: translateZ(20px);
+        }
+
+        .stat-row:hover {
+            transform: translateZ(40px) scale(1.02);
+            box-shadow: var(--shadow-md);
+            border-color: var(--sky-200);
+        }
+
+        .stat-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-weight: 600;
+            color: var(--ink-800);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: var(--sky-100);
+            color: var(--sky-600);
+            display: grid;
+            place-items: center;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--ink-900);
+        }
+
+        /* Opportunities Cards (3D Tilt) */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            perspective: 1000px;
+        }
+
+        .opp-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(15, 31, 43, 0.05);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.1s;
+            cursor: pointer;
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        .opp-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 0%, var(--sky-50), transparent 70%);
+            opacity: 0;
+            transition: opacity var(--transition);
+            z-index: -1;
+        }
+
+        .opp-card:hover::before {
+            opacity: 1;
+        }
+
+        .opp-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 20px;
+            background: var(--sky-50);
+            color: var(--sky-600);
+            display: grid;
+            place-items: center;
+            margin-bottom: 24px;
+            transition: all var(--transition-bounce);
+            transform: translateZ(30px);
+            border: 1px solid var(--sky-100);
+        }
+
+        .opp-card:hover .opp-icon {
+            transform: translateZ(50px) scale(1.1) rotate(-5deg);
+            background: var(--sky-500);
+            color: var(--white);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .opp-icon svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .opp-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            transform: translateZ(20px);
+        }
+
+        .opp-card p {
+            color: var(--ink-500);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1;
+            transform: translateZ(10px);
+        }
+
+        .card-arrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--sky-600);
+            font-weight: 700;
+            font-size: 0.95rem;
+            transform: translateZ(20px);
+            transition: gap var(--transition);
+        }
+
+        .opp-card:hover .card-arrow {
+            gap: 12px;
+        }
+
+        /* Live Activity Section (NEW) */
+        .feed-container {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feed-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(var(--sky-200), var(--sky-500), var(--sky-200));
+        }
+
+        .feed-item {
+            display: flex;
+            gap: 24px;
+            padding: 24px;
+            border-radius: var(--radius-md);
+            transition: all var(--transition);
+            border: 1px solid transparent;
+            margin-bottom: 16px;
+            background: var(--white);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .feed-item:hover {
+            transform: translateX(10px) scale(1.01);
+            border-color: var(--sky-200);
+            box-shadow: var(--shadow-md);
+        }
+
+        .feed-time {
+            color: var(--ink-400);
+            font-size: 0.85rem;
+            font-weight: 600;
+            min-width: 60px;
+            padding-top: 6px;
+        }
+
+        .feed-content h4 {
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+        }
+
+        .feed-content p {
+            color: var(--ink-500);
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+        }
+
+        .feed-tags {
+            display: flex;
+            gap: 8px;
+        }
+
+        .feed-tag {
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: var(--sky-50);
+            color: var(--sky-600);
+            border: 1px solid var(--sky-100);
+        }
+
+        /* Incentive System Gamification */
+        .gamify-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 40px;
+        }
+
+        .points-panel {
+            background: linear-gradient(145deg, var(--white), var(--sky-50));
+            border-radius: var(--radius-xl);
+            padding: 40px;
+            text-align: center;
+            border: 1px solid var(--sky-200);
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .points-panel::after {
+            content: '🎯';
+            position: absolute;
+            font-size: 15rem;
+            opacity: 0.05;
+            right: -40px;
+            bottom: -40px;
+        }
+
+        .level-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background: var(--ink-900);
+            color: var(--white);
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 15px rgba(15, 31, 43, 0.2);
+        }
+
+        .points-display {
+            font-size: 5rem;
+            font-weight: 900;
+            line-height: 1;
+            color: var(--ink-900);
+            text-shadow: 2px 2px 0 var(--sky-200);
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .points-display span {
+            font-size: 1.5rem;
+            color: var(--sky-600);
+        }
+
+        .progress-wrapper {
+            margin-top: 40px;
+            text-align: left;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            color: var(--ink-700);
+        }
+
+        .progress-track {
+            height: 16px;
+            background: rgba(15, 31, 43, 0.05);
+            border-radius: 999px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--sky-400), var(--sky-600));
+            border-radius: 999px;
+            transition: width 2s cubic-bezier(0.2, 0.8, 0.2, 1);
+            box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3);
+        }
+
+        .badges-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .badge-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            text-align: center;
+            border: 1px solid rgba(15, 31, 43, 0.05);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-bounce);
+        }
+
+        .badge-card:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: var(--shadow-md);
+            border-color: var(--sky-200);
+        }
+
+        .badge-icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+            display: inline-block;
+            transition: transform var(--transition);
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+        }
+
+        .badge-card:hover .badge-icon {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .badge-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .badge-card p {
+            font-size: 0.85rem;
+            color: var(--ink-500);
+        }
+
+        .badge-card.locked {
+            opacity: 0.6;
+            filter: grayscale(1);
+            background: var(--sky-50);
+        }
+
+        .badge-card.locked:hover {
+            filter: grayscale(0.5);
+            transform: translateY(-4px);
+        }
+
+        /* Event Gallery - Horizontal Scroll Ribbon */
+        .gallery-container {
+            margin: 0 calc(-50vw + 50%);
+            width: 100vw;
+            overflow-x: auto;
+            padding: 40px 24px;
+            display: flex;
+            gap: 30px;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+        }
+
+        .gallery-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .gallery-card {
+            min-width: 400px;
+            height: 300px;
+            border-radius: var(--radius-xl);
+            position: relative;
+            overflow: hidden;
+            scroll-snap-align: center;
+            box-shadow: var(--shadow-md);
+            cursor: pointer;
+            transform: scale(0.98);
+            transition: all var(--transition);
+        }
+
+        .gallery-card:hover {
+            transform: scale(1);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .gallery-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+            border-radius: 0;
+        }
+
+        .gallery-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(15, 31, 43, 0.9) 0%, rgba(15, 31, 43, 0.4) 50%, transparent 100%);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            transition: opacity var(--transition);
+        }
+
+        .tag-anim {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            color: var(--white);
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transform: translateY(-10px);
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .gallery-card:hover .tag-anim {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .gallery-overlay h3 {
+            color: var(--white);
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            transform: translateY(20px);
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-overlay p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.4s ease 0.1s;
+        }
+
+        .gallery-card:hover .gallery-overlay h3,
+        .gallery-card:hover .gallery-overlay p {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Floating Action Button (FAB) */
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--ink-900);
+            color: var(--white);
+            display: grid;
+            place-items: center;
+            box-shadow: var(--shadow-lg);
+            cursor: pointer;
+            z-index: 90;
+            transition: all var(--transition-bounce);
+            border: none;
+        }
+
+        .fab:hover {
+            transform: translateY(-5px) scale(1.1);
+            background: var(--sky-500);
+            box-shadow: var(--shadow-glow);
+            color: var(--white);
+        }
+
+        .fab svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        /* Notification Dropdown */
+        .notif-dropdown {
+            position: absolute;
+            top: calc(100% + 16px);
+            right: 0;
+            width: 380px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transform: translateY(15px) scale(0.95);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-bounce);
+            transform-origin: top right;
+        }
+
+        .notif-dropdown.active {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .notif-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .notif-header h4 {
+            font-size: 1.2rem;
+        }
+
+        .notif-clear {
+            font-size: 0.85rem;
+            color: var(--sky-600);
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .notif-item {
+            padding: 16px;
+            background: var(--sky-50);
+            border-radius: var(--radius-md);
+            margin-bottom: 12px;
+            border: 1px solid var(--sky-100);
+            transition: all 0.2s;
+        }
+
+        .notif-item:hover {
+            background: var(--sky-100);
+            transform: translateX(5px);
+        }
+
+        .notif-item p {
+            font-size: 0.9rem;
+            color: var(--ink-800);
+            margin-bottom: 12px;
+        }
+
+        .notif-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--ink-900);
+            color: var(--white);
+            padding: 80px 24px;
+            text-align: center;
+            margin-top: 60px;
+            border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding-top: 40px;
+            }
+
+            .hero-content {
+                align-items: center;
+            }
+
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .gamify-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .feed-item {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .badges-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-card {
+                min-width: 300px;
+                height: 240px;
+            }
+
+            .notif-dropdown {
+                width: 90vw;
+                right: -60px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="progress-container">
+        <div class="progress-bar-scroll" id="scrollProgress"></div>
+    </div>
+
+    <div class="bg-layer">
+        <div class="bg-blob blob-1"></div>
+        <div class="bg-blob blob-2"></div>
+        <div class="bg-blob blob-3"></div>
+    </div>
+
+    <header class="topbar" id="navbar">
+        <div class="nav">
+            <div class="logo">
+                <img class="logo-img" src="logo.png"
+                    onerror="this.src='https://via.placeholder.com/88/9ecae1/ffffff?text=TS'" alt="Logo" />
+                Talent Search
+            </div>
+            <nav class="menu">
+                <a href="index (1).html">Home</a>
+                <a href="initiatives.html">Initiatives</a>
+                <a href="workshops.html">Workshops</a>
+                <a href="events.html">Events</a>
+                <a href="posted-opportunities.html">Posted Opportunities</a>
+            </nav>
+            <div class="nav-actions">
+                <div style="position: relative;">
+                    <button class="icon-btn" id="notifToggle">
+                        <span class="icon-dot"></span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                    </button>
+                    <div class="notif-dropdown" id="notifDropdown">
+                        <div class="notif-header">
+                            <h4>Notifications</h4>
+                            <span class="notif-clear">Mark all read</span>
+                        </div>
+                        <div class="notif-item">
+                            <p><strong>Match found:</strong> "Campus Sustainability Sprint" needs your skills.</p>
+                            <div class="notif-actions">
+                                <button class="btn btn-sky"
+                                    style="height:32px; padding:0 16px; font-size:0.8rem;">Accept</button>
+                                <button class="btn btn-secondary"
+                                    style="height:32px; padding:0 16px; font-size:0.8rem;">Decline</button>
+                            </div>
+                        </div>
+                        <div class="notif-item">
+                            <p>New workshop recommendation based on your activity.</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="login.html" class="btn btn-primary" style="display: none;">Login</a>
+                <!-- Kept for functionality but hidden on landing -->
+                <a href="login.html" class="btn btn-sky">Get Started</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="tag">🎯 Welcome to Talent Search</div>
+                    <h1>Welcome to<br><span>Talent Search</span></h1>
+                    <p>Discover and contribute to short-term opportunities — internships, events, workshops and quick
+                        projects that help talents and creators grow. Explore curated initiatives and post opportunities
+                        in a few clicks.</p>
+                    <div class="hero-actions">
+                        <a href="initiatives.html" class="btn btn-primary">
+                            Get Involved
+                        </a>
+                        <a href="login.html" class="btn btn-secondary">
+                            Learn More
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="post-bar"
+                        style="margin-top: 24px; display: flex; gap: 12px; align-items: center; background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); padding: 12px; border-radius: var(--radius-md); border: 1px solid rgba(15, 31, 43, 0.1); box-shadow: var(--shadow-sm); animation: fadeUp 0.8s ease-out 0.4s both;">
+                        <input id="quickPost" type="text" placeholder="Have an opportunity? Describe it briefly..."
+                            style="flex: 1; padding: 12px 16px; border-radius: var(--radius-sm); border: 1px solid rgba(15, 31, 43, 0.1); background: rgba(255, 255, 255, 0.9); font-family: inherit; font-size: 0.95rem; outline: none; transition: all 0.2s;"
+                            onfocus="this.style.borderColor='var(--sky-400)'; this.style.boxShadow='0 0 0 3px var(--sky-100)';"
+                            onblur="this.style.borderColor='rgba(15, 31, 43, 0.1)'; this.style.boxShadow='none';"
+                            aria-label="Post an opportunity brief" />
+                        <button onclick="quickPost()" class="btn btn-sky"
+                            style="height: 44px; padding: 0 20px; font-size: 0.95rem;">Post</button>
+                    </div>
+
+                </div>
+
+                <div class="hero-visual" id="parallaxWidget">
+                    <div class="dashboard-widget">
+                        <div class="widget-header">
+                            <h3>Live Pulse Overview</h3>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--ink-400)"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="1"></circle>
+                                <circle cx="19" cy="12" r="1"></circle>
+                                <circle cx="5" cy="12" r="1"></circle>
+                            </svg>
+                        </div>
+                        <div class="stat-grid">
+                            <div class="stat-row">
+                                <div class="stat-info">
+                                    <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" width="24" height="24">
+                                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="9" cy="7" r="4"></circle>
+                                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                        </svg></div>
+                                    New Collaborations
+                                </div>
+                                <div class="stat-value counter" data-target="156">0</div>
+                            </div>
+                            <div class="stat-row">
+                                <div class="stat-info">
+                                    <div class="stat-icon" style="background:#fefce8; color:#eab308;"><svg
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            width="24" height="24">
+                                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                                        </svg></div>
+                                    Active Initiatives
+                                </div>
+                                <div class="stat-value counter" data-target="42">0</div>
+                            </div>
+                            <div class="stat-row">
+                                <div class="stat-info">
+                                    <div class="stat-icon" style="background:var(--ink-900); color:var(--white);"><svg
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            width="24" height="24">
+                                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                                        </svg></div>
+                                    Upcoming Events
+                                </div>
+                                <div class="stat-value counter" data-target="18">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Activity Feed -->
+        <section class="section reveal">
+            <div class="section-header">
+                <h2 class="section-title">Platform Activity</h2>
+                <p class="section-desc">See what's happening right now across the community.</p>
+            </div>
+
+            <div class="feed-container">
+                <div class="feed-item">
+                    <div class="feed-time">Just now</div>
+                    <div class="feed-content">
+                        <h4>New Opportunity Posted</h4>
+                        <p>Sarah J. posted a new Frontend Developer role for the 'AI Design Tool' initiative.</p>
+                        <div class="feed-tags"><span class="feed-tag">Design</span><span class="feed-tag">Tech</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="feed-item">
+                    <div class="feed-time">2h ago</div>
+                    <div class="feed-content">
+                        <h4>Workshop Trending</h4>
+                        <p>"Intro to Glassmorphism UI" reached 50 registered attendees.</p>
+                        <div class="feed-tags"><span class="feed-tag"
+                                style="background:#fefce8; color:#eab308; border-color:#fef08a;">Hot 🔥</span></div>
+                    </div>
+                </div>
+                <div class="feed-item">
+                    <div class="feed-time">5h ago</div>
+                    <div class="feed-content">
+                        <h4>Milestone Reached</h4>
+                        <p>The Campus Sustainability project just completed phase 1.</p>
+                        <div class="feed-tags"><span class="feed-tag"
+                                style="background:#f0fdf4; color:#22c55e; border-color:#bbf7d0;">Success</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Opportunities Cards -->
+        <section class="section reveal">
+            <div class="section-header">
+                <h2 class="section-title">Explore Pathways</h2>
+                <p class="section-desc">Find your next big thing. Connect, build, learn, and grow through diverse
+                    opportunities.</p>
+            </div>
+
+            <div class="card-grid">
+                <a class="opp-card tilt-card" href="initiatives.html">
+                    <div class="opp-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path
+                                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                            </path>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                        </svg>
+                    </div>
+                    <h3>Initiatives</h3>
+                    <p>Community-led programs and short projects.
+                    </p>
+                    <div class="card-arrow">View Projects &rarr;</div>
+                </a>
+
+                <a class="opp-card tilt-card" href="workshops.html">
+                    <div class="opp-icon" style="background:#eff6ff; color:#3b82f6; border-color:#bfdbfe;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                    </div>
+                    <h3>Workshops</h3>
+                    <p>Hands-on sessions to learn and build quickly.</p>
+                    <div class="card-arrow" style="color:#3b82f6;">Join Sessions &rarr;</div>
+                </a>
+
+                <a class="opp-card tilt-card" href="events.html">
+                    <div class="opp-icon" style="background:#fefce8; color:#eab308; border-color:#fef08a;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <h3>Events</h3>
+                    <p>Discover meetups, showcases and networking.</p>
+                    <div class="card-arrow" style="color:#eab308;">See Calendar &rarr;</div>
+                </a>
+
+                <a class="opp-card tilt-card" href="appointment.html">
+                    <div class="opp-icon" style="background:#f0fdf4; color:#22c55e; border-color:#bbf7d0;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path
+                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3>Book an Appointment</h3>
+                    <p>Schedule mentorship and quick advisor sessions.</p>
+                    <div class="card-arrow" style="color:#22c55e;">Book Appointment &rarr;</div>
+                </a>
+            </div>
+
+            <div class="quick-links" style="margin-top:24px; display:flex; gap:14px; align-items:center;">
+                <small style="color:var(--ink-500); font-weight: 500;">Need help posting? Try our quick
+                    templates.</small>
+                <a href="#create" style="margin-left:auto; font-weight:700; color:var(--sky-600)">See tips →</a>
+            </div>
+
+            <div style="text-align: center; margin-top: 60px;">
+                <a href="add-opportunity.html" class="btn btn-sky"
+                    style="font-size: 1.15rem; padding: 0 40px; height: 60px;">+ Post an Opportunity</a>
+            </div>
+        </section>
+
+        <!-- Gamified Incentive Section -->
+        <section class="section reveal">
+            <div class="section-header">
+                <h2 class="section-title">Your Rewards</h2>
+                <p class="section-desc">Contribute to the platform, complete modules, and engage in initiatives to level
+                    up and unlock exclusive perks.</p>
+            </div>
+
+            <div class="gamify-grid">
+                <div class="points-panel">
+                    <div class="level-badge">Level 4 Innovator</div>
+                    <div class="points-display counter" data-target="1250">0 <span>XP</span></div>
+                    <p style="color:var(--ink-700); font-weight: 500;">You are in the top 15% of contributors this
+                        month!</p>
+
+                    <div class="progress-wrapper">
+                        <div class="progress-header">
+                            <span>Progress to Level 5 Master</span>
+                            <span style="color:var(--sky-600);">78%</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill" style="width: 78%;"></div>
+                        </div>
+                        <p style="color:var(--ink-400); font-size: 0.8rem; margin-top: 8px;">250 XP remaining to next
+                            rank</p>
+                    </div>
+                </div>
+
+                <div class="badges-grid">
+                    <div class="badge-card">
+                        <div class="badge-icon">🎖️</div>
+                        <h4>Early Adopter</h4>
+                        <p>Joined platform during beta phase</p>
+                    </div>
+                    <div class="badge-card">
+                        <div class="badge-icon">🔥</div>
+                        <h4>On Fire</h4>
+                        <p>Logged in 7 consecutive days</p>
+                    </div>
+                    <div class="badge-card">
+                        <div class="badge-icon">💡</div>
+                        <h4>Creator</h4>
+                        <p>Posted a trending opportunity</p>
+                    </div>
+                    <div class="badge-card locked">
+                        <div class="badge-icon">👑</div>
+                        <h4>Community Lead</h4>
+                        <p>Requires leading 5 initiatives</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Event Gallery (Horizontal Scroll) -->
+        <section class="section reveal" style="padding-bottom:100px;">
+            <div class="section-header">
+                <h2 class="section-title">Moments Captured</h2>
+                <p class="section-desc">Swipe through highlights from our latest campus events, mixers, and workshops.
+                </p>
+            </div>
+
+            <div class="gallery-container">
+                <div class="gallery-card">
+                    <img src="founder.jpg" alt="Founders Day"
+                        onerror="this.src='https://images.unsplash.com/photo-1540317580384-e5d43867caa6?auto=format&fit=crop&q=80&w=600'" />
+                    <div class="tag-anim">Featured Event</div>
+                    <div class="gallery-overlay">
+                        <h3>Founders Day 2026</h3>
+                        <p>Celebrating the bold ideas shaping our future.</p>
+                    </div>
+                </div>
+                <div class="gallery-card">
+                    <img src="foundation.jpeg" alt="Foundation Day"
+                        onerror="this.src='https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&q=80&w=600'" />
+                    <div class="tag-anim">Campus Life</div>
+                    <div class="gallery-overlay">
+                        <h3>Foundation Gala</h3>
+                        <p>A night honoring top campus contributors.</p>
+                    </div>
+                </div>
+                <div class="gallery-card">
+                    <img src="workshop.jpg" alt="Workshop"
+                        onerror="this.src='https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=600'" />
+                    <div class="tag-anim">Hands-on Learning</div>
+                    <div class="gallery-overlay">
+                        <h3>Design Systems 101</h3>
+                        <p>Practical sessions on building scalable UI.</p>
+                    </div>
+                </div>
+                <div class="gallery-card">
+                    <img src="mixer.jpg" alt="Mixer"
+                        onerror="this.src='https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&q=80&w=600'" />
+                    <div class="tag-anim">Networking</div>
+                    <div class="gallery-overlay">
+                        <h3>Tech Mixer Friday</h3>
+                        <p>Casual conversations with industry leaders.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Floating Action Button -->
+    <a href="appointment.html" class="fab" title="Book Appointment">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+    </a>
+
+    <footer class="footer">
+        <h2>Talent Search Platform</h2>
+        <p style="color:var(--ink-400); margin-top:20px;">Designed to connect talent with right opportunity.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+
+            // Quick Post Functionality
+            window.quickPost = function () {
+                const input = document.getElementById('quickPost');
+                const val = input.value.trim();
+                if (!val) {
+                    input.focus();
+                    return alert('Please enter a short description of the opportunity.');
+                }
+                alert('Thanks! Your opportunity has been noted: "' + (val.length > 80 ? val.slice(0, 77) + '...' : val) + '"');
+                input.value = '';
+            }
+
+            // 1. Navbar Scroll & Progress Bar
+            const navbar = document.getElementById('navbar');
+            const scrollProgress = document.getElementById('scrollProgress');
+
+            window.addEventListener('scroll', () => {
+                // Navbar style toggle
+                if (window.scrollY > 20) navbar.classList.add('scrolled');
+                else navbar.classList.remove('scrolled');
+
+                // Progress bar calc
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                scrollProgress.style.width = scrolled + "%";
+            });
+
+            // 2. Notification Dropdown Toggle
+            const notifToggle = document.getElementById('notifToggle');
+            const notifDropdown = document.getElementById('notifDropdown');
+
+            notifToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                notifDropdown.classList.toggle('active');
+            });
+            window.addEventListener('click', () => {
+                if (notifDropdown.classList.contains('active')) notifDropdown.classList.remove('active');
+            });
+            notifDropdown.addEventListener('click', e => e.stopPropagation());
+
+            // 3. Reveal Animations on Scroll
+            const revealElements = document.querySelectorAll('.reveal');
+            const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        // If it has counters inside, trigger them
+                        const counters = entry.target.querySelectorAll('.counter');
+                        if (counters.length) runCounters(counters);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, revealOptions);
+
+            revealElements.forEach(el => revealObserver.observe(el));
+
+            // 4. Parallax Effect for Hero Dashboard
+            const heroSection = document.querySelector('.hero');
+            const widget = document.getElementById('parallaxWidget');
+
+            heroSection.addEventListener('mousemove', (e) => {
+                const xAxis = (window.innerWidth / 2 - e.pageX) / 40;
+                const yAxis = (window.innerHeight / 2 - e.pageY) / 40;
+                widget.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+            });
+            heroSection.addEventListener('mouseleave', () => {
+                widget.style.transform = `rotateY(-10deg) rotateX(5deg)`;
+                widget.style.transition = `transform 0.5s ease`;
+            });
+            heroSection.addEventListener('mouseenter', () => {
+                widget.style.transition = `none`;
+            });
+
+            // 5. 3D Tilt Effect for Opportunity Cards
+            const tiltCards = document.querySelectorAll('.tilt-card');
+            tiltCards.forEach(card => {
+                card.addEventListener('mousemove', e => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = ((y - centerY) / centerY) * -10; // Max rotation 10deg
+                    const rotateY = ((x - centerX) / centerX) * 10;
+
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                    card.style.transition = `transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1)`;
+                });
+                card.addEventListener('mouseenter', () => {
+                    card.style.transition = `none`;
+                });
+            });
+
+            // 6. Native JS Count-Up Animation
+            const heroCounters = heroSection.querySelectorAll('.counter');
+            runCounters(heroCounters); // Run hero immediately
+
+            function runCounters(counters) {
+                counters.forEach(counter => {
+                    counter.innerText = '0';
+                    const updateCounter = () => {
+                        const target = +counter.getAttribute('data-target');
+                        const c = +counter.innerText.replace(/[^0-9]/g, '');
+                        // speed calc
+                        const increment = target / 50;
+                        if (c < target) {
+                            counter.innerHTML = Math.ceil(c + increment) + (counter.innerHTML.includes('XP') ? ' <span>XP</span>' : '');
+                            setTimeout(updateCounter, 20);
+                        } else {
+                            counter.innerHTML = target + (counter.innerHTML.includes('XP') ? ' <span>XP</span>' : '');
+                        }
+                    };
+                    updateCounter();
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
