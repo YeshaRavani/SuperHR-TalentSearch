@@ -1,166 +1,736 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Sign Up — Talent Search</title>
-    <style>
-      :root {
-        --sky-500: #9ecae1;
-        --sky-400: #add8e6;
-        --sky-100: #eaf6fb;
-        --ink-900: #0f1f2b;
-        --ink-700: #2a3f52;
-        --ink-500: #5a6c7b;
-        --white: #ffffff;
-        --shadow-sm: 0 6px 18px rgba(16, 30, 43, 0.08);
-        --shadow-xs: 0 2px 10px rgba(16, 30, 43, 0.06);
-        --radius-lg: 22px;
-        --radius-md: 16px;
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sign Up — Talent Search</title>
+  <style>
+    :root {
+      --sky-600: #7eb3ce;
+      --sky-500: #9ecae1;
+      --sky-400: #add8e6;
+      --sky-200: #d6f0fa;
+      --sky-100: #eaf6fb;
+      --sky-50: #f4fafe;
+      --ink-900: #0f1f2b;
+      --ink-800: #1b2f40;
+      --ink-700: #2a3f52;
+      --ink-500: #647b8f;
+      --ink-400: #8c9fae;
+      --white: #ffffff;
+
+      --shadow-sm: 0 4px 12px rgba(15, 31, 43, 0.05);
+      --shadow-md: 0 10px 30px rgba(15, 31, 43, 0.08);
+      --shadow-lg: 0 20px 40px rgba(15, 31, 43, 0.12);
+      --shadow-glow: 0 0 20px rgba(158, 202, 225, 0.4);
+
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+
+      --transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --transition-bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--ink-900);
+      background: var(--white);
+      line-height: 1.6;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+      border-radius: var(--radius-md);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    /* Scroll Bar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--white);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--sky-200);
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--sky-400);
+    }
+
+    /* Scroll Progress */
+    .progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.1);
+      z-index: 100;
+    }
+
+    .progress-bar-scroll {
+      height: 100%;
+      background: linear-gradient(90deg, var(--sky-400), var(--sky-600));
+      width: 0%;
+    }
+
+    /* Animations */
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(158, 202, 225, 0.7);
       }
 
-      * { box-sizing: border-box; }
-      body { margin:0; font-family: "Inter", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color:var(--ink-900); background: linear-gradient(180deg, #f7fcff 0%, #ffffff 42%, #f8fbfd 100%); }
-
-      /* Topbar (copied exactly from index (1).html) */
-      .topbar {
-        position: sticky;
-        top: 0;
-        z-index: 20;
-        background: rgba(255, 255, 255, 0.92);
-        backdrop-filter: blur(14px);
-        border-bottom: 1px solid rgba(16, 30, 43, 0.06);
+      70% {
+        box-shadow: 0 0 0 15px rgba(158, 202, 225, 0);
       }
 
-      .nav {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 18px 24px;
-        display: flex;
+      100% {
+        box-shadow: 0 0 0 0 rgba(158, 202, 225, 0);
+      }
+    }
+
+    /* Navbar */
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      transition: all var(--transition);
+    }
+
+    .topbar.scrolled {
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: var(--shadow-sm);
+      border-bottom-color: rgba(15, 31, 43, 0.05);
+      padding: 5px 0;
+    }
+
+    .nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: padding var(--transition);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 1.5rem;
+      letter-spacing: -0.03em;
+      color: var(--ink-900);
+    }
+
+    .logo-img {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      box-shadow: var(--shadow-sm);
+      object-fit: cover;
+    }
+
+    .menu {
+      display: flex;
+      gap: 4px;
+    }
+
+    .menu a {
+      position: relative;
+      padding: 10px 16px;
+      color: var(--ink-700);
+      font-weight: 500;
+      font-size: 0.95rem;
+      border-radius: 999px;
+      transition: all var(--transition);
+      z-index: 1;
+    }
+
+    .menu a::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--sky-50);
+      border-radius: 999px;
+      z-index: -1;
+      transform: scale(0.8);
+      opacity: 0;
+      transition: all var(--transition-bounce);
+    }
+
+    .menu a:hover {
+      color: var(--sky-600);
+    }
+
+    .menu a:hover::before {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .icon-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(15, 31, 43, 0.08);
+      background: var(--white);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: all var(--transition-bounce);
+      position: relative;
+    }
+
+    .icon-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--sky-200);
+      color: var(--sky-600);
+    }
+
+    .icon-btn svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .icon-dot {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 10px;
+      height: 10px;
+      background: #ff4757;
+      border-radius: 50%;
+      box-shadow: 0 0 0 2px var(--white);
+      animation: pulse 2s infinite;
+    }
+
+    .notification-wrap {
+      position: relative;
+    }
+
+    .notification-panel {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      width: min(92vw, 340px);
+      padding: 14px;
+      border-radius: var(--radius-md);
+      background: var(--white);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(16, 30, 43, 0.08);
+      display: none;
+      z-index: 40;
+    }
+
+    .notification-panel.open {
+      display: block;
+    }
+
+    .notification-head {
+      margin: 0 0 10px;
+      font-size: 0.95rem;
+    }
+
+    .notification-item {
+      padding: 10px;
+      border-radius: 12px;
+      background: var(--sky-100);
+      margin-bottom: 8px;
+    }
+
+    .notification-item p {
+      margin: 0;
+      color: var(--ink-700);
+      font-size: 0.9rem;
+    }
+
+    .notification-actions {
+      margin-top: 8px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .notif-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.82rem;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--sky-500), var(--sky-400));
+      color: var(--white);
+    }
+
+    .notif-btn.secondary {
+      background: var(--white);
+      color: var(--ink-700);
+      border: 1px solid rgba(16, 30, 43, 0.1);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      height: 48px;
+      padding: 0 28px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      transition: all var(--transition-bounce);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(rgba(255, 255, 255, 0.2), transparent);
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+
+    .btn:hover::after {
+      opacity: 1;
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn-sky {
+      background: linear-gradient(135deg, var(--sky-500), var(--sky-400));
+      color: var(--ink-900);
+      box-shadow: var(--shadow-glow), var(--shadow-sm);
+    }
+
+    .btn-sky:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 30px rgba(158, 202, 225, 0.6), var(--shadow-md);
+      background: linear-gradient(135deg, var(--sky-400), var(--sky-400));
+      color: var(--ink-900);
+    }
+
+    .login-btn {
+      height: 44px;
+      padding: 0 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(135deg, var(--sky-500), var(--sky-400));
+      color: var(--ink-900);
+      font-weight: 600;
+      font-size: 1rem;
+      box-shadow: var(--shadow-glow), var(--shadow-sm);
+      cursor: pointer;
+      transition: all var(--transition-bounce);
+    }
+
+    .login-btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 30px rgba(158, 202, 225, 0.6), var(--shadow-md);
+      background: linear-gradient(135deg, var(--sky-400), var(--sky-400));
+    }
+
+
+    /* Background Visuals */
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    .bg-blob {
+      position: absolute;
+      filter: blur(100px);
+      opacity: 0.6;
+      border-radius: 50%;
+    }
+
+    .blob-1 {
+      top: -10%;
+      right: -5%;
+      width: 600px;
+      height: 600px;
+      background: var(--sky-100);
+    }
+
+    .blob-2 {
+      bottom: 10%;
+      left: -10%;
+      width: 500px;
+      height: 500px;
+      background: var(--sky-50);
+    }
+
+    /* Centered card */
+    .container {
+      min-height: calc(100vh - 80px);
+      /* adjusted for topbar */
+      display: grid;
+      place-items: center;
+      padding: 120px 24px 60px;
+      /* added top padding to avoid topbar overlap */
+    }
+
+    .main-card {
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      padding: 40px;
+      box-shadow: var(--shadow-lg), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+      border: 1px solid rgba(15, 31, 43, 0.05);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      max-width: 560px;
+      width: 100%;
+    }
+
+    .title {
+      font-size: clamp(1.8rem, 4vw, 2.2rem);
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: var(--ink-500);
+      font-size: 1.15rem;
+      margin-bottom: 30px;
+    }
+
+    /* Opportunities Cards Style Adapted for Role Selection */
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      width: 100%;
+    }
+
+    .opp-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(15, 31, 43, 0.05);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      position: relative;
+      transition: all var(--transition-bounce);
+      cursor: pointer;
+      overflow: hidden;
+      isolation: isolate;
+      text-align: left;
+    }
+
+    .opp-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 0%, var(--sky-50), transparent 70%);
+      opacity: 0;
+      transition: opacity var(--transition);
+      z-index: -1;
+    }
+
+    .opp-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--sky-200);
+    }
+
+    .opp-card:hover::before {
+      opacity: 1;
+    }
+
+    .opp-icon {
+      width: 60px;
+      height: 60px;
+      flex-shrink: 0;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      transition: all var(--transition-bounce);
+      border: 1px solid transparent;
+    }
+
+    .opp-card:hover .opp-icon {
+      transform: scale(1.1) rotate(-5deg);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .opp-icon svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .opp-content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .opp-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 4px;
+      color: var(--ink-900);
+    }
+
+    .opp-card p {
+      color: var(--ink-500);
+      line-height: 1.5;
+      font-size: 0.95rem;
+      margin: 0;
+    }
+
+
+    /* Option Icons specific styling matching index (1).html logic */
+    .admin-icon {
+      background: #eff6ff;
+      color: #3b82f6;
+      border-color: #bfdbfe;
+    }
+
+    .opp-card:hover .admin-icon {
+      background: #3b82f6;
+      color: var(--white);
+    }
+
+    .user-icon {
+      background: #f0fdf4;
+      color: #22c55e;
+      border-color: #bbf7d0;
+    }
+
+    .opp-card:hover .user-icon {
+      background: #22c55e;
+      color: var(--white);
+    }
+
+    .link-btn {
+      background: none;
+      border: none;
+      color: var(--ink-700);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      display: inline-block;
+      margin-top: 30px;
+      transition: color var(--transition);
+    }
+
+    .link-btn:hover {
+      color: var(--sky-600);
+    }
+
+    @media (max-width:560px) {
+      .main-card {
+        padding: 30px 20px;
+      }
+
+      .opp-card {
+        flex-direction: column;
+        text-align: center;
         align-items: center;
-        justify-content: space-between;
-        gap: 16px;
+        padding: 24px 20px;
       }
+    }
+  </style>
+</head>
 
-      .logo { display:flex; align-items:center; gap:12px; font-weight:600; font-size:1.3rem; }
-      .logo-img { width:60px; height:60px; border-radius:50%; box-shadow:var(--shadow-xs); object-fit:cover; }
-      a { text-decoration:none; color:inherit; }
+<body>
+  <div class="progress-container">
+    <div class="progress-bar-scroll" id="scrollProgress"></div>
+  </div>
 
-      .menu { display:flex; align-items:center; gap:20px; color:var(--ink-700); font-size:0.95rem; }
-      .menu a { display:inline-flex; align-items:center; justify-content:center; min-height:40px; padding:0 14px; border-radius:999px; transition:background .2s ease, color .2s ease; }
-      .menu a:hover { background:var(--sky-100); color:var(--ink-900); }
+  <div class="bg-layer">
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+  </div>
 
-      .nav-actions { display:flex; align-items:center; gap:14px; }
-      .icon-btn { width:40px; height:40px; border-radius:50%; border:1px solid rgba(16,30,43,0.08); display:grid; place-items:center; background:var(--white); box-shadow:var(--shadow-xs); position:relative; }
-      .icon-dot { width:10px; height:10px; border-radius:50%; background:var(--sky-500); position:absolute; top:11px; right:11px; }
-      .notification-wrap { position:relative; }
-      .notification-panel { position:absolute; top:calc(100% + 10px); right:0; width:min(92vw,340px); padding:14px; border-radius:var(--radius-md); background:var(--white); box-shadow:var(--shadow-sm); border:1px solid rgba(16,30,43,0.08); display:none; z-index:40; }
-      .notification-panel.open { display:block; }
-      .notification-head { margin:0 0 10px; font-size:0.95rem; }
-      .notification-item { padding:10px; border-radius:12px; background:var(--sky-100); margin-bottom:8px; }
-      .notification-item p { margin:0; color:var(--ink-700); font-size:0.9rem; }
-      .notification-actions { margin-top:8px; display:flex; gap:8px; }
-      .notif-btn { border:none; border-radius:999px; padding:6px 12px; font-size:0.82rem; cursor:pointer; background:linear-gradient(135deg,var(--sky-500),var(--sky-400)); color:var(--white); }
-      .notif-btn.secondary { background:var(--white); color:var(--ink-700); border:1px solid rgba(16,30,43,0.1); }
-      .login-btn { height:40px; padding:0 18px; display:inline-flex; align-items:center; justify-content:center; border-radius:999px; border:none; background:var(--sky-500); color:var(--white); font-weight:600; font-size:1.05rem; box-shadow:var(--shadow-sm); cursor:pointer; }
-
-      /* Centered card */
-      .container { min-height: calc(100vh - 120px); display:grid; place-items:center; padding:40px 24px; }
-      .card { width:560px; max-width:94vw; background:var(--white); border-radius:var(--radius-lg); padding:28px; box-shadow:var(--shadow-sm); display:flex; flex-direction:column; gap:14px; }
-      .title { font-size:1.25rem; font-weight:700; }
-      .subtitle { color:var(--ink-500); font-size:0.95rem; }
-
-      .form { display:flex; flex-direction:column; gap:12px; margin-top:6px; }
-      .text-input, select, textarea { width:100%; padding:12px 14px; border-radius:12px; border:1px solid rgba(16,30,43,0.08); box-shadow:var(--shadow-xs); font-size:1rem; }
-      select { appearance:none; background:var(--white); }
-
-      .row { display:flex; justify-content:space-between; align-items:center; }
-      .actions { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:8px; }
-
-      .primary-btn { display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:12px 22px; border-radius:999px; background:linear-gradient(135deg,var(--sky-500),var(--sky-400)); color:var(--white); font-weight:600; font-size:1.05rem; border:none; box-shadow:var(--shadow-sm); cursor:pointer; }
-      .link-btn { background:none; border:none; color:var(--ink-700); text-decoration:none; font-weight:600; cursor:pointer; }
-
-      @media (max-width:560px){ .card{padding:20px;} }
-    </style>
-  </head>
-  <body>
-    <header class="topbar">
-      <div class="nav">
-        <div class="logo">
-          <img class="logo-img" src="logo.png" alt="Talent Search logo" />
-          Talent Search
-        </div>
-        <nav class="menu">
-          <a href="index (1).html">Home</a>
-          <a href="initiatives.html">Initiatives</a>
-          <a href="workshops.html">Workshops</a>
-          <a href="events.html">Events</a>
-          <a href="#">About Us</a>
-        </nav>
-        <div class="nav-actions">
-          <div class="notification-wrap">
-            <button class="icon-btn notification-toggle" aria-label="Notifications" aria-haspopup="true" aria-expanded="false">
-              <span class="icon-dot"></span>
-              <span>🔔</span>
-            </button>
-            <div class="notification-panel" role="menu" aria-label="Notifications">
-              <h3 class="notification-head">Notifications</h3>
-              <div class="notification-item">
-                <p>Interest matched: "Campus Sustainability Sprint". Do you want to enroll?</p>
-                <div class="notification-actions">
-                  <button class="notif-btn">Enroll</button>
-                  <button class="notif-btn secondary">Later</button>
-                </div>
+  <header class="topbar" id="navbar">
+    <div class="nav">
+      <div class="logo">
+        <img class="logo-img" src="logo.png" alt="Talent Search logo" />
+        Talent Search
+      </div>
+      <nav class="menu">
+        <a href="index (1).html">Home</a>
+        <a href="opportunities.html">Opportunities</a>
+        <a href="#">About Us</a>
+      </nav>
+      <div class="nav-actions">
+        <div class="notification-wrap">
+          <button class="icon-btn notification-toggle" aria-label="Notifications" aria-haspopup="true"
+            aria-expanded="false">
+            <span class="icon-dot"></span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+          </button>
+          <div class="notification-panel" role="menu" aria-label="Notifications">
+            <h3 class="notification-head">Notifications</h3>
+            <div class="notification-item">
+              <p>Interest matched: "Campus Sustainability Sprint". Do you want to enroll?</p>
+              <div class="notification-actions">
+                <button class="notif-btn">Enroll</button>
+                <button class="notif-btn secondary">Later</button>
               </div>
-              <div class="notification-item"><p>You have a new workshop recommendation based on your recent activity.</p></div>
+            </div>
+            <div class="notification-item">
+              <p>You have a new workshop recommendation based on your recent activity.</p>
             </div>
           </div>
-          <a href="login.html" class="login-btn">Login</a>
         </div>
+        <a href="login.html" class="login-btn">Login</a>
       </div>
-    </header>
+    </div>
+  </header>
 
-    <main class="container">
-      <div class="card">
-        <div>
-          <div class="title">Sign Up</div>
-        </div>
+  <main class="container">
+    <div class="main-card">
+      <h1 class="title">Join Talent Search</h1>
+      <p class="subtitle">Select your account type to continue</p>
 
-        <form class="form" id="signupForm" onsubmit="return false;">
-          <input id="name" class="text-input" placeholder="Name" value="Rushil Gargash" />
-          <select id="institution">
-            <option value="" disabled>Select your institution</option>
-            <option selected>Plaksha University</option>
-            <option>Indian Institute of Technology</option>
-            <option>National University</option>
-            <option>Other</option>
-          </select>
-          <input id="id" class="text-input" placeholder="Employee ID / Student ID" value="U20240161" />
-          <input id="username" class="text-input" placeholder="Username" />
-          <input id="password" class="text-input" type="password" placeholder="Password" />
-          <input id="confirmPassword" class="text-input" type="password" placeholder="Confirm Password" />
-
-          <div class="actions">
-            <a href="login.html" class="link-btn">Already have an account? Login</a>
-            <a href="profileSetUp.html" class="primary-btn">Next →</a>
+      <div class="card-grid">
+        <!-- Option 1: Admin -->
+        <a href="admin-details.html" class="opp-card tilt-card">
+          <div class="opp-icon admin-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <polyline points="16 11 18 13 22 9"></polyline>
+            </svg>
           </div>
-        </form>
-      </div>
-    </main>
+          <div class="opp-content">
+            <h3>Admin</h3>
+            <p>Create an administrator account to post and manage opportunities.</p>
+          </div>
+        </a>
 
-    <script>
-      (function(){
-        // notification dropdown behaviour
-        document.querySelectorAll('.notification-wrap').forEach(function(wrap){
-          var toggle = wrap.querySelector('.notification-toggle');
-          var panel = wrap.querySelector('.notification-panel');
-          if(!toggle || !panel) return;
-          toggle.addEventListener('click', function(e){ e.stopPropagation(); var isOpen = panel.classList.toggle('open'); toggle.setAttribute('aria-expanded', isOpen? 'true':'false'); });
-          panel.addEventListener('click', function(e){ e.stopPropagation(); });
-          document.addEventListener('click', function(){ panel.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); });
-          document.addEventListener('keydown', function(event){ if(event.key === 'Escape'){ panel.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); } });
+        <!-- Option 2: User -->
+        <a href="user-details.html" class="opp-card tilt-card">
+          <div class="opp-icon user-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <div class="opp-content">
+            <h3>User</h3>
+            <p>Create a user account to explore and apply for opportunities.</p>
+          </div>
+        </a>
+      </div>
+
+      <a href="login.html" class="link-btn">Already have an account? Login</a>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      // notification dropdown behaviour
+      document.querySelectorAll('.notification-wrap').forEach(function (wrap) {
+        var toggle = wrap.querySelector('.notification-toggle');
+        var panel = wrap.querySelector('.notification-panel');
+        if (!toggle || !panel) return;
+        toggle.addEventListener('click', function (e) { e.stopPropagation(); var isOpen = panel.classList.toggle('open'); toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false'); });
+        panel.addEventListener('click', function (e) { e.stopPropagation(); });
+        document.addEventListener('click', function () { panel.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); });
+        document.addEventListener('keydown', function (event) { if (event.key === 'Escape') { panel.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); } });
+      });
+
+      // Navbar Scroll (from index (1).html logic)
+      const navbar = document.getElementById('navbar');
+      const scrollProgress = document.getElementById('scrollProgress');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 20 && navbar) {
+          navbar.classList.add('scrolled');
+        } else if (navbar) {
+          navbar.classList.remove('scrolled');
+        }
+
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (height > 0) ? (winScroll / height) * 100 : 0;
+        if (scrollProgress) scrollProgress.style.width = scrolled + "%";
+      });
+    })();
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const role = localStorage.getItem('userRole');
+      if (role === 'employee') {
+        // Hide 'Posted Opportunities' in navbar or anywhere
+        document.querySelectorAll('a[href="posted-opportunities.html"]').forEach(el => el.style.display = 'none');
+
+        // Hide any explicitly named 'Post Opportunity' buttons/links connecting to add-opportunity.html
+        document.querySelectorAll('a[href="add-opportunity.html"]').forEach(el => el.style.display = 'none');
+
+        // Hide dynamically labeled matching interface elements
+        document.querySelectorAll('button, .btn').forEach(btn => {
+          if (btn.textContent.includes('Post Opportunity')) {
+            btn.style.display = 'none';
+          }
         });
-      })();
-    </script>
-  </body>
+      }
+    });
+  </script>
+</body>
+
+
 </html>

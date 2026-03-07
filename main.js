@@ -80,9 +80,7 @@
   var menu = el("nav", "menu");
   var menuLinks = [
     { label: "Home", href: "index (1).html" },
-    { label: "Initiatives", href: "initiatives.html" },
-    { label: "Workshops", href: "workshops.html" },
-    { label: "Events", href: "events.html", active: true },
+    { label: "Opportunities", href: "opportunities.html", active: true },
     { label: "Posted Opportunities", href: "posted-opportunities.html" },
     { label: "About Us", href: "aboutus.html" },
   ];
