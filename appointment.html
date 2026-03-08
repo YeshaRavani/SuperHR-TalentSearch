@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Talent Search - Book an Appointment</title>
+  <title>Talent Search - Appointment</title>
   <style>
     :root {
       --sky-600: #7eb3ce;
@@ -608,6 +608,7 @@
   <link rel="stylesheet" href="chatbot.css" />
 
   <script src="opportunities_data.js"></script>
+    <link rel="stylesheet" href="header.css" />
 </head>
 
 <body>
@@ -631,21 +632,55 @@
             <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
         </button>
-        <h3>Send Invite to <span id="modal-person-name" style="color:var(--sky-600)"></span></h3>
-        <p class="mod-sub">Fill out the details below to request a discussion.</p>
+        <h3>Schedule with <span id="modal-person-name" style="color:var(--sky-600)"></span></h3>
+        <p class="mod-sub">Pick a date and time, then describe what you'd like to discuss.</p>
 
         <form onsubmit="event.preventDefault(); submitInviteForm();">
+          <!-- Date & Time Row -->
+          <div class="grid-2" style="margin-bottom:20px;">
+            <div class="form-group" style="margin-bottom:0;">
+              <label for="invite-date">Date</label>
+              <input id="invite-date" type="date" required />
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label for="invite-time">Time</label>
+              <input id="invite-time" type="time" required />
+            </div>
+          </div>
+
           <div class="form-group">
             <label for="invite-topic">Topic of Discussion</label>
             <input id="invite-topic" type="text" placeholder="e.g. Startup strategy guidance" required />
           </div>
+
           <div class="form-group">
-            <label for="invite-msg">Message (Optional)</label>
-            <textarea id="invite-msg" placeholder="Hi, I would like to discuss..."
-              style="min-height:100px; padding:12px 16px; border-radius:12px; border:1px solid rgba(15,31,43,0.15); width:100%; font-family:inherit; font-size:1rem;"></textarea>
+            <label for="invite-reason">Reason for Meeting</label>
+            <select id="invite-reason" required>
+              <option value="" disabled selected>Select a reason…</option>
+              <option value="Career Guidance">Career Guidance</option>
+              <option value="Project Feedback">Project Feedback</option>
+              <option value="Mentorship Session">Mentorship Session</option>
+              <option value="Opportunity Discussion">Opportunity Discussion</option>
+              <option value="Workshop Follow-up">Workshop Follow-up</option>
+              <option value="Other">Other</option>
+            </select>
           </div>
-          <button type="submit" class="btn btn-sky" style="width:100%; margin-top:8px;" id="modal-submit-btn">Send
-            Invitation</button>
+
+          <div class="form-group">
+            <label for="invite-msg">Additional Notes <span style="font-weight:400; color:var(--ink-500);">(optional)</span></label>
+            <textarea id="invite-msg" placeholder="Hi, I would like to discuss..."
+              style="min-height:90px; padding:12px 16px; border-radius:12px; border:1px solid rgba(15,31,43,0.15); width:100%; font-family:inherit; font-size:1rem; resize:vertical; transition:border-color 0.2s, box-shadow 0.2s; outline:none;"
+              onfocus="this.style.borderColor='var(--sky-500)'; this.style.boxShadow='0 0 0 4px var(--sky-100)';"
+              onblur="this.style.borderColor='rgba(15,31,43,0.15)'; this.style.boxShadow='none';"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-sky" style="width:100%; margin-top:4px; gap:8px;" id="modal-submit-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+            Send Invite
+          </button>
         </form>
       </div>
     </div>
@@ -665,14 +700,42 @@
           <a href="aboutus.html">About Us</a>
         </nav>
         <div class="nav-actions">
-          <a class="profile" aria-label="Profile" href="profile.html">👤</a>
+          <!-- Notification Bell -->
+          <div style="position: relative;">
+            <button class="icon-btn" id="notifToggle" aria-label="Notifications" aria-haspopup="true" aria-expanded="false">
+              <span class="icon-dot"></span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+            </button>
+            <div class="notif-dropdown" id="notifDropdown">
+              <div class="notif-header">
+                <h4>Notifications</h4>
+                <span class="notif-clear">Mark all read</span>
+              </div>
+              <div class="notif-item">
+                <p><strong>Reminder:</strong> Your appointment with Aarav Mehta is scheduled for tomorrow at 10:00 AM.</p>
+              </div>
+              <div class="notif-item">
+                <p>Diya Kapoor accepted your meeting request. Check your calendar.</p>
+              </div>
+            </div>
+          </div>
+          <!-- Profile -->
+          <a href="profile.html" class="profile" aria-label="Profile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </a>
         </div>
       </div>
     </header>
 
     <main class="page">
       <section class="page-head">
-        <h1>Book an Appointment</h1>
+        <h1>Appointment</h1>
         <p>Find the right mentor or guide, pick a time, and send an invite — all in one place.</p>
       </section>
 
@@ -695,10 +758,31 @@
       </section>
 
       <section class="sent-invites-section">
-        <h3>My Sent Invitations</h3>
+        <h3>My Meetings</h3>
         <div id="sent-invites-container">
-          <!-- Logs injected here -->
-          <div style="color:var(--ink-500); font-size:0.95rem;" id="empty-invites-msg">No invitations sent yet.</div>
+          <!-- Sample invite -->
+          <div class="invite-log-card">
+            <div class="invite-log-info">
+              <strong>Meera Singh</strong>
+              <span>Career Guidance — Resume & interview preparation tips</span>
+              <span style="font-size:0.82rem; color:var(--ink-400); margin-top:4px; display:block;">
+                📅 Fri, 7 Mar 2026 &nbsp;·&nbsp; ⏰ 11:00 AM
+              </span>
+            </div>
+            <span class="badge" style="background:#ecfdf5; color:#10b981; border-color:#d1fae5; flex-shrink:0;">Invite Sent</span>
+          </div>
+
+          <!-- Sample: Accepted invite -->
+          <div class="invite-log-card">
+            <div class="invite-log-info">
+              <strong>Diya Kapoor</strong>
+              <span>Opportunity Discussion — Feedback on my initiative proposal</span>
+              <span style="font-size:0.82rem; color:var(--ink-400); margin-top:4px; display:block;">
+                📅 Wed, 5 Mar 2026 &nbsp;·&nbsp; ⏰ 03:30 PM
+              </span>
+            </div>
+            <span class="badge" style="background:#eff6ff; color:#2563eb; border-color:#bfdbfe; flex-shrink:0;">✓ Invite Accepted</span>
+          </div>
         </div>
       </section>
     </main>
@@ -784,6 +868,12 @@
         document.getElementById('modal-person-name').textContent = people[index].name;
         document.getElementById('invite-topic').value = '';
         document.getElementById('invite-msg').value = '';
+        document.getElementById('invite-reason').value = '';
+        document.getElementById('invite-time').value = '';
+        // Pre-fill today's date as default/minimum
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('invite-date').min = today;
+        document.getElementById('invite-date').value = today;
         document.getElementById('inviteModal').classList.add('active');
         document.body.style.overflow = 'hidden';
       };
@@ -808,8 +898,22 @@
           person.status = 'Invite Sent';
           person.statusClass = '';
 
+          // Gather all fields
+          const topic  = document.getElementById('invite-topic').value;
+          const reason = document.getElementById('invite-reason').value;
+          const date   = document.getElementById('invite-date').value;
+          const time   = document.getElementById('invite-time').value;
+          const notes  = document.getElementById('invite-msg').value.trim();
+
+          // Format date nicely
+          const dateLabel = date
+            ? new Date(date + 'T00:00').toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })
+            : '';
+          const timeLabel = time
+            ? new Date('1970-01-01T' + time).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true })
+            : '';
+
           // Log logic
-          const topic = document.getElementById('invite-topic').value;
           const container = document.getElementById('sent-invites-container');
           const emptyMsg = document.getElementById('empty-invites-msg');
           if (emptyMsg) emptyMsg.remove();
@@ -819,9 +923,13 @@
           logItem.innerHTML = `
               <div class="invite-log-info">
                 <strong>${person.name}</strong>
-                <span>Topic: ${topic}</span>
+                <span>${reason} &mdash; ${topic}</span>
+                <span style="font-size:0.82rem; color:var(--ink-400); margin-top:2px; display:block;">
+                  📅 ${dateLabel} &nbsp;·&nbsp; ⏰ ${timeLabel}
+                  ${notes ? `<br>📝 ${notes}` : ''}
+                </span>
               </div>
-              <span class="badge" style="background:#ecfdf5; color:#10b981; border-color:#d1fae5;">Invite Sent</span>
+              <span class="badge" style="background:#ecfdf5; color:#10b981; border-color:#d1fae5; flex-shrink:0;">Invite Sent</span>
             `;
           container.prepend(logItem);
 
@@ -858,6 +966,7 @@
 
   <script src="chatbot.js"></script>
   <script src="role-permissions.js"></script>
+    <script src="header.js"></script>
 </body>
 
 

@@ -516,8 +516,62 @@
         #search-results .list-item:last-child {
             border-bottom: none;
         }
+        /* Chat Messages */
+        .msg-row {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 10px 16px;
+            border-radius: var(--radius-md);
+            transition: background 0.15s;
+        }
+
+        .msg-row:hover {
+            background: rgba(15, 31, 43, 0.03);
+        }
+
+        .msg-bubble {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .msg-meta {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .msg-name {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--ink-900);
+        }
+
+        .msg-time {
+            font-size: 0.75rem;
+            color: var(--ink-400);
+            font-weight: 400;
+        }
+
+        .msg-bubble p {
+            font-size: 0.9rem;
+            color: var(--ink-800);
+            line-height: 1.55;
+            margin: 0;
+            word-break: break-word;
+        }
+
+        .msg-bubble p strong {
+            color: var(--sky-600);
+        }
+
+        #static-messages {
+            padding: 12px 0;
+        }
     </style>
     <link rel="stylesheet" href="chatbot.css" />
+    <link rel="stylesheet" href="header.css" />
 </head>
 
 <body>
@@ -560,7 +614,12 @@
                         </div>
                     </div>
                 </div>
-                <a class="profile" aria-label="Profile" href="profile.html">👤</a>
+                <a href="profile.html" class="profile" aria-label="Profile">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+      <circle cx="12" cy="7" r="4"></circle>
+    </svg>
+  </a>
             </div>
         </div>
     </header>
@@ -632,16 +691,83 @@
                 <div class="panel-header" id="chat-header">
                     <span style="color:var(--sky-500); margin-right:4px;">#</span> general-chat
                 </div>
-                <div class="panel-content">
-                    <div class="chat-placeholder" id="chat-placeholder">
+                <div class="panel-content" id="chat-messages-area" style="display:flex; flex-direction:column; gap:0;">
+                    <!-- Static messages for #general-chat -->
+                    <div id="static-messages">
+
+                        <div class="msg-row">
+                            <div class="avatar-sm" style="background:#bee3f8; color:#2b6cb0; flex-shrink:0;">JS</div>
+                            <div class="msg-bubble">
+                                <div class="msg-meta"><span class="msg-name">Jane Smith</span><span class="msg-time">9:02 AM</span></div>
+                                <p>Good morning everyone! 👋 Hope you're all having a great start to the week. Don't forget — the <strong>Campus Sustainability Sprint</strong> kickoff is this Friday.</p>
+                            </div>
+                        </div>
+
+                        <div class="msg-row">
+                            <div class="avatar-sm" style="background:#c6f6d5; color:#276749; flex-shrink:0;">Dr</div>
+                            <div class="msg-bubble">
+                                <div class="msg-meta"><span class="msg-name">Dr. Richards</span><span class="msg-time">9:07 AM</span></div>
+                                <p>Morning Jane! Quick reminder that the <strong>Design for Impact Workshop</strong> registration closes today at 5 PM. Still a few spots left if anyone is interested.</p>
+                            </div>
+                        </div>
+
+                        <div class="msg-row">
+                            <div class="avatar-sm" style="background:#fef9c3; color:#92400e; flex-shrink:0;">B</div>
+                            <div class="msg-bubble">
+                                <div class="msg-meta"><span class="msg-name">Bob</span><span class="msg-time">9:14 AM</span></div>
+                                <p>Just signed up for the workshop — looks really interesting. Has anyone done the Data Viz Mentorship before? Wondering what to expect.</p>
+                            </div>
+                        </div>
+
+                        <div class="msg-row">
+                            <div class="avatar-sm" style="background:#bee3f8; color:#2b6cb0; flex-shrink:0;">JS</div>
+                            <div class="msg-bubble">
+                                <div class="msg-meta"><span class="msg-name">Jane Smith</span><span class="msg-time">9:18 AM</span></div>
+                                <p>Bob — it's fantastic! You'll work with real datasets and get paired with a mentor from industry. Highly recommend going in with a project idea ready.</p>
+                            </div>
+                        </div>
+
+                        <div class="msg-row">
+                            <div class="avatar-sm" style="background:#e9d8fd; color:#553c9a; flex-shrink:0;">A</div>
+                            <div class="msg-bubble">
+                                <div class="msg-meta"><span class="msg-name">Alice (You)</span><span class="msg-time">9:22 AM</span></div>
+                                <p>Thanks Jane! I'm also going to register. Does the workshop cover Python or is it more tool-agnostic?</p>
+                            </div>
+                        </div>
+
+                        <div class="msg-row">
+                            <div class="avatar-sm" style="background:#c6f6d5; color:#276749; flex-shrink:0;">Dr</div>
+                            <div class="msg-bubble">
+                                <div class="msg-meta"><span class="msg-name">Dr. Richards</span><span class="msg-time">9:25 AM</span></div>
+                                <p>Alice — tool-agnostic, but Python and Tableau are the most commonly used. No worries if you don't know them yet, the facilitators are very supportive. 🙌</p>
+                            </div>
+                        </div>
+
+                        <div class="msg-row">
+                            <div class="avatar-sm" style="background:#fed7e2; color:#9b2c2c; flex-shrink:0;">MK</div>
+                            <div class="msg-bubble">
+                                <div class="msg-meta"><span class="msg-name">Manav K.</span><span class="msg-time">10:05 AM</span></div>
+                                <p>Hey all — posted a new opportunity in #innovation-ideas. Looking for 2-3 collaborators on an AI-for-sustainability project. DM me if interested!</p>
+                            </div>
+                        </div>
+
+                        <div class="msg-row">
+                            <div class="avatar-sm" style="background:#e2e8f0; color:#2d3748; flex-shrink:0;">PR</div>
+                            <div class="msg-bubble">
+                                <div class="msg-meta"><span class="msg-name">Priya R.</span><span class="msg-time">10:31 AM</span></div>
+                                <p>Manav that sounds awesome — I'll DM you. Also heads up for everyone: the Foundation Day event registration closes <strong>tomorrow</strong>. Sign up before it fills up!</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Placeholder shown on other channels -->
+                    <div class="chat-placeholder" id="chat-placeholder" style="display:none;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path
-                                d="M12 20h9a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h3l4 4 4-4z">
-                            </path>
+                            <path d="M12 20h9a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h3l4 4 4-4z"></path>
                         </svg>
-                        <h3>Welcome to the Community!</h3>
-                        <p style="margin-top:8px;">This is the beginning of the #general-chat history.</br>Messages will
-                            appear here.</p>
+                        <h3 id="placeholder-title">Welcome to the Community!</h3>
+                        <p id="placeholder-sub" style="margin-top:8px;"></p>
                     </div>
                 </div>
                 <div class="message-input-area">
@@ -733,13 +859,20 @@
 
                 chatHeader.innerHTML = `<span style="color:var(--sky-500); margin-right:4px;">#</span> ${channelName}`;
 
-                chatPlaceholder.innerHTML = `
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M12 20h9a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h3l4 4 4-4z"></path>
-                    </svg>
-                    <h3>Welcome to the Community!</h3>
-                    <p style="margin-top:8px;">This is the beginning of the #${channelName} history.</br>Messages will appear here.</p>
-                `;
+                const staticMsgs = document.getElementById('static-messages');
+                const placeholder = document.getElementById('chat-placeholder');
+                const placeholderSub = document.getElementById('placeholder-sub');
+
+                if (channelName === 'general-chat') {
+                    // Show static messages, hide placeholder
+                    if (staticMsgs) staticMsgs.style.display = 'block';
+                    if (placeholder) placeholder.style.display = 'none';
+                } else {
+                    // Hide static messages, show placeholder
+                    if (staticMsgs) staticMsgs.style.display = 'none';
+                    if (placeholder) placeholder.style.display = 'flex';
+                    if (placeholderSub) placeholderSub.textContent = `This is the beginning of the #${channelName} history. Messages will appear here.`;
+                }
 
                 chatInput.placeholder = `Message #${channelName}...`;
                 chatInput.disabled = false;
@@ -905,6 +1038,7 @@
     </script>
     <script src="chatbot.js"></script>
     <script src="role-permissions.js"></script>
+    <script src="header.js"></script>
 </body>
 
 </html>
