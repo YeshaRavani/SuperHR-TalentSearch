@@ -1372,12 +1372,12 @@
                         </div>
                         <div class="stat-row" style="display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--white); border-radius: 16px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15,31,43,0.05);">
                             <div class="stat-info" style="display: flex; align-items: center; gap: 12px; font-weight: 600;">
-                                <div class="stat-icon" style="width: 40px; height: 40px; border-radius: 12px; background: #fefce8; color: #eab308; display: grid; place-items: center;">
+                                <div class="stat-icon" style="width: 40px; height: 40px; border-radius: 12px; background: #fee2e2; color: #ef4444; display: grid; place-items: center;">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
-                                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                                        <polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line>
                                     </svg>
                                 </div>
-                                Permission Requests
+                                Removed Opportunities
                             </div>
                             <div class="stat-value counter" data-target="14" style="font-size: 1.5rem; font-weight: 800; color: var(--ink-900);">0</div>
                         </div>
@@ -1443,15 +1443,6 @@
                             <p style="font-size: 0.85rem; color: var(--ink-500);">System config</p>
                         </div>
                     </a>
-                    <a href="admin-user-profile.html" style="background: var(--white); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15, 31, 43, 0.05); display: flex; align-items: center; gap: 16px; transition: all var(--transition-bounce);">
-                        <div style="width: 48px; height: 48px; border-radius: 14px; background: var(--sky-50); color: var(--sky-600); display: grid; place-items: center;">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                        </div>
-                        <div>
-                            <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--ink-900);">My Profile</h3>
-                            <p style="font-size: 0.85rem; color: var(--ink-500);">Admin details</p>
-                        </div>
-                    </a>
                 </div>
             </div>
         </section>
@@ -1501,57 +1492,114 @@
                     <p class="section-desc" style="color: var(--ink-500); font-size: 1.1rem;">Platform engagement and growth metrics at a glance.</p>
                 </div>
                 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 24px;">
-                    <div style="background: var(--white); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15, 31, 43, 0.05);">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px;">
+                    <!-- User Growth Chart -->
+                    <div style="background: var(--white); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15, 31, 43, 0.05); display: flex; flex-direction: column;">
                         <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--ink-800); margin-bottom: 20px;">User Growth (Last 30 Days)</h3>
-                        <div style="height: 200px; display: flex; align-items: flex-end; gap: 8px; border-bottom: 2px solid var(--sky-100); padding-bottom: 8px;">
-                            <div style="flex: 1; background: var(--sky-200); height: 30%; border-radius: 4px 4px 0 0;"></div>
-                            <div style="flex: 1; background: var(--sky-200); height: 45%; border-radius: 4px 4px 0 0;"></div>
-                            <div style="flex: 1; background: var(--sky-300); height: 60%; border-radius: 4px 4px 0 0;"></div>
-                            <div style="flex: 1; background: var(--sky-400); height: 75%; border-radius: 4px 4px 0 0;"></div>
-                            <div style="flex: 1; background: var(--sky-500); height: 85%; border-radius: 4px 4px 0 0;"></div>
-                            <div style="flex: 1; background: var(--sky-600); height: 100%; border-radius: 4px 4px 0 0;"></div>
+                        <div style="flex: 1; min-height: 200px; display: flex; align-items: flex-end; gap: 8px; border-bottom: 2px solid var(--sky-100); padding-bottom: 8px;">
+                            <div style="flex: 1; background: var(--sky-200); height: 30%; border-radius: 4px 4px 0 0; position: relative;">
+                                <span style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 0.75rem; color: var(--ink-500); font-weight: 600;">+12</span>
+                            </div>
+                            <div style="flex: 1; background: var(--sky-200); height: 45%; border-radius: 4px 4px 0 0; position: relative;">
+                                <span style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 0.75rem; color: var(--ink-500); font-weight: 600;">+24</span>
+                            </div>
+                            <div style="flex: 1; background: var(--sky-300); height: 60%; border-radius: 4px 4px 0 0; position: relative;">
+                                <span style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 0.75rem; color: var(--ink-500); font-weight: 600;">+44</span>
+                            </div>
+                            <div style="flex: 1; background: var(--sky-400); height: 75%; border-radius: 4px 4px 0 0; position: relative;">
+                                <span style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 0.75rem; color: var(--sky-600); font-weight: 800;">+68</span>
+                            </div>
                         </div>
                         <div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 0.8rem; color: var(--ink-500); font-weight: 600;">
                             <span>Week 1</span><span>Week 2</span><span>Week 3</span><span>Week 4</span>
                         </div>
                     </div>
 
-                    <div style="background: var(--white); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15, 31, 43, 0.05);">
+                    <!-- Department Activity -->
+                    <div style="background: var(--white); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15, 31, 43, 0.05); display: flex; flex-direction: column;">
                         <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--ink-800); margin-bottom: 20px;">Top Departments by Activity</h3>
-                        <div style="display: flex; flex-direction: column; gap: 16px;">
+                        <div style="display: flex; flex-direction: column; gap: 20px; flex: 1;">
                             <div>
-                                <div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 0.85rem; font-weight: 600;">
-                                    <span>Engineering</span><span>45%</span>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.85rem; font-weight: 600;">
+                                    <span style="display: flex; align-items: center; gap: 8px;"><div style="width: 8px; height: 8px; border-radius: 50%; background: var(--sky-600);"></div> Engineering</span><span>45%</span>
                                 </div>
-                                <div style="height: 8px; background: var(--sky-100); border-radius: 999px; overflow: hidden;">
-                                    <div style="height: 100%; background: var(--sky-600); width: 45%;"></div>
+                                <div style="height: 10px; background: var(--sky-50); border-radius: 999px; overflow: hidden;">
+                                    <div style="height: 100%; background: var(--sky-600); width: 45%; border-radius: 999px;"></div>
                                 </div>
                             </div>
                             <div>
-                                <div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 0.85rem; font-weight: 600;">
-                                    <span>Marketing</span><span>30%</span>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.85rem; font-weight: 600;">
+                                    <span style="display: flex; align-items: center; gap: 8px;"><div style="width: 8px; height: 8px; border-radius: 50%; background: var(--sky-500);"></div> Marketing</span><span>30%</span>
                                 </div>
-                                <div style="height: 8px; background: var(--sky-100); border-radius: 999px; overflow: hidden;">
-                                    <div style="height: 100%; background: var(--sky-500); width: 30%;"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 0.85rem; font-weight: 600;">
-                                    <span>Design</span><span>15%</span>
-                                </div>
-                                <div style="height: 8px; background: var(--sky-100); border-radius: 999px; overflow: hidden;">
-                                    <div style="height: 100%; background: var(--sky-400); width: 15%;"></div>
+                                <div style="height: 10px; background: var(--sky-50); border-radius: 999px; overflow: hidden;">
+                                    <div style="height: 100%; background: var(--sky-500); width: 30%; border-radius: 999px;"></div>
                                 </div>
                             </div>
                             <div>
-                                <div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 0.85rem; font-weight: 600;">
-                                    <span>Sales</span><span>10%</span>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.85rem; font-weight: 600;">
+                                    <span style="display: flex; align-items: center; gap: 8px;"><div style="width: 8px; height: 8px; border-radius: 50%; background: var(--sky-400);"></div> Design</span><span>15%</span>
                                 </div>
-                                <div style="height: 8px; background: var(--sky-100); border-radius: 999px; overflow: hidden;">
-                                    <div style="height: 100%; background: var(--sky-300); width: 10%;"></div>
+                                <div style="height: 10px; background: var(--sky-50); border-radius: 999px; overflow: hidden;">
+                                    <div style="height: 100%; background: var(--sky-400); width: 15%; border-radius: 999px;"></div>
                                 </div>
                             </div>
+                            <div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.85rem; font-weight: 600;">
+                                    <span style="display: flex; align-items: center; gap: 8px;"><div style="width: 8px; height: 8px; border-radius: 50%; background: var(--sky-300);"></div> Sales</span><span>10%</span>
+                                </div>
+                                <div style="height: 10px; background: var(--sky-50); border-radius: 999px; overflow: hidden;">
+                                    <div style="height: 100%; background: var(--sky-300); width: 10%; border-radius: 999px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Platform Log Table -->
+                    <div style="background: var(--white); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15, 31, 43, 0.05); grid-column: 1 / -1;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--ink-800);">Latest Admin Operations</h3>
+                            <a href="#" style="font-size: 0.85rem; font-weight: 600; color: var(--sky-600);">View Full Log →</a>
+                        </div>
+                        <div style="overflow-x: auto;">
+                            <table style="width: 100%; min-width: 600px; border-collapse: collapse; text-align: left;">
+                                <thead>
+                                    <tr style="border-bottom: 2px solid var(--sky-50); color: var(--ink-500); font-size: 0.85rem;">
+                                        <th style="padding: 12px 16px; font-weight: 600;">Admin</th>
+                                        <th style="padding: 12px 16px; font-weight: 600;">Action Type</th>
+                                        <th style="padding: 12px 16px; font-weight: 600;">Target Resource</th>
+                                        <th style="padding: 12px 16px; font-weight: 600;">Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid rgba(15, 31, 43, 0.02); transition: background 0.2s;" onmouseover="this.style.background='var(--sky-50)'" onmouseout="this.style.background='transparent'">
+                                        <td style="padding: 16px; font-weight: 600; color: var(--ink-800); display: flex; align-items: center; gap: 12px;">
+                                            <img src="https://i.pravatar.cc/100?img=68" style="width:32px; height:32px; border-radius:50%; object-fit:cover;">
+                                            System Routine
+                                        </td>
+                                        <td style="padding: 16px;"><span style="padding: 4px 10px; background: #ecfdf5; color: #10b981; border-radius: 999px; font-size: 0.75rem; font-weight: 700;">Global Export</span></td>
+                                        <td style="padding: 16px; color: var(--ink-700); font-size: 0.9rem;">Quarterly Metrics Report.csv</td>
+                                        <td style="padding: 16px; color: var(--ink-500); font-size: 0.85rem;">Today, 09:41 AM</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid rgba(15, 31, 43, 0.02); transition: background 0.2s;" onmouseover="this.style.background='var(--sky-50)'" onmouseout="this.style.background='transparent'">
+                                        <td style="padding: 16px; font-weight: 600; color: var(--ink-800); display: flex; align-items: center; gap: 12px;">
+                                            <div style="width:32px; height:32px; border-radius:50%; background: var(--ink-900); color: var(--white); display: grid; place-items: center; font-size: 0.8rem;">JS</div>
+                                            Jane Smith
+                                        </td>
+                                        <td style="padding: 16px;"><span style="padding: 4px 10px; background: #fee2e2; color: #ef4444; border-radius: 999px; font-size: 0.75rem; font-weight: 700;">Revoked</span></td>
+                                        <td style="padding: 16px; color: var(--ink-700); font-size: 0.9rem;">Opportunity ID #9921</td>
+                                        <td style="padding: 16px; color: var(--ink-500); font-size: 0.85rem;">Yesterday, 14:22 PM</td>
+                                    </tr>
+                                    <tr style="transition: background 0.2s;" onmouseover="this.style.background='var(--sky-50)'" onmouseout="this.style.background='transparent'">
+                                        <td style="padding: 16px; font-weight: 600; color: var(--ink-800); display: flex; align-items: center; gap: 12px;">
+                                            <div style="width:32px; height:32px; border-radius:50%; background: var(--sky-200); color: var(--sky-600); display: grid; place-items: center; font-size: 0.8rem;">AM</div>
+                                            Admin Master
+                                        </td>
+                                        <td style="padding: 16px;"><span style="padding: 4px 10px; background: #eff6ff; color: #3b82f6; border-radius: 999px; font-size: 0.75rem; font-weight: 700;">Role Mod</span></td>
+                                        <td style="padding: 16px; color: var(--ink-700); font-size: 0.9rem;">User ID #412 "David K" to Employee</td>
+                                        <td style="padding: 16px; color: var(--ink-500); font-size: 0.85rem;">Nov 14, 11:05 AM</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -1641,6 +1689,19 @@
             };
             updateCounter();
         });
+
+        // Reveal Animation
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, revealOptions);
+        revealElements.forEach(el => revealObserver.observe(el));
         
         // RBAC Enforce (Optional basic local rules if applied via component logic)
         const role = localStorage.getItem('userRole');
