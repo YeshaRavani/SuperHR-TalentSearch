@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Talent & Opportunity Discovery - Admin</title>
     <style>
-
         :root {
             --sky-600: #7eb3ce;
             --sky-500: #9ecae1;
@@ -454,9 +454,9 @@
         }
 
         /* Hero Section */
-        
 
-        
+
+
 
         .hero-content {
             display: flex;
@@ -533,7 +533,7 @@
             animation: scaleIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
         }
 
-        
+
 
         /* Interactive parallax handled by JS */
 
@@ -568,11 +568,11 @@
             box-shadow: var(--shadow-sm);
             border: 1px solid rgba(255, 255, 255, 1);
             transition: all var(--transition-bounce);
-            
+
         }
 
         .stat-row:hover {
-            
+
             box-shadow: var(--shadow-md);
             border-color: var(--sky-200);
         }
@@ -618,7 +618,7 @@
             display: flex;
             flex-direction: column;
             position: relative;
-            
+
             transition: transform 0.1s;
             cursor: pointer;
             overflow: hidden;
@@ -649,12 +649,12 @@
             place-items: center;
             margin-bottom: 24px;
             transition: all var(--transition-bounce);
-            
+
             border: 1px solid var(--sky-100);
         }
 
         .opp-card:hover .opp-icon {
-            
+
             background: var(--sky-500);
             color: var(--white);
             box-shadow: var(--shadow-glow);
@@ -668,7 +668,7 @@
         .opp-card h3 {
             font-size: 1.4rem;
             margin-bottom: 12px;
-            
+
         }
 
         .opp-card p {
@@ -676,7 +676,7 @@
             line-height: 1.6;
             margin-bottom: 20px;
             flex-grow: 1;
-            
+
         }
 
         .card-arrow {
@@ -686,7 +686,7 @@
             color: var(--sky-600);
             font-weight: 700;
             font-size: 0.95rem;
-            
+
             transition: gap var(--transition);
         }
 
@@ -1044,7 +1044,7 @@
             height: 28px;
         }
 
-        
+
         .profile {
             width: 44px;
             height: 44px;
@@ -1062,7 +1062,7 @@
             box-shadow: var(--shadow-md);
             border-color: var(--sky-200);
         }
-        
+
         /* Footer */
         .footer {
             background: var(--ink-900);
@@ -1075,7 +1075,7 @@
 
         /* Responsive */
         @media (max-width: 1024px) {
-            
+
 
             .hero-content {
                 align-items: center;
@@ -1117,16 +1117,19 @@
                 height: 240px;
             }
 
-            
-        }
-    
 
-        * { box-sizing: border-box; }
+        }
+
+
+        * {
+            box-sizing: border-box;
+        }
+
         .page-container {
             width: min(1200px, 100% - 48px);
             margin-inline: auto;
         }
-        
+
         /* New Header Styles */
         .topbar {
             position: sticky;
@@ -1140,6 +1143,7 @@
             border-bottom: 1px solid rgba(15, 31, 43, 0.05);
             box-shadow: var(--shadow-sm);
         }
+
         .nav {
             display: flex;
             align-items: center;
@@ -1160,6 +1164,7 @@
             transition: all var(--transition-bounce);
             text-decoration: none;
         }
+
         .profile:hover {
             transform: translateY(-3px);
             box-shadow: var(--shadow-md);
@@ -1170,28 +1175,33 @@
         .hero-section {
             padding: 80px 0;
         }
+
         .hero-grid {
             display: grid;
             grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
             gap: 32px;
             align-items: start;
         }
+
         .hero-content {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
         }
+
         .hero-title {
             font-size: clamp(3rem, 5vw, 4.5rem);
             font-weight: 900;
             margin-bottom: 24px;
             line-height: 1.05;
         }
+
         .hero-title span {
             background: linear-gradient(135deg, var(--sky-600), var(--sky-400));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
         .hero-desc {
             font-size: 1.25rem;
             color: var(--ink-500);
@@ -1199,32 +1209,37 @@
             max-width: 500px;
             line-height: 1.5;
         }
+
         .dashboard-widget {
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(24px);
-            border: 1px solid rgba(255,255,255,1);
+            border: 1px solid rgba(255, 255, 255, 1);
             border-radius: 24px;
             padding: 32px;
-            box-shadow: 0 10px 40px rgba(15,31,43,0.08);
+            box-shadow: 0 10px 40px rgba(15, 31, 43, 0.08);
             width: 100%;
             max-width: 100%;
         }
 
         /* Responsive Fixes */
-        .card-grid, .opp-card, .stat-row, img {
+        .card-grid,
+        .opp-card,
+        .stat-row,
+        img {
             max-width: 100%;
         }
-        
+
         @media (max-width: 1200px) {
             .hero-section {
                 padding: 60px 0;
             }
         }
-        
+
         @media (max-width: 1024px) {
             .hero-grid {
                 grid-template-columns: 1fr;
             }
+
             .hero-content {
                 align-items: center;
                 text-align: center;
@@ -1236,10 +1251,10 @@
             .nav .menu {
                 display: none;
             }
-            
+
         }
-    
-    
+
+
         .notif-item {
             padding: 16px;
             background: var(--sky-50);
@@ -1248,10 +1263,12 @@
             border: 1px solid var(--sky-100);
             transition: all 0.2s;
         }
+
         .notif-item:hover {
             background: var(--sky-100);
             transform: translateX(5px);
         }
+
         .notif-dropdown {
             transform: translateY(15px) scale(0.95);
             opacity: 0;
@@ -1259,15 +1276,18 @@
             transition: all var(--transition-bounce, 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275));
             transform-origin: top right;
         }
-        .notif-dropdown.active, .notif-dropdown.open {
+
+        .notif-dropdown.active,
+        .notif-dropdown.open {
             transform: translateY(0) scale(1);
             opacity: 1;
             visibility: visible;
         }
-</style>
+    </style>
     <link rel="stylesheet" href="chatbot.css" />
     <script src="opportunities_data.js"></script>
 </head>
+
 <body>
     <div class="progress-container">
         <div class="progress-bar-scroll" id="scrollProgress"></div>
@@ -1276,8 +1296,10 @@
     <!-- 1. Header Block -->
     <header class="topbar" id="navbar">
         <div class="page-container nav">
-            <a href="index (1).html" class="logo" title="Go to home" aria-label="Go to home" style="text-decoration: none; color: inherit;">
-                <img class="logo-img" src="logo.png" onerror="this.src='https://via.placeholder.com/88/9ecae1/ffffff?text=TS'" alt="Logo" />
+            <a href="index (1).html" class="logo" title="Go to home" aria-label="Go to home"
+                style="text-decoration: none; color: inherit;">
+                <img class="logo-img" src="logo.png"
+                    onerror="this.src='https://via.placeholder.com/88/9ecae1/ffffff?text=TS'" alt="Logo" />
                 Talent Search
             </a>
             <nav class="menu">
@@ -1299,22 +1321,28 @@
                     <div class="notif-dropdown" id="notifDropdown">
                         <div class="notif-header">
                             <h4>System Alerts</h4>
-                            <span class="notif-clear" id="markAllReadBtn" style="cursor: pointer; color: var(--sky-600); font-size: 0.85rem; font-weight: 600;">Mark all read</span>
+                            <span class="notif-clear" id="markAllReadBtn"
+                                style="cursor: pointer; color: var(--sky-600); font-size: 0.85rem; font-weight: 600;">Mark
+                                all read</span>
                         </div>
                         <div class="notif-item">
-                            <p style="margin-bottom: 0;"><strong>Opportunity Removed:</strong> "Advanced Python Workshop" was removed by admin.</p>
+                            <p style="margin-bottom: 0;"><strong>Opportunity Removed:</strong> "Advanced Python
+                                Workshop" was removed by admin.</p>
                             <div class="notif-actions" style="margin-top: 8px;">
                                 <span style="font-size:0.8rem; color:var(--ink-400);">Just now</span>
                             </div>
                         </div>
                         <div class="notif-item">
-                            <p style="margin-bottom: 0;"><strong>Role Updated:</strong> "Sarah Jenkins" role changed to Department Manager.</p>
+                            <p style="margin-bottom: 0;"><strong>Role Updated:</strong> "Sarah Jenkins" role changed to
+                                Department Manager.</p>
                             <div class="notif-actions" style="margin-top: 8px;">
-                                <a href="admin-manage-users.html" class="btn btn-sky" style="height:32px; padding:0 16px; font-size:0.8rem; text-decoration:none; display:inline-flex; align-items:center;">View</a>
+                                <a href="admin-manage-users.html" class="btn btn-sky"
+                                    style="height:32px; padding:0 16px; font-size:0.8rem; text-decoration:none; display:inline-flex; align-items:center;">View</a>
                             </div>
                         </div>
                         <div class="notif-item">
-                            <p style="margin-bottom: 0;"><strong>System Reminder:</strong> Weekly platform backup completed successfully.</p>
+                            <p style="margin-bottom: 0;"><strong>System Reminder:</strong> Weekly platform backup
+                                completed successfully.</p>
                             <div class="notif-actions" style="margin-top: 8px;">
                                 <span style="font-size:0.8rem; color:var(--ink-400);">1 hr ago</span>
                             </div>
@@ -1323,7 +1351,8 @@
                 </div>
                 <!-- Profile Icon -->
                 <a href="admin-user-profile.html" class="profile" title="Admin Profile">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--sky-600)" stroke-width="2" style="width:20px; height:20px;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--sky-600)" stroke-width="2"
+                        style="width:20px; height:20px;">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                         <circle cx="12" cy="7" r="4"></circle>
                     </svg>
@@ -1335,58 +1364,37 @@
     <main>
         <!-- 2. Hero Section (Left + Right KPI) -->
         <section class="hero-section text-ink-900">
-            <div class="page-container" style="display:flex; flex-direction:column; gap:40px;">
-                
+            <div class="page-container hero-grid">
+
                 <div class="hero-content">
                     <h1 class="hero-title">Admin<br><span>Dashboard</span></h1>
-                    <p class="hero-desc" style="margin-bottom:0;">Platform governance, user management, and system-wide analytics.</p>
-                </div>
-
-                <!-- Quick Actions -->
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px;">
-                    <a href="admin-manage-users.html" style="background: var(--white); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15, 31, 43, 0.05); display: flex; align-items: center; gap: 16px; transition: all var(--transition-bounce);">
-                        <div style="width: 48px; height: 48px; border-radius: 14px; background: var(--sky-50); color: var(--sky-600); display: grid; place-items: center;">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                        </div>
-                        <div>
-                            <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--ink-900);">Manage Users</h3>
-                            <p style="font-size: 0.85rem; color: var(--ink-500);">Roles & access</p>
-                        </div>
-                    </a>
-                    <a href="admin-manage-opportunities.html" style="background: var(--white); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15, 31, 43, 0.05); display: flex; align-items: center; gap: 16px; transition: all var(--transition-bounce);">
-                        <div style="width: 48px; height: 48px; border-radius: 14px; background: var(--sky-50); color: var(--sky-600); display: grid; place-items: center;">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                        </div>
-                        <div>
-                            <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--ink-900);">Manage Opportunities</h3>
-                            <p style="font-size: 0.85rem; color: var(--ink-500);">Review & remove</p>
-                        </div>
-                    </a>
-                    <a href="admin-system-settings.html" style="background: var(--white); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15, 31, 43, 0.05); display: flex; align-items: center; gap: 16px; transition: all var(--transition-bounce);">
-                        <div style="width: 48px; height: 48px; border-radius: 14px; background: var(--sky-50); color: var(--sky-600); display: grid; place-items: center;">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                        </div>
-                        <div>
-                            <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--ink-900);">Settings</h3>
-                            <p style="font-size: 0.85rem; color: var(--ink-500);">System config</p>
-                        </div>
-                    </a>
+                    <p class="hero-desc" style="margin-bottom: 8px;">Platform governance, user management, and system-wide analytics.</p>
+                    <p class="hero-desc" style="font-size: 1.15rem;">Monitor platform performance, oversee governance actions, and manage operational workflows from one place.</p>
+                    <div class="hero-actions" style="display:none;">
+                    </div>
                 </div>
 
                 <div class="dashboard-widget">
-                    <div class="widget-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid rgba(15,31,43,0.05); padding-bottom: 16px;">
-                        <h3 style="font-size: 1.2rem; font-weight: 700; display: flex; align-items: center; gap: 8px;">Live Pulse Overview</h3>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--ink-400)" stroke-width="2">
+                    <div class="widget-header"
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid rgba(15,31,43,0.05); padding-bottom: 16px;">
+                        <h3 style="font-size: 1.2rem; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                            Live Pulse Overview</h3>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--ink-400)"
+                            stroke-width="2">
                             <circle cx="12" cy="12" r="1"></circle>
                             <circle cx="19" cy="12" r="1"></circle>
                             <circle cx="5" cy="12" r="1"></circle>
                         </svg>
                     </div>
-                    <div class="stat-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
-                        <div class="stat-row" style="display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--white); border-radius: 16px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15,31,43,0.05);">
-                            <div class="stat-info" style="display: flex; align-items: center; gap: 12px; font-weight: 600;">
-                                <div class="stat-icon" style="width: 40px; height: 40px; border-radius: 12px; background: var(--sky-100); color: var(--sky-600); display: grid; place-items: center;">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                    <div class="stat-grid" style="display: grid; gap: 16px;">
+                        <div class="stat-row"
+                            style="display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--white); border-radius: 16px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15,31,43,0.05);">
+                            <div class="stat-info"
+                                style="display: flex; align-items: center; gap: 12px; font-weight: 600;">
+                                <div class="stat-icon"
+                                    style="width: 40px; height: 40px; border-radius: 12px; background: var(--sky-100); color: var(--sky-600); display: grid; place-items: center;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        width="20" height="20">
                                         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                                         <circle cx="9" cy="7" r="4"></circle>
                                         <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
@@ -1395,48 +1403,130 @@
                                 </div>
                                 Total Users
                             </div>
-                            <div class="stat-value counter" data-target="1245" style="font-size: 1.5rem; font-weight: 800; color: var(--ink-900);">0</div>
+                            <div class="stat-value counter" data-target="1245"
+                                style="font-size: 1.5rem; font-weight: 800; color: var(--ink-900);">0</div>
                         </div>
-                        <div class="stat-row" style="display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--white); border-radius: 16px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15,31,43,0.05);">
-                            <div class="stat-info" style="display: flex; align-items: center; gap: 12px; font-weight: 600;">
-                                <div class="stat-icon" style="width: 40px; height: 40px; border-radius: 12px; background: #fee2e2; color: #ef4444; display: grid; place-items: center;">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
-                                        <polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line>
+                        <div class="stat-row"
+                            style="display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--white); border-radius: 16px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15,31,43,0.05);">
+                            <div class="stat-info"
+                                style="display: flex; align-items: center; gap: 12px; font-weight: 600;">
+                                <div class="stat-icon"
+                                    style="width: 40px; height: 40px; border-radius: 12px; background: #fee2e2; color: #ef4444; display: grid; place-items: center;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        width="20" height="20">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path
+                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                        </path>
+                                        <line x1="10" y1="11" x2="10" y2="17"></line>
+                                        <line x1="14" y1="11" x2="14" y2="17"></line>
                                     </svg>
                                 </div>
                                 Removed Opportunities
                             </div>
-                            <div class="stat-value counter" data-target="14" style="font-size: 1.5rem; font-weight: 800; color: var(--ink-900);">0</div>
+                            <div class="stat-value counter" data-target="14"
+                                style="font-size: 1.5rem; font-weight: 800; color: var(--ink-900);">0</div>
                         </div>
-                        <div class="stat-row" style="display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--white); border-radius: 16px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15,31,43,0.05);">
-                            <div class="stat-info" style="display: flex; align-items: center; gap: 12px; font-weight: 600;">
-                                <div class="stat-icon" style="width: 40px; height: 40px; border-radius: 12px; background: #eff6ff; color: #3b82f6; display: grid; place-items: center;">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
-                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                        <div class="stat-row"
+                            style="display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--white); border-radius: 16px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15,31,43,0.05);">
+                            <div class="stat-info"
+                                style="display: flex; align-items: center; gap: 12px; font-weight: 600;">
+                                <div class="stat-icon"
+                                    style="width: 40px; height: 40px; border-radius: 12px; background: #eff6ff; color: #3b82f6; display: grid; place-items: center;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        width="20" height="20">
+                                        <polygon
+                                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                        </polygon>
                                     </svg>
                                 </div>
                                 Active Opportunities
                             </div>
-                            <div class="stat-value counter" data-target="324" style="font-size: 1.5rem; font-weight: 800; color: var(--ink-900);">0</div>
+                            <div class="stat-value counter" data-target="324"
+                                style="font-size: 1.5rem; font-weight: 800; color: var(--ink-900);">0</div>
                         </div>
-                        <div class="stat-row" style="display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--white); border-radius: 16px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15,31,43,0.05);">
-                            <div class="stat-info" style="display: flex; align-items: center; gap: 12px; font-weight: 600;">
-                                <div class="stat-icon" style="width: 40px; height: 40px; border-radius: 12px; background: #ecfdf5; color: #10b981; display: grid; place-items: center;">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                        <div class="stat-row"
+                            style="display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--white); border-radius: 16px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15,31,43,0.05);">
+                            <div class="stat-info"
+                                style="display: flex; align-items: center; gap: 12px; font-weight: 600;">
+                                <div class="stat-icon"
+                                    style="width: 40px; height: 40px; border-radius: 12px; background: #ecfdf5; color: #10b981; display: grid; place-items: center;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        width="20" height="20">
                                         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                                         <polyline points="22 4 12 14.01 9 11.01"></polyline>
                                     </svg>
                                 </div>
                                 System Health
                             </div>
-                            <div class="stat-value" style="font-size: 1.5rem; font-weight: 800; color: var(--ink-900);">99.9%</div>
+                            <div class="stat-value" style="font-size: 1.5rem; font-weight: 800; color: var(--ink-900);">
+                                99.9%</div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-
+        <!-- Quick Actions Section -->
+        <section class="section reveal" style="padding: 60px 0;">
+            <div class="page-container">
+                <div class="section-header" style="text-align: left; margin-bottom: 30px;">
+                    <h2 class="section-title" style="font-size: 1.8rem; font-weight: 800; margin-bottom: 8px;">Quick
+                        Actions</h2>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px;">
+                    <a href="admin-manage-users.html"
+                        style="background: var(--white); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15, 31, 43, 0.05); display: flex; align-items: center; gap: 16px; transition: all var(--transition-bounce);">
+                        <div
+                            style="width: 48px; height: 48px; border-radius: 14px; background: var(--sky-50); color: var(--sky-600); display: grid; place-items: center;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--ink-900);">Manage Users</h3>
+                            <p style="font-size: 0.85rem; color: var(--ink-500);">Roles & access</p>
+                        </div>
+                    </a>
+                    <a href="admin-manage-opportunities.html"
+                        style="background: var(--white); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15, 31, 43, 0.05); display: flex; align-items: center; gap: 16px; transition: all var(--transition-bounce);">
+                        <div
+                            style="width: 48px; height: 48px; border-radius: 14px; background: var(--sky-50); color: var(--sky-600); display: grid; place-items: center;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--ink-900);">Manage Opportunities</h3>
+                            <p style="font-size: 0.85rem; color: var(--ink-500);">Review & remove</p>
+                        </div>
+                    </a>
+                    <a href="admin-system-settings.html"
+                        style="background: var(--white); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15, 31, 43, 0.05); display: flex; align-items: center; gap: 16px; transition: all var(--transition-bounce);">
+                        <div
+                            style="width: 48px; height: 48px; border-radius: 14px; background: var(--sky-50); color: var(--sky-600); display: grid; place-items: center;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="3"></circle>
+                                <path
+                                    d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                                </path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--ink-900);">Settings</h3>
+                            <p style="font-size: 0.85rem; color: var(--ink-500);">System config</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
 
         <!-- Removed: Recent Platform Activity Section -->
 
@@ -1444,67 +1534,115 @@
         <section class="section reveal" style="background: var(--sky-50); padding: 80px 0;">
             <div class="page-container">
                 <div class="section-header" style="text-align: center; margin-bottom: 40px;">
-                    <h2 class="section-title" style="font-size: 2.2rem; font-weight: 800; margin-bottom: 12px;">Analytics & Reports</h2>
-                    <p class="section-desc" style="color: var(--ink-500); font-size: 1.1rem;">Platform engagement and growth metrics at a glance.</p>
+                    <h2 class="section-title" style="font-size: 2.2rem; font-weight: 800; margin-bottom: 12px;">
+                        Analytics & Reports</h2>
+                    <p class="section-desc" style="color: var(--ink-500); font-size: 1.1rem;">Platform engagement and
+                        growth metrics at a glance.</p>
                 </div>
-                
+
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px;">
                     <!-- User Growth Chart -->
-                    <div style="background: var(--white); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15, 31, 43, 0.05); display: flex; flex-direction: column;">
-                        <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--ink-800); margin-bottom: 20px;">User Growth (Last 30 Days)</h3>
-                        <div style="flex: 1; min-height: 200px; display: flex; align-items: flex-end; gap: 8px; border-bottom: 2px solid var(--sky-100); padding-bottom: 8px;">
-                            <div style="flex: 1; background: var(--sky-200); height: 30%; border-radius: 4px 4px 0 0; position: relative;">
-                                <span style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 0.75rem; color: var(--ink-500); font-weight: 600;">+12</span>
+                    <div
+                        style="background: var(--white); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15, 31, 43, 0.05); display: flex; flex-direction: column;">
+                        <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--ink-800); margin-bottom: 20px;">
+                            User Growth (Last 30 Days)</h3>
+                        <div
+                            style="flex: 1; min-height: 200px; display: flex; align-items: flex-end; gap: 8px; border-bottom: 2px solid var(--sky-100); padding-bottom: 8px;">
+                            <div
+                                style="flex: 1; background: var(--sky-200); height: 30%; border-radius: 4px 4px 0 0; position: relative;">
+                                <span
+                                    style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 0.75rem; color: var(--ink-500); font-weight: 600;">+12</span>
                             </div>
-                            <div style="flex: 1; background: var(--sky-200); height: 45%; border-radius: 4px 4px 0 0; position: relative;">
-                                <span style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 0.75rem; color: var(--ink-500); font-weight: 600;">+24</span>
+                            <div
+                                style="flex: 1; background: var(--sky-200); height: 45%; border-radius: 4px 4px 0 0; position: relative;">
+                                <span
+                                    style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 0.75rem; color: var(--ink-500); font-weight: 600;">+24</span>
                             </div>
-                            <div style="flex: 1; background: var(--sky-300); height: 60%; border-radius: 4px 4px 0 0; position: relative;">
-                                <span style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 0.75rem; color: var(--ink-500); font-weight: 600;">+44</span>
+                            <div
+                                style="flex: 1; background: var(--sky-300); height: 60%; border-radius: 4px 4px 0 0; position: relative;">
+                                <span
+                                    style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 0.75rem; color: var(--ink-500); font-weight: 600;">+44</span>
                             </div>
-                            <div style="flex: 1; background: var(--sky-400); height: 75%; border-radius: 4px 4px 0 0; position: relative;">
-                                <span style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 0.75rem; color: var(--sky-600); font-weight: 800;">+68</span>
+                            <div
+                                style="flex: 1; background: var(--sky-400); height: 75%; border-radius: 4px 4px 0 0; position: relative;">
+                                <span
+                                    style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 0.75rem; color: var(--sky-600); font-weight: 800;">+68</span>
                             </div>
                         </div>
-                        <div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 0.8rem; color: var(--ink-500); font-weight: 600;">
+                        <div
+                            style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 0.8rem; color: var(--ink-500); font-weight: 600;">
                             <span>Week 1</span><span>Week 2</span><span>Week 3</span><span>Week 4</span>
                         </div>
                     </div>
 
                     <!-- Department Activity -->
-                    <div style="background: var(--white); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15, 31, 43, 0.05); display: flex; flex-direction: column;">
-                        <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--ink-800); margin-bottom: 20px;">Top Departments by Activity</h3>
+                    <div
+                        style="background: var(--white); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15, 31, 43, 0.05); display: flex; flex-direction: column;">
+                        <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--ink-800); margin-bottom: 20px;">Top
+                            Departments by Activity</h3>
                         <div style="display: flex; flex-direction: column; gap: 20px; flex: 1;">
                             <div>
-                                <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.85rem; font-weight: 600;">
-                                    <span style="display: flex; align-items: center; gap: 8px;"><div style="width: 8px; height: 8px; border-radius: 50%; background: var(--sky-600);"></div> Engineering</span><span>45%</span>
+                                <div
+                                    style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.85rem; font-weight: 600;">
+                                    <span style="display: flex; align-items: center; gap: 8px;">
+                                        <div
+                                            style="width: 8px; height: 8px; border-radius: 50%; background: var(--sky-600);">
+                                        </div> Engineering
+                                    </span><span>45%</span>
                                 </div>
-                                <div style="height: 10px; background: var(--sky-50); border-radius: 999px; overflow: hidden;">
-                                    <div style="height: 100%; background: var(--sky-600); width: 45%; border-radius: 999px;"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.85rem; font-weight: 600;">
-                                    <span style="display: flex; align-items: center; gap: 8px;"><div style="width: 8px; height: 8px; border-radius: 50%; background: var(--sky-500);"></div> Marketing</span><span>30%</span>
-                                </div>
-                                <div style="height: 10px; background: var(--sky-50); border-radius: 999px; overflow: hidden;">
-                                    <div style="height: 100%; background: var(--sky-500); width: 30%; border-radius: 999px;"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.85rem; font-weight: 600;">
-                                    <span style="display: flex; align-items: center; gap: 8px;"><div style="width: 8px; height: 8px; border-radius: 50%; background: var(--sky-400);"></div> Design</span><span>15%</span>
-                                </div>
-                                <div style="height: 10px; background: var(--sky-50); border-radius: 999px; overflow: hidden;">
-                                    <div style="height: 100%; background: var(--sky-400); width: 15%; border-radius: 999px;"></div>
+                                <div
+                                    style="height: 10px; background: var(--sky-50); border-radius: 999px; overflow: hidden;">
+                                    <div
+                                        style="height: 100%; background: var(--sky-600); width: 45%; border-radius: 999px;">
+                                    </div>
                                 </div>
                             </div>
                             <div>
-                                <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.85rem; font-weight: 600;">
-                                    <span style="display: flex; align-items: center; gap: 8px;"><div style="width: 8px; height: 8px; border-radius: 50%; background: var(--sky-300);"></div> Sales</span><span>10%</span>
+                                <div
+                                    style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.85rem; font-weight: 600;">
+                                    <span style="display: flex; align-items: center; gap: 8px;">
+                                        <div
+                                            style="width: 8px; height: 8px; border-radius: 50%; background: var(--sky-500);">
+                                        </div> Marketing
+                                    </span><span>30%</span>
                                 </div>
-                                <div style="height: 10px; background: var(--sky-50); border-radius: 999px; overflow: hidden;">
-                                    <div style="height: 100%; background: var(--sky-300); width: 10%; border-radius: 999px;"></div>
+                                <div
+                                    style="height: 10px; background: var(--sky-50); border-radius: 999px; overflow: hidden;">
+                                    <div
+                                        style="height: 100%; background: var(--sky-500); width: 30%; border-radius: 999px;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div
+                                    style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.85rem; font-weight: 600;">
+                                    <span style="display: flex; align-items: center; gap: 8px;">
+                                        <div
+                                            style="width: 8px; height: 8px; border-radius: 50%; background: var(--sky-400);">
+                                        </div> Design
+                                    </span><span>15%</span>
+                                </div>
+                                <div
+                                    style="height: 10px; background: var(--sky-50); border-radius: 999px; overflow: hidden;">
+                                    <div
+                                        style="height: 100%; background: var(--sky-400); width: 15%; border-radius: 999px;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div
+                                    style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.85rem; font-weight: 600;">
+                                    <span style="display: flex; align-items: center; gap: 8px;">
+                                        <div
+                                            style="width: 8px; height: 8px; border-radius: 50%; background: var(--sky-300);">
+                                        </div> Sales
+                                    </span><span>10%</span>
+                                </div>
+                                <div
+                                    style="height: 10px; background: var(--sky-50); border-radius: 999px; overflow: hidden;">
+                                    <div
+                                        style="height: 100%; background: var(--sky-300); width: 10%; border-radius: 999px;">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1514,19 +1652,21 @@
                 </div>
             </div>
         </section>
-        
+
         <!-- Optional Event Gallery -->
         <section class="section reveal" style="padding-bottom:100px; padding-top: 80px;">
             <div class="page-container">
                 <div class="section-header" style="text-align: center; margin-bottom: 40px;">
                     <h2 class="section-title">Event Gallery</h2>
-                    <p class="section-desc">Swipe through highlights from our latest campus events, mixers, and workshops.</p>
+                    <p class="section-desc">Swipe through highlights from our latest campus events, mixers, and
+                        workshops.</p>
                 </div>
             </div>
 
             <div class="gallery-container">
                 <div class="gallery-card">
-                    <img src="founder.jpg" alt="Founders Day" onerror="this.src='https://images.unsplash.com/photo-1540317580384-e5d43867caa6?auto=format&fit=crop&q=80&w=600'" />
+                    <img src="founder.jpg" alt="Founders Day"
+                        onerror="this.src='https://images.unsplash.com/photo-1540317580384-e5d43867caa6?auto=format&fit=crop&q=80&w=600'" />
                     <div class="tag-anim">Featured</div>
                     <div class="gallery-overlay">
                         <h3>Founders Day</h3>
@@ -1534,7 +1674,8 @@
                     </div>
                 </div>
                 <div class="gallery-card">
-                    <img src="foundation.jpeg" alt="Foundation Day" onerror="this.src='https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&q=80&w=600'" />
+                    <img src="foundation.jpeg" alt="Foundation Day"
+                        onerror="this.src='https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&q=80&w=600'" />
                     <div class="tag-anim">Campus</div>
                     <div class="gallery-overlay">
                         <h3>Foundation Day</h3>
@@ -1542,7 +1683,8 @@
                     </div>
                 </div>
                 <div class="gallery-card">
-                    <img src="workshop.jpg" alt="Workshops" onerror="this.src='https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=600'" />
+                    <img src="workshop.jpg" alt="Workshops"
+                        onerror="this.src='https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=600'" />
                     <div class="tag-anim">Learning</div>
                     <div class="gallery-overlay">
                         <h3>Workshops</h3>
@@ -1559,83 +1701,84 @@
     </footer>
 
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Scroll Progress
-        const scrollProgress = document.getElementById('scrollProgress');
-        window.addEventListener('scroll', () => {
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
-            scrollProgress.style.width = scrolled + "%";
-        });
-
-        // Notification Dropdown Toggle
-        const notifToggle = document.getElementById('notifToggle');
-        const notifDropdown = document.getElementById('notifDropdown');
-        notifToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            notifDropdown.classList.toggle('active');
-        });
-        window.addEventListener('click', () => {
-            if (notifDropdown.classList.contains('active')) notifDropdown.classList.remove('active');
-        });
-        notifDropdown.addEventListener('click', e => e.stopPropagation());
-
-        // Number Counters
-        const counters = document.querySelectorAll('.counter');
-        counters.forEach(counter => {
-            counter.innerText = '0';
-            const updateCounter = () => {
-                const target = +counter.getAttribute('data-target');
-                const c = +counter.innerText.replace(/[^0-9]/g, '');
-                const increment = target / 50;
-                if (c < target) {
-                    counter.innerText = Math.ceil(c + increment);
-                    setTimeout(updateCounter, 20);
-                } else {
-                    counter.innerText = target;
-                }
-            };
-            updateCounter();
-        });
-
-        // Reveal Animation
-        const revealElements = document.querySelectorAll('.reveal');
-        const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
-        const revealObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    observer.unobserve(entry.target);
-                }
+        document.addEventListener('DOMContentLoaded', () => {
+            // Scroll Progress
+            const scrollProgress = document.getElementById('scrollProgress');
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                scrollProgress.style.width = scrolled + "%";
             });
-        }, revealOptions);
-        revealElements.forEach(el => revealObserver.observe(el));
-        
-        // RBAC Enforce (Optional basic local rules if applied via component logic)
-        const role = localStorage.getItem('userRole');
-        if (role === 'employee') {
-            document.querySelectorAll('a[href="posted-opportunities.html"], a[href="add-opportunity.html"]').forEach(el => el.style.display = 'none');
-        }
-    });
+
+            // Notification Dropdown Toggle
+            const notifToggle = document.getElementById('notifToggle');
+            const notifDropdown = document.getElementById('notifDropdown');
+            notifToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                notifDropdown.classList.toggle('active');
+            });
+            window.addEventListener('click', () => {
+                if (notifDropdown.classList.contains('active')) notifDropdown.classList.remove('active');
+            });
+            notifDropdown.addEventListener('click', e => e.stopPropagation());
+
+            // Number Counters
+            const counters = document.querySelectorAll('.counter');
+            counters.forEach(counter => {
+                counter.innerText = '0';
+                const updateCounter = () => {
+                    const target = +counter.getAttribute('data-target');
+                    const c = +counter.innerText.replace(/[^0-9]/g, '');
+                    const increment = target / 50;
+                    if (c < target) {
+                        counter.innerText = Math.ceil(c + increment);
+                        setTimeout(updateCounter, 20);
+                    } else {
+                        counter.innerText = target;
+                    }
+                };
+                updateCounter();
+            });
+
+            // Reveal Animation
+            const revealElements = document.querySelectorAll('.reveal');
+            const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, revealOptions);
+            revealElements.forEach(el => revealObserver.observe(el));
+
+            // RBAC Enforce (Optional basic local rules if applied via component logic)
+            const role = localStorage.getItem('userRole');
+            if (role === 'employee') {
+                document.querySelectorAll('a[href="posted-opportunities.html"], a[href="add-opportunity.html"]').forEach(el => el.style.display = 'none');
+            }
+        });
     </script>
     <script src="chatbot.js"></script>
     <script src="role-permissions.js"></script>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const markBtn = document.getElementById('markAllReadBtn');
-        const badge = document.getElementById('notifBadge');
-        if (markBtn && badge) {
-            markBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                badge.style.display = 'none';
-                document.querySelectorAll('.notif-item').forEach(item => {
-                    item.style.opacity = '0.6';
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const markBtn = document.getElementById('markAllReadBtn');
+            const badge = document.getElementById('notifBadge');
+            if (markBtn && badge) {
+                markBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    badge.style.display = 'none';
+                    document.querySelectorAll('.notif-item').forEach(item => {
+                        item.style.opacity = '0.6';
+                    });
                 });
-            });
-        }
-    });
-</script>
+            }
+        });
+    </script>
 </body>
+
 </html>
