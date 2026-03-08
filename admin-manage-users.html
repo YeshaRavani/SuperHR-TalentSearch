@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Talent Search — Home</title>
+    <title>Talent & Opportunity Discovery</title>
     <style>
         :root {
             --sky-600: #7eb3ce;
@@ -1073,74 +1073,6 @@
             height: 28px;
         }
 
-        /* Notification Dropdown */
-        .notif-dropdown {
-            position: absolute;
-            top: calc(100% + 16px);
-            right: 0;
-            width: 380px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: var(--radius-lg);
-            padding: 24px;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            transform: translateY(15px) scale(0.95);
-            opacity: 0;
-            visibility: hidden;
-            transition: all var(--transition-bounce);
-            transform-origin: top right;
-        }
-
-        .notif-dropdown.active {
-            transform: translateY(0) scale(1);
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .notif-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .notif-header h4 {
-            font-size: 1.2rem;
-        }
-
-        .notif-clear {
-            font-size: 0.85rem;
-            color: var(--sky-600);
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .notif-item {
-            padding: 16px;
-            background: var(--sky-50);
-            border-radius: var(--radius-md);
-            margin-bottom: 12px;
-            border: 1px solid var(--sky-100);
-            transition: all 0.2s;
-        }
-
-        .notif-item:hover {
-            background: var(--sky-100);
-            transform: translateX(5px);
-        }
-
-        .notif-item p {
-            font-size: 0.9rem;
-            color: var(--ink-800);
-            margin-bottom: 12px;
-        }
-
-        .notif-actions {
-            display: flex;
-            gap: 8px;
-        }
-
         /* Footer */
         .footer {
             background: var(--ink-900);
@@ -1199,10 +1131,33 @@
                 height: 240px;
             }
 
-            .notif-dropdown {
-                width: 90vw;
-                right: -60px;
-            }
+            
+        }
+    
+        * { box-sizing: border-box; }
+        .page-container {
+            width: min(1200px, 100% - 48px);
+            margin-inline: auto;
+        }
+        
+        /* New Header Styles */
+        .topbar {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(15, 31, 43, 0.05);
+            box-shadow: var(--shadow-sm);
+        }
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 80px;
         }
 
         /* Profile Button */
@@ -1218,13 +1173,60 @@
             transition: all var(--transition-bounce);
             text-decoration: none;
         }
-
         .profile:hover {
             transform: translateY(-3px);
             box-shadow: var(--shadow-md);
             border-color: var(--sky-200);
         }
-    </style>
+
+        /* Prevent table overflow */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+        
+        .role-policy-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(15, 31, 43, 0.05);
+            box-shadow: var(--shadow-sm);
+        }
+
+        @media (max-width: 768px) {
+            .nav .menu {
+                display: none;
+            }
+            
+        }
+
+
+        .notif-item {
+            padding: 16px;
+            background: var(--sky-50);
+            border-radius: var(--radius-md);
+            margin-bottom: 12px;
+            border: 1px solid var(--sky-100);
+            transition: all 0.2s;
+        }
+        .notif-item:hover {
+            background: var(--sky-100);
+            transform: translateX(5px);
+        }
+        .notif-dropdown {
+            transform: translateY(15px) scale(0.95);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-bounce, 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275));
+            transform-origin: top right;
+        }
+        .notif-dropdown.active, .notif-dropdown.open {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+            visibility: visible;
+        }
+</style>
 
     <link rel="stylesheet" href="chatbot.css" />
 
@@ -1242,53 +1244,57 @@
         <div class="bg-blob blob-3"></div>
     </div>
 
+        <!-- 1. Header Block -->
     <header class="topbar" id="navbar">
-        <div class="nav">
-            <a href="index (1).html" class="logo" title="Go to home" aria-label="Go to home"
-                style="text-decoration: none; color: inherit;">
-                <img class="logo-img" src="logo.png"
-                    onerror="this.src='https://via.placeholder.com/88/9ecae1/ffffff?text=TS'" alt="Logo" />
+        <div class="page-container nav">
+            <a href="index (1).html" class="logo" title="Go to home" aria-label="Go to home" style="text-decoration: none; color: inherit;">
+                <img class="logo-img" src="logo.png" onerror="this.src='https://via.placeholder.com/88/9ecae1/ffffff?text=TS'" alt="Logo" />
                 Talent Search
             </a>
             <nav class="menu">
-                <a href="index (1).html" class="active">Home</a>
-                <a href="opportunities.html">Opportunities</a>
-                <a href="posted-opportunities.html">Posted Opportunities</a>
-                <a href="community.html">Community</a>
-                <a href="aboutus.html">About Us</a>
+                <a href="admin-home.html">Home</a>
+                <a href="admin-manage-users.html" class="active">Manage Users</a>
+                <a href="admin-manage-opportunities.html">Manage Opportunities</a>
+                <a href="admin-system-settings.html">System Settings</a>
             </nav>
             <div class="nav-actions">
-                <div style="position: relative;">
+                <div class="notif-wrapper">
                     <button class="icon-btn" id="notifToggle">
-                        <span class="icon-dot"></span>
+                        <span class="icon-dot" id="notifBadge">3</span>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                             <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
                         </svg>
                     </button>
+                    <!-- Notification Hidden Dropdown Panel -->
                     <div class="notif-dropdown" id="notifDropdown">
                         <div class="notif-header">
-                            <h4>Notifications</h4>
-                            <span class="notif-clear">Mark all read</span>
+                            <h4>System Alerts</h4>
+                            <span class="notif-clear" id="markAllReadBtn" style="cursor: pointer; color: var(--sky-600); font-size: 0.85rem; font-weight: 600;">Mark all read</span>
                         </div>
                         <div class="notif-item">
-                            <p><strong>Match found:</strong> "Campus Sustainability Sprint" needs your skills.</p>
-                            <div class="notif-actions">
-                                <button class="btn btn-sky"
-                                    style="height:32px; padding:0 16px; font-size:0.8rem;">Accept</button>
-                                <button class="btn btn-secondary"
-                                    style="height:32px; padding:0 16px; font-size:0.8rem;">Decline</button>
+                            <p style="margin-bottom: 0;"><strong>Opportunity Removed:</strong> "Advanced Python Workshop" was removed by admin.</p>
+                            <div class="notif-actions" style="margin-top: 8px;">
+                                <span style="font-size:0.8rem; color:var(--ink-400);">Just now</span>
                             </div>
                         </div>
                         <div class="notif-item">
-                            <p>New workshop recommendation based on your activity.</p>
+                            <p style="margin-bottom: 0;"><strong>Role Updated:</strong> "Sarah Jenkins" role changed to Department Manager.</p>
+                            <div class="notif-actions" style="margin-top: 8px;">
+                                <a href="admin-manage-users.html" class="btn btn-sky" style="height:32px; padding:0 16px; font-size:0.8rem; text-decoration:none; display:inline-flex; align-items:center;">View</a>
+                            </div>
+                        </div>
+                        <div class="notif-item">
+                            <p style="margin-bottom: 0;"><strong>System Reminder:</strong> Weekly platform backup completed successfully.</p>
+                            <div class="notif-actions" style="margin-top: 8px;">
+                                <span style="font-size:0.8rem; color:var(--ink-400);">1 hr ago</span>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <!-- Profile Icon -->
-                <a href="profile.html" class="profile" title="User Profile">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--sky-600)" stroke-width="2"
-                        style="width:20px; height:20px;">
+                <a href="admin-user-profile.html" class="profile" title="Admin Profile">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--sky-600)" stroke-width="2" style="width:20px; height:20px;">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                         <circle cx="12" cy="7" r="4"></circle>
                     </svg>
@@ -1296,319 +1302,116 @@
             </div>
         </div>
     </header>
+    <main class="page-container" style="max-width: 1200px; padding-top: 100px; margin: 0 auto; min-height: 80vh;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+            <div>
+                <h1 style="font-size: 2.2rem; font-weight: 800; color: var(--ink-900);">Manage Users</h1>
+                <p style="color: var(--ink-500);">Add, remove, or modify roles and permissions for all platform users.</p>
+            </div>
+            <button class="btn btn-sky" style="height: 44px; padding: 0 24px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px; height:18px; margin-right:8px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Add New User
+            </button>
+        </div>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-grid">
-                <div class="hero-content">
-                    <div class="tag">🎯 Welcome to Talent Search</div>
-                    <h1>Welcome to<br><span>Talent Search</span></h1>
-                    <p>Discover and contribute to short-term opportunities — internships, events, workshops and quick
-                        projects that help talents and creators grow. Explore curated initiatives and post opportunities
-                        in a few clicks.</p>
-                    <div class="hero-actions">
-                        <a href="login.html" class="btn btn-secondary">
-                            Learn More
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M5 12h14M12 5l7 7-7 7" />
-                            </svg>
-                        </a>
-                    </div>
-                    <div class="post-bar"
-                        style="margin-top: 24px; display: flex; gap: 12px; align-items: center; background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); padding: 12px; border-radius: var(--radius-md); border: 1px solid rgba(15, 31, 43, 0.1); box-shadow: var(--shadow-sm); animation: fadeUp 0.8s ease-out 0.4s both;">
-                        <input id="quickPost" type="text" placeholder="Have an opportunity? Describe it briefly..."
-                            style="flex: 1; padding: 12px 16px; border-radius: var(--radius-sm); border: 1px solid rgba(15, 31, 43, 0.1); background: rgba(255, 255, 255, 0.9); font-family: inherit; font-size: 0.95rem; outline: none; transition: all 0.2s;"
-                            onfocus="this.style.borderColor='var(--sky-400)'; this.style.boxShadow='0 0 0 3px var(--sky-100)';"
-                            onblur="this.style.borderColor='rgba(15, 31, 43, 0.1)'; this.style.boxShadow='none';"
-                            aria-label="Post an opportunity brief" />
-                        <button onclick="quickPost()" class="btn btn-sky"
-                            style="height: 44px; padding: 0 20px; font-size: 0.95rem;">Post</button>
-                    </div>
-
-                </div>
-
-                <div class="hero-visual" id="parallaxWidget">
-                    <div class="dashboard-widget">
-                        <div class="widget-header">
-                            <h3>Live Pulse Overview</h3>
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--ink-400)"
-                                stroke-width="2">
-                                <circle cx="12" cy="12" r="1"></circle>
-                                <circle cx="19" cy="12" r="1"></circle>
-                                <circle cx="5" cy="12" r="1"></circle>
-                            </svg>
-                        </div>
-                        <div class="stat-grid">
-                            <div class="stat-row">
-                                <div class="stat-info">
-                                    <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" width="24" height="24">
-                                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                            <circle cx="9" cy="7" r="4"></circle>
-                                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                        </svg></div>
-                                    New Collaborations
-                                </div>
-                                <div class="stat-value counter" data-target="156">0</div>
+                <div class="table-responsive" style="background: var(--white); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15, 31, 43, 0.05); margin-bottom: 40px;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left; min-width: 800px;">
+                <thead>
+                    <tr style="border-bottom: 2px solid var(--sky-100); color: var(--ink-700);">
+                        <th style="padding: 16px; font-weight: 600;">User Name</th>
+                        <th style="padding: 16px; font-weight: 600;">Department</th>
+                        <th style="padding: 16px; font-weight: 600;">Current Role</th>
+                        <th style="padding: 16px; font-weight: 600; text-align: right;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody style="color: var(--ink-800);">
+                    <tr style="border-bottom: 1px solid var(--sky-50);">
+                        <td style="padding: 16px; display: flex; align-items: center; gap: 12px;">
+                            <div style="min-width: 40px; height: 40px; border-radius: 50%; background: var(--sky-200); display: grid; place-items: center; font-weight: 700; color: var(--sky-600);">JD</div>
+                            <div>
+                                <div style="font-weight: 600;">John Doe</div>
+                                <div style="font-size: 0.85rem; color: var(--ink-500);">john.doe@example.com</div>
                             </div>
-                            <div class="stat-row">
-                                <div class="stat-info">
-                                    <div class="stat-icon" style="background:#fefce8; color:#eab308;"><svg
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            width="24" height="24">
-                                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                                        </svg></div>
-                                    Active Initiatives
-                                </div>
-                                <div class="stat-value counter" data-target="42">0</div>
+                        </td>
+                        <td style="padding: 16px; font-weight: 500;">Engineering</td>
+                        <td style="padding: 16px;">
+                            <select class="text-input" style="padding: 6px 10px; width: 140px; font-size: 0.9rem;">
+                                <option>Student</option>
+                                <option selected>Employee</option>
+                                <option>Head of Department</option>
+                            </select>
+                        </td>
+                        <td style="padding: 16px; text-align: right;">
+                            <button class="btn" style="height: 32px; padding: 0 12px; font-size: 0.8rem; background: #fee2e2; color: #ef4444;">Remove</button>
+                        </td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--sky-50);">
+                        <td style="padding: 16px; display: flex; align-items: center; gap: 12px;">
+                            <div style="min-width: 40px; height: 40px; border-radius: 50%; background: var(--sky-200); display: grid; place-items: center; font-weight: 700; color: var(--sky-600);">AS</div>
+                            <div>
+                                <div style="font-weight: 600;">Alice Smith</div>
+                                <div style="font-size: 0.85rem; color: var(--ink-500);">alice.smith@example.com</div>
                             </div>
-                            <div class="stat-row">
-                                <div class="stat-info">
-                                    <div class="stat-icon" style="background:var(--ink-900); color:var(--white);"><svg
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            width="24" height="24">
-                                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                            <line x1="16" y1="2" x2="16" y2="6"></line>
-                                            <line x1="8" y1="2" x2="8" y2="6"></line>
-                                            <line x1="3" y1="10" x2="21" y2="10"></line>
-                                        </svg></div>
-                                    Upcoming Events
-                                </div>
-                                <div class="stat-value counter" data-target="18">0</div>
+                        </td>
+                        <td style="padding: 16px; font-weight: 500;">Marketing</td>
+                        <td style="padding: 16px;">
+                            <select class="text-input" style="padding: 6px 10px; width: 140px; font-size: 0.9rem;">
+                                <option>Student</option>
+                                <option>Employee</option>
+                                <option selected>Head of Department</option>
+                            </select>
+                        </td>
+                        <td style="padding: 16px; text-align: right;">
+                            <button class="btn" style="height: 32px; padding: 0 12px; font-size: 0.8rem; background: #fee2e2; color: #ef4444;">Remove</button>
+                        </td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--sky-50);">
+                        <td style="padding: 16px; display: flex; align-items: center; gap: 12px;">
+                            <div style="min-width: 40px; height: 40px; border-radius: 50%; background: var(--sky-200); display: grid; place-items: center; font-weight: 700; color: var(--sky-600);">ML</div>
+                            <div>
+                                <div style="font-weight: 600;">Mark Lee</div>
+                                <div style="font-size: 0.85rem; color: var(--ink-500);">mark.lee@example.com</div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Live Activity Feed -->
-        <section class="section reveal">
-            <div class="section-header">
-                <h2 class="section-title">Platform Activity</h2>
-                <p class="section-desc">See what's happening right now across the community.</p>
-            </div>
-
-            <div class="feed-container">
-                <div class="feed-item">
-                    <div class="feed-time">Just now</div>
-                    <div class="feed-content">
-                        <h4>New Opportunity Posted</h4>
-                        <p>Sarah J. posted a new Frontend Developer role for the 'AI Design Tool' initiative.</p>
-                        <div class="feed-tags"><span class="feed-tag">Design</span><span class="feed-tag">Tech</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="feed-item">
-                    <div class="feed-time">2h ago</div>
-                    <div class="feed-content">
-                        <h4>Workshop Trending</h4>
-                        <p>"Intro to Glassmorphism UI" reached 50 registered attendees.</p>
-                        <div class="feed-tags"><span class="feed-tag"
-                                style="background:#fefce8; color:#eab308; border-color:#fef08a;">Hot 🔥</span></div>
-                    </div>
-                </div>
-                <div class="feed-item">
-                    <div class="feed-time">5h ago</div>
-                    <div class="feed-content">
-                        <h4>Milestone Reached</h4>
-                        <p>The Campus Sustainability project just completed phase 1.</p>
-                        <div class="feed-tags"><span class="feed-tag"
-                                style="background:#f0fdf4; color:#22c55e; border-color:#bbf7d0;">Success</span></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Opportunities Cards -->
-        <section class="section reveal">
-            <div class="section-header">
-                <h2 class="section-title">Explore</h2>
-                <p class="section-desc">Find your next big thing. Connect, build, learn, and grow through diverse
-                    opportunities.</p>
-            </div>
-
-            <div class="card-grid">
-                <a class="opp-card tilt-card" href="initiatives.html">
-                    <div class="opp-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path
-                                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
-                            </path>
-                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                        </svg>
-                    </div>
-                    <h3>Initiatives</h3>
-                    <p>Community-led programs and short projects.
-                    </p>
-                    <div class="card-arrow">View Projects &rarr;</div>
-                </a>
-
-                <a class="opp-card tilt-card" href="workshops.html">
-                    <div class="opp-icon" style="background:#eff6ff; color:#3b82f6; border-color:#bfdbfe;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <line x1="12" y1="16" x2="12" y2="12"></line>
-                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                        </svg>
-                    </div>
-                    <h3>Workshops</h3>
-                    <p>Hands-on sessions to learn and build quickly.</p>
-                    <div class="card-arrow" style="color:#3b82f6;">Join Sessions &rarr;</div>
-                </a>
-
-                <a class="opp-card tilt-card" href="events.html">
-                    <div class="opp-icon" style="background:#fefce8; color:#eab308; border-color:#fef08a;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="9" cy="7" r="4"></circle>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                        </svg>
-                    </div>
-                    <h3>Events</h3>
-                    <p>Discover meetups, showcases and networking.</p>
-                    <div class="card-arrow" style="color:#eab308;">See Calendar &rarr;</div>
-                </a>
-
-                <a class="opp-card tilt-card" href="appointment.html">
-                    <div class="opp-icon" style="background:#f0fdf4; color:#22c55e; border-color:#bbf7d0;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path
-                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
-                            </path>
-                        </svg>
-                    </div>
-                    <h3>Book an Appointment</h3>
-                    <p>Schedule mentorship and quick advisor sessions.</p>
-                    <div class="card-arrow" style="color:#22c55e;">Book Appointment &rarr;</div>
-                </a>
-            </div>
-
-            <div class="quick-links" style="margin-top:24px; display:flex; gap:14px; align-items:center;">
-                <small style="color:var(--ink-500); font-weight: 500;">Need help posting? Try our quick
-                    templates.</small>
-                <a href="#create" style="margin-left:auto; font-weight:700; color:var(--sky-600)">See tips →</a>
-            </div>
-
-            <div style="text-align: center; margin-top: 60px;">
-                <a href="add-opportunity.html" class="btn btn-sky"
-                    style="font-size: 1.15rem; padding: 0 40px; height: 60px;">+ Post an Opportunity</a>
-            </div>
-        </section>
-
-        <!-- Gamified Incentive Section -->
-        <section class="section reveal">
-            <div class="section-header">
-                <h2 class="section-title">Your Rewards</h2>
-                <p class="section-desc">Contribute to the platform, complete modules, and engage in initiatives to level
-                    up and unlock exclusive perks.</p>
-            </div>
-
-            <div class="gamify-grid">
-                <div class="points-panel">
-                    <div class="level-badge">Level 4 Innovator</div>
-                    <div class="points-display counter" data-target="1250">0 <span>XP</span></div>
-                    <p style="color:var(--ink-700); font-weight: 500;">You are in the top 15% of contributors this
-                        month!</p>
-
-                    <div class="progress-wrapper">
-                        <div class="progress-header">
-                            <span>Progress to Level 5 Master</span>
-                            <span style="color:var(--sky-600);">78%</span>
-                        </div>
-                        <div class="progress-track">
-                            <div class="progress-fill" style="width: 78%;"></div>
-                        </div>
-                        <p style="color:var(--ink-400); font-size: 0.8rem; margin-top: 8px;">250 XP remaining to next
-                            rank</p>
-                    </div>
-                </div>
-
-                <div class="badges-grid">
-                    <div class="badge-card">
-                        <div class="badge-icon">🎖️</div>
-                        <h4>Early Adopter</h4>
-                        <p>Joined platform during beta phase</p>
-                    </div>
-                    <div class="badge-card">
-                        <div class="badge-icon">🔥</div>
-                        <h4>On Fire</h4>
-                        <p>Logged in 7 consecutive days</p>
-                    </div>
-                    <div class="badge-card">
-                        <div class="badge-icon">💡</div>
-                        <h4>Creator</h4>
-                        <p>Posted a trending opportunity</p>
-                    </div>
-                    <div class="badge-card locked">
-                        <div class="badge-icon">👑</div>
-                        <h4>Community Lead</h4>
-                        <p>Requires leading 5 initiatives</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Event Gallery (Horizontal Scroll) -->
-        <section class="section reveal" style="padding-bottom:100px;">
-            <div class="section-header">
-                <h2 class="section-title">Moments Captured</h2>
-                <p class="section-desc">Swipe through highlights from our latest campus events, mixers, and workshops.
+                        </td>
+                        <td style="padding: 16px; font-weight: 500;">Design</td>
+                        <td style="padding: 16px;">
+                            <select class="text-input" style="padding: 6px 10px; width: 140px; font-size: 0.9rem;">
+                                <option selected>Student</option>
+                                <option>Employee</option>
+                                <option>Head of Department</option>
+                            </select>
+                        </td>
+                        <td style="padding: 16px; text-align: right;">
+                            <button class="btn" style="height: 32px; padding: 0 12px; font-size: 0.8rem; background: #fee2e2; color: #ef4444;">Remove</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+                <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 24px;">Role Policy</h2>
+        <div style="display: flex; flex-direction: column; max-width: 1000px;">
+            <div class="role-policy-card">
+                <h3 style="font-size: 1.25rem; margin-bottom: 12px; color: var(--ink-900);">Student</h3>
+                <p style="font-size: 1rem; color: var(--ink-700); line-height: 1.6;">
+                    Currently authorized to <strong>post opportunities</strong> and <strong>apply to opportunities</strong> across the platform. This role maintains default engagement interactions without administrative overrides.
                 </p>
             </div>
-
-            <div class="gallery-container">
-                <div class="gallery-card">
-                    <img src="founder.jpg" alt="Founders Day"
-                        onerror="this.src='https://images.unsplash.com/photo-1540317580384-e5d43867caa6?auto=format&fit=crop&q=80&w=600'" />
-                    <div class="tag-anim">Featured Event</div>
-                    <div class="gallery-overlay">
-                        <h3>Founders Day 2026</h3>
-                        <p>Celebrating the bold ideas shaping our future.</p>
-                    </div>
-                </div>
-                <div class="gallery-card">
-                    <img src="foundation.jpeg" alt="Foundation Day"
-                        onerror="this.src='https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&q=80&w=600'" />
-                    <div class="tag-anim">Campus Life</div>
-                    <div class="gallery-overlay">
-                        <h3>Foundation Gala</h3>
-                        <p>A night honoring top campus contributors.</p>
-                    </div>
-                </div>
-                <div class="gallery-card">
-                    <img src="workshop.jpg" alt="Workshop"
-                        onerror="this.src='https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=600'" />
-                    <div class="tag-anim">Hands-on Learning</div>
-                    <div class="gallery-overlay">
-                        <h3>Design Systems 101</h3>
-                        <p>Practical sessions on building scalable UI.</p>
-                    </div>
-                </div>
-                <div class="gallery-card">
-                    <img src="mixer.jpg" alt="Mixer"
-                        onerror="this.src='https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&q=80&w=600'" />
-                    <div class="tag-anim">Networking</div>
-                    <div class="gallery-overlay">
-                        <h3>Tech Mixer Friday</h3>
-                        <p>Casual conversations with industry leaders.</p>
-                    </div>
-                </div>
+            <div class="role-policy-card">
+                <h3 style="font-size: 1.25rem; margin-bottom: 12px; color: var(--ink-900);">Employee</h3>
+                <p style="font-size: 1rem; color: var(--ink-700); line-height: 1.6;">
+                    Currently authorized to <strong>apply to opportunities</strong> only. This role restricts the creation of new platform content while enabling active participation in existing assignments.
+                </p>
             </div>
-        </section>
+            <div class="role-policy-card">
+                <h3 style="font-size: 1.25rem; margin-bottom: 12px; color: var(--ink-900);">Head of Department</h3>
+                <p style="font-size: 1rem; color: var(--ink-700); line-height: 1.6;">
+                    Currently authorized to <strong>post opportunities</strong> only. This role focuses purely on generating and managing organizational engagements without direct participant application capabilities.
+                </p>
+            </div>
+        </div>
     </main>
 
-    <!-- Floating Action Button -->
-    <a href="appointment.html" class="fab" title="Book Appointment">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-        </svg>
-    </a>
+
 
     <footer class="footer">
         <h2>Talent Search Platform</h2>
@@ -1617,19 +1420,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-
-
-            // Quick Post Functionality
-            window.quickPost = function () {
-                const input = document.getElementById('quickPost');
-                const val = input.value.trim();
-                if (!val) {
-                    input.focus();
-                    return alert('Please enter a short description of the opportunity.');
-                }
-                alert('Thanks! Your opportunity has been noted: "' + (val.length > 80 ? val.slice(0, 77) + '...' : val) + '"');
-                input.value = '';
-            }
 
             // 1. Navbar Scroll & Progress Bar
             const navbar = document.getElementById('navbar');
@@ -1764,7 +1554,23 @@
     </script>
 
     <script src="chatbot.js"></script>
-    <script src="role-permissions.js"></script>
+<script src="role-permissions.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const markBtn = document.getElementById('markAllReadBtn');
+        const badge = document.getElementById('notifBadge');
+        if (markBtn && badge) {
+            markBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                badge.style.display = 'none';
+                document.querySelectorAll('.notif-item').forEach(item => {
+                    item.style.opacity = '0.6';
+                });
+            });
+        }
+    });
+</script>
 </body>
 
 

@@ -46,6 +46,9 @@
       background: var(--white);
       line-height: 1.6;
       overflow-x: hidden;
+    }
+
+    html {
       scroll-behavior: smooth;
     }
 
@@ -333,75 +336,6 @@
       border-color: var(--sky-200);
     }
 
-    /* Notification Dropdown */
-    .notif-dropdown {
-      position: absolute;
-      top: calc(100% + 16px);
-      right: 0;
-      width: 380px;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(20px);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      box-shadow: var(--shadow-lg);
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      transform: translateY(15px) scale(0.95);
-      opacity: 0;
-      visibility: hidden;
-      transition: all var(--transition-bounce);
-      transform-origin: top right;
-      z-index: 40;
-    }
-
-    .notif-dropdown.active {
-      transform: translateY(0) scale(1);
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .notif-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    .notif-header h4 {
-      font-size: 1.2rem;
-    }
-
-    .notif-clear {
-      font-size: 0.85rem;
-      color: var(--sky-600);
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    .notif-item {
-      padding: 16px;
-      background: var(--sky-50);
-      border-radius: var(--radius-md);
-      margin-bottom: 12px;
-      border: 1px solid var(--sky-100);
-      transition: all 0.2s;
-    }
-
-    .notif-item:hover {
-      background: var(--sky-100);
-      transform: translateX(5px);
-    }
-
-    .notif-item p {
-      font-size: 0.9rem;
-      color: var(--ink-800);
-      margin-bottom: 12px;
-    }
-
-    .notif-actions {
-      display: flex;
-      gap: 8px;
-    }
-
     /* Buttons */
     .btn {
       display: inline-flex;
@@ -461,7 +395,7 @@
     .page {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 120px 24px 60px;
+      padding: 90px 24px 60px;
     }
 
     .page-head {
@@ -620,6 +554,60 @@
       color: var(--ink-800);
     }
 
+    /* Filter Bar */
+    .filters {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: var(--white);
+      color: var(--ink-700);
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: 1px solid rgba(15, 31, 43, 0.1);
+      cursor: pointer;
+      transition: all var(--transition);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .filter-btn:hover {
+      border-color: var(--sky-200);
+      color: var(--sky-600);
+    }
+
+    .filter-btn.active {
+      background: var(--sky-50);
+      color: var(--sky-600);
+      border-color: var(--sky-200);
+    }
+
+    .category-section {
+      margin-bottom: 60px;
+    }
+
+    .category-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--ink-900);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .category-title::before {
+      content: '';
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--sky-400);
+    }
+
     @media (max-width: 980px) {
       .menu {
         display: none;
@@ -648,11 +636,84 @@
         grid-template-columns: 1fr;
       }
     }
-  </style>
+  
+        .notif-item {
+            padding: 16px;
+            background: var(--sky-50);
+            border-radius: var(--radius-md);
+            margin-bottom: 12px;
+            border: 1px solid var(--sky-100);
+            transition: all 0.2s;
+        }
+        .notif-item:hover {
+            background: var(--sky-100);
+            transform: translateX(5px);
+        }
+        .notif-dropdown {
+            transform: translateY(15px) scale(0.95);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-bounce, 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275));
+            transform-origin: top right;
+        }
+        .notif-dropdown.active, .notif-dropdown.open {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+            visibility: visible;
+        }
+</style>
 
   <link rel="stylesheet" href="chatbot.css" />
 
   <script src="opportunities_data.js"></script>
+  <script>
+window.generateOpportunityCardHTML = function (opp, indexDelay = 0) {
+    const delayStyle = indexDelay > 0 ? `style="transition-delay: ${indexDelay * 0.1}s;"` : '';
+    const animDelayClass = indexDelay > 0 ? `delay-${indexDelay}` : '';
+
+    return `
+        <article class="initiative-card reveal ${animDelayClass}" ${delayStyle}>
+            <div class="card-link" style="text-decoration:none; color:inherit; display:flex; flex-direction:column; height:100%;">
+                <div class="card-image" aria-hidden="true" style="background: ${opp.bgGradient};">
+                    <div class="card-icon-overlay" style="color: ${opp.iconColor};">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            ${opp.mainIcon}
+                        </svg>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <h3>${opp.title}</h3>
+                    <p>${opp.description}</p>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <span class="tag">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                ${opp.tagIcon}
+                            </svg>
+                            ${opp.dateStr}
+                        </span>
+                        <span class="tag" style="background:var(--white); border-color:var(--sky-200); color:var(--ink-700);">
+                            ${opp.category}
+                        </span>
+                        <span class="tag" style="background:var(--sky-50); border-color:var(--sky-200); color:var(--ink-800); font-weight: 600;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                            Enrolled: ${opp.enrolledCount || 0}
+                        </span>
+                    </div>
+                    <div style="border-top: 1px solid rgba(15,31,43,0.05); padding-top: 16px; margin-top: 16px;">
+                        <button onclick="this.closest('article').remove();" class="btn" style="width: 100%; height: 40px; border-radius: 999px; font-weight: 600; cursor: pointer; border: 1px solid #fca5a5; background: #fee2e2; color: #ef4444; transition: 0.3s; z-index: 10; position: relative;">Remove Opportunity</button>
+                    </div>
+                </div>
+            </div>
+        </article>
+    `;
+};
+  </script>
+
 </head>
 
 <body>
@@ -674,73 +735,119 @@
           Talent Search
         </a>
         <nav class="menu">
-            <a href="index (1).html">Home</a>
-            <a href="opportunities.html" class="active">Opportunities</a>
-            <a href="posted-opportunities.html">Posted Opportunities</a>
-            <a href="community.html">Community</a>
-            <a href="aboutus.html">About Us</a>
+          <a href="admin-home.html">Home</a>
+          <a href="admin-manage-users.html">Manage Users</a>
+          <a href="admin-manage-opportunities.html" class="active">Manage Opportunities</a>
+          <a href="admin-system-settings.html">System Settings</a>
         </nav>
         <div class="nav-actions">
-          <div style="position: relative;">
-            <button class="icon-btn" id="notifToggle">
-              <span class="icon-dot"></span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-              </svg>
-            </button>
-            <div class="notif-dropdown" id="notifDropdown">
-              <div class="notif-header">
-                <h4>Notifications</h4>
-                <span class="notif-clear">Mark all read</span>
-              </div>
-              <div class="notif-item">
-                <p><strong>Match found:</strong> "Campus Sustainability Sprint". Do you want to enroll?</p>
-                <div class="notif-actions">
-                  <button class="btn btn-sky" style="height:32px; padding:0 16px; font-size:0.8rem;">Enroll</button>
-                  <button class="btn btn-secondary"
-                    style="height:32px; padding:0 16px; font-size:0.8rem;">Later</button>
+          <div class="notif-wrapper">
+                    <button class="icon-btn" id="notifToggle">
+                        <span class="icon-dot" id="notifBadge">3</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                    </button>
+                    <!-- Notification Hidden Dropdown Panel -->
+                    <div class="notif-dropdown" id="notifDropdown">
+                        <div class="notif-header">
+                            <h4>System Alerts</h4>
+                            <span class="notif-clear" id="markAllReadBtn" style="cursor: pointer; color: var(--sky-600); font-size: 0.85rem; font-weight: 600;">Mark all read</span>
+                        </div>
+                        <div class="notif-item">
+                            <p style="margin-bottom: 0;"><strong>Opportunity Removed:</strong> "Advanced Python Workshop" was removed by admin.</p>
+                            <div class="notif-actions" style="margin-top: 8px;">
+                                <span style="font-size:0.8rem; color:var(--ink-400);">Just now</span>
+                            </div>
+                        </div>
+                        <div class="notif-item">
+                            <p style="margin-bottom: 0;"><strong>Role Updated:</strong> "Sarah Jenkins" role changed to Department Manager.</p>
+                            <div class="notif-actions" style="margin-top: 8px;">
+                                <a href="admin-manage-users.html" class="btn btn-sky" style="height:32px; padding:0 16px; font-size:0.8rem; text-decoration:none; display:inline-flex; align-items:center;">View</a>
+                            </div>
+                        </div>
+                        <div class="notif-item">
+                            <p style="margin-bottom: 0;"><strong>System Reminder:</strong> Weekly platform backup completed successfully.</p>
+                            <div class="notif-actions" style="margin-top: 8px;">
+                                <span style="font-size:0.8rem; color:var(--ink-400);">1 hr ago</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div class="notif-item">
-                <p>You have a new workshop recommendation based on your recent activity.</p>
-              </div>
-              <div class="notif-item">
-                <p>Reminder: Foundation Day event registration closes tomorrow.</p>
-              </div>
-            </div>
-          </div>
-          <a class="profile" aria-label="Profile" href="profile.html">👤</a>
+                <a class="profile" aria-label="Profile" href="admin-user-profile.html" title="Admin Profile" style="color:var(--ink-700);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px; height:20px;">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </a>
         </div>
       </div>
     </header>
 
-    <main class="page">
-      <section class="page-head">
-        <h1>Explore Initiatives</h1>
-        <p class="head-subtext">Discover active projects where you can contribute quickly and collaborate across teams.
-        </p>
+    <main class="page" id="top">
+      <section class="page-head reveal">
+        <h1>Manage Opportunities</h1>
+        <p class="head-subtext">Review and remove platform opportunities.</p>
       </section>
 
-      <section class="initiatives-grid" id="initiatives-container">
-        <!-- Injected dynamically via opportunities_data.js -->
-      </section>
+      <div class="filters reveal">
+        <a href="#top" class="filter-btn active" data-filter="all">All</a>
+        <a href="#events" class="filter-btn" data-filter="event">Events</a>
+        <a href="#initiatives" class="filter-btn" data-filter="initiative">Initiatives</a>
+        <a href="#workshops" class="filter-btn" data-filter="workshop">Workshops</a>
+      </div>
+
+      <div id="opportunities-master-container">
+        <!-- Rendered Sections -->
+      </div>
 
       <script>
         document.addEventListener('DOMContentLoaded', () => {
-          const container = document.getElementById('initiatives-container');
-          if (container && window.superHrOpportunities) {
-            const items = window.superHrOpportunities.filter(o => o.category === 'Initiative');
-            container.innerHTML = items.map((opp, index) => window.generateOpportunityCardHTML(opp, index % 4)).join('');
+          const container = document.getElementById('opportunities-master-container');
+          const filterBtns = document.querySelectorAll('.filter-btn');
+
+          function renderAll() {
+            if (!container || !window.superHrOpportunities) return;
+
+            let html = '';
+
+            const categories = [
+              { key: 'Event', title: 'Events', viewKey: 'events' },
+              { key: 'Initiative', title: 'Initiatives', viewKey: 'initiatives' },
+              { key: 'Workshop', title: 'Workshops', viewKey: 'workshops' }
+            ];
+
+            categories.forEach(cat => {
+              const items = window.superHrOpportunities.filter(o => o.category === cat.key);
+              if (items.length > 0) {
+                html += `
+                  <div class="category-section reveal active" id="${cat.viewKey}">
+                    <h2 class="category-title">${cat.title}</h2>
+                    <section class="initiatives-grid">
+                      ${items.map((opp, index) => window.generateOpportunityCardHTML(opp, index % 4)).join('')}
+                    </section>
+                  </div>
+                `;
+              }
+            });
+
+            container.innerHTML = html;
           }
+
+          renderAll(); // Always render everything so we can scroll to them
+
+          filterBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+              // Update Active UI States
+              filterBtns.forEach(b => b.classList.remove('active'));
+              btn.classList.add('active');
+            });
+          });
         });
       </script>
 
-      <section class="footer-cta reveal">
-        <span>No interests matched? We can help you find something great.</span>
-        <a href="appointment.html" class="btn btn-sky" style="height: 48px; padding: 0 32px; font-size: 1.05rem;">Book
-          an appointment</a>
-      </section>
+      
     </main>
   </div>
 
@@ -808,6 +915,22 @@
 
   <script src="chatbot.js"></script>
 <script src="role-permissions.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const markBtn = document.getElementById('markAllReadBtn');
+        const badge = document.getElementById('notifBadge');
+        if (markBtn && badge) {
+            markBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                badge.style.display = 'none';
+                document.querySelectorAll('.notif-item').forEach(item => {
+                    item.style.opacity = '0.6';
+                });
+            });
+        }
+    });
+</script>
 </body>
 
 

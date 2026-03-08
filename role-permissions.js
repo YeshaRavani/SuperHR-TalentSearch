@@ -1,53 +1,177 @@
-// Role-Based Access Control logic for Talent Search Platform
+// Role-Based Access Control and shared UI behavior for Talent Search Platform
 
-document.addEventListener('DOMContentLoaded', function () {
-    const userRole = localStorage.getItem('userRole');
-    const path = window.location.pathname;
+(function () {
+    function hideElements(selector) {
+        document.querySelectorAll(selector).forEach(function (el) {
+            el.style.display = 'none';
+        });
+    }
+
+    function normalizeNotificationStyles() {
+        if (document.getElementById('notification-unified-styles')) return;
+
+        var style = document.createElement('style');
+        style.id = 'notification-unified-styles';
+        style.textContent = [
+            '.notif-dropdown, .notification-panel {',
+            '  position: absolute;',
+            '  top: calc(100% + 14px);',
+            '  right: 0;',
+            '  width: min(340px, calc(100vw - 24px));',
+            '  max-height: 420px;',
+            '  overflow-y: auto;',
+            '  z-index: 1200;',
+            '  display: none;',
+            '  background: rgba(255, 255, 255, 0.98);',
+            '  backdrop-filter: blur(20px);',
+            '  border-radius: var(--radius-lg, 16px);',
+            '  padding: 20px;',
+            '  box-shadow: 0 10px 40px rgba(15, 31, 43, 0.08);',
+            '  border: 1px solid rgba(15, 31, 43, 0.08);',
+            '}',
+            '.notif-dropdown.active, .notif-dropdown.open, .notification-panel.active, .notification-panel.open {',
+            '  display: block;',
+            '}',
+            '.notification-wrap, .notif-wrap, .notif-wrapper { position: relative; }'
+        ].join('\n');
+        document.head.appendChild(style);
+    }
+
+    function findNotificationPairs() {
+        var pairs = [];
+        var seen = new Set();
+
+        var toggles = Array.from(document.querySelectorAll(
+            '#notifToggle, .notification-toggle, button[aria-label="Notifications"]'
+        ));
+
+        toggles.forEach(function (toggle) {
+            var panel = null;
+            var controls = toggle.getAttribute('aria-controls');
+            if (controls) panel = document.getElementById(controls);
+
+            if (!panel) {
+                var wrap = toggle.closest('.notification-wrap, .notif-wrap');
+                if (wrap) panel = wrap.querySelector('.notification-panel, .notif-dropdown, #notifDropdown');
+            }
+
+            if (!panel) {
+                var parent = toggle.parentElement;
+                if (parent) panel = parent.querySelector('.notification-panel, .notif-dropdown, #notifDropdown');
+            }
+
+            if (!panel) panel = document.getElementById('notifDropdown');
+            if (!panel) return;
+
+            var key = String(toggle) + '::' + String(panel);
+            if (seen.has(key)) return;
+            seen.add(key);
+
+            // Ensure absolute panel is positioned relative to its immediate container.
+            var host = panel.parentElement;
+            if (host && getComputedStyle(host).position === 'static') {
+                host.style.position = 'relative';
+            }
+
+            pairs.push({ toggle: toggle, panel: panel });
+        });
+
+        return pairs;
+    }
+
+    function closeAllPanels(pairs) {
+        pairs.forEach(function (pair) {
+            pair.panel.classList.remove('active', 'open');
+            pair.toggle.setAttribute('aria-expanded', 'false');
+        });
+    }
+
+    function initUnifiedNotifications() {
+        normalizeNotificationStyles();
+
+        var pairs = findNotificationPairs();
+        if (!pairs.length) return;
+
+        closeAllPanels(pairs);
+
+        pairs.forEach(function (pair) {
+            pair.toggle.setAttribute('aria-haspopup', 'true');
+            pair.toggle.setAttribute('aria-expanded', 'false');
+
+            // Capture-phase handler to prevent page-specific scripts from applying different behavior.
+            pair.toggle.addEventListener('click', function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                event.stopImmediatePropagation();
+
+                var isOpen = pair.panel.classList.contains('active') || pair.panel.classList.contains('open');
+                closeAllPanels(pairs);
+                if (!isOpen) {
+                    pair.panel.classList.add('active', 'open');
+                    pair.toggle.setAttribute('aria-expanded', 'true');
+                }
+            }, true);
+
+            pair.panel.addEventListener('click', function (event) {
+                event.stopPropagation();
+            }, true);
+        });
+
+        document.addEventListener('click', function () {
+            closeAllPanels(pairs);
+        }, true);
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') closeAllPanels(pairs);
+        });
+    }
 
     function enforceRBAC() {
-        // Helper functions for hiding elements
-        function hideElements(selector) {
-            document.querySelectorAll(selector).forEach(el => {
-                el.style.display = 'none';
-            });
-        }
+        var userRole = localStorage.getItem('userRole');
+        var path = window.location.pathname;
 
-        // 2. Head of Department Logic
         if (userRole === 'head') {
             hideElements('a[href*="apply"], button[data-action="apply"], .apply-btn');
-            document.querySelectorAll('.btn, button, a').forEach(btn => {
-                const text = btn.textContent.trim().toLowerCase();
+            document.querySelectorAll('.btn, button, a').forEach(function (btn) {
+                var text = btn.textContent.trim().toLowerCase();
                 if (text === 'apply' || text === 'interested' || text.includes('enroll')) {
                     btn.style.display = 'none';
                 }
             });
         }
 
-        // 3. Employee Logic
         if (userRole === 'employee') {
             hideElements('a[href="posted-opportunities.html"]');
             hideElements('a[href="add-opportunity.html"]');
-            document.querySelectorAll('.btn, button, a').forEach(btn => {
-                const text = btn.textContent.trim().toLowerCase();
+            document.querySelectorAll('.btn, button, a').forEach(function (btn) {
+                var text = btn.textContent.trim().toLowerCase();
                 if (text === 'post opportunity' || text === 'post new opportunity') {
                     btn.style.display = 'none';
                 }
             });
         }
+
+        if (userRole === 'admin') {
+            document.querySelectorAll('.btn, button, a').forEach(function (btn) {
+                var text = btn.textContent.trim().toLowerCase();
+                if (text === 'apply' || text === 'interested' || text.includes('enroll')) {
+                    btn.style.display = 'none';
+                }
+            });
+        }
+
+        if (userRole === 'employee' && path.includes('posted-opportunities.html')) {
+            window.location.href = 'opportunities.html';
+        }
     }
 
-    // 1. Initial Enforcement (covers Static HTML)
-    enforceRBAC();
-
-    // 2. Continuous Enforcement (covers Dynamic Javascript Rendering via opportunities_data.js)
-    const observer = new MutationObserver(() => {
+    document.addEventListener('DOMContentLoaded', function () {
         enforceRBAC();
+        initUnifiedNotifications();
+
+        var observer = new MutationObserver(function () {
+            enforceRBAC();
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
     });
-
-    observer.observe(document.body, { childList: true, subtree: true });
-
-    // 3. Routing Blocks
-    if (userRole === 'employee' && path.includes('posted-opportunities.html')) {
-        window.location.href = 'opportunities.html';
-    }
-});
+})();
