@@ -566,6 +566,26 @@
         padding: 40px 24px;
       }
     }
+
+    /* Profile Button */
+    .profile {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(15, 31, 43, 0.08);
+      display: grid;
+      place-items: center;
+      background: var(--white);
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-bounce);
+      text-decoration: none;
+    }
+
+    .profile:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--sky-200);
+    }
   </style>
 
   <link rel="stylesheet" href="chatbot.css" />
@@ -622,8 +642,12 @@
               </div>
             </div>
           </div>
-          <a href="login.html" class="btn btn-sky" style="padding: 0 20px;">Login</a>
-        </div>
+          <a href="profile.html" class="profile" title="User Profile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--sky-600)" stroke-width="2" style="width:20px; height:20px;">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </a>
       </div>
     </header>
 
