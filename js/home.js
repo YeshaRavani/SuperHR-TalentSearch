@@ -1,16 +1,11 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
 
             // Dynamically load user name
             try {
-                if (localStorage.getItem('access_token')) {
-                    if (window.api && window.api.get) {
-                        window.api.get('/users/me').then(user => {
-                            const nameSpan = document.getElementById('hero-user-name');
-                            if (nameSpan && user && user.full_name) {
-                                nameSpan.textContent = user.full_name; // Full name
-                            }
-                        }).catch(() => {});
-                    }
+                const user = await api.get('/user');
+                const nameSpan = document.getElementById('hero-user-name');
+                if (nameSpan && user && user.full_name) {
+                    nameSpan.textContent = user.full_name;
                 }
             } catch (e) {}
 

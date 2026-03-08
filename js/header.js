@@ -183,7 +183,7 @@
     const isLoggedIn = !!localStorage.getItem('access_token');
     if (isLoggedIn) {
       document.querySelectorAll('a[href="index (1).html"]:not([data-no-redirect])').forEach(link => {
-        link.href = 'home.html';
+        link.href = 'dashboard.html';
       });
     }
 

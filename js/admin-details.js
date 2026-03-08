@@ -61,7 +61,7 @@ async function handleAdminSignup(e) {
 
         // Auto-login after signup
         await api.login(user, pass);
-        window.location.href = 'admin-home.html';
+        window.location.href = 'admin-dashboard.html';
     } catch (err) {
         alert("Signup failed: " + err.message);
         submitBtn.disabled = false;
