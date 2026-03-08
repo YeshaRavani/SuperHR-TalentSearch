@@ -485,6 +485,110 @@
       transform: translateY(0);
     }
 
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 31, 43, 0.4);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      display: none;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .modal-overlay.active {
+      display: grid;
+    }
+
+    .modal-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 500px;
+      padding: 32px;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      animation: modalFadeIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes modalFadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: var(--ink-500);
+      transition: color var(--transition);
+      display: grid;
+      place-items: center;
+    }
+
+    .modal-close:hover {
+      color: var(--ink-900);
+    }
+
+    .modal-card h3 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--ink-900);
+      margin-bottom: 8px;
+    }
+
+    .modal-card p.mod-sub {
+      color: var(--ink-500);
+      margin-bottom: 24px;
+      font-size: 0.95rem;
+    }
+
+    /* Sent Invites Section */
+    .sent-invites-section {
+      margin-top: 40px;
+    }
+
+    .sent-invites-section h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--ink-900);
+    }
+
+    .invite-log-card {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      border: 1px solid rgba(15, 31, 43, 0.08);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .invite-log-info strong {
+      display: block;
+      color: var(--ink-900);
+      font-size: 1.05rem;
+    }
+
+    .invite-log-info span {
+      color: var(--ink-500);
+      font-size: 0.9rem;
+    }
+
     @media (max-width: 768px) {
       .grid-2 {
         grid-template-columns: 1fr;
@@ -500,6 +604,10 @@
       }
     }
   </style>
+
+  <link rel="stylesheet" href="chatbot.css" />
+
+  <script src="opportunities_data.js"></script>
 </head>
 
 <body>
@@ -513,6 +621,35 @@
   </div>
 
   <div class="page-wrap">
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="inviteModal">
+      <div class="modal-card">
+        <button class="modal-close" onclick="closeInviteModal()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <h3>Send Invite to <span id="modal-person-name" style="color:var(--sky-600)"></span></h3>
+        <p class="mod-sub">Fill out the details below to request a discussion.</p>
+
+        <form onsubmit="event.preventDefault(); submitInviteForm();">
+          <div class="form-group">
+            <label for="invite-topic">Topic of Discussion</label>
+            <input id="invite-topic" type="text" placeholder="e.g. Startup strategy guidance" required />
+          </div>
+          <div class="form-group">
+            <label for="invite-msg">Message (Optional)</label>
+            <textarea id="invite-msg" placeholder="Hi, I would like to discuss..."
+              style="min-height:100px; padding:12px 16px; border-radius:12px; border:1px solid rgba(15,31,43,0.15); width:100%; font-family:inherit; font-size:1rem;"></textarea>
+          </div>
+          <button type="submit" class="btn btn-sky" style="width:100%; margin-top:8px;" id="modal-submit-btn">Send
+            Invitation</button>
+        </form>
+      </div>
+    </div>
+
     <header class="topbar" id="navbar">
       <div class="nav">
         <div class="logo">
@@ -524,6 +661,7 @@
           <a href="index (1).html">Home</a>
           <a href="opportunities.html">Opportunities</a>
           <a href="posted-opportunities.html">Posted Opportunities</a>
+          <a href="community.html">Community</a>
           <a href="aboutus.html">About Us</a>
         </nav>
         <div class="nav-actions">
@@ -541,7 +679,7 @@
       <section class="form-card">
         <h2>Invite Details</h2>
 
-        <div class="form-group">
+        <div class="form-group" style="margin-bottom:0;">
           <label for="person-search">Search person</label>
           <div style="position: relative;">
             <input id="person-search" type="text" placeholder="Type a name or role"
@@ -554,32 +692,14 @@
           </div>
           <div class="people-list" id="people-list"></div>
         </div>
+      </section>
 
-        <div class="form-group">
-          <label for="meeting-date">Meeting date</label>
-          <input id="meeting-date" type="date" />
+      <section class="sent-invites-section">
+        <h3>My Sent Invitations</h3>
+        <div id="sent-invites-container">
+          <!-- Logs injected here -->
+          <div style="color:var(--ink-500); font-size:0.95rem;" id="empty-invites-msg">No invitations sent yet.</div>
         </div>
-
-        <div class="grid-2">
-          <div class="form-group">
-            <label for="meeting-start">Start time</label>
-            <input id="meeting-start" type="time" />
-          </div>
-
-          <div class="form-group">
-            <label for="meeting-end">End time</label>
-            <input id="meeting-end" type="time" />
-          </div>
-        </div>
-
-        <button class="btn btn-sky" id="invite-btn" style="width: 100%; margin-top: 16px;">
-          Send Invite
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="22" y1="2" x2="11" y2="13"></line>
-            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-          </svg>
-        </button>
-        <div class="invite-status" id="invite-status">✓ Invite sent successfully</div>
       </section>
     </main>
   </div>
@@ -624,10 +744,18 @@
           return;
         }
 
-        filtered.forEach(person => {
+        filtered.forEach((person, index) => {
           const initials = person.name.split(' ').map(n => n[0]).join('');
           const card = document.createElement("div");
           card.className = "person-card";
+
+          let actionHTML = '';
+          if (person.status === 'Invite Sent') {
+            actionHTML = `<span class="badge" style="background:#ecfdf5; color:#10b981; border-color:#d1fae5;">Invite Sent</span>`;
+          } else {
+            actionHTML = `<button class="btn btn-sky" style="height:36px; padding:0 16px; font-size:0.85rem;" onclick="openInviteModal(${index})">Send Invite</button>`;
+          }
+
           card.innerHTML = `
                         <div class="person-info">
                             <div class="person-avatar">${initials}</div>
@@ -636,34 +764,75 @@
                                 <span>${person.role}</span>
                             </div>
                         </div>
-                        <span class="badge ${person.statusClass}">${person.status}</span>
+                        <div style="display:flex; align-items:center; gap:12px;">
+                           ${person.status !== 'Invite Sent' && person.status !== 'Available' ? `<span class="badge ${person.statusClass}">${person.status}</span>` : ''}
+                           ${actionHTML}
+                        </div>
                     `;
-          card.addEventListener("click", () => {
-            searchInput.value = person.name;
-            peopleList.innerHTML = ""; // Hide list after selection
-          });
           peopleList.appendChild(card);
         });
       }
 
       renderPeople("");
       searchInput.addEventListener("input", e => renderPeople(e.target.value));
-      searchInput.addEventListener("focus", e => renderPeople(e.target.value));
 
-      const inviteButton = document.getElementById("invite-btn");
-      const inviteStatus = document.getElementById("invite-status");
+      // Modal Logic exposing globally
+      let selectedPersonIndex = null;
 
-      inviteButton.addEventListener("click", () => {
-        inviteButton.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg> Sending...';
-        inviteButton.style.opacity = '0.8';
+      window.openInviteModal = function (index) {
+        selectedPersonIndex = index;
+        document.getElementById('modal-person-name').textContent = people[index].name;
+        document.getElementById('invite-topic').value = '';
+        document.getElementById('invite-msg').value = '';
+        document.getElementById('inviteModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+      };
+
+      window.closeInviteModal = function () {
+        document.getElementById('inviteModal').classList.remove('active');
+        document.body.style.overflow = 'auto';
+        selectedPersonIndex = null;
+      };
+
+      window.submitInviteForm = function () {
+        if (selectedPersonIndex === null) return;
+
+        const btn = document.getElementById('modal-submit-btn');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = 'Sending...';
+        btn.style.opacity = '0.8';
 
         setTimeout(() => {
-          inviteButton.innerHTML = 'Send Invite <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>';
-          inviteButton.style.opacity = '1';
-          inviteStatus.classList.add('show');
-          setTimeout(() => inviteStatus.classList.remove('show'), 3000);
-        }, 1000);
-      });
+          // Mock state
+          const person = people[selectedPersonIndex];
+          person.status = 'Invite Sent';
+          person.statusClass = '';
+
+          // Log logic
+          const topic = document.getElementById('invite-topic').value;
+          const container = document.getElementById('sent-invites-container');
+          const emptyMsg = document.getElementById('empty-invites-msg');
+          if (emptyMsg) emptyMsg.remove();
+
+          const logItem = document.createElement('div');
+          logItem.className = 'invite-log-card';
+          logItem.innerHTML = `
+              <div class="invite-log-info">
+                <strong>${person.name}</strong>
+                <span>Topic: ${topic}</span>
+              </div>
+              <span class="badge" style="background:#ecfdf5; color:#10b981; border-color:#d1fae5;">Invite Sent</span>
+            `;
+          container.prepend(logItem);
+
+          // Close and reset
+          btn.innerHTML = originalText;
+          btn.style.opacity = '1';
+          closeInviteModal();
+          renderPeople(searchInput.value); // Re-render to show updated badge
+        }, 800);
+      };
+
     });
   </script>
 
@@ -686,6 +855,9 @@
       }
     });
   </script>
+
+  <script src="chatbot.js"></script>
+  <script src="role-permissions.js"></script>
 </body>
 
 

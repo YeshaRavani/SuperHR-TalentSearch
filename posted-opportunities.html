@@ -648,7 +648,27 @@
         justify-content: flex-start;
       }
     }
+
+    /* Opportunity Expiration Badge */
+    .opportunity-expires {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin: 12px 0;
+      color: #ef4444;
+      /* Clean red */
+      font-size: 1rem;
+      font-weight: 700;
+      background: #fef2f2;
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      border: 1px solid #fca5a5;
+    }
   </style>
+
+  <link rel="stylesheet" href="chatbot.css" />
+
+  <script src="opportunities_data.js"></script>
 </head>
 
 <body>
@@ -673,6 +693,7 @@
           <a href="index (1).html">Home</a>
           <a href="opportunities.html">Opportunities</a>
           <a href="posted-opportunities.html" class="active">Posted Opportunities</a>
+          <a href="community.html">Community</a>
           <a href="aboutus.html">About Us</a>
         </nav>
         <div class="nav-actions">
@@ -714,6 +735,15 @@
       <div class="opportunity-card">
         <div class="opportunity-head">
           <h2 class="opportunity-title">Campus Sustainability Sprint</h2>
+
+          <div class="opportunity-expires">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            Expires in 5 Days
+          </div>
+
           <div class="opportunity-meta">
             <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
@@ -732,7 +762,15 @@
 
         <div class="grid">
           <div class="panel">
-            <h4>🔥 Interested (3)</h4>
+            <h4>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                style="color:var(--sky-600)">
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                </path>
+              </svg>
+              Interested (3)
+            </h4>
 
             <div class="person-row">
               <div class="person">
@@ -746,8 +784,8 @@
                 <div class="match-score">92% Match</div>
                 <div class="match-bar"><span style="width:92%"></span></div>
                 <div class="actions">
-                  <button class="btn btn-sky" type="button">Invite</button>
-                  <button class="btn btn-secondary" type="button">Message</button>
+                  <button class="btn btn-sky action-invite" type="button">Invite</button>
+                  <button class="btn btn-secondary action-reject" type="button">Reject</button>
                 </div>
               </div>
             </div>
@@ -764,8 +802,8 @@
                 <div class="match-score">86% Match</div>
                 <div class="match-bar"><span style="width:86%"></span></div>
                 <div class="actions">
-                  <button class="btn btn-sky" type="button">Invite</button>
-                  <button class="btn btn-secondary" type="button">Message</button>
+                  <button class="btn btn-sky action-invite" type="button">Invite</button>
+                  <button class="btn btn-secondary action-reject" type="button">Reject</button>
                 </div>
               </div>
             </div>
@@ -782,15 +820,22 @@
                 <div class="match-score">78% Match</div>
                 <div class="match-bar"><span style="width:78%"></span></div>
                 <div class="actions">
-                  <button class="btn btn-sky" type="button">Invite</button>
-                  <button class="btn btn-secondary" type="button">Message</button>
+                  <button class="btn btn-sky action-invite" type="button">Invite</button>
+                  <button class="btn btn-secondary action-reject" type="button">Reject</button>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="panel">
-            <h4>✅ Enrolled (2)</h4>
+            <h4>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                style="color:#16a34a">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              Enrolled (2)
+            </h4>
 
             <div class="person-row">
               <div class="person">
@@ -805,9 +850,7 @@
                 <div class="match-score" style="color:#16a34a;">95% Match</div>
                 <div class="match-bar"><span
                     style="width:95%; background: linear-gradient(90deg, #4ade80, #16a34a);"></span></div>
-                <div class="actions">
-                  <button class="btn btn-secondary" type="button">Message</button>
-                </div>
+
               </div>
             </div>
 
@@ -824,9 +867,7 @@
                 <div class="match-score" style="color:#16a34a;">90% Match</div>
                 <div class="match-bar"><span
                     style="width:90%; background: linear-gradient(90deg, #4ade80, #16a34a);"></span></div>
-                <div class="actions">
-                  <button class="btn btn-secondary" type="button">Message</button>
-                </div>
+
               </div>
             </div>
           </div>
@@ -836,6 +877,15 @@
       <div class="opportunity-card">
         <div class="opportunity-head">
           <h2 class="opportunity-title">Design for Impact Workshop</h2>
+
+          <div class="opportunity-expires">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            Expires in 8 Days
+          </div>
+
           <div class="opportunity-meta">
             <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
@@ -854,7 +904,15 @@
 
         <div class="grid">
           <div class="panel">
-            <h4>🔥 Interested (2)</h4>
+            <h4>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                style="color:var(--sky-600)">
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                </path>
+              </svg>
+              Interested (2)
+            </h4>
 
             <div class="person-row">
               <div class="person">
@@ -868,8 +926,8 @@
                 <div class="match-score">89% Match</div>
                 <div class="match-bar"><span style="width:89%"></span></div>
                 <div class="actions">
-                  <button class="btn btn-sky" type="button">Invite</button>
-                  <button class="btn btn-secondary" type="button">Message</button>
+                  <button class="btn btn-sky action-invite" type="button">Invite</button>
+                  <button class="btn btn-secondary action-reject" type="button">Reject</button>
                 </div>
               </div>
             </div>
@@ -886,15 +944,22 @@
                 <div class="match-score">81% Match</div>
                 <div class="match-bar"><span style="width:81%"></span></div>
                 <div class="actions">
-                  <button class="btn btn-sky" type="button">Invite</button>
-                  <button class="btn btn-secondary" type="button">Message</button>
+                  <button class="btn btn-sky action-invite" type="button">Invite</button>
+                  <button class="btn btn-secondary action-reject" type="button">Reject</button>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="panel">
-            <h4>✅ Enrolled (1)</h4>
+            <h4>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                style="color:#16a34a">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              Enrolled (1)
+            </h4>
 
             <div class="person-row">
               <div class="person">
@@ -909,9 +974,7 @@
                 <div class="match-score" style="color:#16a34a;">94% Match</div>
                 <div class="match-bar"><span
                     style="width:94%; background: linear-gradient(90deg, #4ade80, #16a34a);"></span></div>
-                <div class="actions">
-                  <button class="btn btn-secondary" type="button">Message</button>
-                </div>
+
               </div>
             </div>
           </div>
@@ -967,8 +1030,87 @@
           }
         });
       }
+      // --- Candidate Action Buttons Logic ---
+      document.querySelectorAll('.action-invite').forEach(btn => {
+        btn.addEventListener('click', function (e) {
+          const personRow = e.target.closest('.person-row');
+          if (!personRow) return;
+
+          const panel = personRow.closest('.panel');
+          const grid = personRow.closest('.grid');
+          if (!panel || !grid) return;
+
+          // Get enrolled panel (the second panel in the grid)
+          const panels = grid.querySelectorAll('.panel');
+          const enrolledPanel = panels[1];
+          if (!enrolledPanel) return;
+
+          // Remove action buttons since they are enrolled
+          const actionsDiv = personRow.querySelector('.actions');
+          if (actionsDiv) actionsDiv.remove();
+
+          // Update styling to match Enrolled format
+          const avatar = personRow.querySelector('.avatar');
+          if (avatar) {
+            avatar.style.background = 'linear-gradient(135deg, #f0fdf4, #bbf7d0)';
+            avatar.style.color = '#16a34a';
+          }
+
+          const matchScore = personRow.querySelector('.match-score');
+          if (matchScore) matchScore.style.color = '#16a34a';
+
+          const matchBarSpan = personRow.querySelector('.match-bar span');
+          if (matchBarSpan) {
+            matchBarSpan.style.background = 'linear-gradient(90deg, #4ade80, #16a34a)';
+          }
+
+          // Move the DOM element to the enrolled panel
+          enrolledPanel.appendChild(personRow);
+
+          // Update Header Counters
+          updateCounters(grid);
+        });
+      });
+
+      document.querySelectorAll('.action-reject').forEach(btn => {
+        btn.addEventListener('click', function (e) {
+          const personRow = e.target.closest('.person-row');
+          if (!personRow) return;
+
+          const grid = personRow.closest('.grid');
+
+          // Remove from DOM entirely
+          personRow.remove();
+
+          // Update Header Counters
+          if (grid) updateCounters(grid);
+        });
+      });
+
+      function updateCounters(grid) {
+        const panels = grid.querySelectorAll('.panel');
+        if (panels.length >= 2) {
+          const interestedPanel = panels[0];
+          const enrolledPanel = panels[1];
+
+          const headerInterested = interestedPanel.querySelector('h4');
+          const headerEnrolled = enrolledPanel.querySelector('h4');
+
+          if (headerInterested) {
+            const count = interestedPanel.querySelectorAll('.person-row').length;
+            headerInterested.innerHTML = headerInterested.innerHTML.replace(/Interested \(\d+\)/, `Interested (${count})`);
+          }
+          if (headerEnrolled) {
+            const count = enrolledPanel.querySelectorAll('.person-row').length;
+            headerEnrolled.innerHTML = headerEnrolled.innerHTML.replace(/Enrolled \(\d+\)/, `Enrolled (${count})`);
+          }
+        }
+      }
     });
   </script>
+
+  <script src="chatbot.js"></script>
+<script src="role-permissions.js"></script>
 </body>
 
 

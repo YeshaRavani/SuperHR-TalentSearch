@@ -113,25 +113,39 @@
     }
 
     .icon-btn {
-      width: 40px;
-      height: 40px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
-      border: 1px solid rgba(16, 30, 43, 0.08);
+      border: 1px solid rgba(15, 31, 43, 0.08);
+      background: var(--white);
       display: grid;
       place-items: center;
-      background: var(--white);
-      box-shadow: var(--shadow-xs);
+      cursor: pointer;
+      transition: all var(--transition-bounce);
       position: relative;
+    }
+
+    .icon-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--sky-200);
+      color: var(--sky-600);
+    }
+
+    .icon-btn svg {
+      width: 22px;
+      height: 22px;
     }
 
     .icon-dot {
       width: 10px;
       height: 10px;
       border-radius: 50%;
-      background: var(--sky-500);
+      background: #ff4757;
+      box-shadow: 0 0 0 2px var(--white);
       position: absolute;
-      top: 11px;
-      right: 11px;
+      top: 10px;
+      right: 10px;
     }
 
     .notification-wrap {
@@ -231,17 +245,50 @@
     .section {
       max-width: 1200px;
       margin: 0 auto;
+      margin-bottom: 40px;
     }
 
-    /* Profile card (use existing tokens for consistency) */
-    .profile-card {
+    /* Hero Profile Card */
+    .hero-card {
       background: var(--white);
       border-radius: var(--radius-lg);
-      padding: 28px;
+      padding: 40px;
       box-shadow: var(--shadow-sm);
       display: flex;
-      gap: 28px;
-      align-items: flex-start;
+      flex-direction: column;
+      gap: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-shape {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      z-index: 0;
+      opacity: 0.5;
+    }
+
+    .hero-shape.shape-1 {
+      top: -100px;
+      right: -100px;
+      width: 300px;
+      height: 300px;
+      background: var(--sky-200);
+    }
+
+    .hero-shape.shape-2 {
+      bottom: -60px;
+      left: 10%;
+      width: 200px;
+      height: 200px;
+      background: #e0f2fe;
+      /* Light blue */
+    }
+
+    .profile-content-wrapper {
+      position: relative;
+      z-index: 1;
     }
 
     .profile-avatar {
@@ -250,13 +297,13 @@
       border-radius: 50%;
       object-fit: cover;
       box-shadow: var(--shadow-xs);
-      border: 4px solid rgba(158, 202, 225, 0.18);
+      border: 4px solid var(--white);
       cursor: pointer;
     }
 
     .profile-grid {
       display: flex;
-      gap: 24px;
+      gap: 32px;
       align-items: flex-start;
     }
 
@@ -264,7 +311,15 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 16px;
+    }
+
+    .profile-details h2 {
+      font-size: 2.2rem;
+      margin: 0 0 4px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--ink-900);
     }
 
     .meta {
@@ -319,6 +374,38 @@
       font-size: 0.95rem;
     }
 
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .stat-card {
+      background: var(--white);
+      border: 1px solid rgba(16, 30, 43, 0.08);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      box-shadow: var(--shadow-xs);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .stat-value {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--sky-600);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--ink-500);
+      font-weight: 500;
+    }
+
     .card-actions {
       display: flex;
       gap: 10px;
@@ -335,6 +422,19 @@
       border: 1px solid rgba(16, 30, 43, 0.08);
       font-size: 1rem;
       width: 100%;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--ink-700);
     }
 
     .edit-skill-input {
@@ -354,17 +454,134 @@
     }
 
     @media (max-width:980px) {
-      .profile-card {
+      .hero-card {
+        padding: 24px;
+      }
+
+      .profile-grid {
         flex-direction: column;
         align-items: center;
         text-align: center;
+        gap: 20px;
       }
 
       .profile-details {
         align-items: center;
       }
+
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (min-width: 981px) {
+      .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    /* Opportunity Cards (Mirrored from Opportunities Hub) */
+    .opportunities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+      margin-top: 16px;
+    }
+
+    .opportunity-card {
+      background: var(--white);
+      border: 1px solid rgba(16, 30, 43, 0.08);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .opportunity-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(16, 30, 43, 0.08);
+      border-color: rgba(158, 202, 225, 0.4);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .opportunity-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0;
+      color: var(--ink-900);
+      line-height: 1.3;
+    }
+
+    .category-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    .badge-event {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+
+    .badge-initiative {
+      background: #e0e7ff;
+      color: #4338ca;
+    }
+
+    .badge-workshop {
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+    .opportunity-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.85rem;
+      color: var(--ink-500);
+      align-items: center;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Section Headers */
+    .section-title {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--ink-900);
+      margin: 0 0 4px;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      color: var(--ink-500);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
     }
   </style>
+
+  <link rel="stylesheet" href="chatbot.css" />
+
+  <script src="opportunities_data.js"></script>
 </head>
 
 <body>
@@ -379,6 +596,7 @@
           <a href="index (1).html">Home</a>
           <a href="opportunities.html">Opportunities</a>
           <a href="posted-opportunities.html">Posted Opportunities</a>
+          <a href="community.html">Community</a>
           <a href="aboutus.html">About Us</a>
         </nav>
         <div class="nav-actions">
@@ -386,7 +604,10 @@
             <button class="icon-btn notification-toggle" aria-label="Notifications" aria-haspopup="true"
               aria-expanded="false">
               <span class="icon-dot"></span>
-              <span>🔔</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
             </button>
             <div class="notification-panel" role="menu" aria-label="Notifications">
               <h3 class="notification-head">Notifications</h3>
@@ -412,83 +633,362 @@
 
     <main>
       <section class="section">
-        <div class="profile-card" id="profileCard">
-          <div class="profile-grid">
-            <div>
-              <img id="profileAvatar" class="profile-avatar" src="rushilprofile.jpeg" alt="Profile avatar"
-                title="Click to change" />
-              <input id="imageInput" type="file" accept="image/*" class="hidden" />
-            </div>
+        <div class="hero-card" id="profileCard">
+          <div class="hero-shape shape-1"></div>
+          <div class="hero-shape shape-2"></div>
 
-            <div class="profile-details">
-              <div>
-                <h2 id="viewName">Rushil Gargash</h2>
-                <input id="inputName" class="text-input hidden" />
-                <div class="meta" id="viewInstitution">Plaksha University</div>
-                <input id="inputInstitution" class="text-input hidden" />
-                <div class="meta" id="viewTeam">Team: Product Innovation Lab</div>
-                <input id="inputTeam" class="text-input hidden" />
-                <div class="meta">ID: <span id="viewId" class="id">U20240161</span></div>
-                <input id="inputId" class="text-input hidden" />
+          <div class="profile-content-wrapper">
+            <div class="profile-grid">
+              <div style="display:flex; flex-direction:column; align-items:center; gap:12px;">
+                <img id="profileAvatar" class="profile-avatar" src="rushilprofile.jpeg" alt="Profile avatar"
+                  title="Click to change" />
+                <button id="changePhotoBtn" class="notif-btn secondary hidden"
+                  style="padding:6px 14px; font-size:0.85rem;">Change Photo</button>
+                <input id="imageInput" type="file" accept="image/*" class="hidden" />
               </div>
 
-              <div class="skills-wrap">
-                <div style="display:flex; align-items:center; gap:10px;">
-                  <strong>Skills</strong>
-                  <button id="editSkillsBtn" class="notif-btn secondary" style="padding:6px 10px;">Edit Skills</button>
-                </div>
-                <div class="skills-list" id="viewSkills">
-                  <span class="skill-pill">Python</span>
-                  <span class="skill-pill">UX Design</span>
-                  <span class="skill-pill">Data Viz</span>
+              <div class="profile-details">
+                <div id="viewModeDetails">
+                  <h2 id="viewName">Rushil Gargash</h2>
+                  <div class="meta" id="viewInstitution" style="font-size:1.1rem; color:var(--ink-700);">Plaksha
+                    University</div>
+                  <div class="meta">Team: <span id="viewTeam">Product Innovation Lab</span></div>
+                  <div class="meta">Role: Student</div>
+                  <div class="meta">Member Since: Jan 2024</div>
+                  <div class="meta">ID: <span id="viewId" class="id">U20240161</span></div>
                 </div>
 
-                <div id="editSkillsArea" class="hidden">
-                  <div id="editSkillsList" style="display:flex; gap:8px; flex-wrap:wrap;"></div>
-                  <div style="margin-top:8px; display:flex; gap:8px; align-items:center;">
-                    <input id="skillInput" class="edit-skill-input" placeholder="Add a skill and press Enter" />
+                <div id="editModeDetails" class="hidden" style="width:100%; max-width:400px; margin-bottom:16px;">
+                  <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input id="inputName" class="text-input" />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">University / Organization</label>
+                    <input id="inputInstitution" class="text-input" />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Team / Department</label>
+                    <input id="inputTeam" class="text-input" />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Role</label>
+                    <input class="text-input" value="Student" readonly
+                      style="background:var(--sky-50); color:var(--ink-500); cursor:not-allowed;" />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">User ID</label>
+                    <input id="inputId" class="text-input" readonly
+                      style="background:var(--sky-50); color:var(--ink-500); cursor:not-allowed;" />
                   </div>
                 </div>
-              </div>
 
-              <div class="points">
-                <div>
-                  <div class="label">Points Accumulated</div>
-                  <div class="value" id="pointsValue">1,420</div>
+                <div style="margin-top: 16px; margin-bottom: 24px; width: 100%;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                    <span style="font-size:0.9rem; font-weight:600; color:var(--ink-900);">Profile Completion</span>
+                    <span style="font-size:0.9rem; font-weight:700; color:var(--sky-600);">80%</span>
+                  </div>
+                  <div style="height:8px; background:var(--sky-100); border-radius:4px; overflow:hidden;">
+                    <div
+                      style="height:100%; width:80%; background:linear-gradient(90deg, var(--sky-400), var(--sky-600)); border-radius:4px;">
+                    </div>
+                  </div>
                 </div>
-              </div>
 
-              <div class="card-actions">
-                <button id="editBtn" class="primary-btn">Edit Profile</button>
-                <button id="saveBtn" class="primary-btn hidden">Save</button>
-                <button id="cancelBtn" class="notif-btn secondary hidden">Cancel</button>
+                <div class="skills-wrap">
+                  <div style="display:flex; align-items:center; gap:10px;">
+                    <strong style="color:var(--ink-900);">Skills</strong>
+                    <button id="editSkillsBtn" class="notif-btn secondary" style="padding:4px 12px; font-weight:500;">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        style="margin-right:4px; vertical-align:-2px;">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                      </svg>
+                      Edit Skills
+                    </button>
+                    <button id="addSkillMockBtn" class="notif-btn secondary"
+                      style="padding:4px 12px; font-weight:500; border-style:dashed;">+ Add Skill</button>
+                  </div>
+                  <div style="margin-top:4px; margin-bottom:12px; font-size:0.9rem; color:var(--ink-500);">Skills help
+                    match you with relevant opportunities.</div>
+                  <div class="skills-list" id="viewSkills">
+                    <span class="skill-pill">Python</span>
+                    <span class="skill-pill">UX Design</span>
+                    <span class="skill-pill">Data Visualization</span>
+                  </div>
+
+                  <div id="editSkillsArea" class="hidden">
+                    <div id="editSkillsList" style="display:flex; gap:8px; flex-wrap:wrap;"></div>
+                    <div style="margin-top:8px; display:flex; gap:8px; align-items:center;">
+                      <input id="skillInput" class="edit-skill-input" placeholder="Add a skill and press Enter" />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="skills-wrap" style="border-top: 1px solid rgba(16, 30, 43, 0.05); padding-top: 24px;">
+                  <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+                    <strong style="color:var(--ink-900);">Preferred Domains</strong>
+                  </div>
+                  <div class="skills-list">
+                    <span class="skill-pill">AI & Machine Learning</span>
+                    <span class="skill-pill">Sustainability</span>
+                    <span class="skill-pill">Product Design</span>
+                    <span class="skill-pill">Data Science</span>
+                    <span class="skill-pill">Entrepreneurship</span>
+                  </div>
+                </div>
+
+                <div class="stats-grid" style="border-top: 1px solid rgba(16, 30, 43, 0.05); padding-top: 24px;">
+                  <div class="stat-card">
+                    <div class="stat-value" id="pointsValue">1,420</div>
+                    <div class="stat-label">Points Earned</div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-value">6</div>
+                    <div class="stat-label">Opportunities Joined</div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">Workshops Attended</div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-value">24</div>
+                    <div class="stat-label">Community Messages</div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-value">850</div>
+                    <div class="stat-label">Incentive Points</div>
+                    <div style="font-size:0.75rem; color:var(--ink-400); margin-top:4px;">Earned through events,
+                      initiatives, and workshops.</div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-value">#12</div>
+                    <div class="stat-label">Leaderboard Rank</div>
+                    <div style="font-size:0.75rem; color:var(--ink-400); margin-top:4px;">Among all active participants.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card-actions" style="margin-top:24px; gap:16px;">
+                  <button id="editBtn" class="login-btn">Edit Profile</button>
+                  <button id="saveBtn" class="login-btn hidden">Save Changes</button>
+                  <button id="cancelBtn" class="notif-btn secondary hidden"
+                    style="height:40px; padding:0 24px; font-size:0.95rem; font-weight:600;">Cancel</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="section" style="margin-top:28px;">
-        <div class="profile-card" style="flex-direction:column; gap:16px;">
-          <div>
-            <h3 style="margin:0 0 6px;">Past Contributions</h3>
-            <div class="meta">Where you have worked or contributed in the past</div>
+      <section class="section" style="margin-top:40px;">
+        <h3 class="section-title">Achievements</h3>
+        <p class="section-subtitle">Your awarded badges and platform recognitions</p>
+
+        <div style="display:flex; flex-wrap:wrap; gap:16px;">
+          <div
+            style="background:var(--white); border:1px solid rgba(16, 30, 43, 0.08); border-radius:var(--radius-lg); padding:16px 20px; display:flex; align-items:center; gap:12px; box-shadow:var(--shadow-sm);">
+            <div
+              style="width:40px; height:40px; border-radius:50%; background:#fef08a; color:#a16207; display:grid; place-items:center;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="8" r="7"></circle>
+                <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+              </svg>
+            </div>
+            <div style="font-weight:700; color:var(--ink-900);">Top Contributor</div>
           </div>
-          <div style="display:flex; flex-direction:column; gap:12px;">
+
+          <div
+            style="background:var(--white); border:1px solid rgba(16, 30, 43, 0.08); border-radius:var(--radius-lg); padding:16px 20px; display:flex; align-items:center; gap:12px; box-shadow:var(--shadow-sm);">
             <div
-              style="padding:14px 16px; border-radius:14px; border:1px solid rgba(16,30,43,0.08); background:var(--sky-100);">
-              <strong>Campus Sustainability Sprint</strong>
-              <div class="meta">Role: Research Assistant • May 2024 – Aug 2024</div>
+              style="width:40px; height:40px; border-radius:50%; background:#dcfce7; color:#15803d; display:grid; place-items:center;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path
+                  d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+                </path>
+              </svg>
             </div>
+            <div style="font-weight:700; color:var(--ink-900);">Community Helper</div>
+          </div>
+
+          <div
+            style="background:var(--white); border:1px solid rgba(16, 30, 43, 0.08); border-radius:var(--radius-lg); padding:16px 20px; display:flex; align-items:center; gap:12px; box-shadow:var(--shadow-sm);">
             <div
-              style="padding:14px 16px; border-radius:14px; border:1px solid rgba(16,30,43,0.08); background:var(--sky-100);">
-              <strong>Design for Impact Workshop</strong>
-              <div class="meta">Role: UX Contributor • Jan 2024 – Mar 2024</div>
+              style="width:40px; height:40px; border-radius:50%; background:#e0e7ff; color:#4338ca; display:grid; place-items:center;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+              </svg>
             </div>
+            <div style="font-weight:700; color:var(--ink-900);">Workshop Champion</div>
+          </div>
+
+          <div
+            style="background:var(--white); border:1px solid rgba(16, 30, 43, 0.08); border-radius:var(--radius-lg); padding:16px 20px; display:flex; align-items:center; gap:12px; box-shadow:var(--shadow-sm);">
             <div
-              style="padding:14px 16px; border-radius:14px; border:1px solid rgba(16,30,43,0.08); background:var(--sky-100);">
-              <strong>Data Viz Mentorship</strong>
-              <div class="meta">Role: Data Visualization • Sep 2023 – Dec 2023</div>
+              style="width:40px; height:40px; border-radius:50%; background:#ffe4e6; color:#be123c; display:grid; place-items:center;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+              </svg>
+            </div>
+            <div style="font-weight:700; color:var(--ink-900);">Innovation Participant</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" style="margin-top:40px;">
+        <h3 class="section-title">Past Contributions</h3>
+        <p class="section-subtitle">Where you have worked or contributed in the past</p>
+
+        <div class="opportunities-grid">
+          <div class="opportunity-card">
+            <div class="card-header">
+              <h4 class="opportunity-title">Campus Sustainability Sprint</h4>
+              <span class="category-badge badge-initiative">Initiative</span>
+            </div>
+            <div class="opportunity-meta">
+              <div class="meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                Role: Research Assistant
+              </div>
+              <div class="meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                May 2024 – Aug 2024
+              </div>
+            </div>
+          </div>
+
+          <div class="opportunity-card">
+            <div class="card-header">
+              <h4 class="opportunity-title">Design for Impact Workshop</h4>
+              <span class="category-badge badge-workshop">Workshop</span>
+            </div>
+            <div class="opportunity-meta">
+              <div class="meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                Role: UX Contributor
+              </div>
+              <div class="meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                Jan 2024 – Mar 2024
+              </div>
+            </div>
+          </div>
+
+          <div class="opportunity-card">
+            <div class="card-header">
+              <h4 class="opportunity-title">Data Viz Mentorship</h4>
+              <span class="category-badge badge-event">Event</span>
+            </div>
+            <div class="opportunity-meta">
+              <div class="meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                Role: Data Visualization
+              </div>
+              <div class="meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                Sep 2023 – Dec 2023
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" style="margin-top:40px;">
+        <h3 class="section-title">Recent Activity</h3>
+        <p class="section-subtitle">Your latest actions across the platform</p>
+
+        <div
+          style="background:var(--white); border-radius:var(--radius-lg); padding:24px; box-shadow:var(--shadow-sm); border:1px solid rgba(16,30,43,0.08);">
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <div
+              style="display:flex; gap:12px; align-items:flex-start; padding-bottom:16px; border-bottom:1px solid rgba(16,30,43,0.05);">
+              <div
+                style="width:36px; height:36px; border-radius:50%; background:var(--sky-100); color:var(--sky-600); display:grid; place-items:center;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+              </div>
+              <div>
+                <div style="font-weight:600; color:var(--ink-900);">Joined <span style="color:var(--sky-500);">Design
+                    Thinking Workshop</span></div>
+                <div style="font-size:0.8rem; color:var(--ink-400); margin-top:4px;">2 hours ago</div>
+              </div>
+            </div>
+
+            <div
+              style="display:flex; gap:12px; align-items:flex-start; padding-bottom:16px; border-bottom:1px solid rgba(16,30,43,0.05);">
+              <div
+                style="width:36px; height:36px; border-radius:50%; background:var(--sky-100); color:var(--sky-600); display:grid; place-items:center;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path
+                    d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+                  </path>
+                </svg>
+              </div>
+              <div>
+                <div style="font-weight:600; color:var(--ink-900);">Commented in <span
+                    style="color:var(--sky-500);">#innovation-ideas</span></div>
+                <div style="font-size:0.8rem; color:var(--ink-400); margin-top:4px;">Yesterday</div>
+              </div>
+            </div>
+
+            <div
+              style="display:flex; gap:12px; align-items:flex-start; padding-bottom:16px; border-bottom:1px solid rgba(16,30,43,0.05);">
+              <div
+                style="width:36px; height:36px; border-radius:50%; background:var(--sky-100); color:var(--sky-600); display:grid; place-items:center;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+              </div>
+              <div>
+                <div style="font-weight:600; color:var(--ink-900);">Applied to <span style="color:var(--sky-500);">Data
+                    Science Mentorship</span></div>
+                <div style="font-size:0.8rem; color:var(--ink-400); margin-top:4px;">2 days ago</div>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:12px; align-items:flex-start;">
+              <div
+                style="width:36px; height:36px; border-radius:50%; background:var(--sky-100); color:var(--sky-600); display:grid; place-items:center;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+              </div>
+              <div>
+                <div style="font-weight:600; color:var(--ink-900);">Invited to <span
+                    style="color:var(--sky-500);">Sustainability Initiative</span></div>
+                <div style="font-size:0.8rem; color:var(--ink-400); margin-top:4px;">3 days ago</div>
+              </div>
             </div>
           </div>
         </div>
@@ -516,6 +1016,10 @@
       var saveBtn = document.getElementById('saveBtn');
       var cancelBtn = document.getElementById('cancelBtn');
       var editSkillsBtn = document.getElementById('editSkillsBtn');
+
+      var viewModeDetails = document.getElementById('viewModeDetails');
+      var editModeDetails = document.getElementById('editModeDetails');
+      var changePhotoBtn = document.getElementById('changePhotoBtn');
 
       var viewName = document.getElementById('viewName');
       var inputName = document.getElementById('inputName');
@@ -546,10 +1050,14 @@
         originalData.avatar = profileAvatar.src;
 
         // show inputs
-        viewName.classList.add('hidden'); inputName.classList.remove('hidden'); inputName.value = originalData.name;
-        viewInstitution.classList.add('hidden'); inputInstitution.classList.remove('hidden'); inputInstitution.value = originalData.institution;
-        viewTeam.classList.add('hidden'); inputTeam.classList.remove('hidden'); inputTeam.value = originalData.team;
-        viewId.parentElement.classList.add('hidden'); inputId.classList.remove('hidden'); inputId.value = originalData.id;
+        viewModeDetails.classList.add('hidden');
+        editModeDetails.classList.remove('hidden');
+        changePhotoBtn.classList.remove('hidden');
+
+        inputName.value = originalData.name;
+        inputInstitution.value = originalData.institution;
+        inputTeam.value = originalData.team;
+        inputId.value = originalData.id;
 
         // skills
         viewSkills.classList.add('hidden'); editSkillsArea.classList.remove('hidden');
@@ -564,27 +1072,21 @@
           viewName.textContent = inputName.value.trim() || '—';
           viewInstitution.textContent = inputInstitution.value.trim() || '—';
           viewTeam.textContent = inputTeam.value.trim() || '—';
-          viewId.textContent = inputId.value.trim() || '—';
+          // User ID remains unchanged as it's readonly
           // skills
           var skills = Array.from(editSkillsList.querySelectorAll('.edit-skill-tag')).map(function (t) { return t.dataset.value; });
           viewSkills.innerHTML = '';
           skills.forEach(function (s) { var sp = document.createElement('span'); sp.className = 'skill-pill'; sp.textContent = s; viewSkills.appendChild(sp); });
         } else {
           // revert
-          viewName.textContent = originalData.name;
-          viewInstitution.textContent = originalData.institution;
-          viewTeam.textContent = originalData.team;
-          viewId.textContent = originalData.id;
           profileAvatar.src = originalData.avatar;
           viewSkills.innerHTML = '';
           originalData.skills.forEach(function (s) { var sp = document.createElement('span'); sp.className = 'skill-pill'; sp.textContent = s; viewSkills.appendChild(sp); });
         }
 
-        // toggle visibility back
-        viewName.classList.remove('hidden'); inputName.classList.add('hidden');
-        viewInstitution.classList.remove('hidden'); inputInstitution.classList.add('hidden');
-        viewTeam.classList.remove('hidden'); inputTeam.classList.add('hidden');
-        viewId.parentElement.classList.remove('hidden'); inputId.classList.add('hidden');
+        viewModeDetails.classList.remove('hidden');
+        editModeDetails.classList.add('hidden');
+        changePhotoBtn.classList.add('hidden');
         viewSkills.classList.remove('hidden'); editSkillsArea.classList.add('hidden');
 
         editBtn.classList.remove('hidden'); saveBtn.classList.add('hidden'); cancelBtn.classList.add('hidden');
@@ -606,6 +1108,7 @@
 
       // avatar change
       profileAvatar.addEventListener('click', function () { if (saveBtn.classList.contains('hidden')) return; imageInput.click(); });
+      changePhotoBtn.addEventListener('click', function () { imageInput.click(); });
       imageInput.addEventListener('change', function (e) { var file = e.target.files && e.target.files[0]; if (!file) return; var reader = new FileReader(); reader.onload = function (ev) { profileAvatar.src = ev.target.result; }; reader.readAsDataURL(file); });
 
       editBtn.addEventListener('click', enterEditMode);
@@ -635,6 +1138,9 @@
       }
     });
   </script>
+
+  <script src="chatbot.js"></script>
+  <script src="role-permissions.js"></script>
 </body>
 
 </html>

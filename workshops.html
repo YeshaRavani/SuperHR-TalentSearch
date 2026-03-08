@@ -672,6 +672,10 @@
       }
     }
   </style>
+
+  <link rel="stylesheet" href="chatbot.css" />
+
+  <script src="opportunities_data.js"></script>
 </head>
 
 <body>
@@ -693,10 +697,11 @@
           Talent Search
         </div>
         <nav class="menu">
-          <a href="index (1).html">Home</a>
-          <a href="opportunities.html" class="active">Opportunities</a>
-          <a href="posted-opportunities.html">Posted Opportunities</a>
-          <a href="aboutus.html">About Us</a>
+            <a href="index (1).html">Home</a>
+            <a href="opportunities.html" class="active">Opportunities</a>
+            <a href="posted-opportunities.html">Posted Opportunities</a>
+            <a href="community.html">Community</a>
+            <a href="aboutus.html">About Us</a>
         </nav>
         <div class="nav-actions">
           <div style="position: relative;">
@@ -740,120 +745,19 @@
           action.</p>
       </section>
 
-      <section class="initiatives-grid">
-        <article class="initiative-card reveal">
-          <div class="card-image" aria-hidden="true">
-            <div class="card-icon-overlay"><svg width="32" height="32" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2">
-                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-              </svg></div>
-          </div>
-          <div class="card-content">
-            <h3>Design Thinking Fundamentals</h3>
-            <p>Build user-first problem-solving skills with guided exercises and team critique.</p>
-            <span class="tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <polyline points="12 6 12 12 16 14"></polyline>
-              </svg> Tue, 3:30 PM</span>
-          </div>
-        </article>
-        <article class="initiative-card reveal delay-1" style="transition-delay: 0.1s;">
-          <div class="card-image" aria-hidden="true" style="background: linear-gradient(140deg, #eff6ff, #bfdbfe);">
-            <div class="card-icon-overlay" style="color:#3b82f6;"><svg width="32" height="32" viewBox="0 0 24 24"
-                fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-              </svg></div>
-          </div>
-          <div class="card-content">
-            <h3>Public Speaking Lab</h3>
-            <p>Practice storytelling and speaking confidence with live feedback in a small group format.</p>
-            <span class="tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <polyline points="12 6 12 12 16 14"></polyline>
-              </svg> Thu, 5:30 PM</span>
-          </div>
-        </article>
-        <article class="initiative-card reveal delay-2" style="transition-delay: 0.2s;">
-          <div class="card-image" aria-hidden="true" style="background: linear-gradient(140deg, #fefce8, #fef08a);">
-            <div class="card-icon-overlay" style="color:#eab308;"><svg width="32" height="32" viewBox="0 0 24 24"
-                fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="18" y1="20" x2="18" y2="10"></line>
-                <line x1="12" y1="20" x2="12" y2="4"></line>
-                <line x1="6" y1="20" x2="6" y2="14"></line>
-              </svg></div>
-          </div>
-          <div class="card-content">
-            <h3>Data Skills Bootcamp</h3>
-            <p>Learn data cleaning, dashboards, and quick analysis techniques for real campus use cases.</p>
-            <span class="tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <polyline points="12 6 12 12 16 14"></polyline>
-              </svg> Wed, 6:00 PM</span>
-          </div>
-        </article>
-        <article class="initiative-card reveal delay-3" style="transition-delay: 0.3s;">
-          <div class="card-image" aria-hidden="true" style="background: linear-gradient(140deg, #f0fdf4, #bbf7d0);">
-            <div class="card-icon-overlay" style="color:#22c55e;"><svg width="32" height="32" viewBox="0 0 24 24"
-                fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="4 14 10 14 10 20"></polyline>
-                <polyline points="20 10 14 10 14 4"></polyline>
-                <line x1="14" y1="10" x2="21" y2="3"></line>
-                <line x1="3" y1="21" x2="10" y2="14"></line>
-              </svg></div>
-          </div>
-          <div class="card-content">
-            <h3>AI Tools for Productivity</h3>
-            <p>Explore practical AI workflows for research, writing, and project execution.</p>
-            <span class="tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <polyline points="12 6 12 12 16 14"></polyline>
-              </svg> Mon, 4:15 PM</span>
-          </div>
-        </article>
-        <article class="initiative-card reveal" style="transition-delay: 0.1s;">
-          <div class="card-image" aria-hidden="true" style="background: linear-gradient(140deg, #fdf4ff, #fbcfe8);">
-            <div class="card-icon-overlay" style="color:#ec4899;"><svg width="32" height="32" viewBox="0 0 24 24"
-                fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                <circle cx="9" cy="7" r="4"></circle>
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-              </svg></div>
-          </div>
-          <div class="card-content">
-            <h3>Leadership in Action</h3>
-            <p>Develop leadership habits through scenario-based activities and peer reflection.</p>
-            <span class="tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <polyline points="12 6 12 12 16 14"></polyline>
-              </svg> Fri, 2:00 PM</span>
-          </div>
-        </article>
-        <article class="initiative-card reveal" style="transition-delay: 0.2s;">
-          <div class="card-image" aria-hidden="true" style="background: linear-gradient(140deg, #faf5ff, #e9d5ff);">
-            <div class="card-icon-overlay" style="color:#a855f7;"><svg width="32" height="32" viewBox="0 0 24 24"
-                fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                <polyline points="21 15 16 10 5 21"></polyline>
-              </svg></div>
-          </div>
-          <div class="card-content">
-            <h3>Portfolio Review Studio</h3>
-            <p>Bring your work, get structured feedback, and improve how you present your strengths.</p>
-            <span class="tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <polyline points="12 6 12 12 16 14"></polyline>
-              </svg> Sat, 10:30 AM</span>
-          </div>
-        </article>
+      <section class="initiatives-grid" id="workshops-container">
+        <!-- Injected dynamically via opportunities_data.js -->
       </section>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const container = document.getElementById('workshops-container');
+          if (container && window.superHrOpportunities) {
+            const items = window.superHrOpportunities.filter(o => o.category === 'Workshop');
+            container.innerHTML = items.map((opp, index) => window.generateOpportunityCardHTML(opp, index % 4)).join('');
+          }
+        });
+      </script>
 
       <section class="footer-cta reveal">
         <span>No workshop interests matched? We can help you find something.</span>
@@ -924,6 +828,9 @@
       }
     });
   </script>
+
+  <script src="chatbot.js"></script>
+<script src="role-permissions.js"></script>
 </body>
 
 

@@ -46,6 +46,9 @@
       background: var(--white);
       line-height: 1.6;
       overflow-x: hidden;
+    }
+
+    html {
       scroll-behavior: smooth;
     }
 
@@ -620,6 +623,60 @@
       color: var(--ink-800);
     }
 
+    /* Filter Bar */
+    .filters {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: var(--white);
+      color: var(--ink-700);
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: 1px solid rgba(15, 31, 43, 0.1);
+      cursor: pointer;
+      transition: all var(--transition);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .filter-btn:hover {
+      border-color: var(--sky-200);
+      color: var(--sky-600);
+    }
+
+    .filter-btn.active {
+      background: var(--sky-50);
+      color: var(--sky-600);
+      border-color: var(--sky-200);
+    }
+
+    .category-section {
+      margin-bottom: 60px;
+    }
+
+    .category-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--ink-900);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .category-title::before {
+      content: '';
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--sky-400);
+    }
+
     @media (max-width: 980px) {
       .menu {
         display: none;
@@ -674,11 +731,11 @@
           Talent Search
         </div>
         <nav class="menu">
-            <a href="index (1).html">Home</a>
-            <a href="opportunities.html" class="active">Opportunities</a>
-            <a href="posted-opportunities.html">Posted Opportunities</a>
-            <a href="community.html">Community</a>
-            <a href="aboutus.html">About Us</a>
+          <a href="index (1).html">Home</a>
+          <a href="opportunities.html" class="active">Opportunities</a>
+          <a href="posted-opportunities.html">Posted Opportunities</a>
+          <a href="community.html">Community</a>
+          <a href="aboutus.html">About Us</a>
         </nav>
         <div class="nav-actions">
           <div style="position: relative;">
@@ -715,24 +772,66 @@
       </div>
     </header>
 
-    <main class="page">
-      <section class="page-head">
-        <h1>Explore Initiatives</h1>
-        <p class="head-subtext">Discover active projects where you can contribute quickly and collaborate across teams.
+    <main class="page" id="top">
+      <section class="page-head reveal">
+        <h1>Opportunities Hub</h1>
+        <p class="head-subtext">Discover events, initiatives, and workshops you can participate in all in one place.
         </p>
       </section>
 
-      <section class="initiatives-grid" id="initiatives-container">
-        <!-- Injected dynamically via opportunities_data.js -->
-      </section>
+      <div class="filters reveal">
+        <a href="#top" class="filter-btn active" data-filter="all">All</a>
+        <a href="#events" class="filter-btn" data-filter="event">Events</a>
+        <a href="#initiatives" class="filter-btn" data-filter="initiative">Initiatives</a>
+        <a href="#workshops" class="filter-btn" data-filter="workshop">Workshops</a>
+      </div>
+
+      <div id="opportunities-master-container">
+        <!-- Rendered Sections -->
+      </div>
 
       <script>
         document.addEventListener('DOMContentLoaded', () => {
-          const container = document.getElementById('initiatives-container');
-          if (container && window.superHrOpportunities) {
-            const items = window.superHrOpportunities.filter(o => o.category === 'Initiative');
-            container.innerHTML = items.map((opp, index) => window.generateOpportunityCardHTML(opp, index % 4)).join('');
+          const container = document.getElementById('opportunities-master-container');
+          const filterBtns = document.querySelectorAll('.filter-btn');
+
+          function renderAll() {
+            if (!container || !window.superHrOpportunities) return;
+
+            let html = '';
+
+            const categories = [
+              { key: 'Event', title: 'Events', viewKey: 'events' },
+              { key: 'Initiative', title: 'Initiatives', viewKey: 'initiatives' },
+              { key: 'Workshop', title: 'Workshops', viewKey: 'workshops' }
+            ];
+
+            categories.forEach(cat => {
+              const items = window.superHrOpportunities.filter(o => o.category === cat.key);
+              if (items.length > 0) {
+                html += `
+                  <div class="category-section reveal active" id="${cat.viewKey}">
+                    <h2 class="category-title">${cat.title}</h2>
+                    <section class="initiatives-grid">
+                      ${items.map((opp, index) => window.generateOpportunityCardHTML(opp, index % 4)).join('')}
+                    </section>
+                  </div>
+                `;
+              }
+            });
+
+            container.innerHTML = html;
           }
+
+          renderAll(); // Always render everything so we can scroll to them
+
+          filterBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+              // Update Active UI States
+              filterBtns.forEach(b => b.classList.remove('active'));
+              btn.classList.add('active');
+            });
+          });
         });
       </script>
 

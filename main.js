@@ -10,56 +10,9 @@
     return node;
   }
 
-  var events = [
-    {
-      key: "founders-day",
-      title: "Founders Day Celebration",
-      description: "Celebrate campus innovators through storytelling sessions, demos, and networking.",
-      schedule: "Tue, 5:00 PM",
-      points: "40",
-      timeRequired: "2 hours",
-    },
-    {
-      key: "foundation-day",
-      title: "Foundation Day Gathering",
-      description: "Join faculty, students, and alumni for a day of milestones and collaborative energy.",
-      schedule: "Thu, 4:30 PM",
-      points: "35",
-      timeRequired: "2.5 hours",
-    },
-    {
-      key: "talent-showcase",
-      title: "Talent Showcase Evening",
-      description: "Watch short presentations from peers working on exciting initiatives and prototypes.",
-      schedule: "Wed, 6:15 PM",
-      points: "30",
-      timeRequired: "1.5 hours",
-    },
-    {
-      key: "career-connect",
-      title: "Career Connect Mixer",
-      description: "Meet mentors, recruiters, and project leads in a relaxed conversation-based format.",
-      schedule: "Mon, 3:30 PM",
-      points: "25",
-      timeRequired: "2 hours",
-    },
-    {
-      key: "pitch-night",
-      title: "Innovation Pitch Night",
-      description: "Present ideas in quick rounds and receive feedback from peers and invited guests.",
-      schedule: "Fri, 7:00 PM",
-      points: "45",
-      timeRequired: "2 hours",
-    },
-    {
-      key: "impact-day",
-      title: "Community Impact Day",
-      description: "Participate in service and outreach activities co-created by student-led groups.",
-      schedule: "Sat, 11:30 AM",
-      points: "50",
-      timeRequired: "3 hours",
-    },
-  ];
+  var events = window.superHrOpportunities.filter(function (o) {
+    return o.category === "Event";
+  });
 
   var app = document.getElementById("app");
   if (!app) {
@@ -156,7 +109,7 @@
   events.forEach(function (eventItem) {
     var card = el("article", "initiative-card");
     var link = el("a", "card-link");
-    link.href = "event-detail.html?event=" + eventItem.key;
+    link.href = eventItem.link;
 
     var image = el("div", "card-image");
     image.setAttribute("aria-hidden", "true");
@@ -166,7 +119,7 @@
     var desc = el("p", "", eventItem.description);
 
     var meta = el("div", "card-meta");
-    meta.appendChild(el("span", "", "Schedule: " + eventItem.schedule));
+    meta.appendChild(el("span", "", "Schedule: " + eventItem.dateStr));
     meta.appendChild(el("span", "card-points", "Points: " + eventItem.points));
     meta.appendChild(el("span", "", "Time Required: " + eventItem.timeRequired));
 

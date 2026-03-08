@@ -558,11 +558,19 @@
         grid-template-columns: 1fr;
       }
 
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
       .about-hero {
         padding: 40px 24px;
       }
     }
   </style>
+
+  <link rel="stylesheet" href="chatbot.css" />
+
+  <script src="opportunities_data.js"></script>
 </head>
 
 <body>
@@ -587,6 +595,7 @@
           <a href="index (1).html">Home</a>
           <a href="opportunities.html">Opportunities</a>
           <a href="posted-opportunities.html">Posted Opportunities</a>
+          <a href="community.html">Community</a>
           <a href="aboutus.html" class="active">About Us</a>
         </nav>
         <div class="nav-actions">
@@ -690,6 +699,60 @@
             talents, and grow through short-term collaborative opportunities.</p>
         </div>
       </div>
+
+      <div style="margin-top: 80px;" class="reveal">
+        <h2 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 16px; color: var(--ink-900);">New Platform
+          Features</h2>
+        <p style="font-size: 1.15rem; color: var(--ink-700); max-width: 800px; line-height: 1.6;">Our platform is
+          continuously evolving to make collaboration, opportunity discovery, and communication easier for everyone on
+          campus.</p>
+
+        <div class="features-grid"
+          style="display: grid; gap: 30px; margin-top: 40px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+          <div class="about-card reveal" style="padding: 32px;">
+            <div class="icon-box" style="width: 50px; height: 50px; margin-bottom: 20px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </div>
+            <h3 style="font-size: 1.3rem; margin-bottom: 12px;">Community Space</h3>
+            <p style="font-size: 1rem; margin-bottom: 0;">The new Community tab creates a shared space for students,
+              employees, and department leaders to interact. Similar to a discussion forum or Discord-style channel, it
+              allows users to exchange ideas, ask questions, and collaborate around opportunities, projects, and campus
+              initiatives.</p>
+          </div>
+
+          <div class="about-card reveal" style="padding: 32px; transition-delay: 0.1s;">
+            <div class="icon-box" style="width: 50px; height: 50px; margin-bottom: 20px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+            </div>
+            <h3 style="font-size: 1.3rem; margin-bottom: 12px;">Centralized Opportunities</h3>
+            <p style="font-size: 1rem; margin-bottom: 0;">The Opportunities page brings together events, initiatives,
+              and workshops in one place. This allows users to easily explore everything happening across the platform
+              without needing to check multiple sections.</p>
+          </div>
+
+          <div class="about-card reveal" style="padding: 32px; transition-delay: 0.2s;">
+            <div class="icon-box" style="width: 50px; height: 50px; margin-bottom: 20px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </div>
+            <h3 style="font-size: 1.3rem; margin-bottom: 12px;">AI Assistant</h3>
+            <p style="font-size: 1rem; margin-bottom: 0;">The platform now includes an AI chatbot that helps users
+              navigate opportunities, answer questions about the platform, and guide users toward relevant activities
+              and collaborations.</p>
+          </div>
+        </div>
+      </div>
     </main>
   </div>
 
@@ -754,6 +817,9 @@
       }
     });
   </script>
+
+  <script src="chatbot.js"></script>
+<script src="role-permissions.js"></script>
 </body>
 
 
