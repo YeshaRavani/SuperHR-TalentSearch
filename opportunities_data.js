@@ -316,12 +316,13 @@ window.superHrOpportunities = [
 ];
 
 // Helper method to generate the HTML string for a single card based on the defined data format
-window.generateOpportunityCardHTML = function (opp, indexDelay = 0) {
+window.generateOpportunityCardHTML = function (opp, indexDelay = 0, inInterestedSection = false) {
     const delayStyle = indexDelay > 0 ? `style="transition-delay: ${indexDelay * 0.1}s;"` : '';
     const animDelayClass = indexDelay > 0 ? `delay-${indexDelay}` : '';
+    const oppId = opp.id || opp.title;
 
     return `
-        <article class="initiative-card reveal ${animDelayClass}" ${delayStyle}>
+        <article class="initiative-card reveal ${animDelayClass}" ${delayStyle} data-opp-id="${oppId}">
             <a href="${opp.link}" class="card-link" style="text-decoration:none; color:inherit; display:flex; flex-direction:column; height:100%;">
                 <div class="card-image" aria-hidden="true" style="background: ${opp.bgGradient};">
                     <div class="card-icon-overlay" style="color: ${opp.iconColor};">
@@ -344,6 +345,30 @@ window.generateOpportunityCardHTML = function (opp, indexDelay = 0) {
                     </span>
                 </div>
             </a>
+            <div class="card-hover-actions">
+                ${inInterestedSection ? `
+                <button class="btn-not-interested" data-id="${oppId}" aria-label="Remove from interested">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink:0;">
+                        <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                    Not Interested
+                </button>
+                ` : `
+                <button class="btn-interested" data-id="${oppId}" aria-label="Mark as interested in ${opp.title}">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5 2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53L12 21.35z"/>
+                    </svg>
+                    Interested
+                </button>
+                <button class="btn-not-interested" data-id="${oppId}" aria-label="Mark as not interested">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink:0;">
+                        <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                    Not Interested
+                </button>
+                `}
+            </div>
         </article>
     `;
 };
+
