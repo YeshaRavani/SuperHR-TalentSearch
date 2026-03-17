@@ -1,6 +1,6 @@
 /**
  * header.js — Shared header interaction script for Talent Search
- * Include this in every page: <script src="header.js"></script>
+ * Include this in every page: <script src="js/header.js"></script>
  *
  * Handles:
  *  - Scroll-based topbar .scrolled class

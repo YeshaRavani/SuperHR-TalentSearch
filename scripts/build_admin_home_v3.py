@@ -201,8 +201,8 @@ def main():
 STYLES_PLACEHOLDER
 CUSTOM_CSS_PLACEHOLDER
     </style>
-    <link rel="stylesheet" href="chatbot.css" />
-    <script src="opportunities_data.js"></script>
+    <link rel="stylesheet" href="css/chatbot.css" />
+    <script src="js/opportunities_data.js"></script>
 </head>
 <body>
     <div class="progress-container">
@@ -213,7 +213,7 @@ CUSTOM_CSS_PLACEHOLDER
     <header class="topbar" id="navbar">
         <div class="page-container nav">
             <div class="logo">
-                <img class="logo-img" src="logo.png" onerror="this.src='https://via.placeholder.com/88/9ecae1/ffffff?text=TS'" alt="Logo" />
+                <img class="logo-img" src="assets/logo.png" onerror="this.src='https://via.placeholder.com/88/9ecae1/ffffff?text=TS'" alt="Logo" />
                 Talent Search
             </div>
             <nav class="menu">
@@ -423,7 +423,7 @@ CUSTOM_CSS_PLACEHOLDER
                     </div>
                 </div>
                 <div class="gallery-card">
-                    <img src="foundation.jpeg" alt="Foundation Day" onerror="this.src='https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&q=80&w=600'" />
+                    <img src="assets/foundation.jpeg" alt="Foundation Day" onerror="this.src='https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&q=80&w=600'" />
                     <div class="tag-anim">Campus</div>
                     <div class="gallery-overlay">
                         <h3>Foundation Day</h3>
@@ -431,7 +431,7 @@ CUSTOM_CSS_PLACEHOLDER
                     </div>
                 </div>
                 <div class="gallery-card">
-                    <img src="workshop.jpg" alt="Workshops" onerror="this.src='https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=600'" />
+                    <img src="assets/workshop.jpg" alt="Workshops" onerror="this.src='https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=600'" />
                     <div class="tag-anim">Learning</div>
                     <div class="gallery-overlay">
                         <h3>Workshops</h3>
@@ -495,8 +495,8 @@ CUSTOM_CSS_PLACEHOLDER
         }
     });
     </script>
-    <script src="chatbot.js"></script>
-    <script src="role-permissions.js"></script>
+    <script src="js/chatbot.js"></script>
+    <script src="js/role-permissions.js"></script>
 </body>
 </html>
 """

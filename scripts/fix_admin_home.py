@@ -41,7 +41,7 @@ def main():
     new_header = """    <header class="topbar" id="navbar">
         <div class="nav" style="width: 100%; max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between;">
             <div class="logo">
-                <img class="logo-img" src="logo.png" onerror="this.src='https://via.placeholder.com/88/9ecae1/ffffff?text=TS'" alt="Logo" />
+                <img class="logo-img" src="assets/logo.png" onerror="this.src='https://via.placeholder.com/88/9ecae1/ffffff?text=TS'" alt="Logo" />
                 Talent Search
             </div>
             <nav class="menu">

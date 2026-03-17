@@ -126,8 +126,8 @@ def main():
     admin_content = re.sub(r'<main[\s\S]*?</main>', new_main, admin_content)
     
     # inject script into head if not there
-    if 'opportunities_data.js' not in admin_content:
-        admin_content = admin_content.replace('</head>', '  <script src="opportunities_data.js"></script>\\n</head>')
+    if 'js/opportunities_data.js' not in admin_content:
+        admin_content = admin_content.replace('</head>', '  <script src="js/opportunities_data.js"></script>\\n</head>')
 
     with open('admin-manage-opportunities.html', 'w', encoding='utf-8') as f:
         f.write(admin_content)

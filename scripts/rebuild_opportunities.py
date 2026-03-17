@@ -96,7 +96,7 @@ window.generateOpportunityCardHTML = function (opp, indexDelay = 0) {
 };
   </script>
 """
-    html = html.replace('<script src="opportunities_data.js"></script>', '<script src="opportunities_data.js"></script>' + override_script)
+    html = html.replace('<script src="js/opportunities_data.js"></script>', '<script src="js/opportunities_data.js"></script>' + override_script)
 
     with open(admin_opp_path, "w", encoding="utf-8") as f:
         f.write(html)

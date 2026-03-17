@@ -129,7 +129,7 @@ def main():
     <header class="topbar" id="navbar">
         <div class="page-container nav">
             <div class="logo">
-                <img class="logo-img" src="logo.png" onerror="this.src='https://via.placeholder.com/88/9ecae1/ffffff?text=TS'" alt="Logo" />
+                <img class="logo-img" src="assets/logo.png" onerror="this.src='https://via.placeholder.com/88/9ecae1/ffffff?text=TS'" alt="Logo" />
                 Talent Search
             </div>
             <nav class="menu">

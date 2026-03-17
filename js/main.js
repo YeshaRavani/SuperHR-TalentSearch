@@ -25,7 +25,7 @@
   var nav = el("div", "nav");
   var logo = el("div", "logo");
   var logoImg = el("img", "logo-img");
-  logoImg.src = "logo.png";
+  logoImg.src = "assets/logo.png";
   logoImg.alt = "Talent Search logo";
   logo.appendChild(logoImg);
   logo.appendChild(document.createTextNode("Talent Search"));

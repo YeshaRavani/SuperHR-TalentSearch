@@ -194,7 +194,7 @@ card1_rep = '''<div class="gallery-card">
                 </div>'''
 
 card2 = '''<div class="gallery-card">
-                    <img src="foundation.jpeg" alt="Foundation Day"
+                    <img src="assets/foundation.jpeg" alt="Foundation Day"
                         onerror="this.src='https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&q=80&w=600'" />
                     <div class="tag-anim">Campus Life</div>
                     <div class="gallery-overlay">
@@ -203,7 +203,7 @@ card2 = '''<div class="gallery-card">
                     </div>
                 </div>'''
 card2_rep = '''<div class="gallery-card">
-                    <img src="foundation.jpeg" alt="Foundation Day"
+                    <img src="assets/foundation.jpeg" alt="Foundation Day"
                         onerror="this.src='https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&q=80&w=600'" />
                     <div class="tag-anim">Campus</div>
                     <div class="gallery-overlay">
@@ -213,7 +213,7 @@ card2_rep = '''<div class="gallery-card">
                 </div>'''
                 
 card3 = '''<div class="gallery-card">
-                    <img src="workshop.jpg" alt="Workshop"
+                    <img src="assets/workshop.jpg" alt="Workshop"
                         onerror="this.src='https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=600'" />
                     <div class="tag-anim">Hands-on Learning</div>
                     <div class="gallery-overlay">
@@ -222,7 +222,7 @@ card3 = '''<div class="gallery-card">
                     </div>
                 </div>'''
 card3_rep = '''<div class="gallery-card">
-                    <img src="workshop.jpg" alt="Workshops"
+                    <img src="assets/workshop.jpg" alt="Workshops"
                         onerror="this.src='https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=600'" />
                     <div class="tag-anim">Learning</div>
                     <div class="gallery-overlay">
