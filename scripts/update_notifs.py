@@ -42,7 +42,7 @@ def process_file(filepath):
                 """
 
     # Replace the existing notif-wrapper block
-    # Regex looks for <div class="notif-wrapper">... and stops exactly before <!-- Profile Icon --> or <a href="admin-user-profile.html" class="profile"
+    # Regex looks for <div class="notif-wrapper">... and stops exactly before <!-- Profile Icon --> or <a href="admin-contributor-profile.html" class="profile"
     pattern = r'<div class="notif-wrapper">.*?(?=<!-- Profile Icon -->|<a class="profile"|<a href="admin-user-profile\.html" class="profile")'
     
     # Wait, some pages might not have notif-wrapper, but they have <button class="icon-btn" id="notifToggle"> inside a relative div or just directly

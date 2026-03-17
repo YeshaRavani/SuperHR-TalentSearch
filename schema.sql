@@ -7,7 +7,7 @@ CREATE TABLE Users (
     full_name TEXT,
     email TEXT,
     password_hash TEXT,
-    role TEXT CHECK(role IN ('student', 'employee', 'head_of_department', 'alumni', 'external')),
+    role TEXT CHECK(role IN ('admin', 'contributors', 'head_of_department')),
     organisation TEXT,
     department_team TEXT,
     profile_photo_url TEXT,

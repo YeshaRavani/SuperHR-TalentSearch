@@ -183,4 +183,4 @@ def process_profile(filepath, templatesrc):
     with open(filepath, 'w', encoding='utf-8') as f:
         f.write(prof_html)
 
-process_profile('/Users/yesharavani/AI_prod/Talent search/SuperHR-TalentSearch/admin-user-profile.html', '/Users/yesharavani/AI_prod/Talent search/SuperHR-TalentSearch/admin-home.html')
+process_profile('/Users/yesharavani/AI_prod/Talent search/SuperHR-TalentSearch/admin-contributor-profile.html', '/Users/yesharavani/AI_prod/Talent search/SuperHR-TalentSearch/admin-home.html')

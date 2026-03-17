@@ -130,22 +130,11 @@
         var userRole = localStorage.getItem('userRole');
         var path = window.location.pathname;
 
-        if (userRole === 'head') {
+        if (userRole === 'head_of_department') {
             hideElements('a[href*="apply"], button[data-action="apply"], .apply-btn');
             document.querySelectorAll('.btn, button, a').forEach(function (btn) {
                 var text = btn.textContent.trim().toLowerCase();
                 if (text === 'apply' || text === 'interested' || text.includes('enroll')) {
-                    btn.style.display = 'none';
-                }
-            });
-        }
-
-        if (userRole === 'employee') {
-            hideElements('a[href="posted-opportunities.html"]');
-            hideElements('a[href="add-opportunity.html"]');
-            document.querySelectorAll('.btn, button, a').forEach(function (btn) {
-                var text = btn.textContent.trim().toLowerCase();
-                if (text === 'post opportunity' || text === 'post new opportunity') {
                     btn.style.display = 'none';
                 }
             });
@@ -158,10 +147,6 @@
                     btn.style.display = 'none';
                 }
             });
-        }
-
-        if (userRole === 'employee' && path.includes('posted-opportunities.html')) {
-            window.location.href = 'opportunities.html';
         }
     }
 

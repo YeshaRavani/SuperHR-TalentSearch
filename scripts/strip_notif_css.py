@@ -4,7 +4,7 @@ files = [
     '/Users/yesharavani/AI_prod/Talent search/SuperHR-TalentSearch/admin-home.html',
     '/Users/yesharavani/AI_prod/Talent search/SuperHR-TalentSearch/admin-manage-users.html',
     '/Users/yesharavani/AI_prod/Talent search/SuperHR-TalentSearch/admin-manage-opportunities.html',
-    '/Users/yesharavani/AI_prod/Talent search/SuperHR-TalentSearch/admin-user-profile.html',
+    '/Users/yesharavani/AI_prod/Talent search/SuperHR-TalentSearch/admin-contributor-profile.html',
     '/Users/yesharavani/AI_prod/Talent search/SuperHR-TalentSearch/admin-system-settings.html'
 ]
 

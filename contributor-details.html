@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>User Profile Setup — Talent Search</title>
-    <link rel="stylesheet" href="css/user-profile.css" />
+    <title>User Sign Up — Talent Search</title>
+    <link rel="stylesheet" href="css/contributor-details.css" />
 
     <link rel="stylesheet" href="css/chatbot.css" />
 
@@ -67,66 +67,50 @@
 
     <main class="container">
         <div class="main-card">
-            <h1 class="title">Profile Setup</h1>
-            <p class="subtitle">Set up your profile to get better recommendations.</p>
+            <h1 class="title">Sign Up</h1>
 
-            <form class="form"
-                onsubmit="event.preventDefault(); localStorage.setItem('userRole', document.getElementById('role').value); window.location.href='index (1).html';">
+            <form class="form" onsubmit="event.preventDefault(); window.location.href='contributor-profile.html';">
                 <div class="form-group">
-                    <label class="form-label">Upload profile picture</label>
-                    <div class="file-input-wrapper">
-                        <div class="file-upload-display">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                <polyline points="17 8 12 3 7 8"></polyline>
-                                <line x1="12" y1="3" x2="12" y2="15"></line>
-                            </svg>
-                            Choose an image
-                        </div>
-                        <input type="file" accept="image/*" />
-                    </div>
+                    <label class="form-label" for="fullname">Full Name</label>
+                    <input id="fullname" class="text-input" placeholder="Enter your full name" required />
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Upload your resume / CV</label>
-                    <div class="file-input-wrapper">
-                        <div class="file-upload-display">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                <polyline points="14 2 14 8 20 8"></polyline>
-                                <line x1="12" y1="18" x2="12" y2="12"></line>
-                                <line x1="9" y1="15" x2="15" y2="15"></line>
-                            </svg>
-                            Upload Document
-                        </div>
-                        <input type="file" accept=".pdf,.doc,.docx" />
-                    </div>
+                    <label class="form-label" for="organization">Organization / University</label>
+                    <input id="organization" class="text-input" placeholder="Enter your university or organization"
+                        required />
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="role">Select your role</label>
-                    <select id="role" class="text-input" required>
-                        <option value="" disabled selected>Select from below</option>
-                        <option value="head">Head of Department</option>
-                        <option value="employee">Employee</option>
-                        <option value="student">Student</option>
-                    </select>
+                    <label class="form-label" for="idnumber">ID Number</label>
+                    <input id="idnumber" class="text-input" placeholder="Enter your contributors ID or equivalent"
+                        required />
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="jobdesc">Job description</label>
-                    <textarea id="jobdesc" class="text-input" placeholder="A brief description of your role..."
-                        required></textarea>
+                    <label class="form-label" for="username">Username</label>
+                    <input id="username" class="text-input" placeholder="Choose a username" required />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input id="password" class="text-input" type="password" placeholder="Create a password" required />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="confirmPassword">Confirm Password</label>
+                    <input id="confirmPassword" class="text-input" type="password" placeholder="Confirm your password"
+                        required />
                 </div>
 
                 <div class="actions">
-                    <button type="submit" class="btn btn-sky">Finish</button>
+                    <button type="submit" class="btn btn-sky">Next →</button>
                 </div>
             </form>
         </div>
     </main>
 
-    <script src="js/user-profile.js"></script>
+    <script src="js/contributor-details.js"></script>
 
     
 

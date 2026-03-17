@@ -60,13 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Role Management (Global Navbar setup)
       const role = localStorage.getItem('userRole');
-      if (role === 'employee') {
-        document.querySelectorAll('a[href="posted-opportunities.html"]').forEach(el => el.style.display = 'none');
-        document.querySelectorAll('a[href="add-opportunity.html"]').forEach(el => el.style.display = 'none');
-        document.querySelectorAll('button, .btn').forEach(btn => {
-          if (btn.textContent.includes('Post Opportunity')) btn.style.display = 'none';
-        });
-      }
 
       // Notification Toggle logic
       const notifToggle = document.getElementById('notifToggle');

@@ -168,7 +168,7 @@ def main():
                     </div>
                 </div>
                 <!-- Profile Icon -->
-                <a href="admin-user-profile.html" class="profile" title="Admin Profile">
+                <a href="admin-contributor-profile.html" class="profile" title="Admin Profile">
                     <svg viewBox="0 0 24 24" fill="none" stroke="var(--sky-600)" stroke-width="2" style="width:20px; height:20px;">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                         <circle cx="12" cy="7" r="4"></circle>

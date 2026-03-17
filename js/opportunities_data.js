@@ -18,13 +18,13 @@ window.superHrOpportunities = [
         timeRequired: "2.5 hours",
         location: "Innovation Atrium, Main Academic Block",
         skills: ["Networking", "Communication", "Storytelling", "Innovation Thinking", "Collaboration"],
-        expectations: "Participants are expected to engage with speakers, explore student and faculty innovation demos, and interact with fellow attendees. Students should actively network, ask questions during storytelling sessions, and participate in discussions about new ideas and campus initiatives."
+        expectations: "Participants are expected to engage with speakers, explore contributor and faculty innovation demos, and interact with fellow attendees. Contributors should actively network, ask questions during storytelling sessions, and participate in discussions about new ideas and campus initiatives."
     },
     {
         id: "foundation-day",
         category: "Event",
         title: "Foundation Day Gathering",
-        description: "Join faculty, students, and alumni for a day of milestones and collaborative energy.",
+        description: "Join faculty, contributors, and alumni for a day of milestones and collaborative energy.",
         dateStr: "Thu, 4:30 PM",
         tagIcon: `<circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>`,
         bgGradient: "linear-gradient(140deg, #fefce8, #fef08a)",
@@ -92,7 +92,7 @@ window.superHrOpportunities = [
         id: "impact-day",
         category: "Event",
         title: "Community Impact Day",
-        description: "Participate in service and outreach activities co-created by student-led groups.",
+        description: "Participate in service and outreach activities co-created by contributor-led groups.",
         dateStr: "Sat, 11:30 AM",
         tagIcon: `<circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>`,
         bgGradient: "linear-gradient(140deg, #eff6ff, #bfdbfe)",
@@ -137,9 +137,9 @@ window.superHrOpportunities = [
         link: "initiative-detail.html?id=init-2",
         points: "30",
         timeRequired: "1.5 hours/week",
-        location: "Student Lounge",
+        location: "Contributor Lounge",
         skills: ["Mentorship", "Empathy", "Guidance"],
-        expectations: "Host open sessions for new students, offering constructive advice and support."
+        expectations: "Host open sessions for new contributors, offering constructive advice and support."
     },
     {
         id: "init-3",
@@ -283,7 +283,7 @@ window.superHrOpportunities = [
         id: "work-5",
         category: "Workshop",
         title: "Digital Marketing Basics",
-        description: "Discover tools to improve visibility for student organizations and personal portfolios.",
+        description: "Discover tools to improve visibility for contributor organizations and personal portfolios.",
         dateStr: "Fri, 3:30 PM",
         tagIcon: `<circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>`,
         bgGradient: "linear-gradient(140deg, #fdf4ff, #fbcfe8)",
@@ -294,7 +294,7 @@ window.superHrOpportunities = [
         timeRequired: "2 hours",
         location: "Virtual Classroom",
         skills: ["SEO", "Social Media Strategy", "Copywriting"],
-        expectations: "Complete the post-workshop quiz and draft a mini campaign plan for a student club."
+        expectations: "Complete the post-workshop quiz and draft a mini campaign plan for a contributor club."
     },
     {
         id: "work-6",

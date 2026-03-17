@@ -5,7 +5,7 @@ admin_files = [
     'admin-manage-users.html',
     'admin-manage-opportunities.html',
     'admin-system-settings.html',
-    'admin-user-profile.html'
+    'admin-contributor-profile.html'
 ]
 
 new_notif = '''<div class="notif-dropdown" id="notifDropdown">
@@ -37,7 +37,7 @@ for file in admin_files:
 
         if file == 'admin-home.html':
             # Add Admin Profile to Quick Actions
-            new_card = '''<a class="opp-card tilt-card" href="admin-user-profile.html">
+            new_card = '''<a class="opp-card tilt-card" href="admin-contributor-profile.html">
                     <div class="opp-icon" style="background:#fefce8; color:#eab308; border-color:#fef08a;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -48,10 +48,10 @@ for file in admin_files:
                     <p>View your governance stats, team details, and contact info.</p>
                 </a>
             </div>'''
-            if 'admin-user-profile.html' not in content:
+            if 'admin-contributor-profile.html' not in content:
                 content = content.replace('</a>\\n            </div>\\n        </section>', '</a>\\n                ' + new_card + '\\n        </section>')
 
-        elif file == 'admin-user-profile.html':
+        elif file == 'admin-contributor-profile.html':
             # Remove Permission Matrix
             content = re.sub(r'<h2 class="section-title">Role Permissions</h2>([\s\S]*?)<div class="permission-matrix">([\s\S]*?)</div>', '', content)
 

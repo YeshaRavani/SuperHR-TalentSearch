@@ -1,7 +1,7 @@
 import os
 import re
 
-user_files = [f for f in os.listdir('.') if f.endswith('.html') and not f.startswith('admin-') and f not in ['test.html', 'user-details.html']]
+user_files = [f for f in os.listdir('.') if f.endswith('.html') and not f.startswith('admin-') and f not in ['test.html', 'contributor-details.html']]
 for f in user_files:
     with open(f, 'r') as file:
         content = file.read()

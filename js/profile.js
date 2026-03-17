@@ -117,20 +117,3 @@
 
     })();
 
-document.addEventListener('DOMContentLoaded', function () {
-      const role = localStorage.getItem('userRole');
-      if (role === 'employee') {
-        // Hide 'Posted Opportunities' in navbar or anywhere
-        document.querySelectorAll('a[href="posted-opportunities.html"]').forEach(el => el.style.display = 'none');
-
-        // Hide any explicitly named 'Post Opportunity' buttons/links connecting to add-opportunity.html
-        document.querySelectorAll('a[href="add-opportunity.html"]').forEach(el => el.style.display = 'none');
-
-        // Hide dynamically labeled matching interface elements
-        document.querySelectorAll('button, .btn').forEach(btn => {
-          if (btn.textContent.includes('Post Opportunity')) {
-            btn.style.display = 'none';
-          }
-        });
-      }
-    });

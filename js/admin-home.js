@@ -53,9 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // RBAC Enforce (Optional basic local rules if applied via component logic)
             const role = localStorage.getItem('userRole');
-            if (role === 'employee') {
-                document.querySelectorAll('a[href="posted-opportunities.html"], a[href="add-opportunity.html"]').forEach(el => el.style.display = 'none');
-            }
         });
 
 document.addEventListener('DOMContentLoaded', () => {
