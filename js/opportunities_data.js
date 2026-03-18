@@ -1,5 +1,5 @@
 // Unified Data Source for SuperHR-TalentSearch Opportunities
-// This feeds events.html, initiatives.html, workshops.html, and opportunities.html
+// This feeds the opportunity detail and listing pages.
 
 window.superHrOpportunities = [
     // ----------------- EVENTS -----------------
@@ -371,4 +371,3 @@ window.generateOpportunityCardHTML = function (opp, indexDelay = 0, inInterested
         </article>
     `;
 };
-

@@ -29,18 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('detail-location').textContent = data.location || "TBD";
       document.getElementById('detail-expectations').textContent = data.expectations || "No specific expectations listed.";
 
-      // Dynamic Back Button
+      // Route all opportunity detail pages back to the unified opportunities listing.
       const backBtn = document.getElementById('back-btn');
-      if (cat === "Workshop") {
-        backBtn.href = "workshops.html";
-        backBtn.innerHTML = "← Back to Workshops";
-      } else if (cat === "Initiative") {
-        backBtn.href = "initiatives.html";
-        backBtn.innerHTML = "← Back to Initiatives";
-      } else {
-        backBtn.href = "events.html";
-        backBtn.innerHTML = "← Back to Events";
-      }
+      backBtn.href = "opportunities.html";
+      backBtn.textContent = "← Back to Opportunities";
 
       // Populate Skills
       const skillsContainer = document.getElementById('detail-skills');
