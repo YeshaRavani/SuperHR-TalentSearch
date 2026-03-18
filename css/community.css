@@ -268,7 +268,7 @@
             display: flex;
             flex-direction: column;
             flex: 1;
-            padding: 32px 24px;
+            padding: 95px 24px 32px;
             max-width: 1600px;
             margin: 0 auto;
             width: 100%;
@@ -303,7 +303,8 @@
             display: grid;
             grid-template-columns: 260px 1fr 280px;
             gap: 20px;
-            height: calc(100vh - 240px);
+            height: auto;
+            min-height: calc(100vh - 240px);
             min-height: 500px;
         }
 
@@ -330,8 +331,8 @@
 
         .panel-content {
             flex: 1;
-            overflow-y: auto;
-            padding: 16px;
+            overflow-y: visible; /* Allows content to expand tall for continuous page scrolling */
+            padding: 32px 16px;
         }
 
         /* Center Chat specific */

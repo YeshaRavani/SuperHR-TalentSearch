@@ -138,6 +138,8 @@
                     btn.style.display = 'none';
                 }
             });
+            // Hide Opportunities tab
+            hideElements('a[href*="opportunities.html"]:not([href*="posted"])');
         }
 
         if (userRole === 'admin') {

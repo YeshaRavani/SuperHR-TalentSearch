@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard — Talent & Discovery</title>
+    <link rel="stylesheet" href="css/index (1).css" />
+    <link rel="stylesheet" href="css/chatbot.css" />
+    <script src="js/opportunities_data.js"></script>
+    <link rel="stylesheet" href="css/header.css" />
+    <style>
+        /* Dash-specific overrrides or extensions */
+        .dashboard-header {
+            margin-bottom: 40px;
+        }
+
+        .dashboard-header h1 span {
+            color: var(--sky-600);
+        }
+
+        .activity-grid {
+            display: grid;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .activity-item {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(15, 31, 43, 0.04);
+            backdrop-filter: blur(12px);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: transform 0.2s;
+        }
+
+        .activity-item:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .activity-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .activity-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--sky-50);
+            color: var(--sky-600);
+            display: grid;
+            place-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="progress-container">
+        <div class="progress-bar-scroll" id="scrollProgress"></div>
+    </div>
+
+    <div class="bg-layer">
+        <div class="bg-blob blob-1"></div>
+        <div class="bg-blob blob-2"></div>
+        <div class="bg-blob blob-3"></div>
+    </div>
+
+    <header class="topbar" id="navbar">
+        <div class="nav">
+            <a href="dashboard.html" class="logo" title="Go to Dashboard" aria-label="Go to Dashboard"
+                style="text-decoration: none; color: inherit;">
+                <img class="logo-img" src="assets/logo.png" alt="Logo" />
+                Talent Search
+            </a>
+            <nav class="menu">
+                <a href="dashboard.html" class="active">Dashboard</a>
+                <a href="opportunities.html" id="nav-opps">Opportunities</a>
+                <a href="posted-opportunities.html">Posted Opportunities</a>
+                <a href="community.html">Community</a>
+                <a href="aboutus.html">About Us</a>
+            </nav>
+            <div class="nav-actions">
+                <div style="position: relative;">
+                    <button class="icon-btn" id="notifToggle">
+                        <span class="icon-dot"></span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                    </button>
+                    <div class="notif-dropdown" id="notifDropdown">
+                        <div class="notif-header">
+                            <h4>Notifications</h4>
+                            <span class="notif-clear">Mark all read</span>
+                        </div>
+                        <div class="notif-item">
+                            <p><strong>Match found:</strong> "Campus Sustainability Sprint".</p>
+                            <div class="notif-actions">
+                                <button class="btn btn-sky"
+                                    style="height:32px; padding:0 16px; font-size:0.8rem;">Accept</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="profile.html" class="btn btn-sky"
+                    style="border-radius: 50%; width:44px; height:44px; padding:0;"><svg viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" width="20" height="20">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg></a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-grid">
+                <div class="hero-content dashboard-header">
+                    <div class="level-badge" id="role-badge" style="display:inline-block; margin-bottom: 16px;">User
+                    </div>
+                    <h1 id="welcome-text">Welcome back,<br><span>Talent Discoverer</span></h1>
+                    <p>Track your stats, activities, and collaborate across teams effortlessly.</p>
+                    <div class="hero-actions" id="dashboard-ctas" style="margin-top: 30px;">
+                        <!-- JS renders buttons here -->
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <div class="dashboard-widget">
+                        <div class="widget-header">
+                            <h3>Live Pulse Overview</h3>
+                        </div>
+                        <div class="stat-grid">
+                            <div class="stat-row">
+                                <div class="stat-info">
+                                    <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" width="24" height="24">
+                                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="9" cy="7" r="4"></circle>
+                                        </svg></div>
+                                    Shortlist Invites
+                                </div>
+                                <div class="stat-value">8</div>
+                            </div>
+                            <div class="stat-row">
+                                <div class="stat-info">
+                                    <div class="stat-icon" style="background:#fefce8; color:#eab308;"><svg
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            width="24" height="24">
+                                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                                        </svg></div>
+                                    Active Projects
+                                </div>
+                                <div class="stat-value">12</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Activity -->
+        <section class="section reveal" style="padding-top:20px;">
+            <div class="section-header">
+                <h2 class="section-title">Recent Activity</h2>
+                <p class="section-desc">Stay updated with latest actions aligned to your workspace.</p>
+            </div>
+
+            <div style="max-width: 800px; margin: 0 auto;" class="activity-grid">
+                <div class="activity-item">
+                    <div class="activity-info">
+                        <div class="activity-icon">💡</div>
+                        <div>
+                            <h4 style="font-weight:700;">New Opportunity Posted</h4>
+                            <p style="font-size: 0.9rem; color: var(--ink-500);">AI Workshop needs mentors.</p>
+                        </div>
+                    </div>
+                    <span style="font-size:0.85rem; color:var(--ink-400);">2h ago</span>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-info">
+                        <div class="activity-icon" style="background:var(--sky-100);">🤝</div>
+                        <div>
+                            <h4 style="font-weight:700;">Application Reviewed</h4>
+                            <p style="font-size: 0.9rem; color: var(--ink-500);">Your profile was matched and liked by
+                                Marketing Leads.</p>
+                        </div>
+                    </div>
+                    <span style="font-size:0.85rem; color:var(--ink-400);">5h ago</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/dashboard.js"></script>
+    <script src="js/chatbot.js"></script>
+    <script src="js/role-permissions.js"></script>
+    <script src="js/header.js"></script>
+</body>
+
+</html>
