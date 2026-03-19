@@ -108,6 +108,51 @@
             </button>
         </div>
 
+        <!-- Incentive Model Configuration Card -->
+        <div class="incentive-card">
+            <div class="incentive-card-header">
+                <div>
+                    <h3 style="margin-bottom: 4px; color: var(--ink-900);">Organisation Incentive Policy</h3>
+                    <p style="color: var(--ink-500); font-size: 0.9rem;">Choose one definitive incentive system for all users. Only one policy can be active at a time.</p>
+                </div>
+            </div>
+            
+            <div class="policy-grid" id="policyCards">
+                <div class="policy-card" data-mode="points">
+                    <div class="policy-radio"></div>
+                    <div class="policy-content">
+                        <h4>Points</h4>
+                        <p>Users accumulate system points from engagements.</p>
+                    </div>
+                </div>
+                <div class="policy-card" data-mode="hours">
+                    <div class="policy-radio"></div>
+                    <div class="policy-content">
+                        <h4>Hours Worked</h4>
+                        <p>Track time logged and grant paid leaves.</p>
+                    </div>
+                </div>
+                <div class="policy-card" data-mode="money">
+                    <div class="policy-radio"></div>
+                    <div class="policy-content">
+                        <h4>Money</h4>
+                        <p>Evaluate monetary compensation and equivalent rewards.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="incentive-context" id="incentiveContext" style="display: none;">
+                <!-- Dynamically populated conversion rule for Hours config if chosen -->
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; border-top: 1px solid rgba(15, 31, 43, 0.05); padding-top: 20px;">
+                <div id="policySummary" style="font-size: 0.95rem; color: var(--ink-700); font-weight: 500;">
+                    <!-- JS renders Current Policy summary -->
+                </div>
+                <button class="btn btn-sky" id="savePolicyBtn" style="height: 40px; padding: 0 24px; min-width: 140px;" disabled>Save Policy</button>
+            </div>
+        </div>
+
         <div class="table-responsive"
             style="background: var(--white); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15, 31, 43, 0.05); margin-bottom: 40px;">
             <table style="width: 100%; border-collapse: collapse; text-align: left; min-width: 800px;">
@@ -115,10 +160,11 @@
                     <tr style="border-bottom: 2px solid var(--sky-100); color: var(--ink-700);">
                         <th style="padding: 16px; font-weight: 600;">User Name</th>
                         <th style="padding: 16px; font-weight: 600;">Department</th>
+                        <th style="padding: 16px; font-weight: 600;">Accumulated Incentive</th>
                         <th style="padding: 16px; font-weight: 600; text-align: right;">Actions</th>
                     </tr>
                 </thead>
-                <tbody style="color: var(--ink-800);">
+                <tbody style="color: var(--ink-800);" id="usersTableBody">
                     <tr style="border-bottom: 1px solid var(--sky-50);">
                         <td style="padding: 16px;">
                             <a href="user-profile.html"
@@ -133,7 +179,9 @@
                             </a>
                         </td>
                         <td style="padding: 16px; font-weight: 500;">Engineering</td>
-
+                        <td style="padding: 16px;" class="incentive-cell" data-points="320" data-hours="16" data-money="4500">
+                            <!-- JS populates value -->
+                        </td>
                         <td style="padding: 16px; text-align: right;">
                             <button class="btn"
                                 style="height: 32px; padding: 0 12px; font-size: 0.8rem; background: #fee2e2; color: #ef4444;">Remove</button>
@@ -154,7 +202,9 @@
                             </a>
                         </td>
                         <td style="padding: 16px; font-weight: 500;">Marketing</td>
-
+                        <td style="padding: 16px;" class="incentive-cell" data-points="150" data-hours="8" data-money="2000">
+                            <!-- JS populates value -->
+                        </td>
                         <td style="padding: 16px; text-align: right;">
                             <button class="btn"
                                 style="height: 32px; padding: 0 12px; font-size: 0.8rem; background: #fee2e2; color: #ef4444;">Remove</button>
@@ -174,7 +224,9 @@
                             </a>
                         </td>
                         <td style="padding: 16px; font-weight: 500;">Design</td>
-
+                        <td style="padding: 16px;" class="incentive-cell" data-points="85" data-hours="4.5" data-money="800">
+                            <!-- JS populates value -->
+                        </td>
                         <td style="padding: 16px; text-align: right;">
                             <button class="btn"
                                 style="height: 32px; padding: 0 12px; font-size: 0.8rem; background: #fee2e2; color: #ef4444;">Remove</button>

@@ -76,9 +76,17 @@
 
     <main class="page">
       <section class="page-head">
-        <h1>Posted Opportunities</h1>
-        <p class="head-subtext">Track interest, invite top candidates, and view match scores for each of your listed
-          opportunities.</p>
+        <div class="page-head-content">
+          <div>
+            <h1>Posted Opportunities</h1>
+            <p class="head-subtext">Track interest, invite top candidates, and view match scores for each of your listed
+              opportunities.</p>
+          </div>
+          <a href="add-opportunity.html" class="btn btn-sky head-action-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Post New Opportunity
+          </a>
+        </div>
       </section>
 
       <div class="opportunity-card">
@@ -122,7 +130,7 @@
             </h4>
 
             <div class="person-row">
-              <div class="person">
+              <div class="person" onclick="openResumeModal('Aarav R.', 'AR', 'Data Analysis Specialist', ['Data Analysis', 'Python', 'Sustainability Metrics'], ['Completed 2 campus data projects focusing on energy efficiency.', 'Led a workshop on basic data hygiene.'], '92%')">
                 <div class="avatar">AR</div>
                 <div>
                   <div class="person-name">Aarav R.</div>
@@ -137,10 +145,14 @@
                   <button class="btn btn-secondary action-reject" type="button">Reject</button>
                 </div>
               </div>
+              <div class="match-reasoning">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--sky-500)"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                Strong match because this candidate has Data Analysis experience, completed 2 similar projects, and has worked on sustainability logic.
+              </div>
             </div>
 
             <div class="person-row">
-              <div class="person">
+              <div class="person" onclick="openResumeModal('Sana K.', 'SK', 'UX Designer', ['UX Research', 'Figma', 'Prototyping'], ['Hosted 5 UX workshops for students.', 'Strong background in iterative design processes.'], '86%')">
                 <div class="avatar">SK</div>
                 <div>
                   <div class="person-name">Sana K.</div>
@@ -155,10 +167,14 @@
                   <button class="btn btn-secondary action-reject" type="button">Reject</button>
                 </div>
               </div>
+              <div class="match-reasoning">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--sky-500)"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                Good fit due to UX Design background and active workshop participation, indicating strong peer collaboration skills.
+              </div>
             </div>
 
             <div class="person-row">
-              <div class="person">
+              <div class="person" onclick="openResumeModal('Nikhil J.', 'NJ', 'Undergraduate Researcher', ['Research methodologies', 'Literature review', 'Survey design'], ['Participated in 1 major campus initiative.', 'Passionate about structural analysis.'], '78%')">
                 <div class="avatar">NJ</div>
                 <div>
                   <div class="person-name">Nikhil J.</div>
@@ -172,6 +188,10 @@
                   <button class="btn btn-sky action-invite" type="button">Invite</button>
                   <button class="btn btn-secondary action-reject" type="button">Reject</button>
                 </div>
+              </div>
+              <div class="match-reasoning">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--sky-500)"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                Moderate match. Shows relevant research exposure, but fewer directly related completed sustainability projects.
               </div>
             </div>
           </div>
@@ -187,7 +207,7 @@
             </h4>
 
             <div class="person-row">
-              <div class="person">
+              <div class="person" onclick="openResumeModal('Maya A.', 'MA', 'Project Lead', ['Agile', 'Team Leadership', 'Sustainability Strategy'], ['Led a cross-functional campus eco-initiative.', 'Managed a budget for green tech prototypes.'], '95%')">
                 <div class="avatar" style="background: linear-gradient(135deg, #f0fdf4, #bbf7d0); color: #16a34a;">MA
                 </div>
                 <div>
@@ -199,12 +219,15 @@
                 <div class="match-score" style="color:#16a34a;">95% Match</div>
                 <div class="match-bar"><span
                     style="width:95%; background: linear-gradient(90deg, #4ade80, #16a34a);"></span></div>
-
+              </div>
+              <div class="match-reasoning">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--sky-500)"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                Exceptional match. Maya possesses direct Project Leadership experience and specialized sustainability strategy skills.
               </div>
             </div>
 
             <div class="person-row">
-              <div class="person">
+              <div class="person" onclick="openResumeModal('Dev B.', 'DB', 'Engineering Student', ['CAD', 'Thermal Dynamics', 'Prototyping'], ['Designed an eco-friendly campus cooling system.', 'Engineering club vice president.'], '90%')">
                 <div class="avatar" style="background: linear-gradient(135deg, #f0fdf4, #bbf7d0); color: #16a34a;">DB
                 </div>
                 <div>
@@ -216,7 +239,10 @@
                 <div class="match-score" style="color:#16a34a;">90% Match</div>
                 <div class="match-bar"><span
                     style="width:90%; background: linear-gradient(90deg, #4ade80, #16a34a);"></span></div>
-
+              </div>
+              <div class="match-reasoning">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--sky-500)"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                Strong technical alignment. Extensive engineering background relevant to physical sustainability prototypes.
               </div>
             </div>
           </div>
@@ -264,7 +290,7 @@
             </h4>
 
             <div class="person-row">
-              <div class="person">
+              <div class="person" onclick="openResumeModal('Priya G.', 'PG', 'UX Researcher', ['User Testing', 'Accessibility Focus', 'Data Synthesis'], ['Organized impact research panels for startups.', 'Passionate about inclusive design and empathy mapping.'], '89%')">
                 <div class="avatar">PG</div>
                 <div>
                   <div class="person-name">Priya G.</div>
@@ -279,10 +305,14 @@
                   <button class="btn btn-secondary action-reject" type="button">Reject</button>
                 </div>
               </div>
+              <div class="match-reasoning">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--sky-500)"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                Highly relevant candidate. Has conducted multiple accessibility workshops and excels in user-centered design testing.
+              </div>
             </div>
 
             <div class="person-row">
-              <div class="person">
+              <div class="person" onclick="openResumeModal('Rohan T.', 'RT', 'Graphic Designer', ['Adobe CC', 'Brand Identity', 'Illustration'], ['Designed branding for 2 campus events.', 'Created the student council logo.'], '81%')">
                 <div class="avatar">RT</div>
                 <div>
                   <div class="person-name">Rohan T.</div>
@@ -296,6 +326,10 @@
                   <button class="btn btn-sky action-invite" type="button">Invite</button>
                   <button class="btn btn-secondary action-reject" type="button">Reject</button>
                 </div>
+              </div>
+              <div class="match-reasoning">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--sky-500)"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                Good design capabilities. Strong portfolio in event branding makes him a solid visual contributor for this workshop.
               </div>
             </div>
           </div>
@@ -311,7 +345,7 @@
             </h4>
 
             <div class="person-row">
-              <div class="person">
+              <div class="person" onclick="openResumeModal('Sneha L.', 'SL', 'Workshop Mentor', ['Public Speaking', 'Curriculum Design', 'Mentorship'], ['Mentored 40+ students in design thinking.', 'Facilitated the Spring Hackathon.'], '94%')">
                 <div class="avatar" style="background: linear-gradient(135deg, #f0fdf4, #bbf7d0); color: #16a34a;">SL
                 </div>
                 <div>
@@ -323,7 +357,10 @@
                 <div class="match-score" style="color:#16a34a;">94% Match</div>
                 <div class="match-bar"><span
                     style="width:94%; background: linear-gradient(90deg, #4ade80, #16a34a);"></span></div>
-
+              </div>
+              <div class="match-reasoning">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--sky-500)"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                Excellent mentor profile. Proven track record of guiding students through design thinking sprints successfully.
               </div>
             </div>
           </div>
@@ -333,14 +370,42 @@
     </main>
   </div>
 
+  <div class="resume-modal" id="resumeModal">
+    <div class="resume-modal-backdrop" onclick="closeResumeModal()"></div>
+    <div class="resume-modal-content">
+      <button class="resume-modal-close" onclick="closeResumeModal()">×</button>
+      <div class="resume-header">
+        <div class="avatar" style="width: 72px; height: 72px; font-size: 1.8rem;" id="rm-avatar"></div>
+        <div>
+          <div class="resume-name" id="rm-name"></div>
+          <div class="resume-role" id="rm-role"></div>
+        </div>
+      </div>
+      
+      <div class="resume-section">
+        <h3>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+          Skills & Expertise
+        </h3>
+        <div class="resume-skills" id="rm-skills"></div>
+      </div>
+
+      <div class="resume-section">
+        <h3>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+          Experience Summary
+        </h3>
+        <div id="rm-bullets"></div>
+      </div>
+    </div>
+  </div>
+
   <script src="js/posted-opportunities.js"></script>
-
+  <script src="js/posted-opportunities-modal.js"></script>
   
-
   <script src="js/chatbot.js"></script>
-<script src="js/role-permissions.js"></script>
-    <script src="js/header.js"></script>
+  <script src="js/role-permissions.js"></script>
+  <script src="js/header.js"></script>
 </body>
-
 
 </html>

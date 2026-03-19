@@ -83,6 +83,39 @@
 
         <form class="form" id="opportunityForm" onsubmit="return false;">
 
+          <!-- AI Assist Hero -->
+          <div class="ai-assist-box">
+            <div class="ai-assist-header">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48 2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48 2.83-2.83"></path>
+              </svg>
+              <h3>Describe your opportunity</h3>
+            </div>
+            <p class="ai-assist-sub">We'll suggest the structured details for you.</p>
+            
+            <div class="ai-assist-input-wrapper">
+              <textarea id="aiDescription" class="ai-textarea" placeholder="e.g. Need 2 students to help design posters for our sustainability sprint over the next two weeks. Should know Canva or Figma. Roughly 3–5 hours a week. Reward around 250 XP."></textarea>
+              <button type="button" class="mic-btn" id="micBtn" title="Speak description">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+                  <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                  <line x1="12" y1="19" x2="12" y2="22"></line>
+                </svg>
+              </button>
+            </div>
+            
+            <button type="button" class="btn btn-sky ai-generate-btn" id="generateBtn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+              </svg>
+              Generate Details
+            </button>
+          </div>
+
+          <div class="form-divider">
+            <span>Review & Edit Structured Details</span>
+          </div>
+
           <div class="floating-group">
             <input id="title" class="floating-input" placeholder=" " required />
             <label for="title" class="floating-label">Opportunity Title</label>
@@ -115,16 +148,17 @@
           </div>
 
           <div class="row">
-            <div class="form-group">
-              <label for="timePerWeek">Time Commitment</label>
-              <select id="timePerWeek" class="text-input" required>
-                <option value="" disabled selected>Select expected effort</option>
-                <option>Less than 1 hour</option>
-                <option>1-2 hours / week</option>
-                <option>3-5 hours / week</option>
-                <option>5-10 hours / week</option>
-                <option>Full Sprint</option>
-              </select>
+            <div class="form-group" style="grid-column: 1 / -1;">
+              <label>Time Commitment</label>
+              <div class="time-chips" id="timeChipsContainer" style="align-items: center;">
+                <input type="hidden" id="timePerWeek" required />
+                <button type="button" class="time-chip" data-value="Less than 1 hour">&lt; 1 hr</button>
+                <button type="button" class="time-chip" data-value="1-2 hours / week">1–2 hrs</button>
+                <button type="button" class="time-chip" data-value="3-5 hours / week">3–5 hrs</button>
+                <button type="button" class="time-chip" data-value="5-10 hours / week">5–10 hrs</button>
+                <button type="button" class="time-chip" data-value="Custom">Custom</button>
+                <input type="text" id="customTimeInput" class="text-input" placeholder="Specify time..." style="display: none; max-width: 140px; padding: 6px 12px; font-size: 0.9rem;" />
+              </div>
             </div>
           </div>
 

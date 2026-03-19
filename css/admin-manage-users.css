@@ -306,6 +306,109 @@
             gap: 16px;
         }
 
+        /* Incentive Model Card Styles */
+        .incentive-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(15, 31, 43, 0.05);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 24px;
+        }
+        .incentive-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .policy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .policy-card {
+            background: var(--white);
+            border: 2px solid rgba(15, 31, 43, 0.08);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            transition: all 0.2s ease-in-out;
+        }
+        .policy-card:hover {
+            border-color: var(--sky-200);
+            background: var(--sky-50);
+        }
+        .policy-card.selected {
+            border-color: var(--sky-600);
+            background: #f0f9ff;
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.1);
+        }
+        .policy-radio {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid var(--ink-300);
+            margin-top: 2px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            transition: all 0.2s;
+        }
+        .policy-card.selected .policy-radio {
+            border-color: var(--sky-600);
+            background: var(--sky-600);
+        }
+        .policy-card.selected .policy-radio::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--white);
+            display: block;
+        }
+        .policy-content h4 {
+            margin: 0 0 4px 0;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--ink-900);
+        }
+        .policy-content p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: var(--ink-500);
+            line-height: 1.4;
+        }
+        .incentive-context {
+            padding: 16px;
+            background: var(--sky-50);
+            border-radius: var(--radius-sm);
+            color: var(--ink-700);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .conversion-inline {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+        .conversion-input {
+            width: 60px;
+            padding: 6px 10px;
+            border: 1px solid rgba(15, 31, 43, 0.15);
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 0.95rem;
+            text-align: center;
+        }
+
         .icon-btn {
             width: 44px;
             height: 44px;

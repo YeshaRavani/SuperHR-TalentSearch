@@ -128,3 +128,155 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
+
+// Organisation Incentive Policy Logic
+document.addEventListener('DOMContentLoaded', () => {
+    const policyCards = document.querySelectorAll('.policy-card');
+    const contextContainer = document.getElementById('incentiveContext');
+    const userCells = document.querySelectorAll('.incentive-cell');
+    const savePolicyBtn = document.getElementById('savePolicyBtn');
+    const policySummary = document.getElementById('policySummary');
+
+    // Default state: official policy
+    let state = {
+        mode: localStorage.getItem('incentiveMode') || 'points',
+        hoursPerLeave: parseInt(localStorage.getItem('hoursPerLeave')) || 8
+    };
+
+    // Pending selection state
+    let pendingMode = state.mode;
+
+    function renderContext() {
+        if (!contextContainer) return;
+        
+        // Context only appears specifically for 'hours' because it requires configuration
+        if (state.mode === 'hours') {
+            contextContainer.style.display = 'flex';
+            contextContainer.innerHTML = `
+                <div class="conversion-inline">
+                    <span>Active Conversion Rule:</span>
+                    <input type="number" id="hoursInput" class="conversion-input" value="${state.hoursPerLeave}" min="1">
+                    <span>hours worked = 1 paid leave unit</span>
+                </div>
+            `;
+            const hoursInput = document.getElementById('hoursInput');
+            if (hoursInput) {
+                hoursInput.addEventListener('change', (e) => {
+                    let val = parseInt(e.target.value);
+                    if (val && val > 0) {
+                        state.hoursPerLeave = val;
+                        localStorage.setItem('hoursPerLeave', val);
+                        renderUserCells();
+                        updateSummary();
+                    }
+                });
+            }
+        } else {
+            contextContainer.style.display = 'none';
+        }
+    }
+
+    function renderUserCells() {
+        if (!userCells) return;
+        userCells.forEach(cell => {
+            const pts = cell.getAttribute('data-points') || 0;
+            const hrs = parseFloat(cell.getAttribute('data-hours') || 0);
+            const mny = cell.getAttribute('data-money') || 0;
+
+            if (state.mode === 'points') {
+                cell.innerHTML = `<strong>${pts}</strong> points`;
+            } else if (state.mode === 'money') {
+                const formattedMny = Number(mny).toLocaleString('en-IN');
+                cell.innerHTML = `<strong>₹${formattedMny}</strong> earned`;
+            } else if (state.mode === 'hours') {
+                const leaves = (hrs / state.hoursPerLeave).toFixed(1);
+                // Simplify rendering like "1.0" to "1"
+                const cleanLeaves = leaves.endsWith('.0') ? leaves.slice(0, -2) : leaves;
+                
+                let badgeHtml = '';
+                if (hrs >= state.hoursPerLeave) {
+                    badgeHtml = `<span style="display:inline-block; margin-top:4px; font-size:0.75rem; background:#dcfce7; color:#166534; padding:2px 8px; border-radius:999px;">Eligible for leave</span>`;
+                }
+
+                cell.innerHTML = `
+                    <div style="line-height:1.4;">
+                        <strong>${hrs}</strong> hours logged
+                        <div style="font-size:0.85rem; color:var(--ink-500);">= ${cleanLeaves} paid leave units</div>
+                        ${badgeHtml}
+                    </div>
+                `;
+            }
+        });
+    }
+
+    function updateSummary() {
+        if (!policySummary) return;
+        
+        const modeLabels = {
+            'points': 'Points',
+            'hours': 'Hours Worked',
+            'money': 'Money'
+        };
+        
+        let html = `Current policy: <strong>${modeLabels[state.mode]}</strong>`;
+        if (state.mode === 'hours') {
+            html += `<br><span style="font-weight:400; font-size: 0.85rem; color:var(--ink-500);">Conversion rule: ${state.hoursPerLeave} hours = 1 paid leave</span>`;
+        }
+        policySummary.innerHTML = html;
+    }
+
+    function setPendingCard(mode) {
+        pendingMode = mode;
+        policyCards.forEach(card => {
+            if (card.getAttribute('data-mode') === pendingMode) {
+                card.classList.add('selected');
+            } else {
+                card.classList.remove('selected');
+            }
+        });
+
+        // Enable save button if the selection represents a structural policy change
+        if (pendingMode !== state.mode) {
+            savePolicyBtn.disabled = false;
+            savePolicyBtn.textContent = 'Save Policy Change';
+        } else {
+            savePolicyBtn.disabled = true;
+            savePolicyBtn.textContent = 'Policy Saved';
+        }
+    }
+
+    // Bind card clicks
+    policyCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const mode = card.getAttribute('data-mode');
+            if (mode) {
+                setPendingCard(mode);
+            }
+        });
+    });
+    
+    // Bind save button
+    if (savePolicyBtn) {
+        savePolicyBtn.addEventListener('click', () => {
+            if (pendingMode && pendingMode !== state.mode) {
+                // Commit the policy
+                state.mode = pendingMode;
+                localStorage.setItem('incentiveMode', state.mode);
+                
+                // Re-render UI
+                setPendingCard(state.mode);
+                updateSummary();
+                renderContext();
+                renderUserCells();
+            }
+        });
+    }
+
+    // Initialize display
+    if(policyCards.length > 0) {
+        setPendingCard(state.mode);
+        updateSummary();
+        renderContext();
+        renderUserCells();
+    }
+});

@@ -20,17 +20,5 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
     }
 
-    if (roleBadge) roleBadge.textContent = 'User';
     if (welcomeText) welcomeText.innerHTML = `Welcome back,<br><span>${greetingName}</span>`;
-
-    if (ctaContainer) {
-        ctaContainer.innerHTML = `
-            <a href="opportunities.html" class="btn btn-secondary" style="font-size: 1.1rem; padding: 0 32px; height: 52px;">
-                Browse Opportunities
-            </a>
-            <a href="add-opportunity.html" class="btn btn-sky" style="font-size: 1.1rem; padding: 0 32px; height: 52px;">
-                + Post Opportunity
-            </a>
-        `;
-    }
 });
