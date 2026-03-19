@@ -82,7 +82,7 @@
                     </div>
                 </div>
                 <!-- Profile Icon -->
-                <a href="admin-contributor-profile.html" class="profile" aria-label="Profile">
+                <a href="admin-user-profile.html" class="profile" aria-label="Profile">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         style="width:20px;height:20px;">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -113,43 +113,59 @@
             <div class="incentive-card-header">
                 <div>
                     <h3 style="margin-bottom: 4px; color: var(--ink-900);">Organisation Incentive Policy</h3>
-                    <p style="color: var(--ink-500); font-size: 0.9rem;">Choose one definitive incentive system for all users. Only one policy can be active at a time.</p>
+                    <p style="color: var(--ink-500); font-size: 0.9rem;">Choose one definitive incentive system for all
+                        users. Only one policy can be active at a time.</p>
                 </div>
             </div>
-            
+
             <div class="policy-grid" id="policyCards">
-                <div class="policy-card" data-mode="points">
-                    <div class="policy-radio"></div>
-                    <div class="policy-content">
-                        <h4>Points</h4>
-                        <p>Users accumulate system points from engagements.</p>
+                <div class="policy-card" data-mode="points" title="Select Points System">
+                    <div class="policy-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                            <path d="M4 11V9h16v2a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"></path>
+                            <path d="M12 15V22"></path>
+                            <path d="M7 22H17"></path>
+                        </svg>
                     </div>
+                    <h4>Points</h4>
+                    <p>Users accumulate system points from engagements.</p>
                 </div>
-                <div class="policy-card" data-mode="hours">
-                    <div class="policy-radio"></div>
-                    <div class="policy-content">
-                        <h4>Hours Worked</h4>
-                        <p>Track time logged and grant paid leaves.</p>
+                <div class="policy-card" data-mode="hours" title="Select Hours System">
+                    <div class="policy-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
                     </div>
+                    <h4>Hours Worked</h4>
+                    <p>Track time logged and grant paid leaves.</p>
                 </div>
-                <div class="policy-card" data-mode="money">
-                    <div class="policy-radio"></div>
-                    <div class="policy-content">
-                        <h4>Money</h4>
-                        <p>Evaluate monetary compensation and equivalent rewards.</p>
+                <div class="policy-card" data-mode="money" title="Select Money System">
+                    <div class="policy-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+                            <circle cx="12" cy="12" r="2"></circle>
+                            <path d="M6 12h.01M18 12h.01"></path>
+                        </svg>
                     </div>
+                    <h4>Money</h4>
+                    <p>Evaluate monetary compensation and equivalent rewards.</p>
                 </div>
             </div>
-            
+
             <div class="incentive-context" id="incentiveContext" style="display: none;">
                 <!-- Dynamically populated conversion rule for Hours config if chosen -->
             </div>
 
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; border-top: 1px solid rgba(15, 31, 43, 0.05); padding-top: 20px;">
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; border-top: 1px solid rgba(15, 31, 43, 0.05); padding-top: 20px;">
                 <div id="policySummary" style="font-size: 0.95rem; color: var(--ink-700); font-weight: 500;">
                     <!-- JS renders Current Policy summary -->
                 </div>
-                <button class="btn btn-sky" id="savePolicyBtn" style="height: 40px; padding: 0 24px; min-width: 140px;" disabled>Save Policy</button>
+                <button class="btn btn-sky" id="savePolicyBtn" style="height: 40px; padding: 0 24px; min-width: 140px;"
+                    disabled>Save Policy</button>
             </div>
         </div>
 
@@ -179,7 +195,8 @@
                             </a>
                         </td>
                         <td style="padding: 16px; font-weight: 500;">Engineering</td>
-                        <td style="padding: 16px;" class="incentive-cell" data-points="320" data-hours="16" data-money="4500">
+                        <td style="padding: 16px;" class="incentive-cell" data-points="320" data-hours="16"
+                            data-money="4500">
                             <!-- JS populates value -->
                         </td>
                         <td style="padding: 16px; text-align: right;">
@@ -202,7 +219,8 @@
                             </a>
                         </td>
                         <td style="padding: 16px; font-weight: 500;">Marketing</td>
-                        <td style="padding: 16px;" class="incentive-cell" data-points="150" data-hours="8" data-money="2000">
+                        <td style="padding: 16px;" class="incentive-cell" data-points="150" data-hours="8"
+                            data-money="2000">
                             <!-- JS populates value -->
                         </td>
                         <td style="padding: 16px; text-align: right;">
@@ -224,7 +242,8 @@
                             </a>
                         </td>
                         <td style="padding: 16px; font-weight: 500;">Design</td>
-                        <td style="padding: 16px;" class="incentive-cell" data-points="85" data-hours="4.5" data-money="800">
+                        <td style="padding: 16px;" class="incentive-cell" data-points="85" data-hours="4.5"
+                            data-money="800">
                             <!-- JS populates value -->
                         </td>
                         <td style="padding: 16px; text-align: right;">

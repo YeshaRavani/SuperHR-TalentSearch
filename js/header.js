@@ -44,7 +44,7 @@
         // Progress bar
         if (progressBar) {
           var total = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-          var pct   = total > 0 ? (scrollY / total) * 100 : 0;
+          var pct = total > 0 ? (scrollY / total) * 100 : 0;
           progressBar.style.width = pct + '%';
         }
       }, { passive: true });
@@ -58,8 +58,8 @@
      */
 
     // ── Pattern A ────────────────────────────────────────────────────────────
-    var bellA   = document.getElementById('notifToggle');
-    var panelA  = document.getElementById('notifDropdown') || document.getElementById('notifPanel');
+    var bellA = document.getElementById('notifToggle');
+    var panelA = document.getElementById('notifDropdown') || document.getElementById('notifPanel');
 
     if (bellA && panelA) {
       bellA.setAttribute('aria-haspopup', 'true');
@@ -86,7 +86,7 @@
     // ── Pattern B ────────────────────────────────────────────────────────────
     document.querySelectorAll('.notification-wrap, .notif-wrapper').forEach(function (wrap) {
       var toggle = wrap.querySelector('.notification-toggle') || wrap.querySelector('.icon-btn');
-      var panel  = wrap.querySelector('.notification-panel') || wrap.querySelector('.notif-dropdown');
+      var panel = wrap.querySelector('.notification-panel') || wrap.querySelector('.notif-dropdown');
       if (!toggle || !panel) return;
 
       toggle.setAttribute('aria-haspopup', 'true');
@@ -133,13 +133,50 @@
 
     /* ── Mark-all-read badge clear ──────────────────────────────────────────── */
     var markAllBtn = document.getElementById('markAllReadBtn') ||
-                     document.querySelector('.notif-clear');
-    var badge      = document.getElementById('notifBadge');
+      document.querySelector('.notif-clear');
+    var badge = document.getElementById('notifBadge');
 
     if (markAllBtn && badge) {
       markAllBtn.addEventListener('click', function () {
         badge.style.display = 'none';
       });
+    }
+
+    /* ── Profile Onboarding / Navbar Toggle ──────────────────────────────── */
+    const userRole = localStorage.getItem('userRole');
+    const adminImage = localStorage.getItem('adminProfileImage');
+    const navActions = document.querySelector('.nav-actions');
+
+    if (userRole === 'admin' && navActions) {
+      const loginBtn = navActions.querySelector('.login-btn');
+      if (loginBtn) {
+        loginBtn.style.display = 'none';
+        if (!navActions.querySelector('.profile')) {
+          const profileLink = document.createElement('a');
+          profileLink.href = "admin-user-profile.html";
+          profileLink.className = "profile";
+          profileLink.setAttribute('aria-label', 'Profile');
+
+          if (adminImage) {
+            profileLink.innerHTML = `<img src="${adminImage}" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;" />`;
+          } else {
+            profileLink.innerHTML = `
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;">
+                          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                          <circle cx="12" cy="7" r="4"></circle>
+                        </svg>`;
+          }
+          navActions.appendChild(profileLink);
+        }
+      } else {
+        const profileNode = navActions.querySelector('.profile');
+        if (profileNode) {
+          profileNode.href = "admin-user-profile.html";
+          if (adminImage) {
+            profileNode.innerHTML = `<img src="${adminImage}" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;" />`;
+          }
+        }
+      }
     }
 
   }); // end ready()
