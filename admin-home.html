@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/chatbot.css" />
     <script src="js/opportunities_data.js"></script>
     <link rel="stylesheet" href="css/header.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -75,11 +76,12 @@
                 </div>
                 <!-- Profile Icon -->
                 <a href="admin-contributor-profile.html" class="profile" aria-label="Profile">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;">
-      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-      <circle cx="12" cy="7" r="4"></circle>
-    </svg>
-  </a>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        style="width:20px;height:20px;">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </a>
             </div>
         </div>
     </header>
@@ -192,8 +194,119 @@
             </div>
         </section>
 
+        <!-- Skill Insights Section -->
+        <section class="section" style="padding: 60px 0; background: #f8fafc;">
+            <div class="page-container">
+                <div class="section-header" style="text-align: left; margin-bottom: 30px;">
+                    <h2 class="section-title" style="font-size: 1.8rem; font-weight: 800; margin-bottom: 8px;">Skill
+                        Insights</h2>
+                    <p class="section-desc" style="color: var(--ink-500);">Comprehensive analysis of skill strengths
+                        across the organization.</p>
+                </div>
+
+                <!-- Main Card Wrapper -->
+                <div
+                    style="background: var(--white); border-radius: var(--radius-lg); padding: 32px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15, 31, 43, 0.05); display: flex; flex-direction: column; gap: 40px;">
+
+                    <!-- 1. Radar Chart -->
+                    <div
+                        style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%;">
+                        <div style="max-width: 450px; width: 100%; height: 380px;">
+                            <canvas id="skillRadarChart"></canvas>
+                        </div>
+                    </div>
+
+                    <hr style="border-top: 1px solid rgba(15,31,43,0.06);" />
+
+                    <!-- 2. Bar Chart -->
+                    <div style="width: 100%;">
+                        <h3
+                            style="font-size: 1.15rem; font-weight: 700; color: var(--ink-900); margin-bottom: 20px; text-align: center;">
+                            Detailed Count Breakdowns</h3>
+                        <div style="max-width: 600px; margin: 0 auto; width: 100%; height: 260px;">
+                            <canvas id="skillBarChart"></canvas>
+                        </div>
+                    </div>
+
+                    <hr style="border-top: 1px solid rgba(15,31,43,0.06);" />
+
+                    <!-- 3. Top Skills & Popular Tags -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px;">
+                        <div>
+                            <h3
+                                style="font-size: 1.1rem; font-weight: 700; color: var(--ink-900); margin-bottom: 16px;">
+                                Top Skills</h3>
+                            <div style="display: flex; flex-direction: column; gap: 14px;">
+                                <div
+                                    style="display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem; font-weight: 600;">
+                                    <span style="display: flex; align-items: center; gap: 8px;">
+                                        <div
+                                            style="width: 8px; height: 8px; border-radius: 50%; background: var(--sky-600);">
+                                        </div> Python
+                                    </span> <span style="color: var(--sky-600);">32 users</span>
+                                </div>
+                                <div
+                                    style="display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem; font-weight: 600;">
+                                    <span style="display: flex; align-items: center; gap: 8px;">
+                                        <div style="width: 8px; height: 8px; border-radius: 50%; background: #a855f7;">
+                                        </div> UI / UX Design
+                                    </span> <span style="color: #a855f7;">24 users</span>
+                                </div>
+                                <div
+                                    style="display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem; font-weight: 600;">
+                                    <span style="display: flex; align-items: center; gap: 8px;">
+                                        <div style="width: 8px; height: 8px; border-radius: 50%; background: #10b981;">
+                                        </div> Public Speaking
+                                    </span> <span style="color: #10b981;">18 users</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h4
+                                style="font-size: 0.9rem; font-weight: 700; color: var(--ink-500); margin-bottom: 12px; text-transform: uppercase;">
+                                Popular Tags</h4>
+                            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                                <span
+                                    style="padding: 6px 14px; background: var(--sky-50); color: var(--sky-600); border-radius: 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s;"
+                                    onmouseover="this.style.background='var(--sky-200)'; this.style.color='var(--sky-900)'"
+                                    onmouseout="this.style.background='var(--sky-50)'; this.style.color='var(--sky-600)'">React</span>
+                                <span
+                                    style="padding: 6px 14px; background: var(--sky-50); color: var(--sky-600); border-radius: 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer;"
+                                    onmouseover="this.style.background='var(--sky-200)'; this.style.color='var(--sky-900)'"
+                                    onmouseout="this.style.background='var(--sky-50)'; this.style.color='var(--sky-600)'">Figma</span>
+                                <span
+                                    style="padding: 6px 14px; background: var(--sky-50); color: var(--sky-600); border-radius: 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer;"
+                                    onmouseover="this.style.background='var(--sky-200)'; this.style.color='var(--sky-900)'"
+                                    onmouseout="this.style.background='var(--sky-50)'; this.style.color='var(--sky-600)'">Marketing</span>
+                                <span
+                                    style="padding: 6px 14px; background: var(--sky-50); color: var(--sky-600); border-radius: 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer;"
+                                    onmouseover="this.style.background='var(--sky-200)'; this.style.color='var(--sky-900)'"
+                                    onmouseout="this.style.background='var(--sky-50)'; this.style.color='var(--sky-600)'">Speaking</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. AI Insight Message -->
+                    <div style="padding-top: 16px; border-top: 1px solid rgba(15,31,43,0.04); text-align: center;">
+                        <p
+                            style="font-style: italic; color: var(--ink-400); font-size: 0.85rem; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--sky-600)"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            Our AI continuously updates these insights as users participate in opportunities,
+                            collaborate, and build new skills.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
         <!-- Quick Actions Section -->
-        <section class="section reveal" style="padding: 60px 0;">
+        <section class="section" style="padding: 60px 0;">
             <div class="page-container">
                 <div class="section-header" style="text-align: left; margin-bottom: 30px;">
                     <h2 class="section-title" style="font-size: 1.8rem; font-weight: 800; margin-bottom: 8px;">Quick
@@ -418,8 +531,73 @@
     <script src="js/chatbot.js"></script>
     <script src="js/role-permissions.js"></script>
 
-    
+
     <script src="js/header.js"></script>
+    <!-- Chart.js Init -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const ctx = document.getElementById('skillRadarChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Technical', 'Design', 'Communication', 'Management', 'Data/AI', 'Marketing'],
+                    datasets: [{
+                        label: 'Organization Strength',
+                        data: [85, 75, 70, 60, 80, 50],
+                        backgroundColor: 'rgba(2, 132, 199, 0.15)',
+                        borderColor: 'rgba(2, 132, 199, 0.8)',
+                        pointBackgroundColor: 'rgba(2, 132, 199, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(2, 132, 199, 1)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: 'rgba(15, 31, 43, 0.1)' },
+                            grid: { color: 'rgba(15, 31, 43, 0.06)' },
+                            pointLabels: { font: { size: 12, weight: '600' }, color: '#334155' },
+                            suggestedMin: 0,
+                            suggestedMax: 100
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+
+            // Initialize Bar Chart
+            const barCtx = document.getElementById('skillBarChart').getContext('2d');
+            new Chart(barCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Python', 'React', 'UI Design', 'Figma', 'Speaking', 'Marketing'],
+                    datasets: [{
+                        label: 'Users count',
+                        data: [32, 28, 24, 21, 18, 15],
+                        backgroundColor: 'rgba(2, 132, 199, 0.85)',
+                        borderRadius: 8,
+                        hoverBackgroundColor: 'rgba(2, 132, 199, 1)'
+                    }]
+                },
+                options: {
+                    indexAxis: 'y', // Horizontal Layout
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { color: 'rgba(15, 31, 43, 0.03)' }, ticks: { font: { size: 11 } } },
+                        y: { grid: { display: false }, ticks: { font: { size: 12, weight: '600' } } }
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
