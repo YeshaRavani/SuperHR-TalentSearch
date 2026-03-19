@@ -12,7 +12,7 @@
   <script src="js/opportunities_data.js"></script>
   <script src="js/admin-manage-opportunities.js"></script>
 
-    <link rel="stylesheet" href="css/header.css" />
+  <link rel="stylesheet" href="css/header.css" />
 </head>
 
 <body>
@@ -28,9 +28,10 @@
   <div class="page-wrap">
     <header class="topbar" id="navbar">
       <div class="nav">
-        <a href="index (1).html" class="logo" title="Go to home" aria-label="Go to home" style="text-decoration: none; color: inherit;">
-          <img class="logo-img" src="assets/logo.png" onerror="this.src='https://via.placeholder.com/88/9ecae1/ffffff?text=TS'"
-            alt="Logo" />
+        <a href="index (1).html" class="logo" title="Go to home" aria-label="Go to home"
+          style="text-decoration: none; color: inherit;">
+          <img class="logo-img" src="assets/logo.png"
+            onerror="this.src='https://via.placeholder.com/88/9ecae1/ffffff?text=TS'" alt="Logo" />
           Talent Search
         </a>
         <nav class="menu">
@@ -38,48 +39,55 @@
           <a href="admin-manage-users.html">Manage Users</a>
           <a href="admin-manage-opportunities.html" class="active">Manage Opportunities</a>
           <a href="admin-system-settings.html">System Settings</a>
+          <a href="admin-aboutus.html">About Us</a>
         </nav>
         <div class="nav-actions">
           <div class="notif-wrapper">
-                    <button class="icon-btn" id="notifToggle">
-                        <span class="icon-dot" id="notifBadge">3</span>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                        </svg>
-                    </button>
-                    <!-- Notification Hidden Dropdown Panel -->
-                    <div class="notif-dropdown" id="notifDropdown">
-                        <div class="notif-header">
-                            <h4>System Alerts</h4>
-                            <span class="notif-clear" id="markAllReadBtn" style="cursor: pointer; color: var(--sky-600); font-size: 0.85rem; font-weight: 600;">Mark all read</span>
-                        </div>
-                        <div class="notif-item">
-                            <p style="margin-bottom: 0;"><strong>Opportunity Removed:</strong> "Advanced Python Workshop" was removed by admin.</p>
-                            <div class="notif-actions" style="margin-top: 8px;">
-                                <span style="font-size:0.8rem; color:var(--ink-400);">Just now</span>
-                            </div>
-                        </div>
-                        <div class="notif-item">
-                            <p style="margin-bottom: 0;"><strong>Role Updated:</strong> "Sarah Jenkins" role changed to Department Manager.</p>
-                            <div class="notif-actions" style="margin-top: 8px;">
-                                <a href="admin-manage-users.html" class="btn btn-sky" style="height:32px; padding:0 16px; font-size:0.8rem; text-decoration:none; display:inline-flex; align-items:center;">View</a>
-                            </div>
-                        </div>
-                        <div class="notif-item">
-                            <p style="margin-bottom: 0;"><strong>System Reminder:</strong> Weekly platform backup completed successfully.</p>
-                            <div class="notif-actions" style="margin-top: 8px;">
-                                <span style="font-size:0.8rem; color:var(--ink-400);">1 hr ago</span>
-                            </div>
-                        </div>
-                    </div>
+            <button class="icon-btn" id="notifToggle">
+              <span class="icon-dot" id="notifBadge">3</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+            </button>
+            <!-- Notification Hidden Dropdown Panel -->
+            <div class="notif-dropdown" id="notifDropdown">
+              <div class="notif-header">
+                <h4>System Alerts</h4>
+                <span class="notif-clear" id="markAllReadBtn"
+                  style="cursor: pointer; color: var(--sky-600); font-size: 0.85rem; font-weight: 600;">Mark all
+                  read</span>
+              </div>
+              <div class="notif-item">
+                <p style="margin-bottom: 0;"><strong>Opportunity Removed:</strong> "Advanced Python Workshop" was
+                  removed by admin.</p>
+                <div class="notif-actions" style="margin-top: 8px;">
+                  <span style="font-size:0.8rem; color:var(--ink-400);">Just now</span>
                 </div>
-                <a href="admin-contributor-profile.html" class="profile" aria-label="Profile">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;">
-      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-      <circle cx="12" cy="7" r="4"></circle>
-    </svg>
-  </a>
+              </div>
+              <div class="notif-item">
+                <p style="margin-bottom: 0;"><strong>Role Updated:</strong> "Sarah Jenkins" role changed to Department
+                  Manager.</p>
+                <div class="notif-actions" style="margin-top: 8px;">
+                  <a href="admin-manage-users.html" class="btn btn-sky"
+                    style="height:32px; padding:0 16px; font-size:0.8rem; text-decoration:none; display:inline-flex; align-items:center;">View</a>
+                </div>
+              </div>
+              <div class="notif-item">
+                <p style="margin-bottom: 0;"><strong>System Reminder:</strong> Weekly platform backup completed
+                  successfully.</p>
+                <div class="notif-actions" style="margin-top: 8px;">
+                  <span style="font-size:0.8rem; color:var(--ink-400);">1 hr ago</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a href="admin-contributor-profile.html" class="profile" aria-label="Profile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </a>
         </div>
       </div>
     </header>
@@ -101,21 +109,21 @@
         <!-- Rendered Sections -->
       </div>
 
-      
 
-      
+
+
     </main>
   </div>
 
-  
 
-  
+
+
 
   <script src="js/chatbot.js"></script>
-<script src="js/role-permissions.js"></script>
+  <script src="js/role-permissions.js"></script>
 
 
-    <script src="js/header.js"></script>
+  <script src="js/header.js"></script>
 </body>
 
 

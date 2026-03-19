@@ -25,20 +25,22 @@
     </div>
 
     <header class="topbar" id="navbar">
-      <div class="nav">
-        <a href="index (1).html" class="logo" title="Go to home" aria-label="Go to home" style="text-decoration: none; color: inherit;">
-          <img class="logo-img" src="assets/logo.png" onerror="this.src='https://via.placeholder.com/88/9ecae1/ffffff?text=TS'"
-            alt="Logo" />
-          Talent Search
-        </a>
-        <nav class="menu">
-          <a href="admin-home.html">Home</a>
-          <a href="admin-manage-users.html">Manage Users</a>
-          <a href="admin-manage-opportunities.html">Manage Opportunities</a>
-          <a href="admin-system-settings.html" class="active">System Settings</a>
-        </nav>
-        <div class="nav-actions">
-          <div class="notif-wrapper">
+        <div class="nav">
+            <a href="index (1).html" class="logo" title="Go to home" aria-label="Go to home"
+                style="text-decoration: none; color: inherit;">
+                <img class="logo-img" src="assets/logo.png"
+                    onerror="this.src='https://via.placeholder.com/88/9ecae1/ffffff?text=TS'" alt="Logo" />
+                Talent Search
+            </a>
+            <nav class="menu">
+                <a href="admin-home.html">Home</a>
+                <a href="admin-manage-users.html">Manage Users</a>
+                <a href="admin-manage-opportunities.html">Manage Opportunities</a>
+                <a href="admin-system-settings.html" class="active">System Settings</a>
+                <a href="admin-aboutus.html">About Us</a>
+            </nav>
+            <div class="nav-actions">
+                <div class="notif-wrapper">
                     <button class="icon-btn" id="notifToggle">
                         <span class="icon-dot" id="notifBadge">3</span>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -50,22 +52,28 @@
                     <div class="notif-dropdown" id="notifDropdown">
                         <div class="notif-header">
                             <h4>System Alerts</h4>
-                            <span class="notif-clear" id="markAllReadBtn" style="cursor: pointer; color: var(--sky-600); font-size: 0.85rem; font-weight: 600;">Mark all read</span>
+                            <span class="notif-clear" id="markAllReadBtn"
+                                style="cursor: pointer; color: var(--sky-600); font-size: 0.85rem; font-weight: 600;">Mark
+                                all read</span>
                         </div>
                         <div class="notif-item">
-                            <p style="margin-bottom: 0;"><strong>Opportunity Removed:</strong> "Advanced Python Workshop" was removed by admin.</p>
+                            <p style="margin-bottom: 0;"><strong>Opportunity Removed:</strong> "Advanced Python
+                                Workshop" was removed by admin.</p>
                             <div class="notif-actions" style="margin-top: 8px;">
                                 <span style="font-size:0.8rem; color:var(--ink-400);">Just now</span>
                             </div>
                         </div>
                         <div class="notif-item">
-                            <p style="margin-bottom: 0;"><strong>Role Updated:</strong> "Sarah Jenkins" role changed to Department Manager.</p>
+                            <p style="margin-bottom: 0;"><strong>Role Updated:</strong> "Sarah Jenkins" role changed to
+                                Department Manager.</p>
                             <div class="notif-actions" style="margin-top: 8px;">
-                                <a href="admin-manage-users.html" class="btn btn-sky" style="height:32px; padding:0 16px; font-size:0.8rem; text-decoration:none; display:inline-flex; align-items:center;">View</a>
+                                <a href="admin-manage-users.html" class="btn btn-sky"
+                                    style="height:32px; padding:0 16px; font-size:0.8rem; text-decoration:none; display:inline-flex; align-items:center;">View</a>
                             </div>
                         </div>
                         <div class="notif-item">
-                            <p style="margin-bottom: 0;"><strong>System Reminder:</strong> Weekly platform backup completed successfully.</p>
+                            <p style="margin-bottom: 0;"><strong>System Reminder:</strong> Weekly platform backup
+                                completed successfully.</p>
                             <div class="notif-actions" style="margin-top: 8px;">
                                 <span style="font-size:0.8rem; color:var(--ink-400);">1 hr ago</span>
                             </div>
@@ -73,12 +81,13 @@
                     </div>
                 </div>
                 <a href="admin-contributor-profile.html" class="profile" aria-label="Profile">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;">
-      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-      <circle cx="12" cy="7" r="4"></circle>
-    </svg>
-  </a>
-        </div>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        style="width:20px;height:20px;">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </a>
+            </div>
     </header>
 
     <main class="container" style="max-width: 1000px; padding-top: 100px; margin: 0 auto; min-height: 80vh;">
@@ -89,42 +98,55 @@
 
         <!-- Global Settings -->
         <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 20px;">Platform Configuration</h2>
-        <div style="background: var(--white); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15, 31, 43, 0.05); margin-bottom: 40px; display: grid; gap: 24px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--sky-50); padding-bottom: 16px;">
+        <div
+            style="background: var(--white); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15, 31, 43, 0.05); margin-bottom: 40px; display: grid; gap: 24px;">
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--sky-50); padding-bottom: 16px;">
                 <div>
                     <h3 style="font-size: 1.1rem; font-weight: 600; color: var(--ink-800);">Maintenance Mode</h3>
-                    <p style="font-size: 0.9rem; color: var(--ink-500);">Temporarily disable access to all non-admin users for system updates.</p>
+                    <p style="font-size: 0.9rem; color: var(--ink-500);">Temporarily disable access to all non-admin
+                        users for system updates.</p>
                 </div>
                 <label style="position: relative; display: inline-block; width: 50px; height: 28px;">
                     <input type="checkbox" style="opacity: 0; width: 0; height: 0;">
-                    <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; border-radius: 34px; transition: .4s;">
-                        <span style="position: absolute; content: ''; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; border-radius: 50%; transition: .4s;"></span>
+                    <span
+                        style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; border-radius: 34px; transition: .4s;">
+                        <span
+                            style="position: absolute; content: ''; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; border-radius: 50%; transition: .4s;"></span>
                     </span>
                 </label>
             </div>
-            
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--sky-50); padding-bottom: 16px;">
+
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--sky-50); padding-bottom: 16px;">
                 <div>
-                    <h3 style="font-size: 1.1rem; font-weight: 600; color: var(--ink-800);">Auto-Approve Opportunities</h3>
-                    <p style="font-size: 0.9rem; color: var(--ink-500);">Automatically approve opportunities posted by User roles.</p>
+                    <h3 style="font-size: 1.1rem; font-weight: 600; color: var(--ink-800);">Auto-Approve Opportunities
+                    </h3>
+                    <p style="font-size: 0.9rem; color: var(--ink-500);">Automatically approve opportunities posted by
+                        User roles.</p>
                 </div>
                 <label style="position: relative; display: inline-block; width: 50px; height: 28px;">
                     <input type="checkbox" checked style="opacity: 0; width: 0; height: 0;">
-                    <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--sky-500); border-radius: 34px; transition: .4s;">
-                        <span style="position: absolute; content: ''; height: 20px; width: 20px; left: 26px; bottom: 4px; background-color: white; border-radius: 50%; transition: .4s;"></span>
+                    <span
+                        style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--sky-500); border-radius: 34px; transition: .4s;">
+                        <span
+                            style="position: absolute; content: ''; height: 20px; width: 20px; left: 26px; bottom: 4px; background-color: white; border-radius: 50%; transition: .4s;"></span>
                     </span>
                 </label>
             </div>
-            
+
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <div>
                     <h3 style="font-size: 1.1rem; font-weight: 600; color: var(--ink-800);">Allow Public Profiles</h3>
-                    <p style="font-size: 0.9rem; color: var(--ink-500);">Let users make their academic and professional profiles visible to recruiters outside the organisation.</p>
+                    <p style="font-size: 0.9rem; color: var(--ink-500);">Let users make their academic and professional
+                        profiles visible to recruiters outside the organisation.</p>
                 </div>
                 <label style="position: relative; display: inline-block; width: 50px; height: 28px;">
                     <input type="checkbox" checked style="opacity: 0; width: 0; height: 0;">
-                    <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--sky-500); border-radius: 34px; transition: .4s;">
-                        <span style="position: absolute; content: ''; height: 20px; width: 20px; left: 26px; bottom: 4px; background-color: white; border-radius: 50%; transition: .4s;"></span>
+                    <span
+                        style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--sky-500); border-radius: 34px; transition: .4s;">
+                        <span
+                            style="position: absolute; content: ''; height: 20px; width: 20px; left: 26px; bottom: 4px; background-color: white; border-radius: 50%; transition: .4s;"></span>
                     </span>
                 </label>
             </div>
@@ -132,24 +154,31 @@
 
         <!-- Security & Access -->
         <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 20px;">Security & Access</h2>
-        <div style="background: var(--white); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15, 31, 43, 0.05); margin-bottom: 40px; display: grid; gap: 24px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--sky-50); padding-bottom: 16px;">
+        <div
+            style="background: var(--white); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15, 31, 43, 0.05); margin-bottom: 40px; display: grid; gap: 24px;">
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--sky-50); padding-bottom: 16px;">
                 <div>
-                    <h3 style="font-size: 1.1rem; font-weight: 600; color: var(--ink-800);">Two-Factor Authentication (2FA)</h3>
-                    <p style="font-size: 0.9rem; color: var(--ink-500);">Require 2FA for all admin and department head logins.</p>
+                    <h3 style="font-size: 1.1rem; font-weight: 600; color: var(--ink-800);">Two-Factor Authentication
+                        (2FA)</h3>
+                    <p style="font-size: 0.9rem; color: var(--ink-500);">Require 2FA for all admin and department head
+                        logins.</p>
                 </div>
                 <label style="position: relative; display: inline-block; width: 50px; height: 28px;">
                     <input type="checkbox" checked style="opacity: 0; width: 0; height: 0;">
-                    <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--sky-500); border-radius: 34px; transition: .4s;">
-                        <span style="position: absolute; content: ''; height: 20px; width: 20px; left: 26px; bottom: 4px; background-color: white; border-radius: 50%; transition: .4s;"></span>
+                    <span
+                        style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--sky-500); border-radius: 34px; transition: .4s;">
+                        <span
+                            style="position: absolute; content: ''; height: 20px; width: 20px; left: 26px; bottom: 4px; background-color: white; border-radius: 50%; transition: .4s;"></span>
                     </span>
                 </label>
             </div>
-            
+
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <div>
                     <h3 style="font-size: 1.1rem; font-weight: 600; color: var(--ink-800);">Session Timeout</h3>
-                    <p style="font-size: 0.9rem; color: var(--ink-500);">Automatically log out inactive users after a set period.</p>
+                    <p style="font-size: 0.9rem; color: var(--ink-500);">Automatically log out inactive users after a
+                        set period.</p>
                 </div>
                 <select class="text-input" style="padding: 8px 12px; width: 160px; font-size: 0.9rem;">
                     <option>15 Minutes</option>
@@ -159,9 +188,10 @@
                 </select>
             </div>
         </div>
-        
+
         <div style="display: flex; justify-content: flex-end; padding-bottom: 60px;">
-            <button class="btn btn-sky" style="height: 48px; padding: 0 32px; font-size: 1rem;">Save All Settings</button>
+            <button class="btn btn-sky" style="height: 48px; padding: 0 32px; font-size: 1rem;">Save All
+                Settings</button>
         </div>
     </main>
 
@@ -174,10 +204,10 @@
 
     <script src="js/admin-system-settings.js"></script>
 
-    
+
 
     <script src="js/chatbot.js"></script>
-<script src="js/role-permissions.js"></script>
+    <script src="js/role-permissions.js"></script>
 
 
     <script src="js/header.js"></script>

@@ -38,6 +38,7 @@
                 <a href="admin-manage-users.html" class="active">Manage Users</a>
                 <a href="admin-manage-opportunities.html">Manage Opportunities</a>
                 <a href="admin-system-settings.html">System Settings</a>
+                <a href="admin-aboutus.html">About Us</a>
             </nav>
             <div class="nav-actions">
                 <div class="notif-wrapper">
@@ -95,8 +96,7 @@
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
             <div>
                 <h1 style="font-size: 2.2rem; font-weight: 800; color: var(--ink-900);">Manage Users</h1>
-                <p style="color: var(--ink-500);">Add, remove, or modify roles and permissions for all platform users.
-                </p>
+                <p style="color: var(--ink-500);">Manage users across the platform.</p>
             </div>
             <button class="btn btn-sky" style="height: 44px; padding: 0 24px;">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -115,75 +115,66 @@
                     <tr style="border-bottom: 2px solid var(--sky-100); color: var(--ink-700);">
                         <th style="padding: 16px; font-weight: 600;">User Name</th>
                         <th style="padding: 16px; font-weight: 600;">Department</th>
-                        <th style="padding: 16px; font-weight: 600;">Current Role</th>
                         <th style="padding: 16px; font-weight: 600; text-align: right;">Actions</th>
                     </tr>
                 </thead>
                 <tbody style="color: var(--ink-800);">
                     <tr style="border-bottom: 1px solid var(--sky-50);">
-                        <td style="padding: 16px; display: flex; align-items: center; gap: 12px;">
-                            <div
-                                style="min-width: 40px; height: 40px; border-radius: 50%; background: var(--sky-200); display: grid; place-items: center; font-weight: 700; color: var(--sky-600);">
-                                JD</div>
-                            <div>
-                                <div style="font-weight: 600;">John Doe</div>
-                                <div style="font-size: 0.85rem; color: var(--ink-500);">john.doe@example.com</div>
-                            </div>
+                        <td style="padding: 16px;">
+                            <a href="user-profile.html"
+                                style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; cursor: pointer;">
+                                <div
+                                    style="min-width: 40px; height: 40px; border-radius: 50%; background: var(--sky-200); display: grid; place-items: center; font-weight: 700; color: var(--sky-600);">
+                                    JD</div>
+                                <div>
+                                    <div style="font-weight: 600; color: var(--ink-900);">John Doe</div>
+                                    <div style="font-size: 0.85rem; color: var(--ink-500);">john.doe@example.com</div>
+                                </div>
+                            </a>
                         </td>
                         <td style="padding: 16px; font-weight: 500;">Engineering</td>
-                        <td style="padding: 16px;">
-                            <select class="text-input" style="padding: 6px 10px; width: 140px; font-size: 0.9rem;">
-                                <option>User</option>
-                                <option selected></option>
-                                <option>User</option>
-                            </select>
-                        </td>
+
                         <td style="padding: 16px; text-align: right;">
                             <button class="btn"
                                 style="height: 32px; padding: 0 12px; font-size: 0.8rem; background: #fee2e2; color: #ef4444;">Remove</button>
                         </td>
                     </tr>
                     <tr style="border-bottom: 1px solid var(--sky-50);">
-                        <td style="padding: 16px; display: flex; align-items: center; gap: 12px;">
-                            <div
-                                style="min-width: 40px; height: 40px; border-radius: 50%; background: var(--sky-200); display: grid; place-items: center; font-weight: 700; color: var(--sky-600);">
-                                AS</div>
-                            <div>
-                                <div style="font-weight: 600;">Alice Smith</div>
-                                <div style="font-size: 0.85rem; color: var(--ink-500);">alice.smith@example.com</div>
-                            </div>
+                        <td style="padding: 16px;">
+                            <a href="user-profile.html"
+                                style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; cursor: pointer;">
+                                <div
+                                    style="min-width: 40px; height: 40px; border-radius: 50%; background: var(--sky-200); display: grid; place-items: center; font-weight: 700; color: var(--sky-600);">
+                                    AS</div>
+                                <div>
+                                    <div style="font-weight: 600; color: var(--ink-900);">Alice Smith</div>
+                                    <div style="font-size: 0.85rem; color: var(--ink-500);">alice.smith@example.com
+                                    </div>
+                                </div>
+                            </a>
                         </td>
                         <td style="padding: 16px; font-weight: 500;">Marketing</td>
-                        <td style="padding: 16px;">
-                            <select class="text-input" style="padding: 6px 10px; width: 140px; font-size: 0.9rem;">
-                                <option>User</option>
-                                <option></option>
-                                <option selected>User</option>
-                            </select>
-                        </td>
+
                         <td style="padding: 16px; text-align: right;">
                             <button class="btn"
                                 style="height: 32px; padding: 0 12px; font-size: 0.8rem; background: #fee2e2; color: #ef4444;">Remove</button>
                         </td>
                     </tr>
                     <tr style="border-bottom: 1px solid var(--sky-50);">
-                        <td style="padding: 16px; display: flex; align-items: center; gap: 12px;">
-                            <div
-                                style="min-width: 40px; height: 40px; border-radius: 50%; background: var(--sky-200); display: grid; place-items: center; font-weight: 700; color: var(--sky-600);">
-                                ML</div>
-                            <div>
-                                <div style="font-weight: 600;">Mark Lee</div>
-                                <div style="font-size: 0.85rem; color: var(--ink-500);">mark.lee@example.com</div>
-                            </div>
+                        <td style="padding: 16px;">
+                            <a href="user-profile.html"
+                                style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; cursor: pointer;">
+                                <div
+                                    style="min-width: 40px; height: 40px; border-radius: 50%; background: var(--sky-200); display: grid; place-items: center; font-weight: 700; color: var(--sky-600);">
+                                    ML</div>
+                                <div>
+                                    <div style="font-weight: 600; color: var(--ink-900);">Mark Lee</div>
+                                    <div style="font-size: 0.85rem; color: var(--ink-500);">mark.lee@example.com</div>
+                                </div>
+                            </a>
                         </td>
                         <td style="padding: 16px; font-weight: 500;">Design</td>
-                        <td style="padding: 16px;">
-                            <select class="text-input" style="padding: 6px 10px; width: 140px; font-size: 0.9rem;">
-                                <option selected>User</option>
-                                <option></option>
-                                <option>User</option>
-                            </select>
-                        </td>
+
                         <td style="padding: 16px; text-align: right;">
                             <button class="btn"
                                 style="height: 32px; padding: 0 12px; font-size: 0.8rem; background: #fee2e2; color: #ef4444;">Remove</button>
@@ -192,26 +183,7 @@
                 </tbody>
             </table>
         </div>
-        <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 24px;">Role Policy</h2>
-        <div style="display: flex; flex-direction: column; max-width: 1000px;">
-            <div class="role-policy-card">
-                <h3 style="font-size: 1.25rem; margin-bottom: 12px; color: var(--ink-900);">User</h3>
-                <p style="font-size: 1rem; color: var(--ink-700); line-height: 1.6;">
-                    Currently authorized to <strong>post opportunities</strong> and <strong>apply to
-                        opportunities</strong> across the platform. This role maintains default engagement interactions
-                    without administrative overrides.
-                </p>
-            </div>
 
-            <div class="role-policy-card">
-                <h3 style="font-size: 1.25rem; margin-bottom: 12px; color: var(--ink-900);">User</h3>
-                <p style="font-size: 1rem; color: var(--ink-700); line-height: 1.6;">
-                    Currently authorized to <strong>post opportunities</strong> only. This role focuses purely on
-                    generating and managing organizational engagements without direct participant application
-                    capabilities.
-                </p>
-            </div>
-        </div>
     </main>
 
 

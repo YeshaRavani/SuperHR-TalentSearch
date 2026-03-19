@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>About Talent Search</title>
+    <link rel="stylesheet" href="css/aboutus.css" />
+
+    <link rel="stylesheet" href="css/chatbot.css" />
+
+    <script src="js/opportunities_data.js"></script>
+    <link rel="stylesheet" href="css/header.css" />
+</head>
+
+<body>
+    <div class="progress-container">
+        <div class="progress-bar-scroll" id="scrollProgress"></div>
+    </div>
+
+    <div class="bg-layer">
+        <div class="bg-blob blob-1"></div>
+        <div class="bg-blob blob-2"></div>
+    </div>
+
+    <div class="page-wrap">
+        <header class="topbar" id="navbar">
+            <div class="nav">
+                <a href="index (1).html" class="logo" title="Go to home" aria-label="Go to home"
+                    style="text-decoration: none; color: inherit;">
+                    <img class="logo-img" src="assets/logo.png"
+                        onerror="this.src='https://via.placeholder.com/88/9ecae1/ffffff?text=TS'" alt="Logo" />
+                    Talent Search
+                </a>
+                <nav class="menu">
+                    <a href="admin-home.html">Home</a>
+                    <a href="admin-manage-users.html">Manage Users</a>
+                    <a href="admin-manage-opportunities.html">Manage Opportunities</a>
+                    <a href="admin-system-settings.html">System Settings</a>
+                    <a href="admin-aboutus.html" class="active">About Us</a>
+                </nav>
+                <div class="nav-actions">
+                    <div style="position: relative;">
+                        <button class="icon-btn" id="notifToggle">
+                            <span class="icon-dot"></span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                            </svg>
+                        </button>
+                        <div class="notif-dropdown" id="notifDropdown">
+                            <div class="notif-header">
+                                <h4>Notifications</h4>
+                                <span class="notif-clear">Mark all read</span>
+                            </div>
+                            <div class="notif-item">
+                                <p><strong>Match found:</strong> "Campus Sustainability Sprint". Do you want to enroll?
+                                </p>
+                                <div style="display:flex; gap:8px;">
+                                    <button class="btn btn-sky"
+                                        style="height:32px; padding:0 16px; font-size:0.8rem;">Enroll</button>
+                                    <button class="btn btn-secondary"
+                                        style="height:32px; padding:0 16px; font-size:0.8rem;">Later</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="admin-contributor-profile.html" class="profile" aria-label="Profile">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            style="width:20px;height:20px;">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <main class="page">
+            <section class="about-hero">
+                <h1>About Talent Search</h1>
+                <p>Talent Search connects people with short-term opportunities across initiatives, workshops, events,
+                    and
+                    collaborations.</p>
+            </section>
+
+            <div class="about-grid">
+                <div class="about-card reveal">
+                    <div class="icon-box">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                    </div>
+                    <h3>What is Talent Search?</h3>
+                    <p>Talent Search is an internal platform designed to discover, post, and participate in short-term
+                        opportunities such as initiatives, workshops, events, and collaborations based entirely on
+                        skills and
+                        interests.</p>
+                </div>
+
+                <div class="about-card reveal" style="transition-delay: 0.1s;">
+                    <div class="icon-box">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path
+                                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                            </path>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                        </svg>
+                    </div>
+                    <h3>Why we built this</h3>
+                    <p>We built this to address fragmented opportunities, underutilized skills, and limited cross-team
+                        collaboration. The platform lowers barriers to participation and encourages organic
+                        collaboration across
+                        teams and disciplines.</p>
+                </div>
+
+                <div class="about-card full-width reveal" style="transition-delay: 0.2s;">
+                    <div class="icon-box">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                    </div>
+                    <h3>What you can do on the platform</h3>
+                    <ul class="feature-list">
+                        <li>Discover initiatives, workshops, and events tailored to your profile</li>
+                        <li>Contribute efficiently based on your unique skills and availability</li>
+                        <li>Post new opportunities and effortlessly find perfect collaborators</li>
+                        <li>Earn experience points (XP) and peer recognition through active participation</li>
+                    </ul>
+                </div>
+
+                <div class="about-card full-width reveal"
+                    style="transition-delay: 0.3s; background: linear-gradient(135deg, rgba(234, 246, 251, 0.6), rgba(255, 255, 255, 0.9));">
+                    <div class="icon-box"
+                        style="background: var(--sky-500); color: var(--white); box-shadow: var(--shadow-glow);">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                    </div>
+                    <h3>Our Vision</h3>
+                    <p style="font-size: 1.15rem; font-weight: 500; color: var(--ink-900);">We aim to build a culture of
+                        involvement, shared ownership, and continuous learning — where everyone can contribute, discover
+                        hidden
+                        talents, and grow through short-term collaborative opportunities.</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 80px;" class="reveal">
+                <h2 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 16px; color: var(--ink-900);">New
+                    Platform
+                    Features</h2>
+                <p style="font-size: 1.15rem; color: var(--ink-700); max-width: 800px; line-height: 1.6;">Our platform
+                    is
+                    continuously evolving to make collaboration, opportunity discovery, and communication easier for
+                    everyone on
+                    campus.</p>
+
+                <div class="features-grid"
+                    style="display: grid; gap: 30px; margin-top: 40px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+                    <div class="about-card reveal" style="padding: 32px;">
+                        <div class="icon-box" style="width: 50px; height: 50px; margin-bottom: 20px;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.3rem; margin-bottom: 12px;">Community Space</h3>
+                        <p style="font-size: 1rem; margin-bottom: 0;">The new Community tab creates a shared space for
+                            contributors and department leaders to interact. Similar to a discussion forum or
+                            Discord-style channel, it
+                            allows users to exchange ideas, ask questions, and collaborate around opportunities,
+                            projects, and campus
+                            initiatives.</p>
+                    </div>
+
+                    <div class="about-card reveal" style="padding: 32px; transition-delay: 0.1s;">
+                        <div class="icon-box" style="width: 50px; height: 50px; margin-bottom: 20px;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.3rem; margin-bottom: 12px;">Centralized Opportunities</h3>
+                        <p style="font-size: 1rem; margin-bottom: 0;">The Opportunities page brings together events,
+                            initiatives,
+                            and workshops in one place. This allows users to easily explore everything happening across
+                            the platform
+                            without needing to check multiple sections.</p>
+                    </div>
+
+                    <div class="about-card reveal" style="padding: 32px; transition-delay: 0.2s;">
+                        <div class="icon-box" style="width: 50px; height: 50px; margin-bottom: 20px;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.3rem; margin-bottom: 12px;">AI Assistant</h3>
+                        <p style="font-size: 1rem; margin-bottom: 0;">The platform now includes an AI chatbot that helps
+                            users
+                            navigate opportunities, answer questions about the platform, and guide users toward relevant
+                            activities
+                            and collaborations.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/aboutus.js"></script>
+
+    <script src="js/chatbot.js"></script>
+    <script src="js/role-permissions.js"></script>
+    <script src="js/header.js"></script>
+</body>
+
+</html>

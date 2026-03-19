@@ -31,7 +31,7 @@
                 <a href="admin-manage-users.html">Manage Users</a>
                 <a href="admin-manage-opportunities.html">Manage Opportunities</a>
                 <a href="admin-system-settings.html">System Settings</a>
-                <a href="aboutus.html">About Us</a>
+                <a href="admin-aboutus.html">About Us</a>
             </nav>
             <div class="nav-actions">
                 <div class="notif-wrapper">
@@ -232,56 +232,82 @@
 
                     <!-- 3. Top Skills & Popular Tags -->
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px;">
-                        <div>
+                        <!-- 3. Top Skills in Organization -->
+                        <div style="width: 100%;">
                             <h3
-                                style="font-size: 1.1rem; font-weight: 700; color: var(--ink-900); margin-bottom: 16px;">
-                                Top Skills</h3>
-                            <div style="display: flex; flex-direction: column; gap: 14px;">
-                                <div
-                                    style="display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem; font-weight: 600;">
-                                    <span style="display: flex; align-items: center; gap: 8px;">
+                                style="font-size: 1.15rem; font-weight: 700; color: var(--ink-900); margin-bottom: 20px;">
+                                Top Skills in Organization</h3>
+                            <div
+                                style="display: flex; flex-direction: column; background: var(--white); border-radius: var(--radius-md); border: 1px solid rgba(15,31,43,0.04); overflow: hidden;">
+
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-bottom: 1px solid rgba(15,31,43,0.04); transition: background 0.2s; cursor: pointer;"
+                                    onmouseover="this.style.background='rgba(2, 132, 199, 0.02)'"
+                                    onmouseout="this.style.background='transparent'">
+                                    <div style="display: flex; align-items: center; gap: 12px;">
                                         <div
                                             style="width: 8px; height: 8px; border-radius: 50%; background: var(--sky-600);">
-                                        </div> Python
-                                    </span> <span style="color: var(--sky-600);">32 users</span>
+                                        </div>
+                                        <span
+                                            style="font-weight: 600; color: #0284c7; background: #e0f2fe; padding: 4px 12px; border-radius: 16px; font-size: 0.85rem;">Python</span>
+                                    </div>
+                                    <span style="font-size: 0.9rem; font-weight: 600; color: var(--ink-500);">32
+                                        users</span>
                                 </div>
-                                <div
-                                    style="display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem; font-weight: 600;">
-                                    <span style="display: flex; align-items: center; gap: 8px;">
+
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-bottom: 1px solid rgba(15,31,43,0.04); transition: background 0.2s; cursor: pointer;"
+                                    onmouseover="this.style.background='rgba(2, 132, 199, 0.02)'"
+                                    onmouseout="this.style.background='transparent'">
+                                    <div style="display: flex; align-items: center; gap: 12px;">
                                         <div style="width: 8px; height: 8px; border-radius: 50%; background: #a855f7;">
-                                        </div> UI / UX Design
-                                    </span> <span style="color: #a855f7;">24 users</span>
+                                        </div>
+                                        <span
+                                            style="font-weight: 600; color: #7c3aed; background: #f3e8ff; padding: 4px 12px; border-radius: 16px; font-size: 0.85rem;">React</span>
+                                    </div>
+                                    <span style="font-size: 0.9rem; font-weight: 600; color: var(--ink-500);">28
+                                        users</span>
                                 </div>
-                                <div
-                                    style="display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem; font-weight: 600;">
-                                    <span style="display: flex; align-items: center; gap: 8px;">
+
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-bottom: 1px solid rgba(15,31,43,0.04); transition: background 0.2s; cursor: pointer;"
+                                    onmouseover="this.style.background='rgba(2, 132, 199, 0.02)'"
+                                    onmouseout="this.style.background='transparent'">
+                                    <div style="display: flex; align-items: center; gap: 12px;">
                                         <div style="width: 8px; height: 8px; border-radius: 50%; background: #10b981;">
-                                        </div> Public Speaking
-                                    </span> <span style="color: #10b981;">18 users</span>
+                                        </div>
+                                        <span
+                                            style="font-weight: 600; color: #059669; background: #d1fae5; padding: 4px 12px; border-radius: 16px; font-size: 0.85rem;">UI
+                                            / UX Design</span>
+                                    </div>
+                                    <span style="font-size: 0.9rem; font-weight: 600; color: var(--ink-500);">24
+                                        users</span>
                                 </div>
-                            </div>
-                        </div>
-                        <div>
-                            <h4
-                                style="font-size: 0.9rem; font-weight: 700; color: var(--ink-500); margin-bottom: 12px; text-transform: uppercase;">
-                                Popular Tags</h4>
-                            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-                                <span
-                                    style="padding: 6px 14px; background: var(--sky-50); color: var(--sky-600); border-radius: 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s;"
-                                    onmouseover="this.style.background='var(--sky-200)'; this.style.color='var(--sky-900)'"
-                                    onmouseout="this.style.background='var(--sky-50)'; this.style.color='var(--sky-600)'">React</span>
-                                <span
-                                    style="padding: 6px 14px; background: var(--sky-50); color: var(--sky-600); border-radius: 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer;"
-                                    onmouseover="this.style.background='var(--sky-200)'; this.style.color='var(--sky-900)'"
-                                    onmouseout="this.style.background='var(--sky-50)'; this.style.color='var(--sky-600)'">Figma</span>
-                                <span
-                                    style="padding: 6px 14px; background: var(--sky-50); color: var(--sky-600); border-radius: 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer;"
-                                    onmouseover="this.style.background='var(--sky-200)'; this.style.color='var(--sky-900)'"
-                                    onmouseout="this.style.background='var(--sky-50)'; this.style.color='var(--sky-600)'">Marketing</span>
-                                <span
-                                    style="padding: 6px 14px; background: var(--sky-50); color: var(--sky-600); border-radius: 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer;"
-                                    onmouseover="this.style.background='var(--sky-200)'; this.style.color='var(--sky-900)'"
-                                    onmouseout="this.style.background='var(--sky-50)'; this.style.color='var(--sky-600)'">Speaking</span>
+
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-bottom: 1px solid rgba(15,31,43,0.04); transition: background 0.2s; cursor: pointer;"
+                                    onmouseover="this.style.background='rgba(2, 132, 199, 0.02)'"
+                                    onmouseout="this.style.background='transparent'">
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <div style="width: 8px; height: 8px; border-radius: 50%; background: #f59e0b;">
+                                        </div>
+                                        <span
+                                            style="font-weight: 600; color: #d97706; background: #fef3c7; padding: 4px 12px; border-radius: 16px; font-size: 0.85rem;">Public
+                                            Speaking</span>
+                                    </div>
+                                    <span style="font-size: 0.9rem; font-weight: 600; color: var(--ink-500);">18
+                                        users</span>
+                                </div>
+
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-bottom: none; transition: background 0.2s; cursor: pointer;"
+                                    onmouseover="this.style.background='rgba(2, 132, 199, 0.02)'"
+                                    onmouseout="this.style.background='transparent'">
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <div style="width: 8px; height: 8px; border-radius: 50%; background: #6366f1;">
+                                        </div>
+                                        <span
+                                            style="font-weight: 600; color: #4f46e5; background: #e0e7ff; padding: 4px 12px; border-radius: 16px; font-size: 0.85rem;">Figma</span>
+                                    </div>
+                                    <span style="font-size: 0.9rem; font-weight: 600; color: var(--ink-500);">16
+                                        users</span>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -296,7 +322,7 @@
                                 <line x1="12" y1="16" x2="12" y2="12"></line>
                                 <line x1="12" y1="8" x2="12.01" y2="8"></line>
                             </svg>
-                            Our AI continuously updates these insights as users participate in opportunities,
+                            Our system continuously updates these insights as users participate in opportunities,
                             collaborate, and build new skills.
                         </p>
                     </div>
@@ -492,7 +518,7 @@
 
             <div class="gallery-container">
                 <div class="gallery-card">
-                    <img src="founder.jpg" alt="Founders Day"
+                    <img src="assets/founder.jpeg" alt="Founders Day"
                         onerror="this.src='https://images.unsplash.com/photo-1540317580384-e5d43867caa6?auto=format&fit=crop&q=80&w=600'" />
                     <div class="tag-anim">Featured</div>
                     <div class="gallery-overlay">
