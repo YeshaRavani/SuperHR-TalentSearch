@@ -79,11 +79,13 @@
                 Talent Search
             </a>
             <nav class="menu">
-                <a href="dashboard.html" class="active">Dashboard</a>
-                <a href="opportunities.html" id="nav-opps">Opportunities</a>
-                <a href="posted-opportunities.html">Posted Opportunities</a>
-                <a href="community.html">Community</a>
-                <a href="aboutus.html">About Us</a>
+                <ul>
+                    <li><a href="index (1).html">Home</a></li>
+                    <li><a href="opportunities.html">Opportunities</a></li>
+                    <li><a href="posted-opportunities.html">Posted Opportunities</a></li>
+                    <li><a href="community.html">Community</a></li>
+                    <li><a href="aboutus.html">About Us</a></li>
+                </ul>
             </nav>
             <div class="nav-actions">
                 <div style="position: relative;">
@@ -160,6 +162,33 @@
                                 </div>
                                 <div class="stat-value">12</div>
                             </div>
+                            <div class="stat-row">
+                                <div class="stat-info">
+                                    <div class="stat-icon" style="background:#eff6ff; color:#3b82f6;"><svg
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            width="24" height="24">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                        </svg></div>
+                                    Upcoming workshops
+                                </div>
+                                <div class="stat-value">5</div>
+                            </div>
+                            <div class="stat-row">
+                                <div class="stat-info">
+                                    <div class="stat-icon" style="background:var(--ink-900); color:var(--white);"><svg
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            width="24" height="24">
+                                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                                        </svg></div>
+                                    Events this month
+                                </div>
+                                <div class="stat-value">4</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -167,7 +196,7 @@
         </section>
 
         <!-- Recent Activity -->
-        <section class="section reveal" style="padding-top:20px;">
+        <section class="section" style="padding-top:20px;">
             <div class="section-header">
                 <h2 class="section-title">Recent Activity</h2>
                 <p class="section-desc">Stay updated with latest actions aligned to your workspace.</p>
@@ -197,6 +226,159 @@
                 </div>
             </div>
         </section>
+
+
+        <!-- Opportunities Cards -->
+        <section class="section">
+            <div class="section-header" style="margin-bottom: 30px;">
+                <h2 class="section-title">Explore</h2>
+                <p class="section-desc">Discover initiatives, workshops, events, and community networks tailored to your
+                    goals.</p>
+            </div>
+
+            <div class="card-grid" style="max-width: 1100px; margin: 0 auto;">
+                <a class="opp-card tilt-card" href="opportunities.html">
+                    <div class="opp-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path
+                                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                            </path>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                        </svg>
+                    </div>
+                    <h3>Opportunities</h3>
+                    <p>Discover initiatives, workshops, and events in one centralized location.</p>
+                    <div class="card-arrow">Explore now &rarr;</div>
+                </a>
+
+                <a class="opp-card tilt-card" href="appointment.html">
+                    <div class="opp-icon" style="background:#f0fdf4; color:#22c55e; border-color:#bbf7d0;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path
+                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3>Appointment</h3>
+                    <p>Schedule dedicated time with mentors and opportunity team guides.</p>
+                    <div class="card-arrow" style="color:#22c55e;">Book now &rarr;</div>
+                </a>
+
+                <a class="opp-card tilt-card" href="community.html">
+                    <div class="opp-icon" style="background:#fefce8; color:#eab308; border-color:#fef08a;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <h3>Community</h3>
+                    <p>Connect with other diverse participants and grow your network quickly.</p>
+                    <div class="card-arrow" style="color:#eab308;">Join network &rarr;</div>
+                </a>
+            </div>
+
+            <div style="text-align: center; margin-top: 60px;">
+                <a href="add-opportunity.html" class="btn btn-sky"
+                    style="font-size: 1.15rem; padding: 0 40px; height: 60px;">+ Post an Opportunity</a>
+            </div>
+        </section>
+
+        <!-- Gamified Incentive Section -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">Incentive</h2>
+                <p class="section-desc">Earn points by contributing to initiatives, participating in events, and
+                    collaborating across teams.</p>
+            </div>
+
+            <div class="gamify-grid">
+                <div class="points-panel">
+                    <div class="level-badge">Level 4 Innovator</div>
+                    <div class="points-display counter" data-target="1250">125 <span>XP</span></div>
+                    <p style="color:var(--ink-700); font-weight: 500;">You are in the top 15% of contributors this
+                        month!</p>
+
+                    <div class="progress-wrapper">
+                        <div class="progress-header">
+                            <span>Progress to Level 5 Master</span>
+                            <span style="color:var(--sky-600);">78%</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill" style="width: 78%;"></div>
+                        </div>
+                        <p style="color:var(--ink-400); font-size: 0.8rem; margin-top: 8px;">250 XP remaining to next
+                            rank</p>
+                    </div>
+                </div>
+
+                <div class="badges-grid">
+                    <div class="badge-card">
+                        <div class="badge-icon">🎖️</div>
+                        <h4>Early Adopter</h4>
+                        <p>Joined platform during beta phase</p>
+                    </div>
+                    <div class="badge-card">
+                        <div class="badge-icon">🔥</div>
+                        <h4>On Fire</h4>
+                        <p>Logged in 7 consecutive days</p>
+                    </div>
+                    <div class="badge-card">
+                        <div class="badge-icon">💡</div>
+                        <h4>Creator</h4>
+                        <p>Posted a trending opportunity</p>
+                    </div>
+                    <div class="badge-card locked">
+                        <div class="badge-icon">👑</div>
+                        <h4>Community Lead</h4>
+                        <p>Requires leading 5 initiatives</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Event Gallery (Horizontal Scroll) -->
+        <section class="section" style="padding-bottom:100px;">
+            <div class="section-header">
+                <h2 class="section-title">Event Gallery</h2>
+                <p class="section-desc">Swipe through highlights from our latest campus events, mixers, and workshops.
+                </p>
+            </div>
+
+            <div class="gallery-container">
+                <div class="gallery-card">
+                    <img src="assets/founder.jpeg" alt="Founders Day"
+                        onerror="this.src='https://images.unsplash.com/photo-1540317580384-e5d43867caa6?auto=format&fit=crop&q=80&w=600'" />
+                    <div class="tag-anim">Featured</div>
+                    <div class="gallery-overlay">
+                        <h3>Founders Day</h3>
+                        <p>Celebrate bold ideas and meet project leads.</p>
+                    </div>
+                </div>
+                <div class="gallery-card">
+                    <img src="assets/foundation.jpeg" alt="Foundation Day"
+                        onerror="this.src='https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&q=80&w=600'" />
+                    <div class="tag-anim">Campus</div>
+                    <div class="gallery-overlay">
+                        <h3>Foundation Day</h3>
+                        <p>A showcase of talent stories and growing teams.</p>
+                    </div>
+                </div>
+                <div class="gallery-card">
+                    <img src="assets/workshop.jpg" alt="Workshops"
+                        onerror="this.src='https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=600'" />
+                    <div class="tag-anim">Learning</div>
+                    <div class="gallery-overlay">
+                        <h3>Workshops</h3>
+                        <p>Practical sessions designed for rapid upskilling.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
     </main>
 
     <script src="js/dashboard.js"></script>

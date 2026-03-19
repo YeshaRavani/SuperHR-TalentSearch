@@ -125,31 +125,8 @@
             if (event.key === 'Escape') closeAllPanels(pairs);
         });
     }
-
     function enforceRBAC() {
-        var userRole = localStorage.getItem('userRole');
-        var path = window.location.pathname;
-
-        if (userRole === 'head_of_department') {
-            hideElements('a[href*="apply"], button[data-action="apply"], .apply-btn');
-            document.querySelectorAll('.btn, button, a').forEach(function (btn) {
-                var text = btn.textContent.trim().toLowerCase();
-                if (text === 'apply' || text === 'interested' || text.includes('enroll')) {
-                    btn.style.display = 'none';
-                }
-            });
-            // Hide Opportunities tab
-            hideElements('a[href*="opportunities.html"]:not([href*="posted"])');
-        }
-
-        if (userRole === 'admin') {
-            document.querySelectorAll('.btn, button, a').forEach(function (btn) {
-                var text = btn.textContent.trim().toLowerCase();
-                if (text === 'apply' || text === 'interested' || text.includes('enroll')) {
-                    btn.style.display = 'none';
-                }
-            });
-        }
+        // Unrestricted User Access
     }
 
     document.addEventListener('DOMContentLoaded', function () {

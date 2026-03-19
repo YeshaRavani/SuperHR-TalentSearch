@@ -10,12 +10,12 @@
   --hdr-sky-400: #add8e6;
   --hdr-sky-200: #d6f0fa;
   --hdr-sky-100: #eaf6fb;
-  --hdr-sky-50:  #f4fafe;
+  --hdr-sky-50: #f4fafe;
   --hdr-ink-900: #0f1f2b;
   --hdr-ink-800: #1b2f40;
   --hdr-ink-700: #2a3f52;
   --hdr-ink-500: #647b8f;
-  --hdr-white:   #ffffff;
+  --hdr-white: #ffffff;
   --hdr-shadow-sm: 0 4px 12px rgba(15, 31, 43, 0.05);
   --hdr-shadow-md: 0 10px 30px rgba(15, 31, 43, 0.08);
   --hdr-shadow-lg: 0 20px 40px rgba(15, 31, 43, 0.12);
@@ -92,9 +92,17 @@
 
 /* ── Menu ────────────────────────────────────────────────────────────────────── */
 .menu {
+  overflow: visible;
+}
+
+.menu ul {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 24px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-wrap: nowrap;
 }
 
 .menu a {
@@ -190,9 +198,17 @@
 }
 
 @keyframes hdr-pulse {
-  0%   { box-shadow: 0 0 0 0   rgba(255,71,87,0.7),   0 0 0 2px var(--hdr-white); }
-  70%  { box-shadow: 0 0 0 8px rgba(255,71,87,0),     0 0 0 2px var(--hdr-white); }
-  100% { box-shadow: 0 0 0 0   rgba(255,71,87,0),     0 0 0 2px var(--hdr-white); }
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.7), 0 0 0 2px var(--hdr-white);
+  }
+
+  70% {
+    box-shadow: 0 0 0 8px rgba(255, 71, 87, 0), 0 0 0 2px var(--hdr-white);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 71, 87, 0), 0 0 0 2px var(--hdr-white);
+  }
 }
 
 /* ── Profile icon ────────────────────────────────────────────────────────────── */

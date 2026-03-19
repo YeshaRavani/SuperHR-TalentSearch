@@ -25,16 +25,19 @@
 
     <header class="topbar" id="navbar">
         <div class="nav">
-            <a href="index (1).html" class="logo" title="Go to home" aria-label="Go to home" style="text-decoration: none; color: inherit;">
+            <a href="index (1).html" class="logo" title="Go to home" aria-label="Go to home"
+                style="text-decoration: none; color: inherit;">
                 <img class="logo-img" src="assets/logo.png" alt="Talent Search logo" />
                 Talent Search
             </a>
             <nav class="menu">
-                <a href="index (1).html">Home</a>
-                <a href="opportunities.html">Opportunities</a>
-                <a href="posted-opportunities.html">Posted Opportunities</a>
-                <a href="community.html">Community</a>
-                <a href="aboutus.html">About Us</a>
+                <ul>
+                    <li><a href="index (1).html">Home</a></li>
+                    <li><a href="opportunities.html">Opportunities</a></li>
+                    <li><a href="posted-opportunities.html">Posted Opportunities</a></li>
+                    <li><a href="community.html">Community</a></li>
+                    <li><a href="aboutus.html">About Us</a></li>
+                </ul>
             </nav>
             <div class="nav-actions">
                 <div class="notification-wrap">
@@ -71,7 +74,7 @@
             <p class="subtitle">Set up your profile to get better recommendations.</p>
 
             <form class="form"
-                onsubmit="event.preventDefault(); localStorage.setItem('userRole', document.getElementById('role').value); window.location.href='dashboard.html';">
+                onsubmit="event.preventDefault(); localStorage.setItem('userRole', 'user'); window.location.href='dashboard.html';">
                 <div class="form-group">
                     <label class="form-label">Upload profile picture</label>
                     <div class="file-input-wrapper">
@@ -103,15 +106,7 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-label" for="role">Select your role</label>
-                    <select id="role" class="text-input" required>
-                        <option value="" disabled selected>Select from below</option>
-                        <option value="head_of_department">Head of Department</option>
-                        
-                        <option value="contributor">Contributor</option>
-                    </select>
-                </div>
+
 
                 <div class="form-group">
                     <label class="form-label" for="jobdesc">Job description</label>
@@ -128,10 +123,10 @@
 
     <script src="js/contributor-profile.js"></script>
 
-    
+
 
     <script src="js/chatbot.js"></script>
-<script src="js/role-permissions.js"></script>
+    <script src="js/role-permissions.js"></script>
     <script src="js/header.js"></script>
 </body>
 
