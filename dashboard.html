@@ -7,6 +7,7 @@
     <title>Dashboard — Talent & Discovery</title>
     <link rel="stylesheet" href="css/index (1).css" />
     <link rel="stylesheet" href="css/chatbot.css" />
+    <link rel="stylesheet" href="css/incentive-module.css" />
     <script src="js/opportunities_data.js"></script>
     <link rel="stylesheet" href="css/header.css" />
     <style>
@@ -281,58 +282,8 @@
             </div>
         </section>
 
-        <!-- Gamified Incentive Section -->
-        <section class="section">
-            <div class="section-header">
-                <h2 class="section-title">Incentive</h2>
-                <p class="section-desc">Earn points by contributing to initiatives, participating in events, and
-                    collaborating across teams.</p>
-            </div>
-
-            <div class="gamify-grid">
-                <div class="points-panel">
-                    <div class="level-badge">Level 4 Innovator</div>
-                    <div class="points-display counter" data-target="1250">125 <span>XP</span></div>
-                    <p style="color:var(--ink-700); font-weight: 500;">You are in the top 15% of contributors this
-                        month!</p>
-
-                    <div class="progress-wrapper">
-                        <div class="progress-header">
-                            <span>Progress to Level 5 Master</span>
-                            <span style="color:var(--sky-600);">78%</span>
-                        </div>
-                        <div class="progress-track">
-                            <div class="progress-fill" style="width: 78%;"></div>
-                        </div>
-                        <p style="color:var(--ink-400); font-size: 0.8rem; margin-top: 8px;">250 XP remaining to next
-                            rank</p>
-                    </div>
-                </div>
-
-                <div class="badges-grid">
-                    <div class="badge-card">
-                        <div class="badge-icon">🎖️</div>
-                        <h4>Early Adopter</h4>
-                        <p>Joined platform during beta phase</p>
-                    </div>
-                    <div class="badge-card">
-                        <div class="badge-icon">🔥</div>
-                        <h4>On Fire</h4>
-                        <p>Logged in 7 consecutive days</p>
-                    </div>
-                    <div class="badge-card">
-                        <div class="badge-icon">💡</div>
-                        <h4>Creator</h4>
-                        <p>Posted a trending opportunity</p>
-                    </div>
-                    <div class="badge-card locked">
-                        <div class="badge-icon">👑</div>
-                        <h4>Community Lead</h4>
-                        <p>Requires leading 5 initiatives</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <!-- Professional Incentive Section -->
+        <section class="section" id="professional-incentive-module"></section>
 
         <!-- Event Gallery (Horizontal Scroll) -->
         <section class="section" style="padding-bottom:100px;">
@@ -380,6 +331,7 @@
     <script src="js/chatbot.js"></script>
     <script src="js/role-permissions.js"></script>
     <script src="js/header.js"></script>
+    <script src="js/incentive-module.js"></script>
 </body>
 
 </html>
