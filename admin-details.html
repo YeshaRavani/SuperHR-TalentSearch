@@ -11,6 +11,7 @@
 
     <script src="js/opportunities_data.js"></script>
     <link rel="stylesheet" href="css/header.css" />
+    <script src="js/api.js"></script>
 </head>
 
 <body>
@@ -70,7 +71,7 @@
         <div class="main-card">
             <h1 class="title">Sign Up</h1>
 
-            <form class="form" onsubmit="event.preventDefault(); window.location.href='admin-home.html';">
+            <form class="form" onsubmit="handleAdminSignup(event);">
             <div class="form-group">
                 <label class="form-label" for="fullname">Full Name</label>
                 <input id="fullname" class="text-input" placeholder="Enter your full name" required />

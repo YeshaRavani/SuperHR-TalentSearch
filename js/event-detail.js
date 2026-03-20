@@ -1,19 +1,41 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
       const params = new URLSearchParams(window.location.search);
       // We use 'id' normally, but check 'event' for backwards compatibility
       const oppId = params.get('id') || params.get('event') || 'evt-1';
 
-      let data = null;
-      if (window.superHrOpportunities) {
-        // If it's a direct ID match
-        data = window.superHrOpportunities.find(o => o.id === oppId);
-        // Backwards fallbacks if somehow looking up by legacy key
-        if (!data) data = window.superHrOpportunities.find(o => o.id.includes(oppId) || oppId.includes(o.id));
-        // Ultimate fallback
-        if (!data) data = window.superHrOpportunities[0];
-      } else {
-        console.error("opportunities_data.js not loaded.");
-        return;
+      try {
+        const data = await api.get(`/opportunities/${oppId}`);
+        populateUI(data);
+      } catch (err) {
+        console.error("Failed to load opportunity details:", err);
+      }
+
+      function populateUI(data) {
+        // Populate Text
+        document.title = "Talent Search - " + data.title;
+        document.getElementById('detail-title').textContent = data.title;
+        const cat = data.type || "Event";
+        document.getElementById('detail-category').textContent = cat;
+        document.getElementById('detail-desc').textContent = data.full_description;
+
+        document.getElementById('detail-schedule').textContent = data.schedule_time || "-";
+        document.getElementById('detail-points').textContent = data.points_reward || "-";
+        document.getElementById('detail-time').textContent = data.time_required || "-";
+        document.getElementById('detail-location').textContent = data.location || "TBD";
+        document.getElementById('detail-expectations').textContent = data.expectations || "No specific expectations listed.";
+        
+        // Action Button logic
+        const btnInt = document.getElementById('btn-interest');
+        const successMsg = document.getElementById('success-msg');
+        btnInt.addEventListener('click', async () => {
+            try {
+                await api.post(`/interested-opportunities?opp_id=${data.id}`);
+                btnInt.style.display = 'none';
+                successMsg.classList.add('active');
+            } catch (err) {
+                alert("Action failed: " + err.message);
+            }
+        });
       }
 
       // Populate Text

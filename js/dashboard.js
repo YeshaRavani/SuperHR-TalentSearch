@@ -1,24 +1,45 @@
-// Dashboard Role-based Logic
-document.addEventListener('DOMContentLoaded', function () {
-    const roleBadge = document.getElementById('role-badge');
+document.addEventListener('DOMContentLoaded', async () => {
     const welcomeText = document.getElementById('welcome-text');
-    const ctaContainer = document.getElementById('dashboard-ctas');
+    const roleBadge = document.getElementById('role-badge');
+    
+    // Fetch current user details
+    try {
+        const user = await api.get('/user');
+        if (user.role === 'admin') {
+            window.location.href = 'admin-home.html';
+            return;
+        }
+        
+        if (welcomeText) {
+            const firstName = user.full_name.split(' ')[0];
+            welcomeText.innerHTML = `Welcome back,<br><span>${firstName}</span>`;
+        }
+        
+        if (roleBadge) {
+            roleBadge.textContent = user.role.charAt(0).toUpperCase() + user.role.slice(1);
+        }
 
-    const userType = localStorage.getItem('userType') || 'user';
-    const userRole = localStorage.getItem('userRole') || 'contributor'; // fallback
+        // Fetch reward policy to display correct units
+        const policy = await api.get('/admin/reward-policy');
+        updateRewardUI(policy.active_mode);
 
-    // Add greeting from signup data preservation if exists for absolute continuity
-    const name = localStorage.getItem('signup_fullname');
-    let greetingName = "Talent Discoverer";
-    if (name) {
-        greetingName = name.split(' ')[0]; // First name
+    } catch (err) {
+        console.error("Dashboard init failed:", err);
+        // Fallback or redirect to login if unauthorized
+        if (err.message.includes('401')) {
+            window.location.href = 'login.html';
+        }
     }
 
-    // Safety redirect for Admin Type
-    if (userType === 'admin') {
-        window.location.href = 'admin-home.html';
-        return;
+    function updateRewardUI(mode) {
+        const rewardLabels = document.querySelectorAll('.reward-label');
+        const labels = {
+            'points': 'Total Points',
+            'hours': 'Hours Logged',
+            'money': 'Money Earned'
+        };
+        rewardLabels.forEach(el => {
+            if (labels[mode]) el.textContent = labels[mode];
+        });
     }
-
-    if (welcomeText) welcomeText.innerHTML = `Welcome back,<br><span>${greetingName}</span>`;
 });

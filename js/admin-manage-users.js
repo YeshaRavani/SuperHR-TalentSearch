@@ -129,27 +129,92 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-// Organisation Incentive Policy Logic
-document.addEventListener('DOMContentLoaded', () => {
+// Organisation Reward Policy Logic
+document.addEventListener('DOMContentLoaded', async () => {
     const policyCards = document.querySelectorAll('.policy-card');
     const contextContainer = document.getElementById('incentiveContext');
-    const userCells = document.querySelectorAll('.incentive-cell');
     const savePolicyBtn = document.getElementById('savePolicyBtn');
     const policySummary = document.getElementById('policySummary');
 
-    // Default state: official policy
     let state = {
-        mode: localStorage.getItem('incentiveMode') || 'points',
-        hoursPerLeave: parseInt(localStorage.getItem('hoursPerLeave')) || 8
+        mode: 'points',
+        hoursPerLeave: 8
     };
 
-    // Pending selection state
     let pendingMode = state.mode;
+
+    // Load initial policy
+    try {
+        const policy = await api.get('/admin/reward-policy');
+        state.mode = policy.active_mode;
+        state.hoursPerLeave = policy.hours_per_leave;
+        pendingMode = state.mode;
+        renderAll();
+    } catch (err) {
+        console.error("Failed to load reward policy:", err);
+    }
+
+    async function loadUsers() {
+        try {
+            const users = await api.get('/admin/users');
+            renderUserTable(users);
+        } catch (err) {
+            console.error("Failed to load users:", err);
+        }
+    }
+
+    function renderUserTable(users) {
+        const tbody = document.querySelector('.user-table tbody');
+        if (!tbody) return;
+        tbody.innerHTML = '';
+
+        users.forEach(user => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>
+                    <div class="user-info">
+                        <div class="user-avatar" style="background:#f1f5f9; color:var(--sky-600); display:flex; align-items:center; justify-content:center; font-weight:600;">
+                            ${user.full_name.charAt(0)}
+                        </div>
+                        <div>
+                            <div class="user-name">${user.full_name}</div>
+                            <div class="user-email">${user.email}</div>
+                        </div>
+                    </div>
+                </td>
+                <td><span class="role-badge role-${user.role.toLowerCase()}">${user.role}</span></td>
+                <td><div class="incentive-cell" data-user-id="${user.id}">Loading...</div></td>
+                <td>
+                    <div class="action-btns">
+                        <button class="icon-btn" title="Edit User"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button>
+                        <button class="icon-btn delete" title="Delete User" onclick="deleteUser('${user.id}')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></button>
+                    </div>
+                </td>
+            `;
+            tbody.appendChild(row);
+        });
+        renderUserCells();
+    }
+
+    window.deleteUser = async function(id) {
+        if (!confirm("Are you sure you want to delete this user?")) return;
+        try {
+            await api.delete(`/admin/users/${id}`);
+            loadUsers();
+        } catch (err) {
+            alert("Delete failed: " + err.message);
+        }
+    };
+
+    function renderAll() {
+        renderContext();
+        renderUserCells();
+        updateSummary();
+        setPendingCard(state.mode);
+    }
 
     function renderContext() {
         if (!contextContainer) return;
-        
-        // Context only appears specifically for 'hours' because it requires configuration
         if (state.mode === 'hours') {
             contextContainer.style.display = 'flex';
             contextContainer.innerHTML = `
@@ -161,11 +226,11 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             const hoursInput = document.getElementById('hoursInput');
             if (hoursInput) {
-                hoursInput.addEventListener('change', (e) => {
+                hoursInput.addEventListener('change', async (e) => {
                     let val = parseInt(e.target.value);
                     if (val && val > 0) {
                         state.hoursPerLeave = val;
-                        localStorage.setItem('hoursPerLeave', val);
+                        await updatePolicy();
                         renderUserCells();
                         updateSummary();
                     }
@@ -176,12 +241,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    async function updatePolicy() {
+        try {
+            await api.put('/admin/reward-policy', {
+                active_mode: state.mode,
+                hours_per_leave: state.hoursPerLeave
+            });
+        } catch (err) {
+            console.error("Failed to update policy:", err);
+        }
+    }
+
     function renderUserCells() {
-        if (!userCells) return;
-        userCells.forEach(cell => {
-            const pts = cell.getAttribute('data-points') || 0;
-            const hrs = parseFloat(cell.getAttribute('data-hours') || 0);
-            const mny = cell.getAttribute('data-money') || 0;
+        const cells = document.querySelectorAll('.incentive-cell');
+        cells.forEach(cell => {
+            // Mock data for demo purpose if not in user object
+            const pts = 450;
+            const hrs = 24.5;
+            const mny = 4500;
 
             if (state.mode === 'points') {
                 cell.innerHTML = `<strong>${pts}</strong> points`;
@@ -190,14 +267,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 cell.innerHTML = `<strong>₹${formattedMny}</strong> earned`;
             } else if (state.mode === 'hours') {
                 const leaves = (hrs / state.hoursPerLeave).toFixed(1);
-                // Simplify rendering like "1.0" to "1"
                 const cleanLeaves = leaves.endsWith('.0') ? leaves.slice(0, -2) : leaves;
-                
-                let badgeHtml = '';
-                if (hrs >= state.hoursPerLeave) {
-                    badgeHtml = `<span style="display:inline-block; margin-top:4px; font-size:0.75rem; background:#dcfce7; color:#166534; padding:2px 8px; border-radius:999px;">Eligible for leave</span>`;
-                }
-
+                let badgeHtml = hrs >= state.hoursPerLeave ? `<span style="display:inline-block; margin-top:4px; font-size:0.75rem; background:#dcfce7; color:#166534; padding:2px 8px; border-radius:999px;">Eligible for leave</span>` : '';
                 cell.innerHTML = `
                     <div style="line-height:1.4;">
                         <strong>${hrs}</strong> hours logged
@@ -211,14 +282,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateSummary() {
         if (!policySummary) return;
-        
-        const modeLabels = {
-            'points': 'Points',
-            'hours': 'Hours Worked',
-            'money': 'Money'
-        };
-        
-        let html = `Current policy: <strong>${modeLabels[state.mode]}</strong>`;
+        const modeLabels = { 'points': 'Points', 'hours': 'Hours Worked', 'money': 'Money' };
+        let html = `Current policy: <strong>${modeLabels[state.mode] || 'Points'}</strong>`;
         if (state.mode === 'hours') {
             html += `<br><span style="font-weight:400; font-size: 0.85rem; color:var(--ink-500);">Conversion rule: ${state.hoursPerLeave} hours = 1 paid leave</span>`;
         }
@@ -228,55 +293,26 @@ document.addEventListener('DOMContentLoaded', () => {
     function setPendingCard(mode) {
         pendingMode = mode;
         policyCards.forEach(card => {
-            if (card.getAttribute('data-mode') === pendingMode) {
-                card.classList.add('selected');
-            } else {
-                card.classList.remove('selected');
-            }
+            if (card.getAttribute('data-mode') === pendingMode) card.classList.add('selected');
+            else card.classList.remove('selected');
         });
-
-        // Enable save button if the selection represents a structural policy change
-        if (pendingMode !== state.mode) {
-            savePolicyBtn.disabled = false;
-            savePolicyBtn.textContent = 'Save Policy Change';
-        } else {
-            savePolicyBtn.disabled = true;
-            savePolicyBtn.textContent = 'Policy Saved';
-        }
+        savePolicyBtn.disabled = pendingMode === state.mode;
+        savePolicyBtn.textContent = pendingMode === state.mode ? 'Policy Saved' : 'Save Policy Change';
     }
 
-    // Bind card clicks
     policyCards.forEach(card => {
-        card.addEventListener('click', () => {
-            const mode = card.getAttribute('data-mode');
-            if (mode) {
-                setPendingCard(mode);
-            }
-        });
+        card.addEventListener('click', () => setPendingCard(card.getAttribute('data-mode')));
     });
-    
-    // Bind save button
+
     if (savePolicyBtn) {
-        savePolicyBtn.addEventListener('click', () => {
+        savePolicyBtn.addEventListener('click', async () => {
             if (pendingMode && pendingMode !== state.mode) {
-                // Commit the policy
                 state.mode = pendingMode;
-                localStorage.setItem('incentiveMode', state.mode);
-                
-                // Re-render UI
-                setPendingCard(state.mode);
-                updateSummary();
-                renderContext();
-                renderUserCells();
+                await updatePolicy();
+                renderAll();
             }
         });
     }
 
-    // Initialize display
-    if(policyCards.length > 0) {
-        setPendingCard(state.mode);
-        updateSummary();
-        renderContext();
-        renderUserCells();
-    }
+    loadUsers();
 });

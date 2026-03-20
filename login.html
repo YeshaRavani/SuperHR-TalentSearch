@@ -10,6 +10,7 @@
 
   <script src="js/opportunities_data.js"></script>
     <link rel="stylesheet" href="css/header.css" />
+  <script src="js/api.js"></script>
 </head>
 
 <body>
@@ -65,15 +66,14 @@
           <p class="subtitle" style="margin-bottom: 24px;">Enter your details to continue.</p>
 
           <div class="stack">
-            <div class="floating-group">
-              <input id="username" class="floating-input" type="text" placeholder=" " />
-              <label for="username" class="floating-label">Username or Email</label>
-            </div>
-
-            <div class="floating-group">
-              <input id="password" class="floating-input" type="password" placeholder=" " />
-              <label for="password" class="floating-label">Password</label>
-            </div>
+            <div class="input-group">
+            <label for="username">Username or Email</label>
+            <input type="text" id="username" placeholder="Username or email" required />
+          </div>
+          <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="••••••••" required />
+          </div>
 
             <button id="formLoginBtn" class="btn btn-sky" style="margin-top: 8px;">Login</button>
             <button id="backBtn" class="btn btn-outline" style="height: 40px;">← Back</button>

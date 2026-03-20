@@ -1,31 +1,44 @@
-(function () {
-            // notification dropdown behaviour
-            document.querySelectorAll('.notification-wrap').forEach(function (wrap) {
-                var toggle = wrap.querySelector('.notification-toggle');
-                var panel = wrap.querySelector('.notification-panel');
-                if (!toggle || !panel) return;
-                toggle.addEventListener('click', function (e) { e.stopPropagation(); var isOpen = panel.classList.toggle('open'); toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false'); });
-                panel.addEventListener('click', function (e) { e.stopPropagation(); });
-                document.addEventListener('click', function () { panel.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); });
-                document.addEventListener('keydown', function (event) { if (event.key === 'Escape') { panel.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); } });
-            });
+document.addEventListener('DOMContentLoaded', async () => {
+    const profileName = document.querySelector('.profile-name');
+    const profileEmail = document.querySelector('.profile-email');
+    const profileOrg = document.getElementById('profile-org');
+    const profileRole = document.getElementById('profile-role');
+    
+    try {
+        const user = await api.get('/user');
+        if (profileName) profileName.textContent = user.full_name;
+        if (profileEmail) profileEmail.textContent = user.email;
+        if (profileOrg) profileOrg.textContent = user.organisation || 'SuperHR';
+        if (profileRole) profileRole.textContent = user.role.charAt(0).toUpperCase() + user.role.slice(1);
 
-            // Navbar Scroll
-            const navbar = document.getElementById('navbar');
-            const scrollProgress = document.getElementById('scrollProgress');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 20 && navbar) {
-                    navbar.classList.add('scrolled');
-                } else if (navbar) {
-                    navbar.classList.remove('scrolled');
-                }
-                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                const scrolled = (height > 0) ? (winScroll / height) * 100 : 0;
-                if (scrollProgress) scrollProgress.style.width = scrolled + "%";
-            });
-        })();
+        // Load applications
+        const apps = await api.get('/applications');
+        renderApplications(apps);
+    } catch (err) {
+        console.error("Profile init failed:", err);
+    }
 
-document.addEventListener('DOMContentLoaded', function () {
-            const role = localStorage.getItem('userRole');
+    function renderApplications(apps) {
+        const list = document.getElementById('applications-list');
+        if (!list) return;
+        list.innerHTML = '';
+        
+        if (apps.length === 0) {
+            list.innerHTML = '<p class="empty-state">No applications found.</p>';
+            return;
+        }
+
+        apps.forEach(app => {
+            const item = document.createElement('div');
+            item.className = 'app-item';
+            item.innerHTML = `
+                <div class="app-info">
+                    <div class="app-title">${app.opportunity_id}</div>
+                    <div class="app-status status-${app.status}">${app.status}</div>
+                </div>
+                <div class="app-date">${new Date(app.created_at).toLocaleDateString()}</div>
+            `;
+            list.appendChild(item);
         });
+    }
+});

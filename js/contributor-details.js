@@ -27,5 +27,45 @@
         })();
 
 document.addEventListener('DOMContentLoaded', function () {
-            const role = localStorage.getItem('userRole');
+    const role = localStorage.getItem('userRole');
+});
+
+async function handleSignupNext(e) {
+    e.preventDefault();
+    const fullname = document.getElementById('fullname').value;
+    const org = document.getElementById('organization').value;
+    const idnum = document.getElementById('idnumber').value;
+    const user = document.getElementById('username').value;
+    const pass = document.getElementById('password').value;
+    const confirmPass = document.getElementById('confirmPassword').value;
+
+    if (pass !== confirmPass) {
+        alert("Passwords do not match!");
+        return;
+    }
+
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.innerText = "Creating Account...";
+
+    try {
+        await api.post('/signup', {
+            username: user,
+            email: `${user}@example.com`,
+            full_name: fullname,
+            password: pass,
+            role: 'contributors',
+            organisation: org,
+            department_team: 'General'
         });
+
+        // Auto-login after signup
+        await api.login(user, pass);
+        window.location.href = 'dashboard.html';
+    } catch (err) {
+        alert("Signup failed: " + err.message);
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Next →";
+    }
+}
+window.handleSignupNext = handleSignupNext;
