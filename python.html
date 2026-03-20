@@ -97,13 +97,31 @@
         <p class="head-subtext">Explore opportunities related to Python.</p>
       </section>
 
-      <!-- Filters Removed -->
+      <div class="skills-headline reveal" style="margin-top: 40px; margin-bottom: 20px;">
+        <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--ink-900); margin-bottom: 4px;">Your Skills</h2>
+        <p style="color: var(--ink-500); font-size: 0.95rem;">Explore opportunities matched to your expertise.</p>
+      </div>
+
+      <div class="skills-filter reveal" id="skillsFilter"
+        style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px;">
+        <a href="opportunities.html" class="skill-card" data-skill="all"
+          style="text-decoration: none; color: inherit;">All Skills</a>
+        <a href="interested.html" class="skill-card" data-skill="Interested"
+          style="text-decoration: none; color: inherit; border: 1.5px solid var(--sky-400); background: #f0f9ff;">Interested
+          <span class="skill-count">(0)</span></a>
+        <a href="python.html" class="skill-card active" data-skill="Python"
+          style="text-decoration: none; color: inherit;">Python <span class="skill-count">(0)</span></a>
+        <div class="skill-card" data-skill="AI">AI <span class="skill-count">(0)</span></div>
+        <div class="skill-card" data-skill="Video Editing">Video Editing <span class="skill-count">(0)</span></div>
+        <div class="skill-card" data-skill="Photography">Photography <span class="skill-count">(0)</span></div>
+        <div class="skill-card" data-skill="Performance">Performance <span class="skill-count">(0)</span></div>
+      </div>
 
       <div id="opportunities-master-container">
         <!-- Rendered Sections -->
       </div>
 
-      <script src="js/python_opportunities.js?v=2"></script>
+      <script src="js/opportunities.js"></script>
 
       <section class="footer-cta reveal">
         <span>No interests matched? We can help you find something great.</span>

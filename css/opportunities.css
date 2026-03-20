@@ -884,3 +884,59 @@ body.is-admin .card-hover-actions {
 .skill-card.active .skill-count {
   background: rgba(255, 255, 255, 0.25);
 }
+
+/* ── Card Actions Footer ── */
+.card-actions {
+  display: flex;
+  gap: 12px;
+  padding: 16px 24px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--white);
+  border-top: 1px solid rgba(15, 31, 43, 0.05);
+  z-index: 4;
+  /* Stay above hover overlay items */
+}
+
+.card-actions .interest-btn {
+  background: #7bb6c9;
+  color: white;
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+  text-align: center;
+}
+
+.card-actions .interest-btn:hover {
+  background: #5fa3b8;
+  transform: scale(1.03);
+}
+
+.card-actions .remove-btn {
+  background: #f28b82;
+  color: white;
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+  text-align: center;
+}
+
+.card-actions .remove-btn:hover {
+  background: #e06c61;
+  transform: scale(1.03);
+}
+
+/* Hide Interested button when in Interested view filter */
+.is-interested-view .interest-btn {
+  display: none;
+}

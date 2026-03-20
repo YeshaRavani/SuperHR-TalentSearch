@@ -2,15 +2,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('opportunities-master-container');
   const filterBtns = document.querySelectorAll('.filter-btn');
 
-  // ── State (sessionStorage → resets on hard reload) ─────────────────
-  const SESSION_KEY = 'opp_interested_ids';
-  function getInterested() {
-    try { return new Set(JSON.parse(sessionStorage.getItem(SESSION_KEY) || '[]')); }
-    catch (e) { return new Set(); }
-  }
-  function saveInterested(set) {
-    sessionStorage.setItem(SESSION_KEY, JSON.stringify([...set]));
-  }
+  // ── State (Memory locked → resets on reload) ─────────────────────
+  let interestedList = [];
+  let removedList = [];
 
   // ── Toast ──────────────────────────────────────────────────────────
   function showToast(msg) {
@@ -48,7 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderAll() {
     if (!container || !window.superHrOpportunities) return;
 
-    const interested = getInterested();
     let html = '';
 
     // Update dynamic skill counts once
@@ -59,31 +52,20 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // 1. My Interested Opportunities section (top)
-    const interestedOpps = [...interested]
-      .map(id => window.superHrOpportunities.find(o => String(o.id || o.title) === String(id)))
-      .filter(o => o && (selectedSkill === 'all' || (o.skills && o.skills.includes(selectedSkill))));
+    // Main Pool Filter 
+    const items = window.superHrOpportunities.filter(o => {
+      const id = String(o.id || o.title);
 
-    if (interestedOpps.length > 0) {
-      html += `
-                <div class="category-section reveal active" id="my-interested">
-                  <h2 class="category-title" style="color:var(--sky-600);">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--sky-400)" style="margin-right:4px;flex-shrink:0;">
-                      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5 2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53L12 21.35z"/>
-                    </svg>
-                    My Interested ${selectedSkill === 'all' ? '' : selectedSkill} Opportunities
-                  </h2>
-                  <section class="initiatives-grid">
-                    ${interestedOpps.map((opp, i) => window.generateOpportunityCardHTML(opp, i % 4, true)).join('')}
-                  </section>
-                </div>`;
-    }
+      // Exclude Removed Items
+      if (removedList.includes(id)) return false;
 
-    // 2. Filtered Main Pool
-    const items = window.superHrOpportunities.filter(o =>
-      (selectedSkill === 'all' || (o.skills && o.skills.includes(selectedSkill))) &&
-      !interested.has(String(o.id || o.title))
-    );
+      if (selectedSkill === 'Interested') {
+        return interestedList.includes(id);
+      }
+
+      const isSkillMatch = selectedSkill === 'all' || (o.skills && o.skills.includes(selectedSkill));
+      return isSkillMatch;
+    });
 
     let sectionContent = '';
     if (items.length > 0) {
@@ -105,26 +87,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Event delegation (single permanent listener on container) ──────
   container.addEventListener('click', function (e) {
-    const intBtn = e.target.closest('.btn-interested');
-    const notBtn = e.target.closest('.btn-not-interested');
+    const intBtn = e.target.closest('.interest-btn');
+    const removeBtn = e.target.closest('.remove-btn');
 
-    if (intBtn || notBtn) {
+    if (intBtn) {
       e.preventDefault();
       e.stopPropagation();
 
-      const id = String((intBtn || notBtn).dataset.id);
-      const interested = getInterested();
+      const id = String(intBtn.dataset.id);
 
-      if (intBtn && !interested.has(id)) {
-        interested.add(id);
-        saveInterested(interested);
-        showToast('❤️ Added to My Interested Opportunities');
+      if (!interestedList.includes(id)) {
+        interestedList.push(id);
+        alert('Added to Interested!');
         renderAll();
-      } else if (notBtn) {
-        interested.delete(id);
-        saveInterested(interested);
-        showToast('Removed from My Interested Opportunities');
-        renderAll();
+      }
+      return;
+    }
+
+    if (removeBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const id = String(removeBtn.dataset.id);
+
+      if (!removedList.includes(id)) {
+        removedList.push(id);
+      }
+
+      const card = removeBtn.closest('.initiative-card');
+      if (card) {
+        card.style.display = 'none';
       }
       return;
     }
