@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ── Render ─────────────────────────────────────────────────────────
-  let selectedSkill = 'all';
+  let selectedSkill = 'Python';
 
   function renderAll() {
     if (!container || !window.superHrOpportunities) return;
@@ -56,13 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
     window.superHrOpportunities.forEach(o => {
       if (o.skills) {
         o.skills.forEach(s => { counts[s] = (counts[s] || 0) + 1; });
-      }
-    });
-    document.querySelectorAll('#skillsFilter .skill-card').forEach(card => {
-      const skill = card.dataset.skill;
-      const countSpan = card.querySelector('.skill-count');
-      if (countSpan && counts[skill] !== undefined) {
-        countSpan.textContent = `(${counts[skill]})`;
       }
     });
 
@@ -110,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
     container.innerHTML = html;
   }
 
+  // ── Event delegation (single permanent listener on container) ──────
   container.addEventListener('click', function (e) {
     const intBtn = e.target.closest('.btn-interested');
     const notBtn = e.target.closest('.btn-not-interested');
@@ -147,17 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── Initial render ─────────────────────────────────────────────────
   renderAll();
 
-  // ── Skill Card Filters ─────────────────────────────────────────────
-  const skillCards = document.querySelectorAll('#skillsFilter .skill-card');
-  skillCards.forEach(card => {
-    if (card.dataset.skill === 'Python' || card.dataset.skill === 'Interested') return; // Navigate instead of filter
-    card.addEventListener('click', () => {
-      skillCards.forEach(c => c.classList.remove('active'));
-      card.classList.add('active');
-      selectedSkill = card.dataset.skill;
-      renderAll();
-    });
-  });
+  // Skill Card Filters Removed
 
 });
 

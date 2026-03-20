@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ── Render ─────────────────────────────────────────────────────────
-  let selectedSkill = 'all';
+  let selectedSkill = 'Interested';
 
   function renderAll() {
     if (!container || !window.superHrOpportunities) return;
@@ -56,13 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
     window.superHrOpportunities.forEach(o => {
       if (o.skills) {
         o.skills.forEach(s => { counts[s] = (counts[s] || 0) + 1; });
-      }
-    });
-    document.querySelectorAll('#skillsFilter .skill-card').forEach(card => {
-      const skill = card.dataset.skill;
-      const countSpan = card.querySelector('.skill-count');
-      if (countSpan && counts[skill] !== undefined) {
-        countSpan.textContent = `(${counts[skill]})`;
       }
     });
 
@@ -108,29 +101,26 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>`;
 
     container.innerHTML = html;
+
+    // Custom text override for Interested page buttons
+    container.querySelectorAll('.interest-btn').forEach(btn => {
+      btn.textContent = "Remove Interest";
+      btn.classList.add('remove-interest-btn');
+    });
   }
 
+  // ── Event delegation (single permanent listener on container) ──────
   container.addEventListener('click', function (e) {
-    const intBtn = e.target.closest('.btn-interested');
-    const notBtn = e.target.closest('.btn-not-interested');
+    const btn = e.target.closest('.interest-btn');
 
-    if (intBtn || notBtn) {
+    if (btn) {
       e.preventDefault();
       e.stopPropagation();
 
-      const id = String((intBtn || notBtn).dataset.id);
-      const interested = getInterested();
-
-      if (intBtn && !interested.has(id)) {
-        interested.add(id);
-        saveInterested(interested);
-        showToast('❤️ Added to My Interested Opportunities');
-        renderAll();
-      } else if (notBtn) {
-        interested.delete(id);
-        saveInterested(interested);
-        showToast('Removed from My Interested Opportunities');
-        renderAll();
+      const card = btn.closest('.initiative-card');
+      if (card) {
+        card.style.display = 'none';
+        showToast('Removed from your interested list (Temporary)');
       }
       return;
     }
@@ -146,18 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Initial render ─────────────────────────────────────────────────
   renderAll();
-
-  // ── Skill Card Filters ─────────────────────────────────────────────
-  const skillCards = document.querySelectorAll('#skillsFilter .skill-card');
-  skillCards.forEach(card => {
-    if (card.dataset.skill === 'Python' || card.dataset.skill === 'Interested') return; // Navigate instead of filter
-    card.addEventListener('click', () => {
-      skillCards.forEach(c => c.classList.remove('active'));
-      card.classList.add('active');
-      selectedSkill = card.dataset.skill;
-      renderAll();
-    });
-  });
 
 });
 

@@ -698,28 +698,83 @@ h4 {
   }
 }
 
-/* ── Interested / Not Interested Buttons (hover CTA) ── */
-.card-hover-actions {
+/* ── Card Hover Overlay ── */
+.card-hover-overlay {
   position: absolute;
-  bottom: 14px;
-  right: 14px;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(6px);
+  border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  align-items: flex-end;
+  justify-content: center;
   opacity: 0;
-  transform: translateY(6px);
-  transition: opacity 0.22s ease, transform 0.22s ease;
+  transition: all 0.3s ease;
+  padding: 24px;
+  z-index: 3;
   pointer-events: none;
-  z-index: 2;
 }
 
-/* Show on card hover AND keyboard focus-within */
-.initiative-card:hover .card-hover-actions,
-.initiative-card:focus-within .card-hover-actions {
+.initiative-card:hover .card-hover-overlay,
+.initiative-card:focus-within .card-hover-overlay {
   opacity: 1;
-  transform: translateY(0);
   pointer-events: auto;
+}
+
+.hover-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink-900);
+  margin-bottom: 8px;
+  text-align: left;
+}
+
+.hover-description {
+  font-size: 0.88rem;
+  color: #5f6f7f;
+  margin-bottom: 14px;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.hover-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: #6b7c8f;
+  margin-bottom: 18px;
+  text-align: left;
+  font-weight: 500;
+}
+
+.hover-details span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.initiative-card:hover .card-content {
+  opacity: 0.2;
+  transition: opacity 0.3s ease;
+}
+
+.interest-btn {
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: none;
+  background: #7bb6c9;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.interest-btn:hover {
+  transform: scale(1.05) !important;
+  background: #5fa3b8;
 }
 
 /* Card needs relative positioning for absolute child */
@@ -777,4 +832,55 @@ body.is-admin .card-hover-actions {
   border-left: 3px solid var(--sky-300, #9ecae1);
   padding-left: 16px;
   margin-left: -16px;
+}
+
+/* ── Skill Cards (Redesign) ── */
+.skills-filter {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.skill-card {
+  background: var(--sky-50);
+  border: 1px solid var(--sky-100);
+  color: var(--ink-800);
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-size: 0.93rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(158, 202, 225, 0.08);
+}
+
+.skill-card:hover {
+  transform: translateY(-2px);
+  background: var(--sky-100);
+  border-color: var(--sky-200);
+  box-shadow: 0 4px 12px rgba(158, 202, 225, 0.15);
+}
+
+.skill-card.active {
+  background: var(--sky-600);
+  color: var(--white);
+  border-color: var(--sky-600);
+  box-shadow: 0 4px 12px rgba(126, 179, 206, 0.3);
+}
+
+.skill-count {
+  font-size: 0.8rem;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.skill-card.active .skill-count {
+  background: rgba(255, 255, 255, 0.25);
 }
