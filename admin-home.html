@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="css/admin-home.css" />
     <link rel="stylesheet" href="css/chatbot.css" />
     <script src="js/api.js"></script>
-    <script src="js/opportunities_data.js"></script>
     <link rel="stylesheet" href="css/header.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -131,7 +130,7 @@
                                 </div>
                                 Total Users
                             </div>
-                            <div class="stat-value counter" data-target="1245"
+                            <div id="metricTotalUsers" class="stat-value counter" data-target="0"
                                 style="font-size: 1.5rem; font-weight: 800; color: var(--ink-900);">0</div>
                         </div>
                         <div class="stat-row"
@@ -152,7 +151,7 @@
                                 </div>
                                 Removed Opportunities
                             </div>
-                            <div class="stat-value counter" data-target="14"
+                            <div id="metricRemovedOpportunities" class="stat-value counter" data-target="0"
                                 style="font-size: 1.5rem; font-weight: 800; color: var(--ink-900);">0</div>
                         </div>
                         <div class="stat-row"
@@ -170,7 +169,7 @@
                                 </div>
                                 Active Opportunities
                             </div>
-                            <div class="stat-value counter" data-target="324"
+                            <div id="metricActiveOpportunities" class="stat-value counter" data-target="0"
                                 style="font-size: 1.5rem; font-weight: 800; color: var(--ink-900);">0</div>
                         </div>
                         <div class="stat-row"
@@ -187,8 +186,8 @@
                                 </div>
                                 System Health
                             </div>
-                            <div class="stat-value" style="font-size: 1.5rem; font-weight: 800; color: var(--ink-900);">
-                                99.9%</div>
+                            <div id="metricSystemHealth" class="stat-value" style="font-size: 1.5rem; font-weight: 800; color: var(--ink-900);">
+                                --</div>
                         </div>
                     </div>
                 </div>
@@ -238,78 +237,8 @@
                             <h3
                                 style="font-size: 1.15rem; font-weight: 700; color: var(--ink-900); margin-bottom: 20px;">
                                 Top Skills in Organization</h3>
-                            <div
-                                style="display: flex; flex-direction: column; background: var(--white); border-radius: var(--radius-md); border: 1px solid rgba(15,31,43,0.04); overflow: hidden;">
-
-                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-bottom: 1px solid rgba(15,31,43,0.04); transition: background 0.2s; cursor: pointer;"
-                                    onmouseover="this.style.background='rgba(2, 132, 199, 0.02)'"
-                                    onmouseout="this.style.background='transparent'">
-                                    <div style="display: flex; align-items: center; gap: 12px;">
-                                        <div
-                                            style="width: 8px; height: 8px; border-radius: 50%; background: var(--sky-600);">
-                                        </div>
-                                        <span
-                                            style="font-weight: 600; color: #0284c7; background: #e0f2fe; padding: 4px 12px; border-radius: 16px; font-size: 0.85rem;">Python</span>
-                                    </div>
-                                    <span style="font-size: 0.9rem; font-weight: 600; color: var(--ink-500);">32
-                                        users</span>
-                                </div>
-
-                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-bottom: 1px solid rgba(15,31,43,0.04); transition: background 0.2s; cursor: pointer;"
-                                    onmouseover="this.style.background='rgba(2, 132, 199, 0.02)'"
-                                    onmouseout="this.style.background='transparent'">
-                                    <div style="display: flex; align-items: center; gap: 12px;">
-                                        <div style="width: 8px; height: 8px; border-radius: 50%; background: #a855f7;">
-                                        </div>
-                                        <span
-                                            style="font-weight: 600; color: #7c3aed; background: #f3e8ff; padding: 4px 12px; border-radius: 16px; font-size: 0.85rem;">React</span>
-                                    </div>
-                                    <span style="font-size: 0.9rem; font-weight: 600; color: var(--ink-500);">28
-                                        users</span>
-                                </div>
-
-                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-bottom: 1px solid rgba(15,31,43,0.04); transition: background 0.2s; cursor: pointer;"
-                                    onmouseover="this.style.background='rgba(2, 132, 199, 0.02)'"
-                                    onmouseout="this.style.background='transparent'">
-                                    <div style="display: flex; align-items: center; gap: 12px;">
-                                        <div style="width: 8px; height: 8px; border-radius: 50%; background: #10b981;">
-                                        </div>
-                                        <span
-                                            style="font-weight: 600; color: #059669; background: #d1fae5; padding: 4px 12px; border-radius: 16px; font-size: 0.85rem;">UI
-                                            / UX Design</span>
-                                    </div>
-                                    <span style="font-size: 0.9rem; font-weight: 600; color: var(--ink-500);">24
-                                        users</span>
-                                </div>
-
-                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-bottom: 1px solid rgba(15,31,43,0.04); transition: background 0.2s; cursor: pointer;"
-                                    onmouseover="this.style.background='rgba(2, 132, 199, 0.02)'"
-                                    onmouseout="this.style.background='transparent'">
-                                    <div style="display: flex; align-items: center; gap: 12px;">
-                                        <div style="width: 8px; height: 8px; border-radius: 50%; background: #f59e0b;">
-                                        </div>
-                                        <span
-                                            style="font-weight: 600; color: #d97706; background: #fef3c7; padding: 4px 12px; border-radius: 16px; font-size: 0.85rem;">Public
-                                            Speaking</span>
-                                    </div>
-                                    <span style="font-size: 0.9rem; font-weight: 600; color: var(--ink-500);">18
-                                        users</span>
-                                </div>
-
-                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-bottom: none; transition: background 0.2s; cursor: pointer;"
-                                    onmouseover="this.style.background='rgba(2, 132, 199, 0.02)'"
-                                    onmouseout="this.style.background='transparent'">
-                                    <div style="display: flex; align-items: center; gap: 12px;">
-                                        <div style="width: 8px; height: 8px; border-radius: 50%; background: #6366f1;">
-                                        </div>
-                                        <span
-                                            style="font-weight: 600; color: #4f46e5; background: #e0e7ff; padding: 4px 12px; border-radius: 16px; font-size: 0.85rem;">Figma</span>
-                                    </div>
-                                    <span style="font-size: 0.9rem; font-weight: 600; color: var(--ink-500);">16
-                                        users</span>
-                                </div>
-
-                            </div>
+                            <div id="adminTopSkillsList"
+                                style="display: flex; flex-direction: column; background: var(--white); border-radius: var(--radius-md); border: 1px solid rgba(15,31,43,0.04); overflow: hidden;"></div>
                         </div>
                     </div>
 
@@ -412,32 +341,8 @@
                         style="background: var(--white); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15, 31, 43, 0.05); display: flex; flex-direction: column;">
                         <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--ink-800); margin-bottom: 20px;">
                             User Growth (Last 30 Days)</h3>
-                        <div
-                            style="flex: 1; min-height: 200px; display: flex; align-items: flex-end; gap: 8px; border-bottom: 2px solid #89c0d8; padding-bottom: 8px;">
-                            <div
-                                style="flex: 1; background: #5b9fbd; height: 30%; border-radius: 4px 4px 0 0; position: relative;">
-                                <span
-                                    style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 0.75rem; color: var(--ink-700); font-weight: 700;">+12</span>
-                            </div>
-                            <div
-                                style="flex: 1; background: #4a8fad; height: 45%; border-radius: 4px 4px 0 0; position: relative;">
-                                <span
-                                    style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 0.75rem; color: var(--ink-700); font-weight: 700;">+24</span>
-                            </div>
-                            <div
-                                style="flex: 1; background: #357fa0; height: 60%; border-radius: 4px 4px 0 0; position: relative;">
-                                <span
-                                    style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 0.75rem; color: var(--ink-700); font-weight: 700;">+44</span>
-                            </div>
-                            <div
-                                style="flex: 1; background: #1f6e90; height: 75%; border-radius: 4px 4px 0 0; position: relative;">
-                                <span
-                                    style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 0.75rem; color: var(--ink-900); font-weight: 800;">+68</span>
-                            </div>
-                        </div>
-                        <div
-                            style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 0.8rem; color: var(--ink-700); font-weight: 700;">
-                            <span>Week 1</span><span>Week 2</span><span>Week 3</span><span>Week 4</span>
+                        <div style="flex: 1; min-height: 220px;">
+                            <canvas id="adminUserGrowthChart"></canvas>
                         </div>
                     </div>
 
@@ -446,60 +351,7 @@
                         style="background: var(--white); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); border: 1px solid rgba(15, 31, 43, 0.05); display: flex; flex-direction: column;">
                         <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--ink-800); margin-bottom: 20px;">Top
                             Departments by Activity</h3>
-                        <div style="display: flex; flex-direction: column; gap: 20px; flex: 1;">
-                            <div>
-                                <div
-                                    style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.85rem; font-weight: 600;">
-                                    <span style="display: flex; align-items: center; gap: 8px;">
-                                        <div style="width: 8px; height: 8px; border-radius: 50%; background: #1f6e90;">
-                                        </div> Engineering
-                                    </span><span>45%</span>
-                                </div>
-                                <div style="height: 10px; background: #c2daea; border-radius: 999px; overflow: hidden;">
-                                    <div style="height: 100%; background: #1f6e90; width: 45%; border-radius: 999px;">
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div
-                                    style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.85rem; font-weight: 600;">
-                                    <span style="display: flex; align-items: center; gap: 8px;">
-                                        <div style="width: 8px; height: 8px; border-radius: 50%; background: #357fa0;">
-                                        </div> Marketing
-                                    </span><span>30%</span>
-                                </div>
-                                <div style="height: 10px; background: #c2daea; border-radius: 999px; overflow: hidden;">
-                                    <div style="height: 100%; background: #357fa0; width: 30%; border-radius: 999px;">
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div
-                                    style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.85rem; font-weight: 600;">
-                                    <span style="display: flex; align-items: center; gap: 8px;">
-                                        <div style="width: 8px; height: 8px; border-radius: 50%; background: #4a8fad;">
-                                        </div> Design
-                                    </span><span>15%</span>
-                                </div>
-                                <div style="height: 10px; background: #c2daea; border-radius: 999px; overflow: hidden;">
-                                    <div style="height: 100%; background: #4a8fad; width: 15%; border-radius: 999px;">
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div
-                                    style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.85rem; font-weight: 600;">
-                                    <span style="display: flex; align-items: center; gap: 8px;">
-                                        <div style="width: 8px; height: 8px; border-radius: 50%; background: #5b9fbd;">
-                                        </div> Sales
-                                    </span><span>10%</span>
-                                </div>
-                                <div style="height: 10px; background: #c2daea; border-radius: 999px; overflow: hidden;">
-                                    <div style="height: 100%; background: #5b9fbd; width: 10%; border-radius: 999px;">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <div id="adminDepartmentActivity" style="display: flex; flex-direction: column; gap: 20px; flex: 1;"></div>
                     </div>
 
                     <!-- Removed: Platform Log Table -->
@@ -560,71 +412,6 @@
 
 
     <script src="js/header.js"></script>
-    <!-- Chart.js Init -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const ctx = document.getElementById('skillRadarChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: ['Technical', 'Design', 'Communication', 'Management', 'Data/AI', 'Marketing'],
-                    datasets: [{
-                        label: 'Organization Strength',
-                        data: [85, 75, 70, 60, 80, 50],
-                        backgroundColor: 'rgba(2, 132, 199, 0.15)',
-                        borderColor: 'rgba(2, 132, 199, 0.8)',
-                        pointBackgroundColor: 'rgba(2, 132, 199, 1)',
-                        pointBorderColor: '#fff',
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: 'rgba(2, 132, 199, 1)',
-                        borderWidth: 2
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        r: {
-                            angleLines: { color: 'rgba(15, 31, 43, 0.1)' },
-                            grid: { color: 'rgba(15, 31, 43, 0.06)' },
-                            pointLabels: { font: { size: 12, weight: '600' }, color: '#334155' },
-                            suggestedMin: 0,
-                            suggestedMax: 100
-                        }
-                    },
-                    plugins: {
-                        legend: { display: false }
-                    }
-                }
-            });
-
-            // Initialize Bar Chart
-            const barCtx = document.getElementById('skillBarChart').getContext('2d');
-            new Chart(barCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['Python', 'React', 'UI Design', 'Figma', 'Speaking', 'Marketing'],
-                    datasets: [{
-                        label: 'Users count',
-                        data: [32, 28, 24, 21, 18, 15],
-                        backgroundColor: 'rgba(2, 132, 199, 0.85)',
-                        borderRadius: 8,
-                        hoverBackgroundColor: 'rgba(2, 132, 199, 1)'
-                    }]
-                },
-                options: {
-                    indexAxis: 'y', // Horizontal Layout
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        x: { grid: { color: 'rgba(15, 31, 43, 0.03)' }, ticks: { font: { size: 11 } } },
-                        y: { grid: { display: false }, ticks: { font: { size: 12, weight: '600' } } }
-                    }
-                }
-            });
-        });
-    </script>
 </body>
 
 </html>

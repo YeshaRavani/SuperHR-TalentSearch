@@ -9,8 +9,6 @@
 
     <link rel="stylesheet" href="css/chatbot.css" />
     <script src="js/api.js"></script>
-
-    <script src="js/opportunities_data.js"></script>
     <link rel="stylesheet" href="css/header.css" />
 </head>
 
@@ -109,7 +107,7 @@
                         users for system updates.</p>
                 </div>
                 <label style="position: relative; display: inline-block; width: 50px; height: 28px;">
-                    <input type="checkbox" style="opacity: 0; width: 0; height: 0;">
+                    <input id="maintenanceModeToggle" type="checkbox" style="opacity: 0; width: 0; height: 0;">
                     <span
                         style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; border-radius: 34px; transition: .4s;">
                         <span
@@ -127,7 +125,7 @@
                         User roles.</p>
                 </div>
                 <label style="position: relative; display: inline-block; width: 50px; height: 28px;">
-                    <input type="checkbox" checked style="opacity: 0; width: 0; height: 0;">
+                    <input id="autoApproveToggle" type="checkbox" checked style="opacity: 0; width: 0; height: 0;">
                     <span
                         style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--sky-500); border-radius: 34px; transition: .4s;">
                         <span
@@ -143,7 +141,7 @@
                         profiles visible to recruiters outside the organisation.</p>
                 </div>
                 <label style="position: relative; display: inline-block; width: 50px; height: 28px;">
-                    <input type="checkbox" checked style="opacity: 0; width: 0; height: 0;">
+                    <input id="publicProfilesToggle" type="checkbox" checked style="opacity: 0; width: 0; height: 0;">
                     <span
                         style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--sky-500); border-radius: 34px; transition: .4s;">
                         <span
@@ -166,7 +164,7 @@
                         logins.</p>
                 </div>
                 <label style="position: relative; display: inline-block; width: 50px; height: 28px;">
-                    <input type="checkbox" checked style="opacity: 0; width: 0; height: 0;">
+                    <input id="require2faToggle" type="checkbox" checked style="opacity: 0; width: 0; height: 0;">
                     <span
                         style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--sky-500); border-radius: 34px; transition: .4s;">
                         <span
@@ -181,17 +179,18 @@
                     <p style="font-size: 0.9rem; color: var(--ink-500);">Automatically log out inactive users after a
                         set period.</p>
                 </div>
-                <select class="text-input" style="padding: 8px 12px; width: 160px; font-size: 0.9rem;">
-                    <option>15 Minutes</option>
-                    <option selected>30 Minutes</option>
-                    <option>1 Hour</option>
-                    <option>Never</option>
+                <select id="sessionTimeoutSelect" class="text-input" style="padding: 8px 12px; width: 160px; font-size: 0.9rem;">
+                    <option value="15">15 Minutes</option>
+                    <option value="30" selected>30 Minutes</option>
+                    <option value="60">1 Hour</option>
+                    <option value="0">Never</option>
                 </select>
             </div>
         </div>
 
-        <div style="display: flex; justify-content: flex-end; padding-bottom: 60px;">
-            <button class="btn btn-sky" style="height: 48px; padding: 0 32px; font-size: 1rem;">Save All
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:16px; padding-bottom:60px;">
+            <div id="systemSettingsStatus" style="color: var(--ink-500); font-size: 0.95rem;"></div>
+            <button id="saveSystemSettingsBtn" class="btn btn-sky" style="height: 48px; padding: 0 32px; font-size: 1rem;">Save All
                 Settings</button>
         </div>
     </main>

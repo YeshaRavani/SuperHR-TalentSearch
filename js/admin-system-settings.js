@@ -1,90 +1,114 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    const navbar = document.getElementById('navbar');
+    const scrollProgress = document.getElementById('scrollProgress');
+    const notifToggle = document.getElementById('notifToggle');
+    const notifDropdown = document.getElementById('notifDropdown');
+    const badge = document.getElementById('notifBadge');
+    const markBtn = document.getElementById('markAllReadBtn');
 
-            // 1. Navbar Scroll & Progress Bar
-            const navbar = document.getElementById('navbar');
-            const scrollProgress = document.getElementById('scrollProgress');
+    const maintenanceModeToggle = document.getElementById('maintenanceModeToggle');
+    const autoApproveToggle = document.getElementById('autoApproveToggle');
+    const publicProfilesToggle = document.getElementById('publicProfilesToggle');
+    const require2faToggle = document.getElementById('require2faToggle');
+    const sessionTimeoutSelect = document.getElementById('sessionTimeoutSelect');
+    const saveBtn = document.getElementById('saveSystemSettingsBtn');
+    const statusEl = document.getElementById('systemSettingsStatus');
 
-            window.addEventListener('scroll', () => {
-                // Navbar style toggle
+    let currentSettings = null;
+
+    function initChrome() {
+        window.addEventListener('scroll', () => {
+            if (navbar) {
                 if (window.scrollY > 20) navbar.classList.add('scrolled');
                 else navbar.classList.remove('scrolled');
+            }
 
-                // Progress bar calc
+            if (scrollProgress) {
                 const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
                 const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                const scrolled = (winScroll / height) * 100;
-                scrollProgress.style.width = scrolled + "%";
-            });
+                const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+                scrollProgress.style.width = `${scrolled}%`;
+            }
+        });
 
-            // 2. Notification Dropdown Toggle
-            const notifToggle = document.getElementById('notifToggle');
-            const notifDropdown = document.getElementById('notifDropdown');
-
+        if (notifToggle && notifDropdown) {
             notifToggle.addEventListener('click', (e) => {
                 e.stopPropagation();
                 notifDropdown.classList.toggle('active');
             });
-            window.addEventListener('click', () => {
-                if (notifDropdown.classList.contains('active')) notifDropdown.classList.remove('active');
-            });
-            notifDropdown.addEventListener('click', e => e.stopPropagation());
+            window.addEventListener('click', () => notifDropdown.classList.remove('active'));
+            notifDropdown.addEventListener('click', (e) => e.stopPropagation());
+        }
 
-            // 3. Reveal Animations on Scroll
-            const revealElements = document.querySelectorAll('.reveal');
-            const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
-
-            const revealObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, revealOptions);
-
-            revealElements.forEach(el => revealObserver.observe(el));
-
-            // 4. Removed unused Parallax
-            // 5. Removed unused Tilt Object
-            const tiltCards = document.querySelectorAll('.tilt-card');
-            tiltCards.forEach(card => {
-                card.addEventListener('mousemove', e => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    const rotateX = ((y - centerY) / centerY) * -10; // Max rotation 10deg
-                    const rotateY = ((x - centerX) / centerX) * 10;
-
-                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-                });
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-                    card.style.transition = `transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1)`;
-                });
-                card.addEventListener('mouseenter', () => {
-                    card.style.transition = `none`;
-                });
-            });
-
-            // 6. Removed JS counters code.
-        });
-
-document.addEventListener('DOMContentLoaded', function () {
-            const role = localStorage.getItem('userRole');
-        });
-
-document.addEventListener('DOMContentLoaded', () => {
-        const markBtn = document.getElementById('markAllReadBtn');
-        const badge = document.getElementById('notifBadge');
         if (markBtn && badge) {
             markBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 badge.style.display = 'none';
-                document.querySelectorAll('.notif-item').forEach(item => {
+                document.querySelectorAll('.notif-item').forEach((item) => {
                     item.style.opacity = '0.6';
                 });
             });
         }
-    });
+    }
+
+    function setStatus(message, isError = false) {
+        if (!statusEl) return;
+        statusEl.textContent = message;
+        statusEl.style.color = isError ? '#ef4444' : 'var(--ink-500)';
+    }
+
+    function readForm() {
+        return {
+            maintenance_mode: Boolean(maintenanceModeToggle?.checked),
+            auto_approve_opportunities: Boolean(autoApproveToggle?.checked),
+            allow_public_profiles: Boolean(publicProfilesToggle?.checked),
+            require_2fa_for_admins: Boolean(require2faToggle?.checked),
+            session_timeout_minutes: Number(sessionTimeoutSelect?.value || 30),
+        };
+    }
+
+    function applySettings(settings) {
+        if (!settings) return;
+        maintenanceModeToggle.checked = settings.maintenance_mode;
+        autoApproveToggle.checked = settings.auto_approve_opportunities;
+        publicProfilesToggle.checked = settings.allow_public_profiles;
+        require2faToggle.checked = settings.require_2fa_for_admins;
+        sessionTimeoutSelect.value = String(settings.session_timeout_minutes);
+    }
+
+    async function loadSettings() {
+        try {
+            currentSettings = await window.api.get('/admin/system-settings');
+            applySettings(currentSettings);
+            setStatus('Loaded saved platform settings.');
+        } catch (err) {
+            console.error('Failed to load admin system settings:', err);
+            setStatus(err.message || 'Failed to load system settings.', true);
+        }
+    }
+
+    async function saveSettings() {
+        const payload = readForm();
+        saveBtn.disabled = true;
+        saveBtn.textContent = 'Saving...';
+
+        try {
+            currentSettings = await window.api.put('/admin/system-settings', payload);
+            applySettings(currentSettings);
+            setStatus('System settings saved.');
+        } catch (err) {
+            console.error('Failed to save admin system settings:', err);
+            setStatus(err.message || 'Failed to save system settings.', true);
+        } finally {
+            saveBtn.disabled = false;
+            saveBtn.textContent = 'Save All Settings';
+        }
+    }
+
+    if (saveBtn) {
+        saveBtn.addEventListener('click', saveSettings);
+    }
+
+    initChrome();
+    await loadSettings();
+});

@@ -9,7 +9,15 @@ def seed_db():
     db = SessionLocal()
     try:
         # 2. Seed Skills
-        skills_list = ["Python", "Automation", "Workflow Optimization", "APIs", "Backend", "Data Analysis", "Pandas", "AI", "NLP", "Machine Learning", "Video Editing", "Content Creation", "Premiere Pro", "Photography", "Event Coverage", "Lighting", "Portraits", "Performance", "Stage Presence", "Public Engagement", "Design", "UI/UX", "Entrepreneurship", "Pitching", "Social Media", "Shorts", "Marketing", "Splicing", "Composition", "Logistics", "Management"]
+        skills_list = [
+            "Python", "Automation", "Workflow Optimization", "APIs", "Backend", "Data Analysis", "Pandas",
+            "AI", "NLP", "Machine Learning", "ML", "Data Science", "Research", "Tech Trends",
+            "Video Editing", "Content Creation", "Premiere Pro", "Photography", "Event Coverage", "Lighting",
+            "Portraits", "Headshots", "Performance", "Stage Presence", "Public Engagement", "Workshop", "Stance",
+            "Design", "UI/UX", "UI Design", "Figma", "Entrepreneurship", "Pitching", "Social Media", "Shorts",
+            "Marketing", "Content", "Splicing", "Composition", "Product Shoot", "Coordination", "Logistics",
+            "Management", "Interested"
+        ]
         skill_objs = {}
         for s_name in skills_list:
             skill = db.query(Skill).filter(Skill.name == s_name).first()
@@ -21,13 +29,27 @@ def seed_db():
 
         # 3. Seed Users
         users_data = [
-            {"id": "admin-1", "username": "admin", "full_name": "Admin User", "email": "admin@superhr.com", "role": "admin", "organisation": "SuperHR", "department_team": "HR Tech"},
-            {"id": "user-1", "username": "rushil", "full_name": "Rushil Gargash", "email": "rushil@example.com", "role": "contributors", "organisation": "Plaksha University", "department_team": "Product Innovation Lab"},
-            {"id": "user-2", "username": "yesha", "full_name": "Yesha Ravani", "email": "yesha@example.com", "role": "contributors", "organisation": "Design Studio", "department_team": "UX Team"},
-            {"id": "user-3", "username": "alex", "full_name": "Alex Rivera", "email": "alex@example.com", "role": "contributors", "organisation": "SuperHR", "department_team": "Engineering"},
-            {"id": "user-4", "username": "sarah", "full_name": "Sarah Chen", "email": "sarah@example.com", "role": "contributors", "organisation": "SuperHR", "department_team": "Marketing"},
-            {"id": "user-5", "username": "mike", "full_name": "Mike Ross", "email": "mike@example.com", "role": "contributors", "organisation": "SuperHR", "department_team": "Legal"},
-            {"id": "user-6", "username": "hod-1", "full_name": "Director Jane", "email": "jane@superhr.com", "role": "head_of_department", "organisation": "SuperHR", "department_team": "Leadership"}
+            {"id": "admin-1", "username": "admin", "full_name": "Admin User", "email": "admin@superhr.com", "role": "admin", "organisation": "SuperHR", "department_team": "HR Tech", "total_points": 0, "skills": ["Management", "Logistics"]},
+            {"id": "user-1", "username": "rushil", "full_name": "Rushil Gargash", "email": "rushil@example.com", "role": "contributors", "organisation": "Plaksha University", "department_team": "Product Innovation Lab", "total_points": 1420, "skills": ["Python", "Automation", "Workflow Optimization", "APIs"]},
+            {"id": "user-2", "username": "yesha", "full_name": "Yesha Ravani", "email": "yesha@example.com", "role": "contributors", "organisation": "Design Studio", "department_team": "UX Team", "total_points": 1180, "skills": ["Design", "UI/UX", "UI Design", "Figma"]},
+            {"id": "user-3", "username": "alex", "full_name": "Alex Rivera", "email": "alex@example.com", "role": "contributors", "organisation": "SuperHR", "department_team": "Engineering", "total_points": 980, "skills": ["Python", "APIs", "Backend", "Data Analysis"]},
+            {"id": "user-4", "username": "sarah", "full_name": "Sarah Chen", "email": "sarah@example.com", "role": "contributors", "organisation": "SuperHR", "department_team": "Marketing", "total_points": 860, "skills": ["Marketing", "Content Creation", "Social Media", "Shorts"]},
+            {"id": "user-5", "username": "mike", "full_name": "Mike Ross", "email": "mike@example.com", "role": "contributors", "organisation": "SuperHR", "department_team": "Legal", "total_points": 620, "skills": ["Research", "Management"]},
+            {"id": "user-6", "username": "hod-1", "full_name": "Director Jane", "email": "jane@superhr.com", "role": "head_of_department", "organisation": "SuperHR", "department_team": "Leadership", "total_points": 320, "skills": ["Management", "Coordination", "Logistics"]},
+            {"id": "user-7", "username": "priya", "full_name": "Priya Nair", "email": "priya@example.com", "role": "contributors", "organisation": "SuperHR", "department_team": "Data Science", "total_points": 910, "skills": ["AI", "Machine Learning", "ML", "Data Science"]},
+            {"id": "user-8", "username": "arjun", "full_name": "Arjun Mehta", "email": "arjun@example.com", "role": "contributors", "organisation": "SuperHR", "department_team": "Automation Lab", "total_points": 840, "skills": ["Python", "Automation", "APIs"]},
+            {"id": "user-9", "username": "nisha", "full_name": "Nisha Kapoor", "email": "nisha@example.com", "role": "contributors", "organisation": "SuperHR", "department_team": "Community", "total_points": 760, "skills": ["Public Engagement", "Performance", "Marketing"]},
+            {"id": "user-10", "username": "karan", "full_name": "Karan Sethi", "email": "karan@example.com", "role": "contributors", "organisation": "SuperHR", "department_team": "Events", "total_points": 700, "skills": ["Logistics", "Coordination", "Event Coverage"]},
+            {"id": "user-11", "username": "ananya", "full_name": "Ananya Rao", "email": "ananya@example.com", "role": "contributors", "organisation": "Design Studio", "department_team": "Brand Design", "total_points": 810, "skills": ["Design", "UI/UX", "Figma", "Photography"]},
+            {"id": "user-12", "username": "dev", "full_name": "Dev Malhotra", "email": "dev@example.com", "role": "contributors", "organisation": "SuperHR", "department_team": "AI Research", "total_points": 930, "skills": ["AI", "NLP", "Research", "Tech Trends"]},
+            {"id": "user-13", "username": "meera", "full_name": "Meera Iyer", "email": "meera@example.com", "role": "contributors", "organisation": "SuperHR", "department_team": "Media Lab", "total_points": 780, "skills": ["Video Editing", "Content Creation", "Premiere Pro", "Photography"]},
+            {"id": "user-14", "username": "rohan", "full_name": "Rohan Bansal", "email": "rohan@example.com", "role": "contributors", "organisation": "SuperHR", "department_team": "Product Innovation Lab", "total_points": 690, "skills": ["Entrepreneurship", "Pitching", "Management"]},
+            {"id": "user-15", "username": "fatima", "full_name": "Fatima Khan", "email": "fatima@example.com", "role": "contributors", "organisation": "SuperHR", "department_team": "Photography Studio", "total_points": 740, "skills": ["Photography", "Portraits", "Headshots", "Lighting"]},
+            {"id": "user-16", "username": "vivek", "full_name": "Vivek Sharma", "email": "vivek@example.com", "role": "contributors", "organisation": "SuperHR", "department_team": "Engineering", "total_points": 880, "skills": ["Backend", "Python", "Data Analysis"]},
+            {"id": "user-17", "username": "sana", "full_name": "Sana Ali", "email": "sana@example.com", "role": "head_of_department", "organisation": "SuperHR", "department_team": "Design Leadership", "total_points": 450, "skills": ["Design", "UI/UX", "Management"]},
+            {"id": "user-18", "username": "rahul", "full_name": "Rahul Verma", "email": "rahul@example.com", "role": "contributors", "organisation": "SuperHR", "department_team": "Workshops", "total_points": 590, "skills": ["Workshop", "Stance", "Public Engagement"]},
+            {"id": "user-19", "username": "isha", "full_name": "Isha Dutta", "email": "isha@example.com", "role": "contributors", "organisation": "SuperHR", "department_team": "Communications", "total_points": 670, "skills": ["Content", "Marketing", "Public Engagement"]},
+            {"id": "user-20", "username": "neel", "full_name": "Neel Joshi", "email": "neel@example.com", "role": "contributors", "organisation": "SuperHR", "department_team": "Operations", "total_points": 610, "skills": ["Logistics", "Management", "Coordination"]}
         ]
         
         user_objs = {}
@@ -43,10 +65,20 @@ def seed_db():
                     role=u["role"],
                     organisation=u["organisation"],
                     department_team=u["department_team"],
-                    total_points=100 if u["id"] != "admin-1" else 0
+                    total_points=u["total_points"]
                 )
                 db.add(user)
                 db.flush()
+            else:
+                user.username = u["username"]
+                user.full_name = u["full_name"]
+                user.email = u["email"]
+                user.role = u["role"]
+                user.organisation = u["organisation"]
+                user.department_team = u["department_team"]
+                user.total_points = u["total_points"]
+
+            user.skills = [skill_objs[s_name] for s_name in u.get("skills", []) if s_name in skill_objs]
             user_objs[u["id"]] = user
 
         # 4. Seed Opportunities from js/opportunities_data.js

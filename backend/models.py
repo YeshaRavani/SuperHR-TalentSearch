@@ -171,6 +171,39 @@ class RewardPolicyResponse(RewardPolicyBase):
         from_attributes = True
 
 
+class AdminSystemSettingsBase(BaseModel):
+    maintenance_mode: bool = False
+    auto_approve_opportunities: bool = True
+    allow_public_profiles: bool = True
+    require_2fa_for_admins: bool = True
+    session_timeout_minutes: int = 30
+
+
+class AdminSystemSettingsResponse(AdminSystemSettingsBase):
+    id: int
+    updated_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
+class AdminMetricPoint(BaseModel):
+    label: str
+    value: int
+
+
+class AdminDashboardStatsResponse(BaseModel):
+    total_users: int
+    active_opportunities: int
+    removed_opportunities: int
+    total_applications: int
+    total_interests: int
+    system_health: float
+    user_growth: List[AdminMetricPoint] = []
+    top_skills: List[AdminMetricPoint] = []
+    department_activity: List[AdminMetricPoint] = []
+
+
 class AIChatRequest(BaseModel):
     message: str
     history: List["AIChatTurn"] = []

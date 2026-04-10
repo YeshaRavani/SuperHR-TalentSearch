@@ -99,7 +99,7 @@
                 <h1 style="font-size: 2.2rem; font-weight: 800; color: var(--ink-900);">Manage Users</h1>
                 <p style="color: var(--ink-500);">Manage users across the platform.</p>
             </div>
-            <button class="btn btn-sky" style="height: 44px; padding: 0 24px;">
+            <button id="addUserBtn" class="btn btn-sky" style="height: 44px; padding: 0 24px;">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     style="width:18px; height:18px; margin-right:8px;">
                     <line x1="12" y1="5" x2="12" y2="19"></line>
@@ -181,78 +181,7 @@
                         <th style="padding: 16px; font-weight: 600; text-align: right;">Actions</th>
                     </tr>
                 </thead>
-                <tbody style="color: var(--ink-800);" id="usersTableBody">
-                    <tr style="border-bottom: 1px solid var(--sky-50);">
-                        <td style="padding: 16px;">
-                            <a href="user-profile.html"
-                                style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; cursor: pointer;">
-                                <div
-                                    style="min-width: 40px; height: 40px; border-radius: 50%; background: var(--sky-200); display: grid; place-items: center; font-weight: 700; color: var(--sky-600);">
-                                    JD</div>
-                                <div>
-                                    <div style="font-weight: 600; color: var(--ink-900);">John Doe</div>
-                                    <div style="font-size: 0.85rem; color: var(--ink-500);">john.doe@example.com</div>
-                                </div>
-                            </a>
-                        </td>
-                        <td style="padding: 16px; font-weight: 500;">Engineering</td>
-                        <td style="padding: 16px;" class="incentive-cell" data-points="320" data-hours="16"
-                            data-money="4500">
-                            <!-- JS populates value -->
-                        </td>
-                        <td style="padding: 16px; text-align: right;">
-                            <button class="btn"
-                                style="height: 32px; padding: 0 12px; font-size: 0.8rem; background: #fee2e2; color: #ef4444;">Remove</button>
-                        </td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid var(--sky-50);">
-                        <td style="padding: 16px;">
-                            <a href="user-profile.html"
-                                style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; cursor: pointer;">
-                                <div
-                                    style="min-width: 40px; height: 40px; border-radius: 50%; background: var(--sky-200); display: grid; place-items: center; font-weight: 700; color: var(--sky-600);">
-                                    AS</div>
-                                <div>
-                                    <div style="font-weight: 600; color: var(--ink-900);">Alice Smith</div>
-                                    <div style="font-size: 0.85rem; color: var(--ink-500);">alice.smith@example.com
-                                    </div>
-                                </div>
-                            </a>
-                        </td>
-                        <td style="padding: 16px; font-weight: 500;">Marketing</td>
-                        <td style="padding: 16px;" class="incentive-cell" data-points="150" data-hours="8"
-                            data-money="2000">
-                            <!-- JS populates value -->
-                        </td>
-                        <td style="padding: 16px; text-align: right;">
-                            <button class="btn"
-                                style="height: 32px; padding: 0 12px; font-size: 0.8rem; background: #fee2e2; color: #ef4444;">Remove</button>
-                        </td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid var(--sky-50);">
-                        <td style="padding: 16px;">
-                            <a href="user-profile.html"
-                                style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; cursor: pointer;">
-                                <div
-                                    style="min-width: 40px; height: 40px; border-radius: 50%; background: var(--sky-200); display: grid; place-items: center; font-weight: 700; color: var(--sky-600);">
-                                    ML</div>
-                                <div>
-                                    <div style="font-weight: 600; color: var(--ink-900);">Mark Lee</div>
-                                    <div style="font-size: 0.85rem; color: var(--ink-500);">mark.lee@example.com</div>
-                                </div>
-                            </a>
-                        </td>
-                        <td style="padding: 16px; font-weight: 500;">Design</td>
-                        <td style="padding: 16px;" class="incentive-cell" data-points="85" data-hours="4.5"
-                            data-money="800">
-                            <!-- JS populates value -->
-                        </td>
-                        <td style="padding: 16px; text-align: right;">
-                            <button class="btn"
-                                style="height: 32px; padding: 0 12px; font-size: 0.8rem; background: #fee2e2; color: #ef4444;">Remove</button>
-                        </td>
-                    </tr>
-                </tbody>
+                <tbody style="color: var(--ink-800);" id="usersTableBody"></tbody>
             </table>
         </div>
 

@@ -73,6 +73,15 @@ class Opportunity(Base):
     applicants = relationship("UserOpportunity", back_populates="opportunity")
     skills = relationship("Skill", secondary="Opportunity_Skills", back_populates="opportunities")
 
+
+class OpportunityRemovalAudit(Base):
+    __tablename__ = "Opportunity_Removal_Audit"
+    id = Column(String, primary_key=True, index=True)
+    opportunity_id = Column(String, index=True)
+    title = Column(String)
+    removed_by = Column(String, ForeignKey("Users.id", ondelete="SET NULL"), nullable=True)
+    removed_at = Column(DateTime, server_default=func.now())
+
 class UserOpportunity(Base):
     __tablename__ = "User_Opportunities"
     id = Column(String, primary_key=True, index=True)
@@ -124,6 +133,17 @@ class RewardPolicy(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     active_mode = Column(String, default="points")
     hours_per_leave = Column(Integer, default=8)
+    updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
+
+
+class AdminSetting(Base):
+    __tablename__ = "Admin_Settings"
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    maintenance_mode = Column(Boolean, default=False)
+    auto_approve_opportunities = Column(Boolean, default=True)
+    allow_public_profiles = Column(Boolean, default=True)
+    require_2fa_for_admins = Column(Boolean, default=True)
+    session_timeout_minutes = Column(Integer, default=30)
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
 
 class ChatSession(Base):

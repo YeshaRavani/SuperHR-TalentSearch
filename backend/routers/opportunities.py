@@ -9,11 +9,14 @@ router = APIRouter()
 
 @router.get("/opportunities", response_model=List[models.OpportunityResponse])
 def get_opportunities(db: Session = Depends(database.get_db)):
-    return db.query(orm_models.Opportunity).all()
+    return db.query(orm_models.Opportunity).filter(orm_models.Opportunity.status != "removed").all()
 
 @router.get("/opportunities/{id}", response_model=models.OpportunityResponse)
 def get_opportunity(id: str, db: Session = Depends(database.get_db)):
-    opp = db.query(orm_models.Opportunity).filter(orm_models.Opportunity.id == id).first()
+    opp = db.query(orm_models.Opportunity).filter(
+        orm_models.Opportunity.id == id,
+        orm_models.Opportunity.status != "removed",
+    ).first()
     if not opp:
         raise HTTPException(status_code=404, detail="Opportunity not found")
     return opp
@@ -52,4 +55,32 @@ def create_opportunity(opp: models.OpportunityCreate, db: Session = Depends(data
 
 @router.get("/my-posted-opportunities", response_model=List[models.OpportunityResponse])
 def get_my_opportunities(current_user: orm_models.User = Depends(auth.get_current_user), db: Session = Depends(database.get_db)):
-    return db.query(orm_models.Opportunity).filter(orm_models.Opportunity.author_id == current_user.id).all()
+    return db.query(orm_models.Opportunity).filter(
+        orm_models.Opportunity.author_id == current_user.id,
+        orm_models.Opportunity.status != "removed",
+    ).all()
+
+
+@router.delete("/opportunities/{id}")
+def delete_opportunity(
+    id: str,
+    db: Session = Depends(database.get_db),
+    current_user: orm_models.User = Depends(auth.get_current_user),
+):
+    opp = db.query(orm_models.Opportunity).filter(orm_models.Opportunity.id == id).first()
+    if not opp:
+        raise HTTPException(status_code=404, detail="Opportunity not found")
+
+    if current_user.role != "admin" and current_user.id != opp.author_id:
+        raise HTTPException(status_code=403, detail="Not authorized")
+
+    audit = orm_models.OpportunityRemovalAudit(
+        id=str(uuid.uuid4()),
+        opportunity_id=opp.id,
+        title=opp.title,
+        removed_by=current_user.id,
+    )
+    db.add(audit)
+    db.delete(opp)
+    db.commit()
+    return {"message": "Opportunity removed"}
