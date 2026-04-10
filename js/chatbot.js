@@ -1,4 +1,6 @@
 function initChatbot() {
+    const CHAT_STORAGE_KEY = 'talent_search_ai_chat_history';
+
     // 1. Check for existing `.fab` button, or create one if it doesn't exist
     let fbs = document.querySelectorAll('.fab');
     let fab;
@@ -89,6 +91,58 @@ function initChatbot() {
     const chatWindow = document.getElementById('ai-chatbot-window');
     const chatInput = document.getElementById('ai-chat-input');
     const chatBody = document.getElementById('ai-chat-body');
+    const conversationHistory = loadConversationHistory();
+
+    function loadConversationHistory() {
+        try {
+            const raw = sessionStorage.getItem(CHAT_STORAGE_KEY);
+            const parsed = raw ? JSON.parse(raw) : [];
+            return Array.isArray(parsed) ? parsed : [];
+        } catch (_) {
+            return [];
+        }
+    }
+
+    function persistConversationHistory() {
+        try {
+            sessionStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(conversationHistory.slice(-12)));
+        } catch (_) {
+            // Ignore storage failures and keep chat usable.
+        }
+    }
+
+    function appendBotMessage(text) {
+        const botDiv = document.createElement('div');
+        botDiv.className = 'chat-bubble bot';
+        botDiv.textContent = text;
+        chatBody.appendChild(botDiv);
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    function appendUserMessage(text) {
+        const userDiv = document.createElement('div');
+        userDiv.className = 'chat-bubble user';
+        userDiv.textContent = text;
+        chatBody.appendChild(userDiv);
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    function renderStoredConversation() {
+        if (!conversationHistory.length) {
+            return;
+        }
+
+        chatBody.innerHTML = '';
+        conversationHistory.forEach((turn) => {
+            if (turn.role === 'user') {
+                appendUserMessage(turn.content);
+            } else {
+                appendBotMessage(turn.content);
+            }
+        });
+    }
+
+    renderStoredConversation();
 
     // 3. Define global functions for toggling and sending messages
     window.toggleAIChatbot = function () {
@@ -105,35 +159,39 @@ function initChatbot() {
         if (!text) return;
 
         // Append User Message
-        const userDiv = document.createElement('div');
-        userDiv.className = 'chat-bubble user';
-        userDiv.textContent = text;
-        chatBody.appendChild(userDiv);
+        appendUserMessage(text);
+        conversationHistory.push({ role: 'user', content: text });
+        persistConversationHistory();
 
         chatInput.value = '';
         chatBody.scrollTop = chatBody.scrollHeight;
 
         try {
-            const response = await api.post('/ai/chat', { message: text });
-            const botDiv = document.createElement('div');
-            botDiv.className = 'chat-bubble bot';
-            botDiv.textContent = response.reply;
-            chatBody.appendChild(botDiv);
-
-            if (response.suggested_actions && response.suggested_actions.length) {
-                const actionsDiv = document.createElement('div');
-                actionsDiv.className = 'chat-bubble bot';
-                actionsDiv.textContent = `Suggested actions: ${response.suggested_actions.join(' | ')}`;
-                chatBody.appendChild(actionsDiv);
+            if (!window.api || typeof window.api.post !== 'function') {
+                throw new Error('Chat API is not available on this page.');
             }
 
-            chatBody.scrollTop = chatBody.scrollHeight;
+            const response = await window.api.post('/ai/chat', {
+                message: text,
+                history: conversationHistory.slice(-6),
+            });
+            appendBotMessage(response.reply);
+            conversationHistory.push({ role: 'assistant', content: response.reply });
+            persistConversationHistory();
+
+            if (response.suggested_actions && response.suggested_actions.length) {
+                appendBotMessage(`Suggested actions: ${response.suggested_actions.join(' | ')}`);
+                conversationHistory.push({
+                    role: 'assistant',
+                    content: `Suggested actions: ${response.suggested_actions.join(' | ')}`,
+                });
+                persistConversationHistory();
+            }
         } catch (error) {
-            const botDiv = document.createElement('div');
-            botDiv.className = 'chat-bubble bot';
-            botDiv.textContent = error.message || 'AI assistant is unavailable right now.';
-            chatBody.appendChild(botDiv);
-            chatBody.scrollTop = chatBody.scrollHeight;
+            const fallback = error.message || 'AI assistant is unavailable right now.';
+            appendBotMessage(fallback);
+            conversationHistory.push({ role: 'assistant', content: fallback });
+            persistConversationHistory();
         }
     };
 }

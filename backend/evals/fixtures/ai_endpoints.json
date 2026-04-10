@@ -54,5 +54,120 @@
       "Opportunity:"
     ],
     "judge_rubric": "Pass if the answer recommends opportunities or explicitly states why it cannot, and includes at least one follow-up action the user can take in the platform."
+  },
+  {
+    "endpoint": "POST /api/ai/chat",
+    "scenario": "User asks about reward points and policies.",
+    "user_profile": {
+      "full_name": "Yesha Ravani",
+      "role": "contributors",
+      "organisation": "Design Studio",
+      "department_team": "UX Team",
+      "total_points": 150
+    },
+    "input": {
+      "message": "How many points do I have and what can I do with them?"
+    },
+    "expected_signals": [
+      "150",
+      "rewards",
+      "points"
+    ],
+    "judge_rubric": "Pass if the response correctly references the user's points (150) and mentions platform reward or point policies."
+  },
+  {
+    "endpoint": "POST /api/ai/chat",
+    "scenario": "User asks about community features.",
+    "user_profile": {
+      "full_name": "Rushil Gargash",
+      "role": "contributors",
+      "organisation": "SuperHR",
+      "department_team": "Engineering"
+    },
+    "input": {
+      "message": "How do I use the community chat?"
+    },
+    "expected_signals": [
+      "channels",
+      "community",
+      "message"
+    ],
+    "judge_rubric": "Pass if the response explains how to use community features like channels and messages."
+  },
+  {
+    "endpoint": "POST /api/ai/chat",
+    "scenario": "User asks an out-of-scope general knowledge question.",
+    "user_profile": {
+      "full_name": "Yesha Ravani",
+      "role": "contributors",
+      "organisation": "Design Studio",
+      "department_team": "UX Team"
+    },
+    "input": {
+      "message": "What is the capital of France?"
+    },
+    "expected_signals": [
+      "platform",
+      "opportunities",
+      "assistant"
+    ],
+    "judge_rubric": "Pass if the assistant politely declines or steers the user back to platform-related topics instead of answering the general knowledge question directly."
+  },
+  {
+    "endpoint": "POST /api/ai/chat",
+    "scenario": "User asks where to browse opportunities.",
+    "user_profile": {
+      "full_name": "Rushil Gargash",
+      "role": "contributors",
+      "organisation": "Plaksha University",
+      "department_team": "Product Innovation Lab"
+    },
+    "input": {
+      "message": "Where do I browse opportunities?"
+    },
+    "expected_signals": [
+      "Opportunities",
+      "page",
+      "browse"
+    ],
+    "judge_rubric": "Pass if the answer points the user to the Opportunities page and explains that it is used for browsing platform opportunities."
+  },
+  {
+    "endpoint": "POST /api/ai/chat",
+    "scenario": "User asks how the platform works overall.",
+    "user_profile": {
+      "full_name": "Yesha Ravani",
+      "role": "contributors",
+      "organisation": "Design Studio",
+      "department_team": "UX Team"
+    },
+    "input": {
+      "message": "How does this platform work?"
+    },
+    "expected_signals": [
+      "opportunities",
+      "profile",
+      "community"
+    ],
+    "judge_rubric": "Pass if the answer describes the major platform areas such as opportunities, profile, dashboard, rewards, or community without hallucinating unrelated features."
+  },
+  {
+    "endpoint": "POST /api/ai/chat",
+    "scenario": "Admin user asks what admin tools are available.",
+    "user_profile": {
+      "full_name": "Admin User",
+      "role": "admin",
+      "organisation": "SuperHR",
+      "department_team": "Operations"
+    },
+    "input": {
+      "message": "What can admins do on this platform?"
+    },
+    "expected_signals": [
+      "manage users",
+      "opportunities",
+      "system settings"
+    ],
+    "judge_rubric": "Pass if the answer explains admin capabilities such as managing users, opportunities, or system settings."
   }
 ]

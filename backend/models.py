@@ -173,6 +173,12 @@ class RewardPolicyResponse(RewardPolicyBase):
 
 class AIChatRequest(BaseModel):
     message: str
+    history: List["AIChatTurn"] = []
+
+
+class AIChatTurn(BaseModel):
+    role: str
+    content: str
 
 
 class AIChatResponse(BaseModel):

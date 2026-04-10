@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from typing import List
+from types import SimpleNamespace
 from .. import models, orm_models, database
-from ..services.ai_logic import answer_platform_question, build_personalized_suggestions, get_ranked_matches
+from ..services.ai_logic import answer_platform_question, build_personalized_suggestions, get_ranked_matches, groq_aided_chat
 from ..utils import auth
 
 router = APIRouter()
@@ -21,9 +22,17 @@ def get_ai_suggestions(current_user: orm_models.User = Depends(auth.get_current_
 @router.post("/ai/chat", response_model=models.AIChatResponse)
 def chat_with_ai(
     request: models.AIChatRequest,
-    current_user: orm_models.User = Depends(auth.get_current_user),
+    current_user: orm_models.User | None = Depends(auth.get_optional_current_user),
     db: Session = Depends(database.get_db),
 ):
     opportunities = db.query(orm_models.Opportunity).all()
-    reply, sources, suggested_actions = answer_platform_question(request.message, current_user, opportunities)
+    if current_user is None:
+        current_user = SimpleNamespace(
+            full_name="Guest User",
+            role="contributors",
+            organisation="Guest",
+            department_team="",
+            total_points=0,
+        )
+    reply, sources, suggested_actions = groq_aided_chat(request.message, current_user, opportunities, request.history)
     return models.AIChatResponse(reply=reply, sources=sources, suggested_actions=suggested_actions)

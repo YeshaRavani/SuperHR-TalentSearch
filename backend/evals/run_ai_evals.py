@@ -9,7 +9,7 @@ ROOT_DIR = Path(__file__).resolve().parents[2]
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
-from backend.services.ai_logic import answer_platform_question, build_personalized_suggestions, get_ranked_matches
+from backend.services.ai_logic import answer_platform_question, build_personalized_suggestions, get_ranked_matches, groq_aided_chat
 
 
 FIXTURES_PATH = Path(__file__).with_name("fixtures") / "ai_endpoints.json"
@@ -71,7 +71,7 @@ def evaluate_case(case: dict[str, Any]) -> dict[str, Any]:
     elif endpoint == "GET /api/ai/suggestions":
         actual_output = build_personalized_suggestions(user, DEFAULT_OPPORTUNITIES)
     elif endpoint == "POST /api/ai/chat":
-        reply, sources, actions = answer_platform_question(case["input"]["message"], user, DEFAULT_OPPORTUNITIES)
+        reply, sources, actions = groq_aided_chat(case["input"]["message"], user, DEFAULT_OPPORTUNITIES)
         actual_output = {
             "reply": reply,
             "sources": sources,

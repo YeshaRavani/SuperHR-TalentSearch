@@ -12,6 +12,7 @@ ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 # 1 day
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/login")
+oauth2_scheme_optional = OAuth2PasswordBearer(tokenUrl="api/login", auto_error=False)
 
 import bcrypt
 
@@ -50,4 +51,23 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = De
     user = db.query(orm_models.User).filter(orm_models.User.username == username).first()
     if user is None:
         raise credentials_exception
+    return user
+
+
+async def get_optional_current_user(
+    token: Optional[str] = Depends(oauth2_scheme_optional),
+    db: Session = Depends(database.get_db),
+):
+    if not token:
+        return None
+
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username: str = payload.get("sub")
+        if username is None:
+            return None
+    except JWTError:
+        return None
+
+    user = db.query(orm_models.User).filter(orm_models.User.username == username).first()
     return user

@@ -49,3 +49,24 @@ def test_chat_recommendations_include_actions():
     assert "Backend API Development" in reply
     assert sources
     assert actions
+
+
+def test_navigation_question_points_to_opportunities_page():
+    user = DummyUser()
+
+    reply, sources, actions = answer_platform_question("Where do I browse opportunities?", user, [])
+
+    assert "Opportunities" in reply
+    assert any("Page: Opportunities" == source for source in sources)
+    assert actions
+
+
+def test_platform_overview_mentions_core_areas():
+    user = DummyUser()
+
+    reply, sources, actions = answer_platform_question("How does this platform work?", user, [])
+
+    assert "opportunities" in reply.lower()
+    assert "community" in reply.lower() or "profile" in reply.lower()
+    assert sources
+    assert actions
