@@ -25,7 +25,7 @@ window.generateOpportunityCardHTML = function (opp, indexDelay = 0, inInterested
                         </svg>
                     </div>
                 </div>
-                <div class="card-content">
+                <div class="card-content" style="padding-bottom: 70px;"> <!-- Add bottom padding to prevent overlap with actions -->
                     <h3>${opp.title}</h3>
                     <p>${opp.description}</p>
                     <span class="tag">
@@ -39,6 +39,10 @@ window.generateOpportunityCardHTML = function (opp, indexDelay = 0, inInterested
                     </span>
                 </div>
             </a>
+            <div class="card-actions">
+                <button class="interest-btn" data-id="${oppId}">Interested</button>
+                <button class="remove-btn" data-id="${oppId}">Remove</button>
+            </div>
             <div class="card-hover-overlay">
                 <h4 class="hover-title">Opportunity Details</h4>
                 <p class="hover-description">${opp.description}</p>
@@ -48,11 +52,6 @@ window.generateOpportunityCardHTML = function (opp, indexDelay = 0, inInterested
                     <span>⏱ ${hoverTime}</span>
                     <span>⭐ ${hoverPoints}</span>
                 </div>
-                ${inInterestedSection ? `
-                <button class="interest-btn btn-not-interested" data-id="${oppId}" aria-label="Remove from interested" style="align-self:center;">Remove</button>
-                ` : `
-                <button class="interest-btn btn-interested" data-id="${oppId}" aria-label="Mark as interested" style="align-self:center;">I'm Interested</button>
-                `}
             </div>
         </article>
     `;

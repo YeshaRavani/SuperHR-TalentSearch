@@ -2,9 +2,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     const container = document.getElementById('opportunities-master-container');
     if (!container) return;
 
+<<<<<<< HEAD
     let allOpps = [];
     let interestedIds = new Set();
     let selectedSkill = 'Python';
+=======
+  // ── State (Memory locked → resets on reload) ─────────────────────
+  let interestedList = [];
+  let removedList = [];
+>>>>>>> 23df3a3a0bcac620580b83a695903f3cdbee46fa
 
     // ── Toast ──────────────────────────────────────────────────────────
     function showToast(msg) {
@@ -54,6 +60,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     function renderAll() {
         let html = '';
 
+<<<<<<< HEAD
         // 1. My Interested section
         const interestedOpps = allOpps.filter(o => 
             interestedIds.has(String(o.id)) && 
@@ -80,6 +87,32 @@ document.addEventListener('DOMContentLoaded', async () => {
             (selectedSkill === 'all' || (o.skills && o.skills.some(s => s.toLowerCase() === selectedSkill.toLowerCase()))) &&
             !interestedIds.has(String(o.id))
         );
+=======
+    let html = '';
+
+    // Update dynamic skill counts once
+    const counts = {};
+    window.superHrOpportunities.forEach(o => {
+      if (o.skills) {
+        o.skills.forEach(s => { counts[s] = (counts[s] || 0) + 1; });
+      }
+    });
+
+    // Main Pool Filter 
+    const items = window.superHrOpportunities.filter(o => {
+      const id = String(o.id || o.title);
+
+      // Exclude Removed Items
+      if (removedList.includes(id)) return false;
+
+      if (selectedSkill === 'Interested') {
+        return interestedList.includes(id);
+      }
+
+      const isSkillMatch = selectedSkill === 'all' || (o.skills && o.skills.includes(selectedSkill));
+      return isSkillMatch;
+    });
+>>>>>>> 23df3a3a0bcac620580b83a695903f3cdbee46fa
 
         let sectionContent = '';
         if (items.length > 0) {
@@ -98,6 +131,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         container.innerHTML = html;
 
+<<<<<<< HEAD
         // Re-initialize reveal observer for new cards
         if (window.initReveal) {
             window.initReveal();
@@ -107,6 +141,52 @@ document.addEventListener('DOMContentLoaded', async () => {
     container.addEventListener('click', async function (e) {
         const intBtn = e.target.closest('.btn-interested');
         const notBtn = e.target.closest('.btn-not-interested');
+=======
+  // ── Event delegation (single permanent listener on container) ──────
+  container.addEventListener('click', function (e) {
+    const intBtn = e.target.closest('.interest-btn');
+    const removeBtn = e.target.closest('.remove-btn');
+
+    if (intBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const id = String(intBtn.dataset.id);
+
+      if (!interestedList.includes(id)) {
+        interestedList.push(id);
+        alert('Added to Interested!');
+        renderAll();
+      }
+      return;
+    }
+
+    if (removeBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const id = String(removeBtn.dataset.id);
+
+      if (!removedList.includes(id)) {
+        removedList.push(id);
+      }
+
+      const card = removeBtn.closest('.initiative-card');
+      if (card) {
+        card.style.display = 'none';
+      }
+      return;
+    }
+
+    const card = e.target.closest('.initiative-card');
+    if (card) {
+      const link = card.querySelector('.card-link');
+      if (link) {
+        window.location.href = link.href;
+      }
+    }
+  });
+>>>>>>> 23df3a3a0bcac620580b83a695903f3cdbee46fa
 
         if (intBtn || notBtn) {
             e.preventDefault();
