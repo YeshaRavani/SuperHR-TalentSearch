@@ -18,8 +18,25 @@ const api = {
         });
 
         if (!response.ok) {
+            if (response.status === 401 && endpoint !== '/login' && endpoint !== '/signup') {
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('userRole');
+                
+                const isPublicAppPage = window.location.pathname.includes('opportunities.html') 
+                    || window.location.pathname.includes('python.html')
+                    || window.location.pathname.includes('interested.html')
+                    || window.location.pathname.endsWith('/')
+                    || window.location.pathname.includes('index');
+
+                if (!isPublicAppPage) {
+                    window.location.href = 'login.html';
+                }
+                throw new Error("Your session has expired. Please log in again.");
+            }
             const error = await response.json().catch(() => ({ detail: 'Unknown error' }));
-            throw new Error(error.detail || response.statusText);
+            const errDetail = error.detail;
+            const errMsg = typeof errDetail === 'string' ? errDetail : JSON.stringify(errDetail);
+            throw new Error(errMsg || response.statusText);
         }
 
         return response.json();

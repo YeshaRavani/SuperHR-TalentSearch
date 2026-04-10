@@ -40,8 +40,8 @@ window.generateOpportunityCardHTML = function (opp, indexDelay = 0, inInterested
                 </div>
             </a>
             <div class="card-actions">
-                <button class="interest-btn" data-id="${oppId}">Interested</button>
-                <button class="remove-btn" data-id="${oppId}">Remove</button>
+                ${window.location.pathname.includes('interested.html') ? '' : `<button class="interest-btn" data-id="${oppId}">Interested</button>`}
+                <button class="remove-btn" data-id="${oppId}" ${window.location.pathname.includes('interested.html') ? 'style="width: 100%;"' : ''}>Remove</button>
             </div>
             <div class="card-hover-overlay">
                 <h4 class="hover-title">Opportunity Details</h4>

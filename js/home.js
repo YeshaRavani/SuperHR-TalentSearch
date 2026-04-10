@@ -1,17 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-
-            // Quick Post Functionality
-            window.quickPost = function () {
-                const input = document.getElementById('quickPost');
-                const val = input.value.trim();
-                if (!val) {
-                    input.focus();
-                    return alert('Please enter a short description of the opportunity.');
+            // Dynamically load user name
+            try {
+                if (localStorage.getItem('access_token')) {
+                    if (window.api && window.api.get) {
+                        window.api.get('/users/me').then(user => {
+                            const nameSpan = document.getElementById('hero-user-name');
+                            if (nameSpan && user && user.full_name) {
+                                nameSpan.textContent = user.full_name; // Full name
+                            }
+                        }).catch(() => {});
+                    }
                 }
-                alert('Thanks! Your opportunity has been noted: "' + (val.length > 80 ? val.slice(0, 77) + '...' : val) + '"');
-                input.value = '';
-            }
+            } catch (e) {}
 
             // 1. Navbar Scroll & Progress Bar
             const navbar = document.getElementById('navbar');

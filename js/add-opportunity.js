@@ -197,14 +197,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const payload = {
                     title: document.getElementById('title').value,
-                    description: document.getElementById('description').value,
+                    short_description: document.getElementById('description').value,
                     full_description: document.getElementById('description').value,
                     schedule_time: document.getElementById('schedule').value,
                     points_reward: parseInt(document.getElementById('bounty').value) || 0,
                     time_required: timeInput.value,
                     location: 'Remote / TBD',
                     type: 'Initiative',
-                    category: 'Project',
                     skills: skills,
                     expectations: ["Active participation", "On-time delivery"],
                     responsibilities: ["Contribute to milestones", "Collaborate with team"],

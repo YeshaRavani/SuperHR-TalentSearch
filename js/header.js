@@ -178,6 +178,15 @@
         }
       }
     }
+
+    /* ── Dynamic Home Link Redirection ─────────────────────────────────────── */
+    const isLoggedIn = !!localStorage.getItem('access_token');
+    if (isLoggedIn) {
+      document.querySelectorAll('a[href="index (1).html"]:not([data-no-redirect])').forEach(link => {
+        link.href = 'home.html';
+      });
+    }
+
     /* ── Global Reveal Observer ────────────────────────────────────────────── */
     const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
     const revealObserver = new IntersectionObserver((entries, observer) => {

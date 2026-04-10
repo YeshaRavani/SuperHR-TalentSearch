@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/chatbot.css" />
     <link rel="stylesheet" href="css/incentive-module.css" />
     <script src="js/opportunities_data.js"></script>
+    <script src="js/api.js"></script>
     <link rel="stylesheet" href="css/header.css" />
 </head>
 
@@ -25,7 +26,7 @@
 
     <header class="topbar" id="navbar">
         <div class="nav">
-            <a href="index (1).html" class="logo" title="Go to home" aria-label="Go to home"
+            <a href="index (1).html" class="logo" title="Go to home" aria-label="Go to home" data-no-redirect="true"
                 style="text-decoration: none; color: inherit;">
                 <img class="logo-img" src="assets/logo.png"
                     onerror="this.src='https://via.placeholder.com/88/9ecae1/ffffff?text=TS'" alt="Logo" />
@@ -85,28 +86,11 @@
             <div class="hero-grid">
                 <div class="hero-content">
                     <div class="tag">🎯 Welcome to Talent Search</div>
-                    <h1>Welcome to<br><span>Talent Search</span></h1>
-                    <p>Discover and contribute to short-term opportunities — internships, events, workshops and quick
-                        projects that help talents and creators grow. Explore curated initiatives and post opportunities
-                        in a few clicks.</p>
-                    <div class="hero-actions">
-                        <a href="login.html" class="btn btn-secondary">
-                            Learn More
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M5 12h14M12 5l7 7-7 7" />
-                            </svg>
+                    <h1>Welcome back<br><span id="hero-user-name" style="font-size: inherit;"></span></h1>
+                    <div style="margin-top: 30px; margin-bottom: 30px;">
+                        <a href="add-opportunity.html" class="btn btn-sky" style="font-size: 1.15rem; padding: 0 40px; height: 60px; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(14, 165, 233, 0.3);">
+                            + Post an Opportunity
                         </a>
-                    </div>
-                    <div class="post-bar"
-                        style="margin-top: 24px; display: flex; gap: 12px; align-items: center; background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); padding: 12px; border-radius: var(--radius-md); border: 1px solid rgba(15, 31, 43, 0.1); box-shadow: var(--shadow-sm); animation: fadeUp 0.8s ease-out 0.4s both;">
-                        <input id="quickPost" type="text" placeholder="Have an opportunity? Describe it briefly..."
-                            style="flex: 1; padding: 12px 16px; border-radius: var(--radius-sm); border: 1px solid rgba(15, 31, 43, 0.1); background: rgba(255, 255, 255, 0.9); font-family: inherit; font-size: 0.95rem; outline: none; transition: all 0.2s;"
-                            onfocus="this.style.borderColor='var(--sky-400)'; this.style.boxShadow='0 0 0 3px var(--sky-100)';"
-                            onblur="this.style.borderColor='rgba(15, 31, 43, 0.1)'; this.style.boxShadow='none';"
-                            aria-label="Post an opportunity brief" />
-                        <button onclick="quickPost()" class="btn btn-sky"
-                            style="height: 44px; padding: 0 20px; font-size: 0.95rem;">Post</button>
                     </div>
 
                 </div>
@@ -347,7 +331,7 @@
         <p style="color:var(--ink-400); margin-top:20px;">Designed to connect talent with right opportunity.</p>
     </footer>
 
-    <script src="js/home.js"></script>
+    <script src="js/home.js?v=3"></script>
 
     
 
