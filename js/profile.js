@@ -1,3 +1,77 @@
+document.addEventListener('DOMContentLoaded', async function () {
+  // Dynamically populate profile from the logged-in user
+  try {
+    const user = await api.get('/user');
+
+    // Name
+    const viewName = document.getElementById('viewName');
+    if (viewName) viewName.textContent = user.full_name || '—';
+
+    // Institution / organisation
+    const viewInstitution = document.getElementById('viewInstitution');
+    if (viewInstitution) viewInstitution.textContent = user.organisation || '—';
+
+    // Team
+    const viewTeam = document.getElementById('viewTeam');
+    if (viewTeam) viewTeam.textContent = user.department_team || '—';
+
+    // Role (displayed in viewModeDetails static text area)
+    const roleMeta = document.querySelector('#viewModeDetails .meta:nth-child(4)');
+    if (roleMeta) roleMeta.textContent = 'Role: ' + (user.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : 'User');
+
+    // User ID
+    const viewId = document.getElementById('viewId');
+    if (viewId) viewId.textContent = user.id || '—';
+
+    // Points
+    const pointsValue = document.getElementById('pointsValue');
+    if (pointsValue) pointsValue.textContent = (user.total_points || 0).toLocaleString();
+
+    // Avatar — show initials if no photo
+    const profileAvatar = document.getElementById('profileAvatar');
+    if (profileAvatar) {
+      // Generate initials from full name
+      const initials = (user.full_name || 'U')
+        .split(' ')
+        .map(n => n[0])
+        .join('')
+        .toUpperCase()
+        .slice(0, 2);
+
+      function renderInitialsAvatar() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 120; canvas.height = 120;
+        const ctx = canvas.getContext('2d');
+        // Pick a colour based on initials for personality
+        const colours = ['#0ea5e9','#8b5cf6','#10b981','#f59e0b','#ef4444','#ec4899'];
+        const colourIdx = initials.charCodeAt(0) % colours.length;
+        ctx.fillStyle = colours[colourIdx];
+        ctx.fillRect(0, 0, 120, 120);
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 44px Inter, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(initials, 60, 60);
+        profileAvatar.src = canvas.toDataURL();
+        profileAvatar.onerror = null;
+      }
+
+      if (user.profile_photo_url) {
+        // User has a real photo — use it, fall back to initials if it fails
+        profileAvatar.src = user.profile_photo_url;
+        profileAvatar.onerror = renderInitialsAvatar;
+      } else {
+        // No photo stored — immediately show coloured initials avatar
+        renderInitialsAvatar();
+      }
+    }
+
+  } catch (e) {
+    console.warn('Could not load profile data:', e.message);
+  }
+});
+
+
 (function () {
       // notification dropdown behavior (same as index)
       document.querySelectorAll('.notification-wrap').forEach(function (wrap) {

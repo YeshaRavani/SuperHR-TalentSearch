@@ -182,7 +182,7 @@
     /* ── Dynamic Home Link Redirection ─────────────────────────────────────── */
     const isLoggedIn = !!localStorage.getItem('access_token');
     if (isLoggedIn) {
-      document.querySelectorAll('a[href="index (1).html"]:not([data-no-redirect])').forEach(link => {
+      document.querySelectorAll('a[href="index (1).html"]:not([data-no-redirect]):not(.logo)').forEach(link => {
         link.href = 'dashboard.html';
       });
     }
