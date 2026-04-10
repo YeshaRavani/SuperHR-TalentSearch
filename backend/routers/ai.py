@@ -1,28 +1,29 @@
-import uuid
-from datetime import datetime
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from typing import List
 from .. import models, orm_models, database
+from ..services.ai_logic import answer_platform_question, build_personalized_suggestions, get_ranked_matches
 from ..utils import auth
 
 router = APIRouter()
 
 @router.get("/ai/match", response_model=List[models.OpportunityResponse])
 def get_ai_matches(current_user: orm_models.User = Depends(auth.get_current_user), db: Session = Depends(database.get_db)):
-    # Simple keyword-based matching for now as a "credible" AI endpoint
-    skills = (current_user.department_team or "").split(",")
     all_opps = db.query(orm_models.Opportunity).all()
-    
-    matches = []
-    for opp in all_opps:
-        for skill in skills:
-            if skill.lower().strip() in opp.expectations.lower() or skill.lower().strip() in opp.title.lower():
-                matches.append(opp)
-                break
-    
-    return matches[:5]
+    return get_ranked_matches(current_user, all_opps)
 
 @router.get("/ai/suggestions")
-def get_ai_suggestions(current_user: orm_models.User = Depends(auth.get_current_user)):
-    return ["Update your profile with more skills for better matching.", "Check out the new Python automation workshop."]
+def get_ai_suggestions(current_user: orm_models.User = Depends(auth.get_current_user), db: Session = Depends(database.get_db)):
+    opportunities = db.query(orm_models.Opportunity).all()
+    return build_personalized_suggestions(current_user, opportunities)
+
+
+@router.post("/ai/chat", response_model=models.AIChatResponse)
+def chat_with_ai(
+    request: models.AIChatRequest,
+    current_user: orm_models.User = Depends(auth.get_current_user),
+    db: Session = Depends(database.get_db),
+):
+    opportunities = db.query(orm_models.Opportunity).all()
+    reply, sources, suggested_actions = answer_platform_question(request.message, current_user, opportunities)
+    return models.AIChatResponse(reply=reply, sources=sources, suggested_actions=suggested_actions)

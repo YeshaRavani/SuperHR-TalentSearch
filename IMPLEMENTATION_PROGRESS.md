@@ -1,38 +1,67 @@
 # Implementation Progress - Talent Search Backend
 
-| Endpoint | Category | Frontend Screen | Status | Swagger Tested | Notes |
-|----------|----------|-----------------|--------|----------------|-------|
-| `POST /api/signup` | Auth | `signup.html` | implemented | yes | |
-| `POST /api/login` | Auth | `login.html` | implemented | yes | |
-| `POST /api/logout` | Auth | - | implemented | yes | |
-| `GET /api/user` | Auth | `dashboard.html` | implemented | yes | |
-| `GET /api/opportunities` | Opportunities | `opportunities.html` | implemented | yes | |
-| `GET /api/opportunities/{id}` | Opportunities | `event-detail.html` etc. | implemented | yes | |
-| `POST /api/opportunities` | Opportunities | `add-opportunity.html` | implemented | yes | |
-| `GET /api/my-posted-opportunities` | Opportunities | `posted-opportunities.html` | implemented | yes | |
-| `POST /api/interested-opportunities` | Engagement | `opportunities.html` | implemented | yes | |
-| `GET /api/interested-opportunities` | Engagement | `interested.html` | implemented | yes | |
-| `DELETE /api/interested-opportunities/{id}` | Engagement | `interested.html` | implemented | yes | |
-| `POST /api/applications` | Engagement | `event-detail.html` | implemented | yes | |
-| `GET /api/applications` | Engagement | `contributor-profile.html` | implemented | yes | |
-| `PUT /api/applications/{id}` | Engagement | `admin-applicants.html` | implemented | yes | |
-| `POST /api/invitations` | Invitations | `appointment.html` | not_started | no | |
-| `GET /api/invitations` | Invitations | `appointment.html` | not_started | no | |
-| `PUT /api/invitations/{id}` | Invitations | `appointment.html` | not_started | no | |
-| `GET /api/admin/users` | Admin | `admin-manage-users.html` | implemented | yes | |
-| `POST /api/admin/users` | Admin | `admin-manage-users.html` | implemented | yes | |
-| `PUT /api/admin/users/{id}` | Admin | `admin-manage-users.html` | implemented | yes | |
-| `PUT /api/admin/users/{id}/role` | Admin | `admin-manage-users.html` | implemented | yes | |
-| `DELETE /api/admin/users/{id}` | Admin | `admin-manage-users.html` | implemented | yes | |
-| `GET /api/opportunities/{id}/applicants` | Admin | `admin-applicants.html` | implemented | yes | |
-| `GET /api/chat/channels` | Community | `community.html` | not_started | no | |
-| `GET /api/chat/channels/{id}/messages` | Community | `community.html` | not_started | no | |
-| `POST /api/chat/channels/{id}/messages` | Community | `community.html` | not_started | no | |
-| `GET /api/chat/direct-messages/{user_id}` | Community | `community.html` | not_started | no | |
-| `POST /api/chat/direct-messages` | Community | `community.html` | not_started | no | |
-| `GET /api/community/members` | Community | `community.html` | not_started | no | |
-| `GET /api/users/search` | Community | `community.html` | not_started | no | |
-| `GET /api/admin/reward-policy` | Admin | `admin-manage-users.html` | not_started | no | |
-| `PUT /api/admin/reward-policy` | Admin | `admin-manage-users.html` | not_started | no | |
-| `GET /api/rewards/me` | User | `dashboard.html` | not_started | no | |
-| `POST /api/ai/chat` | AI | `chatbot.js` | not_started | no | Stub for now |
+## Summary
+
+- Non-AI endpoints expected in this repo: 32/32 implemented
+- AI endpoints currently identified: 3/3 implemented at baseline level
+- AI evaluation coverage: 3/3 endpoints have sample benchmark cases in `backend/evals/fixtures/ai_endpoints.json`
+- Full deployment readiness: not complete
+
+## Endpoint Status
+
+| Endpoint | Category | Status | Notes |
+|----------|----------|--------|-------|
+| `POST /api/signup` | Auth | implemented | |
+| `POST /api/login` | Auth | implemented | |
+| `POST /api/logout` | Auth | implemented | Stateless logout |
+| `GET /api/user` | Auth | implemented | |
+| `GET /api/opportunities` | Opportunities | implemented | |
+| `GET /api/opportunities/{id}` | Opportunities | implemented | |
+| `POST /api/opportunities` | Opportunities | implemented | |
+| `GET /api/my-posted-opportunities` | Opportunities | implemented | |
+| `POST /api/interested-opportunities` | Engagement | implemented | |
+| `GET /api/interested-opportunities` | Engagement | implemented | Added in current review pass |
+| `DELETE /api/interested-opportunities/{id}` | Engagement | implemented | |
+| `POST /api/applications` | Engagement | implemented | |
+| `GET /api/applications` | Engagement | implemented | |
+| `PUT /api/applications/{id}` | Engagement | implemented | |
+| `POST /api/invitations` | Invitations | implemented | Added in current review pass |
+| `GET /api/invitations` | Invitations | implemented | Added in current review pass |
+| `PUT /api/invitations/{id}` | Invitations | implemented | Added in current review pass |
+| `GET /api/admin/users` | Admin | implemented | |
+| `POST /api/admin/users` | Admin | implemented | |
+| `PUT /api/admin/users/{id}` | Admin | implemented | |
+| `DELETE /api/admin/users/{id}` | Admin | implemented | |
+| `GET /api/opportunities/{id}/applicants` | Admin | implemented | |
+| `GET /api/chat/channels` | Community | implemented | |
+| `GET /api/chat/channels/{id}/messages` | Community | implemented | |
+| `POST /api/chat/channels/{id}/messages` | Community | implemented | |
+| `GET /api/chat/direct-messages/{user_id}` | Community | implemented | Added in current review pass |
+| `POST /api/chat/direct-messages` | Community | implemented | Added in current review pass |
+| `GET /api/community/members` | Community | implemented | |
+| `GET /api/users/search` | Community | implemented | Added in current review pass |
+| `GET /api/admin/reward-policy` | Admin | implemented | |
+| `PUT /api/admin/reward-policy` | Admin | implemented | |
+| `GET /api/rewards/me` | User | implemented | Added in current review pass |
+| `GET /api/ai/match` | AI | implemented | Baseline deterministic recommender |
+| `GET /api/ai/suggestions` | AI | implemented | Baseline personalized suggestions |
+| `POST /api/ai/chat` | AI | implemented | Added in current review pass |
+
+## AI Benchmark Coverage
+
+Each AI endpoint now has:
+
+- Sample input and expected signals in `backend/evals/fixtures/ai_endpoints.json`
+- An eval runner in `backend/evals/run_ai_evals.py`
+- LLM-as-judge support via `OPENAI_API_KEY` and `OPENAI_MODEL`
+- A heuristic fallback judge for offline local validation
+
+## Deployment Gaps
+
+The backend is functionally broad enough for a demo, but full deployment still needs:
+
+- A locked dependency manifest such as `requirements.txt`
+- Environment-based configuration for secrets, DB URL, CORS origins, and model provider settings
+- Automated API tests beyond the current AI logic smoke tests
+- Production serving config such as Dockerfile, process manager, and deployment target configuration
+- Auth hardening, password/seed consistency cleanup, and stricter role/access checks

@@ -37,5 +37,18 @@ To verify the implementation:
 pytest backend/tests/
 ```
 
+## Running AI Evaluations
+To run baseline AI endpoint evaluations locally:
+```bash
+python3 backend/evals/run_ai_evals.py
+```
+
+To enable LLM-as-a-judge scoring instead of the offline heuristic fallback:
+```bash
+export OPENAI_API_KEY=your_key_here
+export OPENAI_MODEL=gpt-4.1-mini
+python3 backend/evals/run_ai_evals.py
+```
+
 ## Current Status
 Refer to `IMPLEMENTATION_PROGRESS.md` for a detailed breakdown of endpoint status and frontend wiring.

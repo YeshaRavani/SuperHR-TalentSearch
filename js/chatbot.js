@@ -100,7 +100,7 @@ function initChatbot() {
         }
     };
 
-    window.sendChatMessage = function () {
+    window.sendChatMessage = async function () {
         const text = chatInput.value.trim();
         if (!text) return;
 
@@ -113,13 +113,28 @@ function initChatbot() {
         chatInput.value = '';
         chatBody.scrollTop = chatBody.scrollHeight;
 
-        setTimeout(() => {
+        try {
+            const response = await api.post('/ai/chat', { message: text });
             const botDiv = document.createElement('div');
             botDiv.className = 'chat-bubble bot';
-            botDiv.textContent = "I'm a demo assistant! I've received your message: \"" + text + "\"";
+            botDiv.textContent = response.reply;
+            chatBody.appendChild(botDiv);
+
+            if (response.suggested_actions && response.suggested_actions.length) {
+                const actionsDiv = document.createElement('div');
+                actionsDiv.className = 'chat-bubble bot';
+                actionsDiv.textContent = `Suggested actions: ${response.suggested_actions.join(' | ')}`;
+                chatBody.appendChild(actionsDiv);
+            }
+
+            chatBody.scrollTop = chatBody.scrollHeight;
+        } catch (error) {
+            const botDiv = document.createElement('div');
+            botDiv.className = 'chat-bubble bot';
+            botDiv.textContent = error.message || 'AI assistant is unavailable right now.';
             chatBody.appendChild(botDiv);
             chatBody.scrollTop = chatBody.scrollHeight;
-        }, 600);
+        }
     };
 }
 

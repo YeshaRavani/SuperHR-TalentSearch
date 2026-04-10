@@ -25,11 +25,25 @@ class User(Base):
     sent_invitations = relationship("Invitation", foreign_keys="Invitation.sender_id", back_populates="sender")
     received_invitations = relationship("Invitation", foreign_keys="Invitation.receiver_id", back_populates="receiver")
     chat_sessions = relationship("ChatSession", back_populates="user")
+    skills = relationship("Skill", secondary="User_Skills", back_populates="users")
 
 class Skill(Base):
     __tablename__ = "Skills"
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     name = Column(String, unique=True, index=True)
+
+    users = relationship("User", secondary="User_Skills", back_populates="skills")
+    opportunities = relationship("Opportunity", secondary="Opportunity_Skills", back_populates="skills")
+
+class UserSkill(Base):
+    __tablename__ = "User_Skills"
+    user_id = Column(String, ForeignKey("Users.id", ondelete="CASCADE"), primary_key=True)
+    skill_id = Column(Integer, ForeignKey("Skills.id", ondelete="CASCADE"), primary_key=True)
+
+class OpportunitySkill(Base):
+    __tablename__ = "Opportunity_Skills"
+    opportunity_id = Column(String, ForeignKey("Opportunities.id", ondelete="CASCADE"), primary_key=True)
+    skill_id = Column(Integer, ForeignKey("Skills.id", ondelete="CASCADE"), primary_key=True)
 
 class Opportunity(Base):
     __tablename__ = "Opportunities"
@@ -44,12 +58,20 @@ class Opportunity(Base):
     points_reward = Column(Integer, default=0)
     time_required = Column(String)
     expectations = Column(Text)
+    responsibilities = Column(Text)
+    benefits = Column(Text)
+    prerequisites = Column(Text)
+    main_icon = Column(Text)
+    tag_icon = Column(Text)
+    bg_gradient = Column(Text)
+    icon_color = Column(Text)
     status = Column(String, default="active")
     author_id = Column(String, ForeignKey("Users.id", ondelete="CASCADE"))
     created_at = Column(DateTime, server_default=func.now())
 
     author = relationship("User", back_populates="opportunities")
     applicants = relationship("UserOpportunity", back_populates="opportunity")
+    skills = relationship("Skill", secondary="Opportunity_Skills", back_populates="opportunities")
 
 class UserOpportunity(Base):
     __tablename__ = "User_Opportunities"

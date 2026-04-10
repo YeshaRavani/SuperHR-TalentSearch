@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .database import engine, Base
-from .routers import auth, opportunities, admin, applications, community, ai
+from .routers import auth, opportunities, admin, applications, community, ai, rewards
 
 # Create tables in database (if they don't exist)
 Base.metadata.create_all(bind=engine)
@@ -28,6 +28,7 @@ app.include_router(applications.router, prefix="/api", tags=["Applications"])
 app.include_router(admin.router, prefix="/api", tags=["Admin"])
 app.include_router(community.router, prefix="/api", tags=["Community"])
 app.include_router(ai.router, prefix="/api", tags=["AI"])
+app.include_router(rewards.router, prefix="/api", tags=["Rewards"])
 
 @app.get("/")
 async def root():

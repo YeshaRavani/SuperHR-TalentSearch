@@ -1,48 +1,25 @@
-document.addEventListener('DOMContentLoaded', () => {
-          const container = document.getElementById('initiatives-container');
-          if (container && window.superHrOpportunities) {
-            const items = window.superHrOpportunities.filter(o => o.category === 'Initiative');
-            container.innerHTML = items.map((opp, index) => window.generateOpportunityCardHTML(opp, index % 4)).join('');
-          }
-        });
+document.addEventListener('DOMContentLoaded', async () => {
+    const container = document.getElementById('initiatives-container');
+    if (!container) return;
 
-document.addEventListener('DOMContentLoaded', () => {
-      // Navbar Scroll
-      const navbar = document.getElementById('navbar');
-      const scrollProgress = document.getElementById('scrollProgress');
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 20) navbar.classList.add('scrolled');
-        else navbar.classList.remove('scrolled');
+    try {
+        const opportunities = await api.get('/opportunities');
+        const initiatives = opportunities
+            .filter(o => o.type === 'Initiative')
+            .map(o => window.OpportunityMapper.map(o));
+            
+        if (initiatives.length === 0) {
+            container.innerHTML = '<p style="color:var(--ink-400); text-align:center; padding: 40px;">No active initiatives at the moment.</p>';
+        } else {
+            container.innerHTML = initiatives.map((opp, index) => window.generateOpportunityCardHTML(opp, index % 4)).join('');
+        }
 
-        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scrolled = (height > 0) ? (winScroll / height) * 100 : 0;
-        scrollProgress.style.width = scrolled + "%";
-      });
-
-      // Notifications
-      const notifToggle = document.getElementById('notifToggle');
-      const notifDropdown = document.getElementById('notifDropdown');
-      notifToggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        notifDropdown.classList.toggle('active');
-      });
-      window.addEventListener('click', () => {
-        if (notifDropdown.classList.contains('active')) notifDropdown.classList.remove('active');
-      });
-      notifDropdown.addEventListener('click', e => e.stopPropagation());
-
-      // Reveal Animation
-      const revealElements = document.querySelectorAll('.reveal');
-      const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
-      const revealObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('active');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, revealOptions);
-      revealElements.forEach(el => revealObserver.observe(el));
-    });
-
+        // Re-initialize reveal observer for new cards
+        if (window.initReveal) {
+            window.initReveal();
+        }
+    } catch (err) {
+        console.error("Failed to load initiatives:", err);
+        container.innerHTML = '<p style="color:red; text-align:center; padding: 20px;">Failed to load initiatives. Please try again later.</p>';
+    }
+});

@@ -1,0 +1,58 @@
+[
+  {
+    "endpoint": "GET /api/ai/match",
+    "scenario": "Product innovation contributor should be matched to Python automation style work.",
+    "user_profile": {
+      "full_name": "Yesha Ravani",
+      "role": "contributors",
+      "organisation": "Plaksha University",
+      "department_team": "Product Innovation Lab, Python"
+    },
+    "input": {
+      "kind": "profile_only"
+    },
+    "expected_signals": [
+      "Python Automation Project",
+      "Backend API Development"
+    ],
+    "judge_rubric": "Pass if the returned matches include at least one clearly relevant engineering or automation opportunity from the expected signals and avoid unrelated empty output."
+  },
+  {
+    "endpoint": "GET /api/ai/suggestions",
+    "scenario": "Suggestions should be personalized rather than generic filler.",
+    "user_profile": {
+      "full_name": "Rushil Gargash",
+      "role": "contributors",
+      "organisation": "Plaksha University",
+      "department_team": "Product Innovation Lab"
+    },
+    "input": {
+      "kind": "profile_only"
+    },
+    "expected_signals": [
+      "Top match right now",
+      "Product Innovation Lab",
+      "Plaksha University"
+    ],
+    "judge_rubric": "Pass if at least one suggestion references a concrete recommendation or profile attribute from the user profile instead of only generic advice."
+  },
+  {
+    "endpoint": "POST /api/ai/chat",
+    "scenario": "User asks for recommendations and should receive actionable platform guidance.",
+    "user_profile": {
+      "full_name": "Yesha Ravani",
+      "role": "contributors",
+      "organisation": "Design Studio",
+      "department_team": "UX Team, Python"
+    },
+    "input": {
+      "message": "Can you recommend opportunities I should apply to?"
+    },
+    "expected_signals": [
+      "matches",
+      "apply",
+      "Opportunity:"
+    ],
+    "judge_rubric": "Pass if the answer recommends opportunities or explicitly states why it cannot, and includes at least one follow-up action the user can take in the platform."
+  }
+]

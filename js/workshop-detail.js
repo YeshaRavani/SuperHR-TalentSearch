@@ -1,69 +1,130 @@
-document.addEventListener('DOMContentLoaded', () => {
-      const params = new URLSearchParams(window.location.search);
-      // We use 'id' normally, but check 'event' for backwards compatibility
-      const oppId = params.get('id') || params.get('event') || 'evt-1';
-
-      let data = null;
-      if (window.superHrOpportunities) {
-        // If it's a direct ID match
-        data = window.superHrOpportunities.find(o => o.id === oppId);
-        // Backwards fallbacks if somehow looking up by legacy key
-        if (!data) data = window.superHrOpportunities.find(o => o.id.includes(oppId) || oppId.includes(o.id));
-        // Ultimate fallback
-        if (!data) data = window.superHrOpportunities[0];
-      } else {
-        console.error("opportunities_data.js not loaded.");
+document.addEventListener('DOMContentLoaded', async () => {
+    const params = new URLSearchParams(window.location.search);
+    const oppId = params.get('id') || params.get('event');
+    if (!oppId) {
+        window.location.href = 'opportunities.html';
         return;
-      }
+    }
 
-      // Populate Text
-      document.title = "Talent Search - " + data.title;
-      document.getElementById('detail-title').textContent = data.title;
-      const cat = data.category || "Event";
-      document.getElementById('detail-category').textContent = cat;
-      document.getElementById('detail-desc').textContent = data.description;
+    const detailContainer = document.querySelector('.page');
+    if (!detailContainer) return;
 
-      document.getElementById('detail-schedule').textContent = data.dateStr || "-";
-      document.getElementById('detail-points').textContent = data.points || "-";
-      document.getElementById('detail-time').textContent = data.timeRequired || "-";
-      document.getElementById('detail-location').textContent = data.location || "TBD";
-      document.getElementById('detail-expectations').textContent = data.expectations || "No specific expectations listed.";
+    try {
+        const rawData = await api.get(`/opportunities/${oppId}`);
+        const data = window.OpportunityMapper.map(rawData);
+        populateUI(data);
+    } catch (err) {
+        console.error("Failed to load workshop details:", err);
+        detailContainer.innerHTML = '<div style="padding:100px; text-align:center;"><h2>Workshop not found</h2><a href="opportunities.html" class="btn btn-sky">Back to Opportunities</a></div>';
+    }
 
-      // Route all opportunity detail pages back to the unified opportunities listing.
-      const backBtn = document.getElementById('back-btn');
-      backBtn.href = "opportunities.html";
-      backBtn.textContent = "← Back to Opportunities";
+    function populateUI(data) {
+        // Populate Title & Header
+        document.title = "Talent Search - " + data.title;
+        const titleEl = document.getElementById('detail-title');
+        const categoryEl = document.getElementById('detail-category');
+        const descEl = document.getElementById('detail-desc');
+        
+        if (titleEl) titleEl.textContent = data.title;
+        if (categoryEl) categoryEl.textContent = data.category;
+        if (descEl) descEl.textContent = data.fullDescription;
 
-      // Populate Skills
-      const skillsContainer = document.getElementById('detail-skills');
-      if (data.skills && data.skills.length > 0) {
-        skillsContainer.innerHTML = data.skills.map(s => `<span class="skill-chip">${s}</span>`).join('');
-      } else {
-        skillsContainer.innerHTML = `<span class="skill-chip">General</span>`;
-      }
+        // Meta Info
+        const scheduleEl = document.getElementById('detail-schedule');
+        const pointsEl = document.getElementById('detail-points');
+        const timeEl = document.getElementById('detail-time');
+        const locationEl = document.getElementById('detail-location');
 
-      // Action Button
-      const btnInt = document.getElementById('btn-interest');
-      const successMsg = document.getElementById('success-msg');
-      btnInt.addEventListener('click', () => {
-        btnInt.style.display = 'none';
-        successMsg.classList.add('active');
-      });
+        if (scheduleEl) scheduleEl.textContent = data.dateStr || "-";
+        if (pointsEl) pointsEl.textContent = data.points || "-";
+        if (timeEl) timeEl.textContent = data.timeRequired || "-";
+        if (locationEl) locationEl.textContent = data.location || "TBD";
 
-      // Role Management (Global Navbar setup)
-      const role = localStorage.getItem('userRole');
+        // Expectations
+        const expNode = document.getElementById('detail-expectations');
+        if (expNode) {
+            if (Array.isArray(data.expectations) && data.expectations.length > 0) {
+                expNode.innerHTML = `<ul style="padding-left: 20px; color: var(--ink-700);">${data.expectations.map(e => `<li style="margin-bottom:8px;">${e}</li>`).join('')}</ul>`;
+            } else {
+                expNode.textContent = data.expectations || "No specific expectations listed.";
+            }
+        }
 
-      // Notification Toggle logic
-      const notifToggle = document.getElementById('notifToggle');
-      const notifDropdown = document.getElementById('notifDropdown');
-      if (notifToggle && notifDropdown) {
+        // Skills
+        const skillsContainer = document.getElementById('detail-skills');
+        if (skillsContainer) {
+            if (data.skills && data.skills.length > 0) {
+                skillsContainer.innerHTML = data.skills.map(s => `<span class="skill-chip">${s}</span>`).join('');
+            } else {
+                skillsContainer.innerHTML = `<span class="skill-chip">General</span>`;
+            }
+        }
+
+        // Action Area Buttons
+        const actionArea = document.querySelector('.action-area');
+        if (actionArea) {
+            let extraHtml = '';
+            const createListCard = (title, list) => `
+                <div class="info-card">
+                  <h3 class="card-heading" style="margin-bottom:16px;">${title}</h3>
+                  <ul style="padding-left: 20px; color: var(--ink-700);">
+                    ${list.map(r => `<li style="margin-bottom:8px">${r}</li>`).join('')}
+                  </ul>
+                </div>
+            `;
+
+            // Workshops might have similar structured data in the DB
+            if (data.responsibilities && data.responsibilities.length > 0) {
+                extraHtml += createListCard('Key Concepts', data.responsibilities);
+            }
+            if (data.benefits && data.benefits.length > 0) {
+                extraHtml += createListCard('What You’ll Gain', data.benefits);
+            }
+            if (data.prerequisites && data.prerequisites.length > 0) {
+                extraHtml += createListCard('Prerequisites', data.prerequisites);
+            }
+
+            if (extraHtml) {
+                actionArea.insertAdjacentHTML('beforebegin', extraHtml);
+            }
+        }
+
+        // Buttons wiring
+        const btnInt = document.getElementById('btn-interest');
+        const successMsg = document.getElementById('success-msg');
+        
+        if (btnInt) {
+            const role = localStorage.getItem('userRole');
+            if (role === 'admin') {
+                btnInt.style.display = 'none';
+            } else {
+                btnInt.addEventListener('click', async () => {
+                   try {
+                       await api.post(`/applications?opp_id=${data.id}`);
+                       btnInt.style.display = 'none';
+                       if (successMsg) {
+                           successMsg.classList.add('active');
+                           successMsg.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Workshop Registration Successful!`;
+                       }
+                   } catch (err) {
+                       alert("Failed to register. Are you logged in?");
+                   }
+                });
+            }
+        }
+    }
+
+    // Shared Navbar & Notifications logic
+    const notifToggle = document.getElementById('notifToggle');
+    const notifDropdown = document.getElementById('notifDropdown');
+    if (notifToggle && notifDropdown) {
         notifToggle.addEventListener('click', (e) => {
-          e.stopPropagation();
-          notifDropdown.classList.toggle('active');
+            e.stopPropagation();
+            notifDropdown.classList.toggle('active');
         });
         window.addEventListener('click', () => {
-          notifDropdown.classList.remove('active');
+            if (notifDropdown.classList.contains('active')) notifDropdown.classList.remove('active');
         });
         notifDropdown.addEventListener('click', e => e.stopPropagation());
-      }
-    });
+    }
+});

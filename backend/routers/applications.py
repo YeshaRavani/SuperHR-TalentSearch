@@ -31,6 +31,14 @@ def mark_interested(opp_id: str, current_user: orm_models.User = Depends(auth.ge
     db.refresh(new_interest)
     return new_interest
 
+
+@router.get("/interested-opportunities", response_model=List[models.UserOpportunityResponse])
+def get_interested_opportunities(current_user: orm_models.User = Depends(auth.get_current_user), db: Session = Depends(database.get_db)):
+    return db.query(orm_models.UserOpportunity).filter(
+        orm_models.UserOpportunity.user_id == current_user.id,
+        orm_models.UserOpportunity.status == "interested"
+    ).all()
+
 @router.delete("/interested-opportunities/{id}")
 def remove_interest(id: str, current_user: orm_models.User = Depends(auth.get_current_user), db: Session = Depends(database.get_db)):
     interest = db.query(orm_models.UserOpportunity).filter(
@@ -91,3 +99,53 @@ def update_application_status(id: str, status: str, db: Session = Depends(databa
     db.refresh(app)
     return app
 
+
+@router.post("/invitations", response_model=models.InvitationResponse)
+def create_invitation(
+    invitation: models.InvitationCreate,
+    current_user: orm_models.User = Depends(auth.get_current_user),
+    db: Session = Depends(database.get_db),
+):
+    receiver = db.query(orm_models.User).filter(orm_models.User.id == invitation.receiver_id).first()
+    if not receiver:
+        raise HTTPException(status_code=404, detail="Receiver not found")
+
+    new_invitation = orm_models.Invitation(
+        id=str(uuid.uuid4()),
+        sender_id=current_user.id,
+        receiver_id=invitation.receiver_id,
+        topic=invitation.topic,
+        message=invitation.message,
+        status="pending",
+    )
+    db.add(new_invitation)
+    db.commit()
+    db.refresh(new_invitation)
+    return new_invitation
+
+
+@router.get("/invitations", response_model=List[models.InvitationResponse])
+def get_invitations(current_user: orm_models.User = Depends(auth.get_current_user), db: Session = Depends(database.get_db)):
+    return db.query(orm_models.Invitation).filter(
+        (orm_models.Invitation.sender_id == current_user.id) |
+        (orm_models.Invitation.receiver_id == current_user.id)
+    ).all()
+
+
+@router.put("/invitations/{id}", response_model=models.InvitationResponse)
+def update_invitation(
+    id: str,
+    invitation_update: models.InvitationUpdate,
+    current_user: orm_models.User = Depends(auth.get_current_user),
+    db: Session = Depends(database.get_db),
+):
+    invitation = db.query(orm_models.Invitation).filter(orm_models.Invitation.id == id).first()
+    if not invitation:
+        raise HTTPException(status_code=404, detail="Invitation not found")
+    if current_user.id not in {invitation.sender_id, invitation.receiver_id} and current_user.role != "admin":
+        raise HTTPException(status_code=403, detail="Not authorized")
+
+    invitation.status = invitation_update.status
+    db.commit()
+    db.refresh(invitation)
+    return invitation

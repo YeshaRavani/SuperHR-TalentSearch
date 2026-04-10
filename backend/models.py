@@ -1,4 +1,5 @@
-from pydantic import BaseModel, EmailStr
+import json
+from pydantic import BaseModel, EmailStr, field_validator
 from typing import List, Optional
 from datetime import datetime
 
@@ -28,6 +29,14 @@ class UserResponse(UserBase):
     class Config:
         from_attributes = True
 
+
+class RewardsSummaryResponse(BaseModel):
+    user_id: str
+    total_points: int
+    active_mode: str
+    hours_per_leave: int
+    leave_hours_available: float
+
 # Opportunity Models
 class OpportunityBase(BaseModel):
     type: str
@@ -39,7 +48,31 @@ class OpportunityBase(BaseModel):
     location: str
     points_reward: int = 0
     time_required: str
-    expectations: str
+    expectations: List[str] = []
+    responsibilities: List[str] = []
+    benefits: List[str] = []
+    prerequisites: List[str] = []
+    skills: List[str] = []
+    main_icon: Optional[str] = None
+    tag_icon: Optional[str] = None
+    bg_gradient: Optional[str] = None
+    icon_color: Optional[str] = None
+
+    @field_validator('expectations', 'responsibilities', 'benefits', 'prerequisites', 'skills', mode='before')
+    @classmethod
+    def parse_json_strings(cls, v):
+        if isinstance(v, str):
+            try:
+                return json.loads(v)
+            except json.JSONDecodeError:
+                # Fallback for old comma-separated or plain text data
+                if ';' in v: return [i.strip() for i in v.split(';')]
+                if ',' in v: return [i.strip() for i in v.split(',')]
+                return [v] if v else []
+        if isinstance(v, list):
+            # If it's a list of Skill objects from ORM, extract their names
+            return [i.name if hasattr(i, 'name') else i for i in v]
+        return v or []
 
 class OpportunityCreate(OpportunityBase):
     pass
@@ -98,6 +131,30 @@ class MessageResponse(MessageBase):
     class Config:
         from_attributes = True
 
+
+class InvitationBase(BaseModel):
+    topic: str
+    message: str
+
+
+class InvitationCreate(InvitationBase):
+    receiver_id: str
+
+
+class InvitationUpdate(BaseModel):
+    status: str
+
+
+class InvitationResponse(InvitationBase):
+    id: str
+    sender_id: str
+    receiver_id: str
+    status: str
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
 # Reward Policy
 class RewardPolicyBase(BaseModel):
     active_mode: str
@@ -112,3 +169,13 @@ class RewardPolicyResponse(RewardPolicyBase):
 
     class Config:
         from_attributes = True
+
+
+class AIChatRequest(BaseModel):
+    message: str
+
+
+class AIChatResponse(BaseModel):
+    reply: str
+    sources: List[str] = []
+    suggested_actions: List[str] = []

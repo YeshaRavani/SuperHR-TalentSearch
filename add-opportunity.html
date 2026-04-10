@@ -6,11 +6,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Post Opportunity — Talent Search</title>
   <link rel="stylesheet" href="css/add-opportunity.css" />
-
   <link rel="stylesheet" href="css/chatbot.css" />
-
   <script src="js/opportunities_data.js"></script>
-    <link rel="stylesheet" href="css/header.css" />
+  <script src="js/api.js"></script>
+  <link rel="stylesheet" href="css/header.css" />
 </head>
 
 <body>
@@ -32,14 +31,14 @@
           Talent Search
         </a>
         <nav class="menu">
-                <ul>
-                    <li><a href="index (1).html">Home</a></li>
-                    <li><a href="opportunities.html">Opportunities</a></li>
-                    <li><a href="posted-opportunities.html" class="active">Posted Opportunities</a></li>
-                    <li><a href="community.html">Community</a></li>
-                    <li><a href="aboutus.html">About Us</a></li>
-                </ul>
-            </nav>
+          <ul>
+            <li><a href="index (1).html">Home</a></li>
+            <li><a href="opportunities.html">Opportunities</a></li>
+            <li><a href="posted-opportunities.html" class="active">Posted Opportunities</a></li>
+            <li><a href="community.html">Community</a></li>
+            <li><a href="aboutus.html">About Us</a></li>
+          </ul>
+        </nav>
         <div class="nav-actions">
           <div style="position: relative;">
             <button class="icon-btn" id="notifToggle">
@@ -65,11 +64,11 @@
             </div>
           </div>
           <a href="profile.html" class="profile" aria-label="Profile">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;">
-      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-      <circle cx="12" cy="7" r="4"></circle>
-    </svg>
-  </a>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </a>
         </div>
       </div>
     </header>
@@ -92,7 +91,7 @@
               <h3>Describe your opportunity</h3>
             </div>
             <p class="ai-assist-sub">We'll suggest the structured details for you.</p>
-            
+
             <div class="ai-assist-input-wrapper">
               <textarea id="aiDescription" class="ai-textarea" placeholder="e.g. Need 2 students to help design posters for our sustainability sprint over the next two weeks. Should know Canva or Figma. Roughly 3–5 hours a week. Reward around 250 XP."></textarea>
               <button type="button" class="mic-btn" id="micBtn" title="Speak description">
@@ -103,7 +102,7 @@
                 </svg>
               </button>
             </div>
-            
+
             <button type="button" class="btn btn-sky ai-generate-btn" id="generateBtn">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
@@ -174,7 +173,7 @@
           <div class="form-actions">
             <a href="index (1).html" class="btn btn-secondary"
               style="height: 48px; font-size: 1.05rem; display: flex;">Cancel</a>
-            <button id="postBtn" class="btn btn-sky">Post Opportunity</button>
+            <button id="postBtn" class="btn btn-sky" type="button">Post Opportunity</button>
           </div>
         </form>
       </div>
@@ -182,13 +181,9 @@
   </div>
 
   <script src="js/add-opportunity.js"></script>
-
-  
-
   <script src="js/chatbot.js"></script>
   <script src="js/role-permissions.js"></script>
-    <script src="js/header.js"></script>
+  <script src="js/header.js"></script>
 </body>
-
 
 </html>

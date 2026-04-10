@@ -1,66 +1,86 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const list = document.getElementById('opportunities-master-container');
+    const skillCards = document.querySelectorAll('.skill-card');
     if (!list) return;
+
+    // This page should remain visible even if shared reveal bootstrapping lags.
+    document.querySelectorAll('.page .reveal').forEach((el) => el.classList.add('active'));
 
     // Load initial data
     let allOpportunities = [];
     try {
         allOpportunities = await api.get('/opportunities');
+        updateSkillCounts(allOpportunities);
         renderOpportunities(allOpportunities);
     } catch (err) {
         console.error("Failed to load opportunities:", err);
+        list.innerHTML = '<div style="padding: 40px; text-align: center; color: var(--ink-400);">Unable to load opportunities. Please check your connection.</div>';
     }
 
     function renderOpportunities(opportunities) {
         list.innerHTML = '';
         
-        // Group by type or just list them all as in the original design
-        // The original design had sections like "General", "Python", etc. based on skills.
-        // For the refined version, we'll follow the professional 2-column list or category sections.
+        if (opportunities.length === 0) {
+            list.innerHTML = '<div style="padding: 60px; text-align: center; color: var(--ink-400);">No matching opportunities found.</div>';
+            return;
+        }
+
+        // Map backend opportunities to rich frontend format
+        const richOpps = opportunities.map(o => window.OpportunityMapper.map(o));
         
-        const categories = [...new Set(opportunities.map(o => o.type))];
+        // Group by category accurately
+        const categories = [...new Set(richOpps.map(o => o.category))];
         
         categories.forEach(cat => {
-            const catOpps = opportunities.filter(o => o.type === cat);
+            const catOpps = richOpps.filter(o => o.category === cat);
             const section = document.createElement('div');
-            section.className = 'category-section active';
+            section.className = 'category-section reveal active'; // Keep active to ensure header is seen
             section.innerHTML = `
-                <h2 class="category-title">${cat}s</h2>
+                <h2 class="category-title reveal active" style="margin-top: 40px; margin-bottom: 24px;">${cat}s</h2>
                 <div class="initiatives-grid">
-                    ${catOpps.map(opp => generateCardHTML(opp)).join('')}
+                    ${catOpps.map((opp, index) => window.generateOpportunityCardHTML(opp, index % 4)).join('')}
                 </div>
             `;
             list.appendChild(section);
         });
+
+        list.querySelectorAll('.reveal').forEach((el) => el.classList.add('active'));
     }
 
-    function generateCardHTML(opp) {
-        return `
-            <div class="initiative-card" onclick="window.location.href='${opp.type.toLowerCase()}-detail.html?id=${opp.id}'">
-                <div class="card-image" style="background-image: url('${opp.image_url || 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=800'}')">
-                    <div class="card-tag">${opp.type}</div>
-                </div>
-                <div class="card-content">
-                    <h3 class="card-title">${opp.title}</h3>
-                    <p class="card-desc">${opp.short_description}</p>
-                    <div class="card-meta">
-                        <span>${opp.schedule_time}</span>
-                        <span>${opp.location}</span>
-                        <span class="card-reward">+${opp.points_reward} pts</span>
-                    </div>
-                </div>
-            </div>
-        `;
+    function updateSkillCounts(opportunities) {
+        skillCards.forEach(card => {
+            const skill = card.dataset.skill;
+            if (skill === 'all' || skill === 'Interested') return;
+
+            const count = opportunities.filter(o => {
+                const skills = Array.isArray(o.skills) ? o.skills : [];
+                return skills.some(s => s.toLowerCase() === skill.toLowerCase()) || 
+                       o.title.toLowerCase().includes(skill.toLowerCase());
+            }).length;
+
+            const countSpan = card.querySelector('.skill-count');
+            if (countSpan) countSpan.textContent = `(${count})`;
+        });
     }
 
-    // Wiring filter buttons (if any)
-    document.querySelectorAll('.skill-card').forEach(card => {
+    // Wiring filter buttons
+    skillCards.forEach(card => {
         card.addEventListener('click', () => {
             const skill = card.dataset.skill;
+            if (skill === 'Interested') return; // Link handled by href
+
+            // UI feedback
+            skillCards.forEach(c => c.classList.remove('active'));
+            card.classList.add('active');
+
             if (skill === 'all') {
                 renderOpportunities(allOpportunities);
             } else {
-                const filtered = allOpportunities.filter(o => o.expectations.includes(skill) || o.title.includes(skill));
+                const filtered = allOpportunities.filter(o => {
+                    const skills = Array.isArray(o.skills) ? o.skills : [];
+                    return skills.some(s => s.toLowerCase() === skill.toLowerCase()) || 
+                           o.title.toLowerCase().includes(skill.toLowerCase());
+                });
                 renderOpportunities(filtered);
             }
         });

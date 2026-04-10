@@ -1,91 +1,101 @@
 document.addEventListener('DOMContentLoaded', async () => {
-      const params = new URLSearchParams(window.location.search);
-      // We use 'id' normally, but check 'event' for backwards compatibility
-      const oppId = params.get('id') || params.get('event') || 'evt-1';
+    const params = new URLSearchParams(window.location.search);
+    const oppId = params.get('id') || params.get('event');
+    if (!oppId) {
+        window.location.href = 'opportunities.html';
+        return;
+    }
 
-      try {
-        const data = await api.get(`/opportunities/${oppId}`);
+    const detailContainer = document.querySelector('.page');
+    if (!detailContainer) return;
+
+    try {
+        const rawData = await api.get(`/opportunities/${oppId}`);
+        const data = window.OpportunityMapper.map(rawData);
         populateUI(data);
-      } catch (err) {
-        console.error("Failed to load opportunity details:", err);
-      }
+    } catch (err) {
+        console.error("Failed to load event details:", err);
+        detailContainer.innerHTML = '<div style="padding:100px; text-align:center;"><h2>Event not found</h2><a href="opportunities.html" class="btn btn-sky">Back to Opportunities</a></div>';
+    }
 
-      function populateUI(data) {
-        // Populate Text
+    function populateUI(data) {
+        // Populate Title & Header
         document.title = "Talent Search - " + data.title;
-        document.getElementById('detail-title').textContent = data.title;
-        const cat = data.type || "Event";
-        document.getElementById('detail-category').textContent = cat;
-        document.getElementById('detail-desc').textContent = data.full_description;
-
-        document.getElementById('detail-schedule').textContent = data.schedule_time || "-";
-        document.getElementById('detail-points').textContent = data.points_reward || "-";
-        document.getElementById('detail-time').textContent = data.time_required || "-";
-        document.getElementById('detail-location').textContent = data.location || "TBD";
-        document.getElementById('detail-expectations').textContent = data.expectations || "No specific expectations listed.";
+        const titleEl = document.getElementById('detail-title');
+        const categoryEl = document.getElementById('detail-category');
+        const descEl = document.getElementById('detail-desc');
         
-        // Action Button logic
+        if (titleEl) titleEl.textContent = data.title;
+        if (categoryEl) categoryEl.textContent = data.category;
+        if (descEl) descEl.textContent = data.fullDescription;
+
+        // Meta Info
+        const scheduleEl = document.getElementById('detail-schedule');
+        const pointsEl = document.getElementById('detail-points');
+        const timeEl = document.getElementById('detail-time');
+        const locationEl = document.getElementById('detail-location');
+
+        if (scheduleEl) scheduleEl.textContent = data.dateStr || "-";
+        if (pointsEl) pointsEl.textContent = data.points || "-";
+        if (timeEl) timeEl.textContent = data.timeRequired || "-";
+        if (locationEl) locationEl.textContent = data.location || "TBD";
+
+        // Expectations
+        const expNode = document.getElementById('detail-expectations');
+        if (expNode) {
+            if (Array.isArray(data.expectations) && data.expectations.length > 0) {
+                expNode.innerHTML = `<ul style="padding-left: 20px; color: var(--ink-700);">${data.expectations.map(e => `<li style="margin-bottom:8px;">${e}</li>`).join('')}</ul>`;
+            } else {
+                expNode.textContent = data.expectations || "No specific expectations listed.";
+            }
+        }
+
+        // Skills
+        const skillsContainer = document.getElementById('detail-skills');
+        if (skillsContainer) {
+            if (data.skills && data.skills.length > 0) {
+                skillsContainer.innerHTML = data.skills.map(s => `<span class="skill-chip">${s}</span>`).join('');
+            } else {
+                skillsContainer.innerHTML = `<span class="skill-chip">General</span>`;
+            }
+        }
+
+        // Action Button
         const btnInt = document.getElementById('btn-interest');
         const successMsg = document.getElementById('success-msg');
-        btnInt.addEventListener('click', async () => {
-            try {
-                await api.post(`/interested-opportunities?opp_id=${data.id}`);
+        
+        if (btnInt) {
+            const role = localStorage.getItem('userRole');
+            if (role === 'admin') {
                 btnInt.style.display = 'none';
-                successMsg.classList.add('active');
-            } catch (err) {
-                alert("Action failed: " + err.message);
+            } else {
+                btnInt.addEventListener('click', async () => {
+                   try {
+                       await api.post(`/applications?opp_id=${data.id}`);
+                       btnInt.style.display = 'none';
+                       if (successMsg) {
+                           successMsg.classList.add('active');
+                           successMsg.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Successfully Registered!`;
+                       }
+                   } catch (err) {
+                       alert("Failed to register. Are you logged in?");
+                   }
+                });
             }
-        });
-      }
+        }
+    }
 
-      // Populate Text
-      document.title = "Talent Search - " + data.title;
-      document.getElementById('detail-title').textContent = data.title;
-      const cat = data.category || "Event";
-      document.getElementById('detail-category').textContent = cat;
-      document.getElementById('detail-desc').textContent = data.description;
-
-      document.getElementById('detail-schedule').textContent = data.dateStr || "-";
-      document.getElementById('detail-points').textContent = data.points || "-";
-      document.getElementById('detail-time').textContent = data.timeRequired || "-";
-      document.getElementById('detail-location').textContent = data.location || "TBD";
-      document.getElementById('detail-expectations').textContent = data.expectations || "No specific expectations listed.";
-
-      // Route all opportunity detail pages back to the unified opportunities listing.
-      const backBtn = document.getElementById('back-btn');
-      backBtn.href = "opportunities.html";
-      backBtn.textContent = "← Back to Opportunities";
-
-      // Populate Skills
-      const skillsContainer = document.getElementById('detail-skills');
-      if (data.skills && data.skills.length > 0) {
-        skillsContainer.innerHTML = data.skills.map(s => `<span class="skill-chip">${s}</span>`).join('');
-      } else {
-        skillsContainer.innerHTML = `<span class="skill-chip">General</span>`;
-      }
-
-      // Action Button
-      const btnInt = document.getElementById('btn-interest');
-      const successMsg = document.getElementById('success-msg');
-      btnInt.addEventListener('click', () => {
-        btnInt.style.display = 'none';
-        successMsg.classList.add('active');
-      });
-
-      // Role Management (Global Navbar setup)
-      const role = localStorage.getItem('userRole');
-
-      // Notification Toggle logic
-      const notifToggle = document.getElementById('notifToggle');
-      const notifDropdown = document.getElementById('notifDropdown');
-      if (notifToggle && notifDropdown) {
+    // Shared Navbar & Notifications logic
+    const notifToggle = document.getElementById('notifToggle');
+    const notifDropdown = document.getElementById('notifDropdown');
+    if (notifToggle && notifDropdown) {
         notifToggle.addEventListener('click', (e) => {
-          e.stopPropagation();
-          notifDropdown.classList.toggle('active');
+            e.stopPropagation();
+            notifDropdown.classList.toggle('active');
         });
         window.addEventListener('click', () => {
-          notifDropdown.classList.remove('active');
+            if (notifDropdown.classList.contains('active')) notifDropdown.classList.remove('active');
         });
         notifDropdown.addEventListener('click', e => e.stopPropagation());
-      }
-    });
+    }
+});
