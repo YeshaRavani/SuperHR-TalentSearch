@@ -70,3 +70,33 @@ def test_platform_overview_mentions_core_areas():
     assert "community" in reply.lower() or "profile" in reply.lower()
     assert sources
     assert actions
+
+
+def test_platform_troubleshooting_gives_visibility_advice():
+    user = DummyUser()
+
+    reply, sources, actions = answer_platform_question("I am not getting any enrollments", user, [])
+
+    assert "profile" in reply.lower() or "skills" in reply.lower()
+    assert any(source == "Page: Profile" for source in sources)
+    assert actions
+
+
+def test_appreciation_reply_stays_natural():
+    user = DummyUser()
+
+    reply, sources, actions = answer_platform_question("nice I like the platform", user, [])
+
+    assert "glad" in reply.lower() or "hear" in reply.lower()
+    assert not sources
+    assert not actions
+
+
+def test_emotional_message_gets_empathy_first():
+    user = DummyUser()
+
+    reply, sources, actions = answer_platform_question("i am depressed", user, [])
+
+    assert "sorry" in reply.lower() or "support" in reply.lower()
+    assert not sources
+    assert not actions

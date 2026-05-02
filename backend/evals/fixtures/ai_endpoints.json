@@ -169,5 +169,43 @@
       "system settings"
     ],
     "judge_rubric": "Pass if the answer explains admin capabilities such as managing users, opportunities, or system settings."
+  },
+  {
+    "endpoint": "POST /api/ai/chat",
+    "scenario": "User says they are not getting enrollments and needs practical platform advice.",
+    "user_profile": {
+      "full_name": "Rushil Gargash",
+      "role": "contributors",
+      "organisation": "Plaksha University",
+      "department_team": "Product Innovation Lab"
+    },
+    "input": {
+      "message": "I am not getting any enrollments"
+    },
+    "expected_signals": [
+      "profile",
+      "skills",
+      "visible"
+    ],
+    "judge_rubric": "Pass if the answer gives practical platform advice about improving profile quality, fit, skills, or visibility instead of rejecting the question as out of scope."
+  },
+  {
+    "endpoint": "POST /api/ai/chat",
+    "scenario": "User appreciates the platform and should get a natural acknowledgement.",
+    "user_profile": {
+      "full_name": "Yesha Ravani",
+      "role": "contributors",
+      "organisation": "Design Studio",
+      "department_team": "UX Team"
+    },
+    "input": {
+      "message": "nice I like the platform"
+    },
+    "expected_signals": [
+      "glad",
+      "help",
+      "profile"
+    ],
+    "judge_rubric": "Pass if the assistant responds naturally to the appreciation and does not switch into an unrelated full platform summary."
   }
 ]

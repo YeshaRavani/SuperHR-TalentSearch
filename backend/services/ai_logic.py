@@ -12,6 +12,12 @@ from .platform_knowledge import (
 
 
 ALLOWED_ACTIONS = {action.lower(): action for action in get_allowed_actions()}
+EMOTIONAL_KEYWORDS = {
+    "depressed", "sad", "stressed", "anxious", "anxiety", "overwhelmed", "burned out", "burnt out",
+    "lonely", "upset", "frustrated", "tired", "hopeless",
+}
+APPRECIATION_KEYWORDS = {"nice", "great", "awesome", "love", "liked", "like the platform", "helpful"}
+ENROLLMENT_KEYWORDS = {"enrollment", "enrolment", "enrollments", "enrolments", "responses", "visibility", "noticed"}
 
 
 def is_greeting(prompt: str) -> bool:
@@ -22,6 +28,25 @@ def is_greeting(prompt: str) -> bool:
 def is_short_acknowledgement(prompt: str) -> bool:
     normalized = prompt.strip().lower()
     return normalized in {"ok", "okay", "cool", "nice", "thanks", "thank you", "got it", "sure"}
+
+
+def is_emotional_support_message(prompt: str) -> bool:
+    normalized = prompt.strip().lower()
+    return any(keyword in normalized for keyword in EMOTIONAL_KEYWORDS)
+
+
+def is_appreciation_message(prompt: str) -> bool:
+    normalized = prompt.strip().lower()
+    return any(keyword in normalized for keyword in APPRECIATION_KEYWORDS) or normalized.startswith("i like")
+
+
+def is_platform_troubleshooting_message(prompt: str) -> bool:
+    normalized = prompt.strip().lower()
+    problem_words = ["not getting", "not seeing", "not working", "no one is", "nobody is", "low", "issue", "problem"]
+    return (
+        any(phrase in normalized for phrase in problem_words)
+        and any(keyword in normalized for keyword in ENROLLMENT_KEYWORDS | {"application", "apply", "match", "opportunity", "profile"})
+    )
 
 
 def build_recent_history(history: List[object] | None) -> str:
@@ -114,10 +139,30 @@ def answer_platform_question(message: str, user: orm_models.User, opportunities:
 
     if is_short_acknowledgement(prompt):
         return (
-            "Sure. Ask me anything about opportunities, rewards, community features, or platform navigation.",
+            "Sure. Tell me what you want to do and I’ll help from there.",
             [],
             [],
         )
+
+    if is_emotional_support_message(prompt):
+        reply = (
+            "I’m sorry you’re feeling that way. I’m not a mental health professional, but talking to someone you trust or getting support from a professional can help. "
+            "If this is connected to your experience on the platform, tell me what’s going wrong and I’ll help you work through it."
+        )
+        return reply, [], []
+
+    if is_appreciation_message(prompt):
+        reply = "Glad to hear that. If you want, I can help you find good opportunities, improve your profile, or show you useful parts of the platform."
+        return reply, [], []
+
+    if is_platform_troubleshooting_message(prompt):
+        reply = (
+            "That usually means your profile, skill tags, or opportunity fit may not be strong enough yet. "
+            "Start by updating your skills, applying to opportunities that closely match them, and staying active in community discussions so your work is more visible."
+        )
+        sources = ["Page: Profile", "Page: Opportunities", "Page: Community"]
+        actions = ["Update your profile", "Browse opportunities"]
+        return reply, sources, actions
 
     if any(keyword in prompt for keyword in ["capital of", "weather", "stock price", "who won", "define ", "translate "]):
         reply = (
@@ -180,12 +225,10 @@ def answer_platform_question(message: str, user: orm_models.User, opportunities:
     if navigation_answer:
         return navigation_answer
 
-    reply = (
-        "I can help with opportunity recommendations, application guidance, community navigation, and reward questions."
-    )
+    reply = "I can help with platform navigation, finding opportunities, improving your profile, rewards, and community features."
     if history:
-        reply = "I can help with that. Ask me about opportunities, rewards, community features, or where to find something in the platform."
-    actions = ["Ask for recommended opportunities", "Ask about rewards", "Ask how to use community chat"]
+        reply = "I’m here for platform questions. Tell me what you’re trying to do or what’s not working, and I’ll guide you."
+    actions = ["Browse opportunities", "Update your profile"]
     return reply, sources, actions
 
 
@@ -265,6 +308,15 @@ def groq_aided_chat(message: str, user: orm_models.User, opportunities: List[orm
             [],
         )
 
+    if is_emotional_support_message(message):
+        return answer_platform_question(message, user, opportunities, history)
+
+    if is_appreciation_message(message):
+        return answer_platform_question(message, user, opportunities, history)
+
+    if is_platform_troubleshooting_message(message):
+        return answer_platform_question(message, user, opportunities, history)
+
     if not groq_service.is_available():
         return answer_platform_question(message, user, opportunities, history)
 
@@ -315,7 +367,10 @@ Requirements:
 9. If the user asks about admin capabilities and they are not an admin, explain that admin tools exist but are restricted.
 10. For greetings or lightweight acknowledgement turns, respond naturally and leave `suggested_actions` empty.
 11. Only include `suggested_actions` when they are genuinely useful next steps.
-12. You MUST return JSON in the following format:
+12. If the user expresses frustration, low engagement, poor enrollments, or trouble getting noticed, give practical platform advice about profile quality, fit, and visibility.
+13. If the user expresses appreciation, respond naturally instead of switching to a product summary.
+14. If the user expresses emotional distress, respond with empathy first, do not ignore it, and only redirect to platform help if appropriate.
+15. You MUST return JSON in the following format:
 {{
   "reply": "your response string",
   "sources": ["list of source names, e.g. 'Project: Alpha'", "User Points"],
