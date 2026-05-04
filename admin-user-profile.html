@@ -33,7 +33,7 @@
                 Talent Search
             </a>
             <nav class="menu">
-                <a href="admin-dashboard.html">Home</a>
+                <a href="admin-home.html">Home</a>
                 <a href="admin-manage-users.html">Manage Users</a>
                 <a href="admin-manage-opportunities.html">Manage Opportunities</a>
                 <a href="admin-system-settings.html">System Settings</a>
@@ -102,16 +102,16 @@
                     style="background: var(--white); border-radius: var(--radius-xl); padding: 40px; box-shadow: var(--shadow-lg); margin-bottom: 24px; display: flex; gap: 30px; align-items: center; border: 1px solid rgba(15, 31, 43, 0.05); position: relative;">
                     <div
                         style="width: 120px; height: 120px; border-radius: 50%; background: var(--sky-200); flex-shrink: 0; overflow: hidden; border: 4px solid var(--white); box-shadow: var(--shadow-md);">
-                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=300"
+                        <img id="adminProfilePhoto" src="assets/profilepic.jpg"
                             alt="Admin Profile" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                     <div>
                         <div
-                            style="display: inline-block; padding: 4px 12px; background: rgba(2, 132, 199, 0.1); color: var(--sky-700); border-radius: 999px; font-size: 0.75rem; font-weight: 700; margin-bottom: 8px; letter-spacing: 0.5px;">
+                            id="adminRoleBadge" style="display: inline-block; padding: 4px 12px; background: rgba(2, 132, 199, 0.1); color: var(--sky-700); border-radius: 999px; font-size: 0.75rem; font-weight: 700; margin-bottom: 8px; letter-spacing: 0.5px;">
                             Super Admin</div>
-                        <h1 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 4px; color: var(--ink-900);">
+                        <h1 id="adminFullName" style="font-size: 2.2rem; font-weight: 800; margin-bottom: 4px; color: var(--ink-900);">
                             Sarah Jenkins</h1>
-                        <p style="font-size: 1.05rem; color: var(--ink-500); margin-bottom: 16px;">Platform Governance
+                        <p id="adminSubtitle" style="font-size: 1.05rem; color: var(--ink-500); margin-bottom: 16px;">Platform Governance
                             Lead • Core Operations Team</p>
                         <div style="display: flex; gap: 12px;">
                             <button id="openEditModal" class="btn btn-sky"
@@ -136,7 +136,7 @@
                         </svg>
                         Admin Bio
                     </h3>
-                    <p style="color: var(--ink-700); line-height: 1.6; font-size: 0.95rem;">Leading the platform
+                    <p id="adminBio" style="color: var(--ink-700); line-height: 1.6; font-size: 0.95rem;">Leading the platform
                         governance initiatives to ensure a safe, collaborative, and highly effective environment for all
                         teams. Focused on optimizing user experiences, streamlining approval workflows, and maintaining
                         data integrity across departments.</p>
@@ -149,7 +149,7 @@
                         style="background: linear-gradient(135deg, var(--sky-600), var(--sky-500)); color: var(--white); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-md);">
                         <h4 style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 4px; font-weight: 500;">Governance
                             Metric</h4>
-                        <div style="font-size: 2.8rem; font-weight: 800; line-height: 1; margin-bottom: 4px;">142</div>
+                        <div id="adminActionsSupervised" style="font-size: 2.8rem; font-weight: 800; line-height: 1; margin-bottom: 4px;">0</div>
                         <p style="font-size: 0.85rem; opacity: 0.85;">Actions supervised this week</p>
                     </div>
 
@@ -166,7 +166,7 @@
                                 </path>
                                 <polyline points="22,6 12,13 2,6"></polyline>
                             </svg>
-                            sarah.jenkins@company.com
+                            <span id="adminEmail">--</span>
                         </p>
                         <p
                             style="color: var(--ink-700); font-size: 0.9rem; display: flex; align-items: center; gap: 8px;">
@@ -228,7 +228,7 @@
                                 <span style="font-weight: 600; color: var(--ink-800); font-size: 0.9rem;">Actions
                                     Supervised</span>
                             </div>
-                            <span style="font-size: 1.25rem; font-weight: 800; color: var(--sky-600);">142</span>
+                            <span id="adminOverviewActions" style="font-size: 1.25rem; font-weight: 800; color: var(--sky-600);">0</span>
                         </div>
                         <!-- Active Users Managed -->
                         <div
@@ -247,7 +247,7 @@
                                 <span style="font-weight: 600; color: var(--ink-800); font-size: 0.9rem;">Users
                                     Managed</span>
                             </div>
-                            <span style="font-size: 1.25rem; font-weight: 800; color: var(--sky-600);">840</span>
+                            <span id="adminOverviewUsers" style="font-size: 1.25rem; font-weight: 800; color: var(--sky-600);">0</span>
                         </div>
                         <!-- Opportunities Approved -->
                         <div
@@ -264,7 +264,7 @@
                                 <span style="font-weight: 600; color: var(--ink-800); font-size: 0.9rem;">Approved
                                     Posts</span>
                             </div>
-                            <span style="font-size: 1.25rem; font-weight: 800; color: var(--sky-600);">85</span>
+                            <span id="adminOverviewPosts" style="font-size: 1.25rem; font-weight: 800; color: var(--sky-600);">0</span>
                         </div>
                         <!-- System Health Impact -->
                         <div
@@ -280,7 +280,7 @@
                                 <span style="font-weight: 600; color: var(--ink-800); font-size: 0.9rem;">System
                                     Health</span>
                             </div>
-                            <span style="font-size: 1.25rem; font-weight: 800; color: #10b981;">98%</span>
+                            <span id="adminOverviewHealth" style="font-size: 1.25rem; font-weight: 800; color: #10b981;">--</span>
                         </div>
                     </div>
                 </div>
@@ -288,10 +288,6 @@
 
         </div>
     </main>
-
-    <script src="js/admin-contributor-profile.js"></script>
-
-
 
     <script src="js/chatbot.js"></script>
     <script src="js/role-permissions.js"></script>
@@ -319,7 +315,7 @@
                 <div class="form-group" style="align-items: center; margin-bottom: 16px;">
                     <div
                         style="position: relative; width: 100px; height: 100px; border-radius: 50%; background: var(--sky-100); overflow: hidden; margin-bottom: 12px; border: 3px solid var(--white); box-shadow: var(--shadow-sm);">
-                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=300"
+                        <img id="editProfilePhoto" src="assets/profilepic.jpg"
                             alt="Current Photo" style="width: 100%; height: 100%; object-fit: cover;">
                         <label
                             style="position: absolute; inset: 0; background: rgba(15,31,43,0.5); display: flex; align-items: center; justify-content: center; color: white; opacity: 0; cursor: pointer; transition: opacity 0.2s;">
@@ -339,11 +335,11 @@
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                     <div class="form-group">
                         <label class="form-label">Full Name</label>
-                        <input type="text" class="text-input" value="Sarah Jenkins">
+                        <input id="adminEditFullName" type="text" class="text-input" value="">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Admin ID</label>
-                        <input type="text" class="text-input" value="ADM-88021" disabled
+                        <input id="adminEditId" type="text" class="text-input" value="" disabled
                             style="background:var(--sky-50); cursor:not-allowed;">
                     </div>
                 </div>
@@ -351,7 +347,7 @@
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                     <div class="form-group">
                         <label class="form-label">Email Address</label>
-                        <input type="email" class="text-input" value="sarah.jenkins@company.com">
+                        <input id="adminEditEmail" type="email" class="text-input" value="">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Phone</label>
@@ -362,17 +358,17 @@
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                     <div class="form-group">
                         <label class="form-label">Department</label>
-                        <input type="text" class="text-input" value="Core Operations">
+                        <input id="adminEditDepartment" type="text" class="text-input" value="">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Job Title</label>
-                        <input type="text" class="text-input" value="Platform Governance Lead">
+                        <input id="adminEditJobTitle" type="text" class="text-input" value="">
                     </div>
                 </div>
 
                 <div class="form-group" style="margin-top: 10px;">
                     <label class="form-label">Admin Bio</label>
-                    <textarea class="text-input"
+                    <textarea id="adminEditBio" class="text-input"
                         style="min-height: 80px;">Leading the platform governance initiatives to ensure a safe, collaborative, and highly effective environment for all teams. Focused on optimizing user experiences, streamlining approval workflows, and maintaining data integrity across departments.</textarea>
                 </div>
             </div>
@@ -396,6 +392,7 @@
     </div>
 
 
+    <script src="js/admin-user-profile.js"></script>
     <script src="js/header.js"></script>
 </body>
 

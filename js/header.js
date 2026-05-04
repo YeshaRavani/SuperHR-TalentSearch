@@ -142,6 +142,60 @@
       });
     }
 
+    /* ── Backend-driven notifications ─────────────────────────────────────── */
+    function escapeHtml(value) {
+      return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function renderNotificationPanel(panel, notifications) {
+      if (!panel) return;
+      const header = panel.querySelector('.notif-header');
+      const headerHtml = header ? header.outerHTML : '<div class="notif-header"><h4>Notifications</h4></div>';
+      const items = notifications.map(function (item) {
+        const action = item.action_url
+          ? `<div class="notif-actions" style="margin-top: 8px;"><a href="${escapeHtml(item.action_url)}" class="btn btn-sky" style="height:32px; padding:0 16px; font-size:0.8rem; text-decoration:none; display:inline-flex; align-items:center;">${escapeHtml(item.action_label || 'Open')}</a></div>`
+          : '';
+
+        return `
+          <div class="notif-item">
+            <p style="margin-bottom: 0;"><strong>${escapeHtml(item.title)}:</strong> ${escapeHtml(item.message)}</p>
+            ${action}
+          </div>
+        `;
+      }).join('');
+
+      panel.innerHTML = headerHtml + items;
+    }
+
+    async function loadNotifications() {
+      if (!window.api || !localStorage.getItem('access_token')) return;
+
+      const panels = Array.from(document.querySelectorAll('#notifDropdown, #notifPanel, .notification-panel, .notif-dropdown'));
+      if (!panels.length) return;
+
+      try {
+        const notifications = await window.api.get('/notifications');
+        panels.forEach(function (panel) {
+          renderNotificationPanel(panel, notifications);
+        });
+
+        const unreadCount = notifications.filter(function (item) { return item.id !== 'empty'; }).length;
+        document.querySelectorAll('#notifBadge, .icon-dot').forEach(function (dot) {
+          dot.textContent = unreadCount ? String(unreadCount) : '';
+          dot.style.display = unreadCount ? '' : 'none';
+        });
+      } catch (err) {
+        console.warn('Could not load notifications:', err.message);
+      }
+    }
+
+    loadNotifications();
+
     /* ── Profile Onboarding / Navbar Toggle ──────────────────────────────── */
     const userRole = localStorage.getItem('userRole');
     const adminImage = localStorage.getItem('adminProfileImage');

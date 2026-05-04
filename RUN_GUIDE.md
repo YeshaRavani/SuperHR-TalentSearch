@@ -7,22 +7,29 @@ This guide describes how to setup and run the new FastAPI backend for the Talent
 - `pip`
 
 ## Setup
-1. **Install Dependencies**:
+1. **Create and activate a virtual environment**:
    ```bash
-   pip install "fastapi" "uvicorn" "sqlalchemy" "pydantic" "passlib[bcrypt]" "python-multipart" "python-jose[cryptography]" "pytest" "httpx" "pydantic-settings"
+   python3 -m venv .venv
+   source .venv/bin/activate
    ```
 
-2. **Initialize & Seed Database**:
+2. **Install Dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Initialize & Seed Database**:
    ```bash
    # Initialize schema
    python3 init_db.py
    # Seed demo data
-   export PYTHONPATH=$PYTHONPATH:. && python3 seed_db.py
+   PYTHONPATH=. python3 seed_db.py
    ```
 
 ## Running the Backend
 Start the FastAPI server using `uvicorn`:
 ```bash
+source .venv/bin/activate
 uvicorn backend.main:app --reload
 ```
 
@@ -34,12 +41,14 @@ Once running, you can access the interactive API documentation at:
 ## Running Tests
 To verify the implementation:
 ```bash
+source .venv/bin/activate
 pytest backend/tests/
 ```
 
 ## Running AI Evaluations
 To run baseline AI endpoint evaluations locally:
 ```bash
+source .venv/bin/activate
 python3 backend/evals/run_ai_evals.py
 ```
 

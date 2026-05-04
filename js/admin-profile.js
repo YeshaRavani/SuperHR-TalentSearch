@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 localStorage.setItem('adminTeam', teamInput.value);
             }
             localStorage.setItem('userRole', 'admin');
-            window.location.href = 'admin-dashboard.html';
+            window.location.href = 'admin-home.html';
         });
     }
 });

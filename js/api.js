@@ -25,6 +25,12 @@ const api = {
                 const isPublicAppPage = window.location.pathname.includes('opportunities.html') 
                     || window.location.pathname.includes('python.html')
                     || window.location.pathname.includes('interested.html')
+                    || window.location.pathname.includes('home.html')
+                    || window.location.pathname.includes('aboutus.html')
+                    || window.location.pathname.includes('initiatives.html')
+                    || window.location.pathname.includes('workshops.html')
+                    || window.location.pathname.includes('login.html')
+                    || window.location.pathname.includes('signup.html')
                     || window.location.pathname.endsWith('/')
                     || window.location.pathname.includes('index');
 

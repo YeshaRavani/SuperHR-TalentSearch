@@ -19,6 +19,14 @@ class UserLogin(BaseModel):
     username: str
     password: str
 
+
+class UserUpdate(BaseModel):
+    full_name: Optional[str] = None
+    email: Optional[EmailStr] = None
+    organisation: Optional[str] = None
+    department_team: Optional[str] = None
+    profile_photo_url: Optional[str] = None
+
 class UserResponse(UserBase):
     id: str
     total_points: int
@@ -36,6 +44,15 @@ class RewardsSummaryResponse(BaseModel):
     active_mode: str
     hours_per_leave: int
     leave_hours_available: float
+
+
+class NotificationResponse(BaseModel):
+    id: str
+    title: str
+    message: str
+    category: str
+    action_label: Optional[str] = None
+    action_url: Optional[str] = None
 
 # Opportunity Models
 class OpportunityBase(BaseModel):
