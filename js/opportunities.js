@@ -9,14 +9,46 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Load initial data
     let allOpportunities = [];
     let interestedList = [];
-    let removedList = JSON.parse(localStorage.getItem('removedOpportunities') || '[]');
+    let activeSkill = 'all';
+
+    function isLoggedIn() {
+        return Boolean(localStorage.getItem('access_token'));
+    }
+
+    function getBasePageFilter(opportunities) {
+        if (window.location.pathname.includes('python.html')) {
+            return opportunities.filter(o => {
+                const skills = Array.isArray(o.skills) ? o.skills : [];
+                return skills.some(s => s.toLowerCase() === 'python');
+            });
+        }
+
+        if (window.location.pathname.includes('interested.html')) {
+            return opportunities.filter(o => interestedList.includes(o.id));
+        }
+
+        return opportunities;
+    }
+
+    function getActiveFilteredOpportunities() {
+        let opportunities = getBasePageFilter(allOpportunities);
+        if (activeSkill === 'all' || activeSkill === 'Interested' || activeSkill === 'Python') {
+            return opportunities;
+        }
+
+        return opportunities.filter(o => {
+            const skills = Array.isArray(o.skills) ? o.skills : [];
+            return skills.some(s => s.toLowerCase() === activeSkill.toLowerCase()) ||
+                o.title.toLowerCase().includes(activeSkill.toLowerCase());
+        });
+    }
 
     try {
         allOpportunities = await api.get('/opportunities');
         
         // Fetch user's interests first
         try {
-            if (localStorage.getItem('access_token')) {
+            if (isLoggedIn()) {
                 const interests = await api.get('/interested-opportunities');
                 interestedList = interests.map(i => i.opportunity_id);
             }
@@ -25,19 +57,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         updateSkillCounts(allOpportunities);
-        
-        // Define initial filter based on the current page
-        let initialFilter = allOpportunities;
-        if (window.location.pathname.includes('python.html')) {
-            initialFilter = allOpportunities.filter(o => {
-                const skills = Array.isArray(o.skills) ? o.skills : [];
-                return skills.some(s => s.toLowerCase() === 'python');
-            });
-        } else if (window.location.pathname.includes('interested.html')) {
-            initialFilter = allOpportunities.filter(o => interestedList.includes(o.id));
-        }
-
-        renderOpportunities(initialFilter);
+        renderOpportunities(getActiveFilteredOpportunities());
     } catch (err) {
         console.error("Failed to load opportunities:", err);
         list.innerHTML = '<div style="padding: 40px; text-align: center; color: var(--ink-400);">Unable to load opportunities. Please check your connection.</div>';
@@ -45,16 +65,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function renderOpportunities(opportunities) {
         list.innerHTML = '';
-        
-        const visibleOpps = opportunities.filter(o => !removedList.includes(o.id));
-        
-        if (visibleOpps.length === 0) {
+
+        if (opportunities.length === 0) {
             list.innerHTML = '<div style="padding: 60px; text-align: center; color: var(--ink-400);">No matching opportunities found.</div>';
             return;
         }
 
         // Map backend opportunities to rich frontend format
-        const richOpps = visibleOpps.map(o => window.OpportunityMapper.map(o));
+        const richOpps = opportunities.map(o => ({
+            ...window.OpportunityMapper.map(o),
+            isInterested: interestedList.includes(o.id),
+        }));
+        const isInterestedPage = window.location.pathname.includes('interested.html');
         
         // Render all opportunities without category divisions
         const section = document.createElement('div');
@@ -62,7 +84,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         section.style.marginTop = '10px';
         section.innerHTML = `
             <div class="initiatives-grid">
-                ${richOpps.map((opp, index) => window.generateOpportunityCardHTML(opp, index % 4)).join('')}
+                ${richOpps.map((opp, index) => window.generateOpportunityCardHTML(opp, index % 4, isInterestedPage, isInterestedPage)).join('')}
             </div>
         `;
         list.appendChild(section);
@@ -71,17 +93,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function updateSkillCounts(opportunities) {
-        const visibleOpps = opportunities.filter(o => !removedList.includes(o.id));
-
         skillCards.forEach(card => {
             const skill = card.dataset.skill;
             if (skill === 'all') return;
 
             let count;
             if (skill === 'Interested') {
-                count = visibleOpps.filter(o => interestedList.includes(o.id)).length;
+                count = opportunities.filter(o => interestedList.includes(o.id)).length;
             } else {
-                count = visibleOpps.filter(o => {
+                count = opportunities.filter(o => {
                     const skills = Array.isArray(o.skills) ? o.skills : [];
                     return skills.some(s => s.toLowerCase() === skill.toLowerCase()) || 
                            o.title.toLowerCase().includes(skill.toLowerCase());
@@ -97,22 +117,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     skillCards.forEach(card => {
         card.addEventListener('click', () => {
             const skill = card.dataset.skill;
-            if (skill === 'Interested' || skill === 'Python' || skill === 'all') return; // Handled by href natively on some pages
+            if (skill === 'Interested' || skill === 'Python') return; // Handled by href natively on some pages
 
             // UI feedback
             skillCards.forEach(c => c.classList.remove('active'));
             card.classList.add('active');
-
-            if (skill === 'all') {
-                renderOpportunities(allOpportunities);
-            } else {
-                const filtered = allOpportunities.filter(o => {
-                    const skills = Array.isArray(o.skills) ? o.skills : [];
-                    return skills.some(s => s.toLowerCase() === skill.toLowerCase()) || 
-                           o.title.toLowerCase().includes(skill.toLowerCase());
-                });
-                renderOpportunities(filtered);
-            }
+            activeSkill = skill;
+            renderOpportunities(getActiveFilteredOpportunities());
         });
     });
 
@@ -127,19 +138,23 @@ document.addEventListener('DOMContentLoaded', async () => {
             e.stopPropagation();
             const id = String(intBtn.dataset.id);
 
+            if (!isLoggedIn()) {
+                alert('Please log in to save your interests.');
+                window.location.href = 'login.html';
+                return;
+            }
+
             if (!interestedList.includes(id)) {
                 try {
+                    intBtn.disabled = true;
+                    intBtn.textContent = 'Adding...';
                     await api.post(`/interested-opportunities?opp_id=${id}`);
                     interestedList.push(id);
-                    intBtn.innerHTML = "Added!";
-                    intBtn.style.background = "var(--green-500)";
-                    intBtn.style.color = "white";
-                    
                     updateSkillCounts(allOpportunities);
-                    
-                    // Shift the user to the interested tab as requested
-                    window.location.href = 'interested.html';
+                    renderOpportunities(getActiveFilteredOpportunities());
                 } catch(err) {
+                    intBtn.disabled = false;
+                    intBtn.textContent = 'Interested';
                     if (err.message && err.message.includes('expired')) {
                         alert('Please log in to save your interests!');
                         window.location.href = 'login.html';
@@ -156,39 +171,26 @@ document.addEventListener('DOMContentLoaded', async () => {
             e.stopPropagation();
             const id = String(removeBtn.dataset.id);
 
-            if (!removedList.includes(id)) {
-                removedList.push(id);
-                localStorage.setItem('removedOpportunities', JSON.stringify(removedList));
+            if (!isLoggedIn()) {
+                alert('Please log in to manage your interests.');
+                window.location.href = 'login.html';
+                return;
             }
 
-            // Sync with backend so the interest is officially revoked 
-            if (interestedList.includes(id)) {
-                try {
-                    await api.delete(`/interested-opportunities/${id}`);
-                } catch(e) {
-                    console.warn("Could not delete from backend:", e);
-                }
+            if (!interestedList.includes(id)) return;
+
+            try {
+                removeBtn.disabled = true;
+                removeBtn.textContent = 'Removing...';
+                await api.delete(`/interested-opportunities/${id}`);
                 interestedList = interestedList.filter(i => i !== id);
-            }
-            
-            // Update the pill count instantly
-            updateSkillCounts(allOpportunities);
-
-            // Trigger a re-render by clicking the active skill card again
-            if (window.location.pathname.includes('interested.html')) {
-                 renderOpportunities(allOpportunities.filter(o => interestedList.includes(o.id)));
-            } else {
-                const activeCard = document.querySelector('.skill-card.active');
-                if (activeCard && !activeCard.dataset.skill.includes('Interested')) {
-                    activeCard.click();
-                } else if (window.location.pathname.includes('python.html')) {
-                    renderOpportunities(allOpportunities.filter(o => {
-                        const skills = Array.isArray(o.skills) ? o.skills : [];
-                        return skills.some(s => s.toLowerCase() === 'python');
-                    }));
-                } else {
-                    renderOpportunities(allOpportunities);
-                }
+                updateSkillCounts(allOpportunities);
+                renderOpportunities(getActiveFilteredOpportunities());
+            } catch(e) {
+                removeBtn.disabled = false;
+                removeBtn.textContent = 'Remove Interest';
+                console.warn("Could not delete interest from backend:", e);
+                alert('Could not remove interest. Please try again.');
             }
             return;
         }

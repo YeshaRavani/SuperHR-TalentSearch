@@ -104,11 +104,7 @@
                             <span class="notif-clear">Mark all read</span>
                         </div>
                         <div class="notif-item">
-                            <p><strong>Match found:</strong> "Campus Sustainability Sprint".</p>
-                            <div class="notif-actions">
-                                <button class="btn btn-sky"
-                                    style="height:32px; padding:0 16px; font-size:0.8rem;">Accept</button>
-                            </div>
+                            <p>Loading notifications...</p>
                         </div>
                     </div>
                 </div>
@@ -146,7 +142,7 @@
                                         </svg></div>
                                     Shortlist Invites
                                 </div>
-                                <div class="stat-value">8</div>
+                                <div class="stat-value" id="dashInviteCount">--</div>
                             </div>
                             <div class="stat-row">
                                 <div class="stat-info">
@@ -157,7 +153,7 @@
                                         </svg></div>
                                     Active Projects
                                 </div>
-                                <div class="stat-value">12</div>
+                                <div class="stat-value" id="dashActiveProjectCount">--</div>
                             </div>
                             <div class="stat-row">
                                 <div class="stat-info">
@@ -170,7 +166,7 @@
                                         </svg></div>
                                     Upcoming workshops
                                 </div>
-                                <div class="stat-value">5</div>
+                                <div class="stat-value" id="dashWorkshopCount">--</div>
                             </div>
                             <div class="stat-row">
                                 <div class="stat-info">
@@ -184,7 +180,7 @@
                                         </svg></div>
                                     Events this month
                                 </div>
-                                <div class="stat-value">4</div>
+                                <div class="stat-value" id="dashEventCount">--</div>
                             </div>
                         </div>
                     </div>
@@ -199,28 +195,8 @@
                 <p class="section-desc">Stay updated with latest actions aligned to your workspace.</p>
             </div>
 
-            <div style="max-width: 800px; margin: 0 auto;" class="activity-grid">
-                <div class="activity-item">
-                    <div class="activity-info">
-                        <div class="activity-icon">💡</div>
-                        <div>
-                            <h4 style="font-weight:700;">New Opportunity Posted</h4>
-                            <p style="font-size: 0.9rem; color: var(--ink-500);">AI Workshop needs mentors.</p>
-                        </div>
-                    </div>
-                    <span style="font-size:0.85rem; color:var(--ink-400);">2h ago</span>
-                </div>
-                <div class="activity-item">
-                    <div class="activity-info">
-                        <div class="activity-icon" style="background:var(--sky-100);">🤝</div>
-                        <div>
-                            <h4 style="font-weight:700;">Application Reviewed</h4>
-                            <p style="font-size: 0.9rem; color: var(--ink-500);">Your profile was matched and liked by
-                                Marketing Leads.</p>
-                        </div>
-                    </div>
-                    <span style="font-size:0.85rem; color:var(--ink-400);">5h ago</span>
-                </div>
+            <div style="max-width: 800px; margin: 0 auto;" class="activity-grid" id="dashboardActivityGrid">
+                <div style="padding: 28px; text-align: center; color: var(--ink-400);">Loading your latest activity...</div>
             </div>
         </section>
 

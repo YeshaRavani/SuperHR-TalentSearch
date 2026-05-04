@@ -10,6 +10,16 @@ router = APIRouter()
 
 @router.post("/interested-opportunities", response_model=models.UserOpportunityResponse)
 def mark_interested(opp_id: str, current_user: orm_models.User = Depends(auth.get_current_user), db: Session = Depends(database.get_db)):
+    opportunity = db.query(orm_models.Opportunity).filter(
+        orm_models.Opportunity.id == opp_id,
+        orm_models.Opportunity.status != "removed",
+    ).first()
+    if not opportunity:
+        raise HTTPException(status_code=404, detail="Opportunity not found")
+
+    if opportunity.author_id == current_user.id:
+        raise HTTPException(status_code=400, detail="You cannot save interest in your own opportunity")
+
     # Check if already exists
     existing = db.query(orm_models.UserOpportunity).filter(
         orm_models.UserOpportunity.user_id == current_user.id,
@@ -36,7 +46,8 @@ def mark_interested(opp_id: str, current_user: orm_models.User = Depends(auth.ge
 def get_interested_opportunities(current_user: orm_models.User = Depends(auth.get_current_user), db: Session = Depends(database.get_db)):
     return db.query(orm_models.UserOpportunity).filter(
         orm_models.UserOpportunity.user_id == current_user.id,
-        orm_models.UserOpportunity.status == "interested"
+        orm_models.UserOpportunity.status == "interested",
+        orm_models.UserOpportunity.opportunity_id.isnot(None),
     ).all()
 
 @router.delete("/interested-opportunities/{id}")
@@ -53,6 +64,16 @@ def remove_interest(id: str, current_user: orm_models.User = Depends(auth.get_cu
 
 @router.post("/applications", response_model=models.UserOpportunityResponse)
 def apply_to_opportunity(opp_id: str, current_user: orm_models.User = Depends(auth.get_current_user), db: Session = Depends(database.get_db)):
+    opportunity = db.query(orm_models.Opportunity).filter(
+        orm_models.Opportunity.id == opp_id,
+        orm_models.Opportunity.status != "removed",
+    ).first()
+    if not opportunity:
+        raise HTTPException(status_code=404, detail="Opportunity not found")
+
+    if opportunity.author_id == current_user.id:
+        raise HTTPException(status_code=400, detail="You cannot apply to your own opportunity")
+
     existing = db.query(orm_models.UserOpportunity).filter(
         orm_models.UserOpportunity.user_id == current_user.id,
         orm_models.UserOpportunity.opportunity_id == opp_id
@@ -79,7 +100,8 @@ def apply_to_opportunity(opp_id: str, current_user: orm_models.User = Depends(au
 def get_my_applications(current_user: orm_models.User = Depends(auth.get_current_user), db: Session = Depends(database.get_db)):
     return db.query(orm_models.UserOpportunity).filter(
         orm_models.UserOpportunity.user_id == current_user.id,
-        orm_models.UserOpportunity.status.in_(["applied", "enrolled", "rejected", "completed"])
+        orm_models.UserOpportunity.status.in_(["applied", "enrolled", "rejected", "completed"]),
+        orm_models.UserOpportunity.opportunity_id.isnot(None),
     ).all()
 
 @router.put("/applications/{id}", response_model=models.UserOpportunityResponse)

@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         usersTableBody.innerHTML = users.map((user) => `
             <tr style="border-bottom: 1px solid var(--sky-50);">
                 <td style="padding: 16px;">
-                    <a href="user-profile.html"
+                    <a href="user-profile.html?id=${encodeURIComponent(user.id)}"
                         style="display:flex; align-items:center; gap:12px; text-decoration:none; color:inherit; cursor:pointer;">
                         <div style="min-width:40px; height:40px; border-radius:50%; background: var(--sky-200); display:grid; place-items:center; font-weight:700; color: var(--sky-600);">
                             ${(user.full_name || user.username || '?').charAt(0).toUpperCase()}

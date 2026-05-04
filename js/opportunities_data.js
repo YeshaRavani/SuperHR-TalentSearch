@@ -8,12 +8,18 @@ window.generateOpportunityCardHTML = function (opp, indexDelay = 0, inInterested
     const delayStyle = indexDelay > 0 ? `style="transition-delay: ${indexDelay * 0.1}s;"` : '';
     const animDelayClass = indexDelay > 0 ? `delay-${indexDelay}` : '';
     const oppId = opp.id || opp.title;
+    const onInterestedPage = isInterestedPage || window.location.pathname.includes('interested.html');
+    const alreadyInterested = Boolean(opp.isInterested);
 
     // Generate variable fallbacks for hover overlay diversity
     const idx = Math.abs(JSON.stringify(opp).length % 10);
     const hoverPoints = opp.points ? `${opp.points} Points` : `${(idx * 10) + 20} Points`;
     const hoverTime = opp.timeRequired || `${(idx % 3) + 2} Hours`;
     const hoverVenue = opp.location || (idx % 2 === 0 ? "Main Hall" : "Remote / Hybrid");
+    const interestButtonLabel = alreadyInterested ? 'Saved' : 'Interested';
+    const interestButtonStyle = alreadyInterested
+        ? 'style="background: var(--green-500, #10b981); color: white;" aria-pressed="true" disabled'
+        : '';
 
     return `
         <article class="initiative-card reveal active ${animDelayClass}" ${delayStyle} data-opp-id="${oppId}">
@@ -40,8 +46,10 @@ window.generateOpportunityCardHTML = function (opp, indexDelay = 0, inInterested
                 </div>
             </a>
             <div class="card-actions">
-                ${window.location.pathname.includes('interested.html') ? '' : `<button class="interest-btn" data-id="${oppId}">Interested</button>`}
-                <button class="remove-btn" data-id="${oppId}" ${window.location.pathname.includes('interested.html') ? 'style="width: 100%;"' : ''}>Remove</button>
+                ${onInterestedPage
+                    ? `<button class="remove-btn" data-id="${oppId}" style="width: 100%;">Remove Interest</button>`
+                    : `<button class="interest-btn" data-id="${oppId}" ${interestButtonStyle}>${interestButtonLabel}</button>`
+                }
             </div>
             <div class="card-hover-overlay">
                 <h4 class="hover-title">Opportunity Details</h4>

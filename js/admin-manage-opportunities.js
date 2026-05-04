@@ -17,6 +17,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         container.innerHTML = `<div style="padding: 60px; text-align: center; color: #ef4444;">${message}</div>`;
     }
 
+    function escapeHtml(value) {
+        return String(value ?? '')
+            .replaceAll('&', '&amp;')
+            .replaceAll('<', '&lt;')
+            .replaceAll('>', '&gt;')
+            .replaceAll('"', '&quot;')
+            .replaceAll("'", '&#039;');
+    }
+
     function initChrome() {
         if (navbar) {
             window.addEventListener('scroll', () => {
@@ -102,6 +111,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     function renderAdminCardHTML(opp, indexDelay = 0) {
         const delayStyle = indexDelay > 0 ? `style="transition-delay: ${indexDelay * 0.1}s;"` : '';
         const animDelayClass = indexDelay > 0 ? `delay-${indexDelay}` : '';
+        const author = opp.author;
+        const authorName = author?.full_name || author?.email || 'Unknown author';
+        const authorTeam = author?.department_team || 'Unassigned';
+        const engagement = opp.engagement || {};
+        const applications = Number(engagement.applications || 0);
+        const interests = Number(engagement.interests || 0);
+        const totalEngagement = Number(engagement.total || 0);
 
         return `
             <article class="initiative-card reveal active ${animDelayClass}" ${delayStyle}>
@@ -114,25 +130,43 @@ document.addEventListener('DOMContentLoaded', async () => {
                         </div>
                     </div>
                     <div class="card-content">
-                        <h3>${opp.title}</h3>
-                        <p>${opp.description}</p>
+                        <h3>${escapeHtml(opp.title)}</h3>
+                        <p>${escapeHtml(opp.description)}</p>
                         <div style="display:flex; gap:8px; flex-wrap:wrap;">
                             <span class="tag">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     ${opp.tagIcon}
                                 </svg>
-                                ${opp.dateStr}
+                                ${escapeHtml(opp.dateStr)}
                             </span>
                             <span class="tag" style="background:var(--white); border-color:var(--sky-200); color:var(--ink-700);">
-                                ${opp.category}
+                                ${escapeHtml(opp.category)}
                             </span>
                             <span class="tag" style="background:var(--sky-50); border-color:var(--sky-200); color:var(--ink-800); font-weight:600;">
                                 ${opp.status === 'removed' ? 'Removed' : 'Active'}
                             </span>
                         </div>
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px; color:var(--ink-500); font-size:0.88rem;">
-                            <span>${opp.location}</span>
-                            <span>${opp.points} pts</span>
+                            <span>${escapeHtml(opp.location)}</span>
+                            <span>${Number(opp.points || 0).toLocaleString('en-IN')} pts</span>
+                        </div>
+                        <div style="display:grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap:8px; margin-top:16px;">
+                            <div style="padding:10px; border-radius:12px; background:var(--sky-50); border:1px solid var(--sky-100);">
+                                <div style="font-size:1rem; font-weight:800; color:var(--ink-900);">${applications.toLocaleString('en-IN')}</div>
+                                <div style="font-size:0.72rem; color:var(--ink-500);">Applied</div>
+                            </div>
+                            <div style="padding:10px; border-radius:12px; background:#eef2ff; border:1px solid #c7d2fe;">
+                                <div style="font-size:1rem; font-weight:800; color:var(--ink-900);">${interests.toLocaleString('en-IN')}</div>
+                                <div style="font-size:0.72rem; color:var(--ink-500);">Interested</div>
+                            </div>
+                            <div style="padding:10px; border-radius:12px; background:#f0fdf4; border:1px solid #bbf7d0;">
+                                <div style="font-size:1rem; font-weight:800; color:var(--ink-900);">${totalEngagement.toLocaleString('en-IN')}</div>
+                                <div style="font-size:0.72rem; color:var(--ink-500);">Total</div>
+                            </div>
+                        </div>
+                        <div style="margin-top:14px; color:var(--ink-500); font-size:0.85rem; line-height:1.45;">
+                            Posted by <strong style="color:var(--ink-800);">${escapeHtml(authorName)}</strong>
+                            <br>${escapeHtml(authorTeam)}
                         </div>
                         <div style="border-top:1px solid rgba(15,31,43,0.05); padding-top:16px; margin-top:16px;">
                             <button class="btn btn-remove" data-id="${opp.id}" style="width: 100%; height: 40px; border-radius: 999px; font-weight: 600; cursor: pointer; border: 1px solid #fca5a5; background: #fee2e2; color: #ef4444; transition: 0.3s; position: relative;">Remove Opportunity</button>
@@ -145,8 +179,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     async function fetchData() {
         try {
-            const rawData = await window.api.get('/admin/opportunities');
-            allOpportunities = rawData.map((opp) => window.OpportunityMapper.map(opp));
+            const rawData = await window.api.get('/admin/opportunities/overview');
+            allOpportunities = rawData.map((opp) => ({
+                ...window.OpportunityMapper.map(opp),
+                author: opp.author,
+                engagement: opp.engagement,
+            }));
             renderAll();
         } catch (err) {
             console.error('Failed to fetch opportunities for admin:', err);
@@ -166,12 +204,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         try {
+            removeBtn.disabled = true;
+            removeBtn.textContent = 'Removing...';
             await window.api.delete(`/opportunities/${id}`);
             allOpportunities = allOpportunities.map((opp) => (
                 opp.id === id ? { ...opp, status: 'removed' } : opp
             ));
             renderAll();
         } catch (err) {
+            removeBtn.disabled = false;
+            removeBtn.textContent = 'Remove Opportunity';
             console.error('Failed to delete opportunity:', err);
             window.alert(err.message || 'Failed to delete opportunity.');
         }

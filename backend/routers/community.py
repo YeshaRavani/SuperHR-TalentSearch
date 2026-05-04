@@ -7,16 +7,71 @@ import uuid
 
 router = APIRouter()
 
+
+def serialize_datetime(value):
+    return value.isoformat() if value else None
+
+
+def serialize_message_overview(message: orm_models.Message) -> dict:
+    sender = message.sender
+    receiver = message.receiver
+    return {
+        "id": message.id,
+        "content": message.content,
+        "is_voice_record": message.is_voice_record,
+        "channel_id": message.channel_id,
+        "receiver_id": message.receiver_id,
+        "sender_id": message.sender_id,
+        "created_at": serialize_datetime(message.created_at),
+        "sender": {
+            "id": sender.id,
+            "username": sender.username,
+            "full_name": sender.full_name,
+            "role": sender.role,
+            "department_team": sender.department_team,
+        } if sender else None,
+        "receiver": {
+            "id": receiver.id,
+            "username": receiver.username,
+            "full_name": receiver.full_name,
+        } if receiver else None,
+    }
+
+
 @router.get("/chat/channels", response_model=List[models.ChannelResponse])
 def get_channels(db: Session = Depends(database.get_db)):
     return db.query(orm_models.Channel).all()
 
 @router.get("/chat/channels/{id}/messages", response_model=List[models.MessageResponse])
 def get_channel_messages(id: str, db: Session = Depends(database.get_db)):
-    return db.query(orm_models.Message).filter(orm_models.Message.channel_id == id).all()
+    return (
+        db.query(orm_models.Message)
+        .filter(orm_models.Message.channel_id == id)
+        .order_by(orm_models.Message.created_at.asc())
+        .all()
+    )
+
+
+@router.get("/chat/channels/{id}/messages/overview")
+def get_channel_messages_overview(id: str, db: Session = Depends(database.get_db)):
+    channel = db.query(orm_models.Channel).filter(orm_models.Channel.id == id).first()
+    if not channel:
+        raise HTTPException(status_code=404, detail="Channel not found")
+
+    messages = (
+        db.query(orm_models.Message)
+        .filter(orm_models.Message.channel_id == id)
+        .order_by(orm_models.Message.created_at.asc())
+        .all()
+    )
+    return [serialize_message_overview(message) for message in messages]
 
 @router.post("/chat/channels/{id}/messages", response_model=models.MessageResponse)
 def post_message(id: str, content: str, current_user: orm_models.User = Depends(auth.get_current_user), db: Session = Depends(database.get_db)):
+    channel = db.query(orm_models.Channel).filter(orm_models.Channel.id == id).first()
+    if not channel:
+        raise HTTPException(status_code=404, detail="Channel not found")
+
     new_msg = orm_models.Message(
         id=str(uuid.uuid4()),
         channel_id=id,
@@ -40,7 +95,26 @@ def get_direct_messages(user_id: str, current_user: orm_models.User = Depends(au
             (orm_models.Message.sender_id == user_id) &
             (orm_models.Message.receiver_id == current_user.id)
         )
-    ).all()
+    ).order_by(orm_models.Message.created_at.asc()).all()
+
+
+@router.get("/chat/direct-messages/{user_id}/overview")
+def get_direct_messages_overview(user_id: str, current_user: orm_models.User = Depends(auth.get_current_user), db: Session = Depends(database.get_db)):
+    other_user = db.query(orm_models.User).filter(orm_models.User.id == user_id).first()
+    if not other_user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    messages = db.query(orm_models.Message).filter(
+        (
+            (orm_models.Message.sender_id == current_user.id) &
+            (orm_models.Message.receiver_id == user_id)
+        ) |
+        (
+            (orm_models.Message.sender_id == user_id) &
+            (orm_models.Message.receiver_id == current_user.id)
+        )
+    ).order_by(orm_models.Message.created_at.asc()).all()
+    return [serialize_message_overview(message) for message in messages]
 
 
 @router.post("/chat/direct-messages", response_model=models.MessageResponse)
@@ -70,7 +144,7 @@ def send_direct_message(
 
 @router.get("/community/members", response_model=List[models.UserResponse])
 def get_community_members(db: Session = Depends(database.get_db)):
-    return db.query(orm_models.User).all()
+    return db.query(orm_models.User).filter(orm_models.User.is_active == True).all()
 
 
 @router.get("/users/search", response_model=List[models.UserResponse])

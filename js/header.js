@@ -235,10 +235,32 @@
 
     /* ── Dynamic Home Link Redirection ─────────────────────────────────────── */
     const isLoggedIn = !!localStorage.getItem('access_token');
-    if (isLoggedIn) {
-      document.querySelectorAll('a[href="index (1).html"]:not([data-no-redirect]):not(.logo)').forEach(link => {
-        link.href = 'dashboard.html';
+
+    function getHomeTarget(role) {
+      if (!isLoggedIn) return 'index (1).html';
+      return role === 'admin' ? 'admin-home.html' : 'dashboard.html';
+    }
+
+    function applyHomeTarget(role) {
+      const target = getHomeTarget(role);
+      document.querySelectorAll('a.logo, a[href="index (1).html"]:not([data-no-redirect])').forEach(link => {
+        link.href = target;
       });
+    }
+
+    applyHomeTarget(userRole);
+
+    if (isLoggedIn && window.api) {
+      window.api.get('/user')
+        .then(function (user) {
+          if (user && user.role) {
+            localStorage.setItem('userRole', user.role);
+            applyHomeTarget(user.role);
+          }
+        })
+        .catch(function () {
+          applyHomeTarget(localStorage.getItem('userRole'));
+        });
     }
 
     /* ── Global Reveal Observer ────────────────────────────────────────────── */
