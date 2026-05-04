@@ -1,10 +1,10 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, File, UploadFile
 from sqlalchemy.orm import Session
 from typing import List
 from types import SimpleNamespace
 from .. import models, orm_models, database
 from ..services.ai_logic import answer_platform_question, build_personalized_suggestions, get_ranked_matches, groq_aided_chat
-from ..utils import auth
+from ..utils import auth, resume_parser
 
 router = APIRouter()
 
@@ -36,3 +36,33 @@ def chat_with_ai(
         )
     reply, sources, suggested_actions = groq_aided_chat(request.message, current_user, opportunities, request.history)
     return models.AIChatResponse(reply=reply, sources=sources, suggested_actions=suggested_actions)
+
+@router.post("/ai/extract-skills")
+async def extract_skills(
+    file: UploadFile = File(...),
+    current_user: orm_models.User = Depends(auth.get_current_user),
+    db: Session = Depends(database.get_db)
+):
+    # 1. Parse text from PDF
+    try:
+        text = await resume_parser.parse_resume_text(file)
+    except Exception as e:
+        return {"error": f"Failed to parse resume: {str(e)}", "skills": []}
+
+    # 2. Use Groq to extract skills
+    system_prompt = (
+        "You are an expert Talent Acquisition AI. Your task is to extract a comprehensive list of professional skills from the provided resume text. "
+        "Extract as many relevant skills as possible, including: \n"
+        "1. Technical/Hard Skills (languages, tools, frameworks)\n"
+        "2. Soft Skills (leadership, communication, problem solving)\n"
+        "3. Domain/Industry Knowledge\n"
+        "Return ONLY a JSON object with a 'skills' key containing a flat list of strings. Do not include categories in the strings."
+    )
+    prompt = f"Resume text:\n{text[:6000]}" # Slightly increased limit
+    
+    try:
+        from ..services.groq_service import groq_service
+        result = groq_service.get_chat_completion(prompt, system_prompt)
+        return {"skills": result.get("skills", [])}
+    except Exception as e:
+        return {"error": f"AI extraction failed: {str(e)}", "skills": []}

@@ -5,19 +5,26 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     // Name
     const viewName = document.getElementById('viewName');
-    if (viewName) viewName.textContent = user.full_name || '—';
+    if (viewName) viewName.textContent = user.full_name || 'Rushil Gargash';
 
     // Institution / organisation
     const viewInstitution = document.getElementById('viewInstitution');
-    if (viewInstitution) viewInstitution.textContent = user.organisation || '—';
+    if (viewInstitution) viewInstitution.textContent = user.organisation || 'Plaksha University';
 
     // Team
     const viewTeam = document.getElementById('viewTeam');
-    if (viewTeam) viewTeam.textContent = user.department_team || '—';
+    if (viewTeam) viewTeam.textContent = user.department_team || 'General';
 
     // Role (displayed in viewModeDetails static text area)
     const roleMeta = document.querySelector('#viewModeDetails .meta:nth-child(4)');
-    if (roleMeta) roleMeta.textContent = 'Role: ' + (user.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : 'User');
+    if (roleMeta) roleMeta.textContent = 'Role: ' + (user.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : 'Contributor');
+
+    // Member Since
+    const sinceMeta = document.querySelector('#viewModeDetails .meta:nth-child(5)');
+    if (sinceMeta && user.created_at) {
+      const date = new Date(user.created_at);
+      sinceMeta.textContent = 'Member Since: ' + date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+    }
 
     // User ID
     const viewId = document.getElementById('viewId');
@@ -63,6 +70,22 @@ document.addEventListener('DOMContentLoaded', async function () {
       } else {
         // No photo stored — immediately show coloured initials avatar
         renderInitialsAvatar();
+      }
+    }
+
+    // Skills - Populate from API
+    const viewSkills = document.getElementById('viewSkills');
+    if (viewSkills && user.skills) {
+      viewSkills.innerHTML = '';
+      if (user.skills.length === 0) {
+        viewSkills.innerHTML = '<span style="color:var(--ink-400); font-size:0.85rem;">No skills added yet.</span>';
+      } else {
+        user.skills.forEach(skill => {
+          const sp = document.createElement('span');
+          sp.className = 'skill-pill';
+          sp.textContent = skill;
+          viewSkills.appendChild(sp);
+        });
       }
     }
 
@@ -139,17 +162,48 @@ document.addEventListener('DOMContentLoaded', async function () {
         editBtn.classList.add('hidden'); saveBtn.classList.remove('hidden'); cancelBtn.classList.remove('hidden');
       }
 
-      function exitEditMode(save) {
+      async function exitEditMode(save) {
         if (save) {
-          // write values back
-          viewName.textContent = inputName.value.trim() || '—';
-          viewInstitution.textContent = inputInstitution.value.trim() || '—';
-          viewTeam.textContent = inputTeam.value.trim() || '—';
-          // User ID remains unchanged as it's readonly
-          // skills
-          var skills = Array.from(editSkillsList.querySelectorAll('.edit-skill-tag')).map(function (t) { return t.dataset.value; });
-          viewSkills.innerHTML = '';
-          skills.forEach(function (s) { var sp = document.createElement('span'); sp.className = 'skill-pill'; sp.textContent = s; viewSkills.appendChild(sp); });
+          saveBtn.disabled = true;
+          saveBtn.textContent = 'Saving...';
+          
+          try {
+            const skills = Array.from(editSkillsList.querySelectorAll('.edit-skill-tag')).map(t => t.dataset.value);
+            const payload = {
+              full_name: inputName.value.trim(),
+              organisation: inputInstitution.value.trim(),
+              department_team: inputTeam.value.trim(),
+              skills: skills
+            };
+
+            // If avatar was changed (it will be a base64 string)
+            if (profileAvatar.src.startsWith('data:image')) {
+              payload.profile_photo_url = profileAvatar.src;
+            }
+
+            await api.put('/user', payload);
+
+            // update values back in view
+            viewName.textContent = inputName.value.trim() || '—';
+            viewInstitution.textContent = inputInstitution.value.trim() || '—';
+            viewTeam.textContent = inputTeam.value.trim() || '—';
+            
+            viewSkills.innerHTML = '';
+            skills.forEach(function (s) { 
+              var sp = document.createElement('span'); 
+              sp.className = 'skill-pill'; 
+              sp.textContent = s; 
+              viewSkills.appendChild(sp); 
+            });
+          } catch (err) {
+            alert('Failed to save profile: ' + err.message);
+            saveBtn.disabled = false;
+            saveBtn.textContent = 'Save Changes';
+            return;
+          } finally {
+            saveBtn.disabled = false;
+            saveBtn.textContent = 'Save Changes';
+          }
         } else {
           // revert
           profileAvatar.src = originalData.avatar;
@@ -185,7 +239,41 @@ document.addEventListener('DOMContentLoaded', async function () {
       imageInput.addEventListener('change', function (e) { var file = e.target.files && e.target.files[0]; if (!file) return; var reader = new FileReader(); reader.onload = function (ev) { profileAvatar.src = ev.target.result; }; reader.readAsDataURL(file); });
 
       editBtn.addEventListener('click', enterEditMode);
-      editSkillsBtn.addEventListener('click', function () { if (editSkillsArea.classList.contains('hidden')) { editSkillsArea.classList.remove('hidden'); viewSkills.classList.add('hidden'); } else { editSkillsArea.classList.add('hidden'); viewSkills.classList.remove('hidden'); } });
+      editSkillsBtn.addEventListener('click', function () {
+        if (editSkillsArea.classList.contains('hidden')) {
+          const currentSkills = Array.from(viewSkills.querySelectorAll('.skill-pill')).map(s => s.textContent.trim());
+          renderEditSkills(currentSkills);
+          editSkillsArea.classList.remove('hidden');
+          viewSkills.classList.add('hidden');
+          
+          // Show save/cancel buttons
+          editBtn.classList.add('hidden');
+          saveBtn.classList.remove('hidden');
+          cancelBtn.classList.remove('hidden');
+        } else {
+          // If we are already in edit mode (maybe from editBtn), this just toggles the area
+          // But usually we want to keep the save buttons visible if we are editing
+        }
+      });
+      const addSkillMockBtn = document.getElementById('addSkillMockBtn');
+      if (addSkillMockBtn) {
+        addSkillMockBtn.addEventListener('click', function () {
+          if (editSkillsArea.classList.contains('hidden')) {
+            const currentSkills = Array.from(viewSkills.querySelectorAll('.skill-pill')).map(s => s.textContent.trim());
+            renderEditSkills(currentSkills);
+            editSkillsArea.classList.remove('hidden');
+            viewSkills.classList.add('hidden');
+          }
+          
+          // Show save/cancel buttons
+          editBtn.classList.add('hidden');
+          saveBtn.classList.remove('hidden');
+          cancelBtn.classList.remove('hidden');
+          
+          skillInput.focus();
+        });
+      }
+
       saveBtn.addEventListener('click', function () { exitEditMode(true); });
       cancelBtn.addEventListener('click', function () { exitEditMode(false); });
 

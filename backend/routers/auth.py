@@ -74,6 +74,21 @@ def update_current_user(
         if existing_email_user:
             raise HTTPException(status_code=400, detail="Email already registered")
 
+    if "skills" in update_data:
+        skill_names = update_data.pop("skills")
+        current_user.skills = []
+        if skill_names:
+            for name in skill_names:
+                name = name.strip()
+                if not name: continue
+                db_skill = db.query(orm_models.Skill).filter(orm_models.Skill.name == name).first()
+                if not db_skill:
+                    db_skill = orm_models.Skill(name=name)
+                    db.add(db_skill)
+                    db.flush()
+                if db_skill not in current_user.skills:
+                    current_user.skills.append(db_skill)
+
     for key, value in update_data.items():
         setattr(current_user, key, value)
 

@@ -74,10 +74,12 @@
             <h1 class="title">Profile Setup</h1>
             <p class="subtitle">Set up your profile to get better recommendations.</p>
 
-            <form class="form"
-                onsubmit="event.preventDefault(); localStorage.setItem('userRole', 'user'); window.location.href='dashboard.html';">
+            <form class="form">
                 <div class="form-group">
                     <label class="form-label">Upload profile picture</label>
+                    <div class="profile-preview-wrap">
+                        <img id="imagePreview" class="profile-preview" src="" alt="Profile Preview" style="display: none;" />
+                    </div>
                     <div class="file-input-wrapper">
                         <div class="file-upload-display">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -87,7 +89,7 @@
                             </svg>
                             Choose an image
                         </div>
-                        <input type="file" accept="image/*" />
+                        <input type="file" id="profilePicInput" accept="image/*" />
                     </div>
                 </div>
 
@@ -110,9 +112,14 @@
 
 
                 <div class="form-group">
-                    <label class="form-label" for="jobdesc">Job description</label>
-                    <textarea id="jobdesc" class="text-input" placeholder="A brief description of your role..."
-                        required></textarea>
+                    <label class="form-label">Skills & Expertise</label>
+                    <div class="add-skill-wrap">
+                        <input type="text" id="newSkillInput" class="text-input add-skill-input" placeholder="Add a skill manually..." />
+                        <button type="button" id="addSkillBtn" class="btn btn-secondary" style="height: 48px;">Add</button>
+                    </div>
+                    <div id="skillsContainer" class="skills-container">
+                        <p class="empty-state" style="color: var(--ink-400); font-size: 0.9rem; margin: auto;">No skills added yet. Upload resume to auto-extract.</p>
+                    </div>
                 </div>
 
                 <div class="actions">

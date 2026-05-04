@@ -28,6 +28,10 @@
 
 document.addEventListener('DOMContentLoaded', function () {
     const role = localStorage.getItem('userRole');
+    const form = document.querySelector('.form');
+    if (form) {
+        form.addEventListener('submit', handleSignupNext);
+    }
 });
 
 async function handleSignupNext(e) {
@@ -45,13 +49,17 @@ async function handleSignupNext(e) {
     }
 
     const submitBtn = e.target.querySelector('button[type="submit"]');
+    if (!submitBtn) return;
+    
+    const originalBtnText = submitBtn.innerText;
     submitBtn.disabled = true;
     submitBtn.innerText = "Creating Account...";
 
     try {
+        const sanitizedEmail = user.toLowerCase().replace(/\s+/g, '.') + '@example.com';
         await api.post('/signup', {
             username: user,
-            email: `${user}@example.com`,
+            email: sanitizedEmail,
             full_name: fullname,
             password: pass,
             role: 'contributors',
@@ -61,11 +69,13 @@ async function handleSignupNext(e) {
 
         // Auto-login after signup
         await api.login(user, pass);
-        window.location.href = 'dashboard.html';
+        
+        // Redirect to profile setup (resume upload) instead of dashboard
+        window.location.href = 'contributor-profile.html';
     } catch (err) {
         alert("Signup failed: " + err.message);
         submitBtn.disabled = false;
-        submitBtn.innerText = "Next →";
+        submitBtn.innerText = originalBtnText;
     }
 }
 window.handleSignupNext = handleSignupNext;

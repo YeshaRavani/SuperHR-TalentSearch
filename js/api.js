@@ -3,10 +3,15 @@ const API_BASE_URL = 'http://127.0.0.1:8000/api';
 const api = {
     async request(endpoint, options = {}) {
         const token = localStorage.getItem('access_token');
+        const isFormData = options.body instanceof FormData;
+        
         const headers = {
-            'Content-Type': 'application/json',
             ...options.headers,
         };
+
+        if (!isFormData) {
+            headers['Content-Type'] = 'application/json';
+        }
 
         if (token) {
             headers['Authorization'] = `Bearer ${token}`;
@@ -53,16 +58,18 @@ const api = {
     },
 
     async post(endpoint, data) {
+        const body = data instanceof FormData ? data : JSON.stringify(data);
         return this.request(endpoint, {
             method: 'POST',
-            body: JSON.stringify(data),
+            body: body,
         });
     },
 
     async put(endpoint, data) {
+        const body = data instanceof FormData ? data : JSON.stringify(data);
         return this.request(endpoint, {
             method: 'PUT',
-            body: JSON.stringify(data),
+            body: body,
         });
     },
 

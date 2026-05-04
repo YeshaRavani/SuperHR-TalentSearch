@@ -26,6 +26,7 @@ class UserUpdate(BaseModel):
     organisation: Optional[str] = None
     department_team: Optional[str] = None
     profile_photo_url: Optional[str] = None
+    skills: Optional[List[str]] = None
 
 class UserResponse(UserBase):
     id: str
@@ -33,6 +34,14 @@ class UserResponse(UserBase):
     is_active: bool
     created_at: datetime
     profile_photo_url: Optional[str] = None
+    skills: List[str] = []
+
+    @field_validator('skills', mode='before')
+    @classmethod
+    def extract_skill_names(cls, v):
+        if isinstance(v, list):
+            return [i.name if hasattr(i, 'name') else i for i in v]
+        return v or []
 
     class Config:
         from_attributes = True
