@@ -137,6 +137,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    const logoutBtn = document.getElementById('logoutBtn');
+
     openBtn?.addEventListener('click', openModal);
     closeBtn?.addEventListener('click', closeModal);
     cancelBtn?.addEventListener('click', closeModal);
@@ -144,6 +146,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (event.target === modal) closeModal();
     });
     saveBtn?.addEventListener('click', saveProfile);
+
+    logoutBtn?.addEventListener('click', () => {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('userRole');
+        window.location.href = 'index (1).html';
+    });
 
     imageInput?.addEventListener('change', (event) => {
         const file = event.target.files && event.target.files[0];
