@@ -81,61 +81,98 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const aiDesc = document.getElementById('aiDescription');
     const generateBtn = document.getElementById('generateBtn');
+    const micBtn = document.getElementById('micBtn');
+
+    // ── Speech Recognition ──
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRecognition && micBtn && aiDesc) {
+        const recognition = new SpeechRecognition();
+        recognition.continuous = true;
+        recognition.lang = 'en-US';
+        recognition.interimResults = true;
+
+        let isListening = false;
+        let finalTranscript = '';
+
+        micBtn.addEventListener('click', () => {
+            if (isListening) {
+                recognition.stop();
+                return;
+            }
+            finalTranscript = aiDesc.value; // Start from current text
+            recognition.start();
+        });
+
+        recognition.onstart = () => {
+            isListening = true;
+            micBtn.classList.add('active');
+            micBtn.style.background = 'var(--red-100)';
+            micBtn.style.color = 'var(--red-600)';
+            micBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="pulse"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4l3 3"></path></svg>';
+        };
+
+        recognition.onresult = (event) => {
+            let interimTranscript = '';
+            for (let i = event.resultIndex; i < event.results.length; ++i) {
+                if (event.results[i].isFinal) {
+                    finalTranscript += event.results[i][0].transcript + ' ';
+                } else {
+                    interimTranscript += event.results[i][0].transcript;
+                }
+            }
+            aiDesc.value = (finalTranscript + interimTranscript).trim();
+            aiDesc.scrollTop = aiDesc.scrollHeight; // Auto-scroll to bottom
+        };
+
+        recognition.onerror = (event) => {
+            console.error('Speech recognition error:', event.error);
+            isListening = false;
+        };
+
+        recognition.onend = () => {
+            isListening = false;
+            micBtn.classList.remove('active');
+            micBtn.style.background = '';
+            micBtn.style.color = '';
+            micBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>';
+        };
+    } else if (micBtn) {
+        micBtn.style.display = 'none'; 
+    }
 
     if (generateBtn && aiDesc) {
-        generateBtn.addEventListener('click', () => {
+        generateBtn.addEventListener('click', async () => {
             const text = aiDesc.value.trim();
             if (!text) return;
 
-            generateBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg> Generating...';
+            const originalBtnHtml = generateBtn.innerHTML;
+            generateBtn.innerHTML = '<svg class="spin" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg> AI Analyzing...';
             generateBtn.disabled = true;
 
-            setTimeout(() => {
-                extractOpportunityDetailsFromText(text);
-                generateBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> Generate Details';
+            try {
+                const data = await api.post('/ai/parse-opportunity', { description: text });
+                
+                // Clear existing skills before adding new ones
+                skills = [];
+                renderSkills();
+                
+                populateOpportunityForm({
+                    title: data.title,
+                    description: data.description,
+                    type: data.type,
+                    xp: data.bounty,
+                    time: data.time_commitment,
+                    schedule: data.schedule,
+                    location: data.location,
+                    skills: data.skills,
+                });
+            } catch (err) {
+                console.error("AI Parsing failed:", err);
+                alert("AI Extraction failed. Please try again or fill manually.");
+            } finally {
+                generateBtn.innerHTML = originalBtnHtml;
                 generateBtn.disabled = false;
-            }, 800);
-        });
-    }
-
-    function inferType(text) {
-        const lower = text.toLowerCase();
-        if (lower.includes('workshop') || lower.includes('training') || lower.includes('session')) return 'Workshop';
-        if (lower.includes('event') || lower.includes('sprint') || lower.includes('meetup')) return 'Event';
-        return 'Initiative';
-    }
-
-    function extractOpportunityDetailsFromText(text) {
-        const lower = text.toLowerCase();
-        let title = text.split(/[.?!]/)[0].substring(0, 70).trim();
-        title = title.replace(/^(i need|need|looking for|we need|seeking)\s+/i, '');
-        title = title.charAt(0).toUpperCase() + title.slice(1);
-
-        const knownSkills = [
-            'Figma', 'Canva', 'Python', 'Data Analysis', 'React', 'HTML', 'CSS',
-            'Marketing', 'Writing', 'Research', 'UX', 'Social Media',
-            'Content Creation', 'Photography', 'Video Editing', 'AI',
-        ];
-        const extractedSkills = knownSkills.filter(skill => lower.includes(skill.toLowerCase()));
-        const xpMatch = text.match(/(\d+)\s*(xp|points?)/i);
-        const scheduleMatch = text.match(/(next \w+|[2-9]\s*weeks?|tomorrow|this weekend|this month|next month)/i);
-        const locationMatch = text.match(/\b(?:at|in)\s+([A-Z][A-Za-z0-9\s-]{2,40})/);
-
-        let time = '';
-        if (lower.includes('less than 1') || lower.includes('< 1')) time = 'Less than 1 hour';
-        else if (lower.includes('1-2') || lower.includes('1 to 2')) time = '1-2 hours / week';
-        else if (lower.includes('3-5') || lower.includes('3 to 5')) time = '3-5 hours / week';
-        else if (lower.includes('5-10') || lower.includes('5 to 10')) time = '5-10 hours / week';
-
-        populateOpportunityForm({
-            title,
-            description: text,
-            type: inferType(text),
-            xp: xpMatch ? xpMatch[1] : '',
-            time,
-            schedule: scheduleMatch ? scheduleMatch[1] : '',
-            location: locationMatch ? locationMatch[1].trim() : '',
-            skills: extractedSkills,
+            }
         });
     }
 

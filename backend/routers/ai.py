@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, File, UploadFile
+from fastapi import APIRouter, Depends, File, UploadFile, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
 from types import SimpleNamespace
@@ -8,7 +8,44 @@ from ..utils import auth, resume_parser
 
 router = APIRouter()
 
+@router.post("/ai/parse-opportunity", response_model=models.AIOpportunityParseResponse)
+async def parse_opportunity(
+    request: models.AIOpportunityParseRequest,
+    current_user: orm_models.User = Depends(auth.get_current_user)
+):
+    system_prompt = (
+        "You are an AI assistant helping a recruiter create an opportunity post. "
+        "From the provided natural language description, extract and structure the details into a JSON object. "
+        "Fields to extract:\n"
+        "1. title: A catchy and professional title.\n"
+        "2. type: Must be one of 'Initiative', 'Workshop', or 'Event'.\n"
+        "3. location: Specific venue or 'Remote'.\n"
+        "4. description: A clear, multi-sentence professional description.\n"
+        "5. schedule: Timeline or date info (e.g. 'Next 2 weeks', 'Every Monday').\n"
+        "6. bounty: Integer value representing XP points reward. Default to 100 if not clear.\n"
+        "7. time_commitment: Choose the closest match from: 'Less than 1 hour', '1-2 hours / week', '3-5 hours / week', '5-10 hours / week'.\n"
+        "8. skills: List of relevant professional skills required.\n"
+        "Return ONLY the JSON object matching the requested schema."
+    )
+    
+    from ..services.groq_service import groq_service
+    try:
+        result = groq_service.get_chat_completion(request.description, system_prompt)
+        # Ensure result has all required keys to match AIOpportunityParseResponse
+        defaults = {
+            "title": "", "type": "Initiative", "location": "Remote", 
+            "description": "", "schedule": "TBD", "bounty": 100, 
+            "time_commitment": "1-2 hours / week", "skills": []
+        }
+        for k, v in defaults.items():
+            if k not in result:
+                result[k] = v
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"AI parsing failed: {str(e)}")
+
 @router.get("/ai/match", response_model=List[models.OpportunityResponse])
+
 def get_ai_matches(current_user: orm_models.User = Depends(auth.get_current_user), db: Session = Depends(database.get_db)):
     all_opps = db.query(orm_models.Opportunity).all()
     return get_ranked_matches(current_user, all_opps)

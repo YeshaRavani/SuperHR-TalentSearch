@@ -244,3 +244,19 @@ class AIChatResponse(BaseModel):
     reply: str
     sources: List[str] = []
     suggested_actions: List[str] = []
+
+
+class AIOpportunityParseRequest(BaseModel):
+    description: str
+
+
+class AIOpportunityParseResponse(BaseModel):
+    title: str
+    type: str
+    location: str
+    description: str
+    schedule: str
+    bounty: int
+    time_commitment: str
+    skills: List[str]
+

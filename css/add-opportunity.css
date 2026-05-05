@@ -103,6 +103,20 @@
       }
     }
 
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .spin {
+      display: inline-block;
+      animation: spin 1s linear infinite;
+    }
+
+    .pulse {
+      animation: pulseMic 1.5s infinite;
+    }
+
+
     .reveal {
       opacity: 0;
       transform: translateY(30px);
