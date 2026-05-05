@@ -8,8 +8,18 @@ import uuid
 router = APIRouter()
 
 @router.get("/opportunities", response_model=List[models.OpportunityResponse])
-def get_opportunities(db: Session = Depends(database.get_db)):
-    return db.query(orm_models.Opportunity).filter(orm_models.Opportunity.status != "removed").all()
+def get_opportunities(
+    db: Session = Depends(database.get_db),
+    current_user: orm_models.User = Depends(auth.get_optional_current_user)
+):
+    query = db.query(orm_models.Opportunity).filter(orm_models.Opportunity.status != "removed")
+    
+    # If logged in and not admin, hide own posts. 
+    # If not logged in, show everything (public view).
+    if current_user and current_user.role != "admin":
+        query = query.filter(orm_models.Opportunity.author_id != current_user.id)
+    
+    return query.all()
 
 @router.get("/opportunities/{id}", response_model=models.OpportunityResponse)
 def get_opportunity(id: str, db: Session = Depends(database.get_db)):

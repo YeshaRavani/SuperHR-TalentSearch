@@ -109,6 +109,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
       // Profile edit UI
       var editBtn = document.getElementById('editBtn');
+      var logoutBtn = document.getElementById('logoutBtn');
       var saveBtn = document.getElementById('saveBtn');
       var cancelBtn = document.getElementById('cancelBtn');
       var editSkillsBtn = document.getElementById('editSkillsBtn');
@@ -159,7 +160,10 @@ document.addEventListener('DOMContentLoaded', async function () {
         viewSkills.classList.add('hidden'); editSkillsArea.classList.remove('hidden');
         renderEditSkills(originalData.skills);
 
-        editBtn.classList.add('hidden'); saveBtn.classList.remove('hidden'); cancelBtn.classList.remove('hidden');
+        editBtn.classList.add('hidden');
+        logoutBtn.classList.add('hidden');
+        saveBtn.classList.remove('hidden');
+        cancelBtn.classList.remove('hidden');
       }
 
       async function exitEditMode(save) {
@@ -216,7 +220,10 @@ document.addEventListener('DOMContentLoaded', async function () {
         changePhotoBtn.classList.add('hidden');
         viewSkills.classList.remove('hidden'); editSkillsArea.classList.add('hidden');
 
-        editBtn.classList.remove('hidden'); saveBtn.classList.add('hidden'); cancelBtn.classList.add('hidden');
+        editBtn.classList.remove('hidden');
+        logoutBtn.classList.remove('hidden');
+        saveBtn.classList.add('hidden');
+        cancelBtn.classList.add('hidden');
       }
 
       function renderEditSkills(list) {
@@ -248,6 +255,7 @@ document.addEventListener('DOMContentLoaded', async function () {
           
           // Show save/cancel buttons
           editBtn.classList.add('hidden');
+          logoutBtn.classList.add('hidden');
           saveBtn.classList.remove('hidden');
           cancelBtn.classList.remove('hidden');
         } else {
@@ -274,6 +282,15 @@ document.addEventListener('DOMContentLoaded', async function () {
         });
       }
 
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('userRole');
+          window.location.href = 'index (1).html';
+        });
+      }
+
+      editBtn.addEventListener('click', enterEditMode);
       saveBtn.addEventListener('click', function () { exitEditMode(true); });
       cancelBtn.addEventListener('click', function () { exitEditMode(false); });
 

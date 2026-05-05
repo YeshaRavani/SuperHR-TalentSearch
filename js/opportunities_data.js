@@ -21,8 +21,33 @@ window.generateOpportunityCardHTML = function (opp, indexDelay = 0, inInterested
         ? 'style="background: var(--green-500, #10b981); color: white;" aria-pressed="true" disabled'
         : '';
 
+    const matchBadge = opp.hasMatch ? `
+        <div class="match-badge ${opp.matchScore >= 70 ? 'high-match' : ''}" style="
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: ${opp.matchScore >= 70 ? 'var(--green-500, #10b981)' : 'var(--sky-500, #0ea5e9)'};
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        ">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            ${opp.matchScore >= 70 ? 'High Match' : 'Skill Match'} (${opp.matchScore}%)
+        </div>
+    ` : '';
+
     return `
         <article class="initiative-card reveal active ${animDelayClass}" ${delayStyle} data-opp-id="${oppId}">
+            ${matchBadge}
             <a href="${opp.link}" class="card-link" style="text-decoration:none; color:inherit; display:flex; flex-direction:column; height:100%;">
                 <div class="card-image" aria-hidden="true" style="background: ${opp.bgGradient};">
                     <div class="card-icon-overlay" style="color: ${opp.iconColor};">
