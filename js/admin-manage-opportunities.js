@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const container = document.getElementById('opportunities-master-container');
-    const filterBtns = document.querySelectorAll('.filter-btn');
     const navbar = document.getElementById('navbar');
     const scrollProgress = document.getElementById('scrollProgress');
     const notifToggle = document.getElementById('notifToggle');
@@ -11,7 +10,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!container) return;
 
     let allOpportunities = [];
-    let activeFilter = 'all';
 
     function setError(message) {
         container.innerHTML = `<div style="padding: 60px; text-align: center; color: #ef4444;">${message}</div>`;
@@ -62,14 +60,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function getFilteredOpportunities() {
-        if (activeFilter === 'all') {
-            return allOpportunities.filter((opp) => opp.status !== 'removed');
-        }
-
-        return allOpportunities.filter((opp) => (
-            opp.status !== 'removed' &&
-            opp.category.toLowerCase() === activeFilter
-        ));
+        return allOpportunities.filter((opp) => opp.status !== 'removed');
     }
 
     function renderAll() {
@@ -79,29 +70,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
 
-        const grouped = {
-            event: visibleOpportunities.filter((opp) => opp.category === 'Event'),
-            initiative: visibleOpportunities.filter((opp) => opp.category === 'Initiative'),
-            workshop: visibleOpportunities.filter((opp) => opp.category === 'Workshop'),
-        };
-
-        const sections = [
-            { key: 'event', title: 'Events', viewKey: 'events' },
-            { key: 'initiative', title: 'Initiatives', viewKey: 'initiatives' },
-            { key: 'workshop', title: 'Workshops', viewKey: 'workshops' },
-        ];
-
-        container.innerHTML = sections
-            .filter((section) => grouped[section.key].length > 0)
-            .map((section) => `
-                <div class="category-section reveal active" id="${section.viewKey}">
-                    <h2 class="category-title">${section.title}</h2>
-                    <section class="initiatives-grid">
-                        ${grouped[section.key].map((opp, index) => renderAdminCardHTML(opp, index % 4)).join('')}
-                    </section>
-                </div>
-            `)
-            .join('');
+        container.innerHTML = `
+            <div class="category-section reveal active" id="opportunities">
+                <section class="initiatives-grid">
+                    ${visibleOpportunities.map((opp, index) => renderAdminCardHTML(opp, index % 4)).join('')}
+                </section>
+            </div>
+        `;
 
         if (window.initReveal) {
             window.initReveal();
@@ -138,9 +113,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                                     ${opp.tagIcon}
                                 </svg>
                                 ${escapeHtml(opp.dateStr)}
-                            </span>
-                            <span class="tag" style="background:var(--white); border-color:var(--sky-200); color:var(--ink-700);">
-                                ${escapeHtml(opp.category)}
                             </span>
                             <span class="tag" style="background:var(--sky-50); border-color:var(--sky-200); color:var(--ink-800); font-weight:600;">
                                 ${opp.status === 'removed' ? 'Removed' : 'Active'}
@@ -217,16 +189,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.error('Failed to delete opportunity:', err);
             window.alert(err.message || 'Failed to delete opportunity.');
         }
-    });
-
-    filterBtns.forEach((btn) => {
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            filterBtns.forEach((item) => item.classList.remove('active'));
-            btn.classList.add('active');
-            activeFilter = btn.dataset.filter || 'all';
-            renderAll();
-        });
     });
 
     initChrome();

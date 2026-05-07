@@ -1,4 +1,4 @@
-from typing import Iterable, List
+from typing import Any, Dict, Iterable, List
 
 from .. import orm_models
 from .groq_service import groq_service
@@ -122,7 +122,41 @@ def build_personalized_suggestions(user: orm_models.User, opportunities: Iterabl
     return suggestions[:3]
 
 
-def answer_platform_question(message: str, user: orm_models.User, opportunities: Iterable[orm_models.Opportunity], history: List[object] | None = None) -> tuple[str, List[str], List[str]]:
+def summarize_runtime_context(runtime_context: Dict[str, Any] | None) -> str:
+    if not runtime_context:
+        return "- Runtime data unavailable"
+
+    lines = [
+        f"- Authenticated: {'yes' if runtime_context.get('is_authenticated') else 'no'}",
+        f"- Visible opportunities: {runtime_context.get('visible_opportunity_count', 0)}",
+        f"- Organisation: {runtime_context.get('organisation') or 'Guest'}",
+    ]
+    channels = runtime_context.get("channels") or []
+    if channels:
+        lines.append("- Community channels: " + ", ".join(channels[:6]))
+    for key, label in [
+        ("applications", "Your applications"),
+        ("interests", "Your saved interests"),
+        ("posted_opportunities", "Your posted opportunities"),
+        ("pending_invitations", "Your pending invitations"),
+        ("organisation_users", "Organisation users"),
+        ("organisation_applications", "Organisation applications"),
+        ("organisation_interests", "Organisation interests"),
+    ]:
+        if key in runtime_context:
+            lines.append(f"- {label}: {runtime_context[key]}")
+    if runtime_context.get("admin_scope"):
+        lines.append(f"- Admin scope: {runtime_context['admin_scope']}")
+    return "\n".join(lines)
+
+
+def answer_platform_question(
+    message: str,
+    user: orm_models.User,
+    opportunities: Iterable[orm_models.Opportunity],
+    history: List[object] | None = None,
+    runtime_context: Dict[str, Any] | None = None,
+) -> tuple[str, List[str], List[str]]:
     prompt = message.lower().strip()
     matches = get_ranked_matches(user, opportunities, limit=3)
     opportunity_names = [opportunity.title for opportunity in matches]
@@ -174,10 +208,11 @@ def answer_platform_question(message: str, user: orm_models.User, opportunities:
     if "admin" in prompt:
         if (user.role or "").lower() == "admin":
             reply = (
-                "Admins can manage users and roles, review opportunities, adjust reward policy, and access system settings."
+                "Admins can manage users, review opportunities, adjust reward policy, and access system settings. "
+                "Your admin pages are scoped to your own organisation, so dashboard counts, users, opportunities, applicants, and notifications only show that organisation."
             )
-            sources = ["Page: Admin Manage Users", "Page: Admin Manage Opportunities", "Page: Admin System Settings"]
-            actions = ["Open admin manage users", "Open admin system settings"]
+            sources = ["Page: Admin Home", "Page: Admin Manage Users", "Page: Admin Manage Opportunities", "Page: Admin System Settings"]
+            actions = ["Open admin manage users", "Open admin manage opportunities"]
         else:
             reply = "Admin tools exist for managing users, opportunities, and system settings, but they are available only to admin accounts."
             sources = ["Page: Admin Manage Users", "Page: Admin Manage Opportunities", "Page: Admin System Settings"]
@@ -189,14 +224,21 @@ def answer_platform_question(message: str, user: orm_models.User, opportunities:
         if navigation_answer:
             return navigation_answer
 
+    if any(keyword in prompt for keyword in ["post", "create", "add"]) and "opportunit" in prompt:
+        reply = (
+            "Use the Add Opportunity page to create a post. The platform now treats posts as general opportunities, "
+            "so you do not need to choose event, initiative, or workshop."
+        )
+        return reply, ["Page: Add Opportunity", "Page: Posted Opportunities"], ["Open add opportunity page", "Open posted opportunities page"]
+
     if any(keyword in prompt for keyword in ["match", "recommend", "opportunit", "apply"]):
         if opportunity_names:
             reply = "Based on your profile, the best current matches are " + ", ".join(opportunity_names) + "."
             sources = [f"Opportunity: {title}" for title in opportunity_names]
-            actions = ["Open the opportunities page", "Review expectations before applying"]
+            actions = ["Open opportunities page", "Review expectations before applying"]
         else:
             reply = "I could not find a strong opportunity match yet. Add more skills or team details to your profile first."
-            actions = ["Update your profile", "Refresh AI matches after adding skills"]
+            actions = ["Update your profile", "Refresh AI matches"]
         return reply, sources, actions
 
     if any(keyword in prompt for keyword in ["point", "reward", "leave"]):
@@ -208,7 +250,9 @@ def answer_platform_question(message: str, user: orm_models.User, opportunities:
         return reply, sources, actions
 
     if any(keyword in prompt for keyword in ["community", "channel", "chat"]):
-        reply = "Use the community page to browse channels, post updates, and message members directly."
+        channels = runtime_context.get("channels", []) if runtime_context else []
+        channel_text = f" Current channels include {', '.join(channels[:3])}." if channels else ""
+        reply = f"Use the Community page to browse channels, post updates, and message members directly.{channel_text}"
         sources = ["Page: Community", "Community channels", "Direct messages"]
         actions = ["Open community page", "Join an active channel"]
         return reply, sources, actions
@@ -232,7 +276,7 @@ def answer_platform_question(message: str, user: orm_models.User, opportunities:
     return reply, sources, actions
 
 
-def build_groq_context(user: orm_models.User, opportunities: List[orm_models.Opportunity]) -> str:
+def build_groq_context(user: orm_models.User, opportunities: List[orm_models.Opportunity], runtime_context: Dict[str, Any] | None = None) -> str:
     """Build a concise, grounded context block for the model."""
     ranked = get_ranked_matches(user, opportunities, limit=5)
     opps_summary = "\n".join(
@@ -251,16 +295,22 @@ Top Matched Opportunities:
 {opps_summary}
 
 Platform Features:
-- Users can browse opportunities, match based on skills/team, and apply.
-- Users earn points for contributions.
-- Community chat has channels and direct messages.
+- Users can browse opportunities, mark interest, apply, post opportunities, and review applicants on their own posts.
+- Users earn points for contributions and can track applications, interests, invitations, and posted opportunities.
+- Community has channels, member discovery, direct messages, and collaboration invitations.
+- Opportunity type segregation has been removed; the platform now presents posts as general opportunities with skill filtering.
+- Contributor signup uses a dropdown of admin-approved organisations; admin signup can create a new organisation freely.
+- Admin dashboards, users, opportunities, applicants, profile metrics, and notifications are organisation-scoped.
+
+Live Platform Data:
+{summarize_runtime_context(runtime_context)}
 """
     platform_context = build_platform_context("", (user.role or "contributors").lower())
     return context + "\n" + platform_context
 
 
 def sanitize_sources(raw_sources: List[str], opportunities: List[orm_models.Opportunity]) -> List[str]:
-    allowed_sources = {"User rewards summary", "Admin reward policy", "Community channels", "Direct messages"}
+    allowed_sources = {"User rewards summary", "Admin reward policy", "Community channels", "Direct messages", "Runtime: Platform data"}
     allowed_sources.update({f"Opportunity: {o.title}" for o in opportunities})
     allowed_sources.update(get_page_sources())
 
@@ -290,7 +340,13 @@ def sanitize_actions(raw_actions: List[str], message: str, user: orm_models.User
     return fallback_actions[:2]
 
 
-def groq_aided_chat(message: str, user: orm_models.User, opportunities: List[orm_models.Opportunity], history: List[object] | None = None) -> tuple[str, List[str], List[str]]:
+def groq_aided_chat(
+    message: str,
+    user: orm_models.User,
+    opportunities: List[orm_models.Opportunity],
+    history: List[object] | None = None,
+    runtime_context: Dict[str, Any] | None = None,
+) -> tuple[str, List[str], List[str]]:
     """Use Groq when available; otherwise fall back to deterministic logic."""
     history = history or []
 
@@ -309,19 +365,19 @@ def groq_aided_chat(message: str, user: orm_models.User, opportunities: List[orm
         )
 
     if is_emotional_support_message(message):
-        return answer_platform_question(message, user, opportunities, history)
+        return answer_platform_question(message, user, opportunities, history, runtime_context)
 
     if is_appreciation_message(message):
-        return answer_platform_question(message, user, opportunities, history)
+        return answer_platform_question(message, user, opportunities, history, runtime_context)
 
     if is_platform_troubleshooting_message(message):
-        return answer_platform_question(message, user, opportunities, history)
+        return answer_platform_question(message, user, opportunities, history, runtime_context)
 
     if not groq_service.is_available():
-        return answer_platform_question(message, user, opportunities, history)
+        return answer_platform_question(message, user, opportunities, history, runtime_context)
 
     role = (user.role or "contributors").lower()
-    context = build_groq_context(user, opportunities)
+    context = build_groq_context(user, opportunities, runtime_context)
     contextual_platform_knowledge = build_platform_context(message, role)
     recent_history = build_recent_history(history)
     system_prompt = f"""
@@ -343,8 +399,10 @@ Requirements:
 4. If a question is out of scope (not about the platform or opportunities), politely steer the user back.
 5. Never include internal IDs, UUIDs, database references, or debug text in the reply or actions.
 6. `suggested_actions` must contain only items from this exact list:
+   - Open home page
    - Open opportunities page
    - Browse opportunities
+   - Open add opportunity page
    - Review expectations before applying
    - Update your profile
    - Refresh AI matches
@@ -358,10 +416,13 @@ Requirements:
    - Open posted opportunities page
    - Open appointment page
    - Open login page
+   - Open contributor signup
+   - Open admin signup
    - Open admin home
    - Open admin manage users
    - Open admin manage opportunities
    - Open admin system settings
+   - Open admin profile
 7. When the user asks where or how to do something, mention the actual page name if it exists in context.
 8. Do not claim a page or feature exists unless it appears in the provided platform knowledge.
 9. If the user asks about admin capabilities and they are not an admin, explain that admin tools exist but are restricted.
@@ -396,4 +457,4 @@ Requirements:
         )
     except Exception:
         # Fallback to deterministic logic on any API or parsing error
-        return answer_platform_question(message, user, opportunities, history)
+        return answer_platform_question(message, user, opportunities, history, runtime_context)

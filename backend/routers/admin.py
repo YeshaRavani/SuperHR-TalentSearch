@@ -16,6 +16,50 @@ def require_admin(current_user: orm_models.User) -> None:
         raise HTTPException(status_code=403, detail="Not authorized")
 
 
+def normalized_org(user: orm_models.User) -> str:
+    return (user.organisation or "").strip()
+
+
+def same_org_user_filter(current_user: orm_models.User):
+    org = normalized_org(current_user)
+    if not org:
+        return orm_models.User.id == current_user.id
+    return func.trim(orm_models.User.organisation) == org
+
+
+def same_org_opportunity_filter(current_user: orm_models.User):
+    org = normalized_org(current_user)
+    if not org:
+        return orm_models.Opportunity.author_id == current_user.id
+    return orm_models.Opportunity.author.has(func.trim(orm_models.User.organisation) == org)
+
+
+def same_org_engagement_filter(current_user: orm_models.User):
+    org = normalized_org(current_user)
+    if not org:
+        return orm_models.UserOpportunity.user_id == current_user.id
+    return orm_models.UserOpportunity.user.has(func.trim(orm_models.User.organisation) == org)
+
+
+def ensure_same_org_user(target_user: orm_models.User, current_user: orm_models.User) -> None:
+    org = normalized_org(current_user)
+    if org:
+        if (target_user.organisation or "").strip() != org:
+            raise HTTPException(status_code=404, detail="User not found")
+    elif target_user.id != current_user.id:
+        raise HTTPException(status_code=404, detail="User not found")
+
+
+def ensure_same_org_opportunity(opportunity: orm_models.Opportunity, current_user: orm_models.User) -> None:
+    author = opportunity.author
+    org = normalized_org(current_user)
+    if org:
+        if not author or (author.organisation or "").strip() != org:
+            raise HTTPException(status_code=404, detail="Opportunity not found")
+    elif opportunity.author_id != current_user.id:
+        raise HTTPException(status_code=404, detail="Opportunity not found")
+
+
 def get_or_create_reward_policy(db: Session) -> orm_models.RewardPolicy:
     policy = db.query(orm_models.RewardPolicy).first()
     if not policy:
@@ -165,7 +209,12 @@ def build_activity(label: str, category: str, created_at, status: str = None) ->
 @router.get("/admin/users", response_model=List[models.UserResponse])
 def get_admin_users(db: Session = Depends(database.get_db), current_user: orm_models.User = Depends(auth.get_current_user)):
     require_admin(current_user)
-    return db.query(orm_models.User).all()
+    return (
+        db.query(orm_models.User)
+        .filter(same_org_user_filter(current_user))
+        .order_by(orm_models.User.created_at.desc())
+        .all()
+    )
 
 
 @router.get("/admin/users/{id}/profile")
@@ -175,10 +224,14 @@ def get_admin_user_profile(id: str, db: Session = Depends(database.get_db), curr
     db_user = db.query(orm_models.User).filter(orm_models.User.id == id).first()
     if not db_user:
         raise HTTPException(status_code=404, detail="User not found")
+    ensure_same_org_user(db_user, current_user)
 
     user_opportunities = (
         db.query(orm_models.UserOpportunity)
-        .filter(orm_models.UserOpportunity.user_id == id)
+        .filter(
+            orm_models.UserOpportunity.user_id == id,
+            orm_models.UserOpportunity.opportunity.has(same_org_opportunity_filter(current_user)),
+        )
         .order_by(orm_models.UserOpportunity.created_at.desc())
         .all()
     )
@@ -190,13 +243,19 @@ def get_admin_user_profile(id: str, db: Session = Depends(database.get_db), curr
     )
     sent_invitations = (
         db.query(orm_models.Invitation)
-        .filter(orm_models.Invitation.sender_id == id)
+        .filter(
+            orm_models.Invitation.sender_id == id,
+            orm_models.Invitation.receiver.has(same_org_user_filter(current_user)),
+        )
         .order_by(orm_models.Invitation.created_at.desc())
         .all()
     )
     received_invitations = (
         db.query(orm_models.Invitation)
-        .filter(orm_models.Invitation.receiver_id == id)
+        .filter(
+            orm_models.Invitation.receiver_id == id,
+            orm_models.Invitation.sender.has(same_org_user_filter(current_user)),
+        )
         .order_by(orm_models.Invitation.created_at.desc())
         .all()
     )
@@ -249,6 +308,7 @@ def get_admin_user_profile(id: str, db: Session = Depends(database.get_db), curr
 @router.post("/admin/users", response_model=models.UserResponse)
 def create_admin_user(user: models.UserCreate, db: Session = Depends(database.get_db), current_user: orm_models.User = Depends(auth.get_current_user)):
     require_admin(current_user)
+    organisation = normalized_org(current_user) or user.organisation
     
     hashed_password = auth.get_password_hash(user.password)
     new_user = orm_models.User(
@@ -258,7 +318,7 @@ def create_admin_user(user: models.UserCreate, db: Session = Depends(database.ge
         full_name=user.full_name,
         hashed_password=hashed_password,
         role=user.role,
-        organisation=user.organisation,
+        organisation=organisation,
         department_team=user.department_team
     )
     db.add(new_user)
@@ -273,9 +333,12 @@ def update_user(id: str, user_update: models.UserBase, db: Session = Depends(dat
     db_user = db.query(orm_models.User).filter(orm_models.User.id == id).first()
     if not db_user:
         raise HTTPException(status_code=404, detail="User not found")
+    ensure_same_org_user(db_user, current_user)
     
     for key, value in user_update.dict().items():
         setattr(db_user, key, value)
+    if normalized_org(current_user):
+        db_user.organisation = normalized_org(current_user)
     
     db.commit()
     db.refresh(db_user)
@@ -288,6 +351,7 @@ def delete_user(id: str, db: Session = Depends(database.get_db), current_user: o
     db_user = db.query(orm_models.User).filter(orm_models.User.id == id).first()
     if not db_user:
         raise HTTPException(status_code=404, detail="User not found")
+    ensure_same_org_user(db_user, current_user)
     
     db.delete(db_user)
     db.commit()
@@ -298,11 +362,16 @@ def get_opportunity_applicants(id: str, db: Session = Depends(database.get_db), 
     opp = db.query(orm_models.Opportunity).filter(orm_models.Opportunity.id == id).first()
     if not opp:
         raise HTTPException(status_code=404, detail="Opportunity not found")
+    if current_user.role == "admin":
+        ensure_same_org_opportunity(opp, current_user)
     
     if current_user.id != opp.author_id and current_user.role != "admin":
         raise HTTPException(status_code=403, detail="Not authorized")
     
-    return db.query(orm_models.UserOpportunity).filter(orm_models.UserOpportunity.opportunity_id == id).all()
+    query = db.query(orm_models.UserOpportunity).filter(orm_models.UserOpportunity.opportunity_id == id)
+    if current_user.role == "admin":
+        query = query.filter(same_org_engagement_filter(current_user))
+    return query.all()
 
 
 @router.get("/opportunities/{id}/applicants/overview")
@@ -310,6 +379,8 @@ def get_opportunity_applicant_overview(id: str, db: Session = Depends(database.g
     opp = db.query(orm_models.Opportunity).filter(orm_models.Opportunity.id == id).first()
     if not opp:
         raise HTTPException(status_code=404, detail="Opportunity not found")
+    if current_user.role == "admin":
+        ensure_same_org_opportunity(opp, current_user)
 
     if current_user.id != opp.author_id and current_user.role != "admin":
         raise HTTPException(status_code=403, detail="Not authorized")
@@ -319,6 +390,7 @@ def get_opportunity_applicant_overview(id: str, db: Session = Depends(database.g
         .filter(
             orm_models.UserOpportunity.opportunity_id == id,
             orm_models.UserOpportunity.user_id.isnot(None),
+            same_org_engagement_filter(current_user) if current_user.role == "admin" else True,
         )
         .order_by(orm_models.UserOpportunity.created_at.desc())
         .all()
@@ -393,7 +465,12 @@ def get_admin_opportunities(
     current_user: orm_models.User = Depends(auth.get_current_user),
 ):
     require_admin(current_user)
-    return db.query(orm_models.Opportunity).order_by(orm_models.Opportunity.created_at.desc()).all()
+    return (
+        db.query(orm_models.Opportunity)
+        .filter(same_org_opportunity_filter(current_user))
+        .order_by(orm_models.Opportunity.created_at.desc())
+        .all()
+    )
 
 
 @router.get("/admin/opportunities/overview")
@@ -403,12 +480,22 @@ def get_admin_opportunities_overview(
 ):
     require_admin(current_user)
 
-    opportunities = db.query(orm_models.Opportunity).order_by(orm_models.Opportunity.created_at.desc()).all()
+    opportunities = (
+        db.query(orm_models.Opportunity)
+        .filter(same_org_opportunity_filter(current_user))
+        .order_by(orm_models.Opportunity.created_at.desc())
+        .all()
+    )
+    opportunity_ids = [opportunity.id for opportunity in opportunities]
     engagement_rows = (
         db.query(
             orm_models.UserOpportunity.opportunity_id,
             orm_models.UserOpportunity.status,
             func.count(orm_models.UserOpportunity.id),
+        )
+        .filter(
+            orm_models.UserOpportunity.opportunity_id.in_(opportunity_ids) if opportunity_ids else False,
+            same_org_engagement_filter(current_user),
         )
         .group_by(orm_models.UserOpportunity.opportunity_id, orm_models.UserOpportunity.status)
         .all()
@@ -434,15 +521,38 @@ def get_admin_dashboard(
 ):
     require_admin(current_user)
 
-    users = db.query(orm_models.User).all()
-    opportunities = db.query(orm_models.Opportunity).all()
-    user_opportunities = db.query(orm_models.UserOpportunity).all()
-    removed_opportunity_count = db.query(func.count(orm_models.OpportunityRemovalAudit.id)).scalar() or 0
+    users = db.query(orm_models.User).filter(same_org_user_filter(current_user)).all()
+    opportunities = db.query(orm_models.Opportunity).filter(same_org_opportunity_filter(current_user)).all()
+    opportunity_ids = [opportunity.id for opportunity in opportunities]
+    user_opportunities = (
+        db.query(orm_models.UserOpportunity)
+        .filter(
+            orm_models.UserOpportunity.opportunity_id.in_(opportunity_ids) if opportunity_ids else False,
+            same_org_engagement_filter(current_user),
+        )
+        .all()
+    )
+    removed_opportunity_count = (
+        db.query(func.count(orm_models.OpportunityRemovalAudit.id))
+        .filter(
+            orm_models.OpportunityRemovalAudit.removed_by.in_([user.id for user in users]) if users else False
+        )
+        .scalar()
+        or 0
+    )
     user_skill_counts = db.query(orm_models.Skill.name, func.count(orm_models.UserSkill.user_id)).join(
         orm_models.UserSkill, orm_models.UserSkill.skill_id == orm_models.Skill.id
+    ).join(
+        orm_models.User, orm_models.User.id == orm_models.UserSkill.user_id
+    ).filter(
+        same_org_user_filter(current_user)
     ).group_by(orm_models.Skill.id).order_by(func.count(orm_models.UserSkill.user_id).desc()).limit(6).all()
     opportunity_skill_counts = db.query(orm_models.Skill.name, func.count(orm_models.OpportunitySkill.opportunity_id)).join(
         orm_models.OpportunitySkill, orm_models.OpportunitySkill.skill_id == orm_models.Skill.id
+    ).join(
+        orm_models.Opportunity, orm_models.Opportunity.id == orm_models.OpportunitySkill.opportunity_id
+    ).filter(
+        same_org_opportunity_filter(current_user)
     ).group_by(orm_models.Skill.id).order_by(func.count(orm_models.OpportunitySkill.opportunity_id).desc()).limit(6).all()
 
     total_users = len(users)

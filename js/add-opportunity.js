@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const OPPORTUNITY_DRAFT_KEY = 'talent_search_ai_opportunity_draft';
     const navbar = document.getElementById('navbar');
     const scrollProgress = document.getElementById('scrollProgress');
     const timeInput = document.getElementById('timePerWeek');
@@ -181,14 +182,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const descriptionEl = document.getElementById('description');
         const bountyEl = document.getElementById('bounty');
         const scheduleEl = document.getElementById('schedule');
-        const typeEl = document.getElementById('opportunityType');
         const locationEl = document.getElementById('location');
 
         if (data.title && titleEl) titleEl.value = data.title;
         if (data.description && descriptionEl) descriptionEl.value = data.description;
         if (data.xp && bountyEl) bountyEl.value = data.xp;
         if (data.schedule && scheduleEl) scheduleEl.value = data.schedule.charAt(0).toUpperCase() + data.schedule.slice(1);
-        if (data.type && typeEl) typeEl.value = data.type;
         if (data.location && locationEl) locationEl.value = data.location;
 
         if (data.time && timeInput) {
@@ -201,6 +200,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
         (data.skills || []).forEach(addSkill);
     }
+
+    function showDraftLoadedNotice() {
+        const formHeader = document.querySelector('.form-header');
+        if (!formHeader || document.getElementById('aiDraftNotice')) return;
+
+        const notice = document.createElement('div');
+        notice.id = 'aiDraftNotice';
+        notice.className = 'ai-draft-notice';
+        notice.innerHTML = `
+            <strong>AI draft loaded.</strong>
+            Review and edit the fields below, then click <span>Post Opportunity</span>.
+        `;
+        formHeader.insertAdjacentElement('afterend', notice);
+    }
+
+    function loadAIDraftIfPresent() {
+        const rawDraft = sessionStorage.getItem(OPPORTUNITY_DRAFT_KEY) || localStorage.getItem(OPPORTUNITY_DRAFT_KEY);
+        if (!rawDraft) return;
+
+        try {
+            const draft = JSON.parse(rawDraft);
+            if (!draft || typeof draft !== 'object') return;
+
+            if (aiDesc && draft.source) {
+                aiDesc.value = draft.source;
+            }
+
+            skills = [];
+            renderSkills();
+            populateOpportunityForm(draft);
+            showDraftLoadedNotice();
+
+            if (postBtn) {
+                postBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                postBtn.classList.add('draft-ready');
+            }
+
+            sessionStorage.removeItem(OPPORTUNITY_DRAFT_KEY);
+            localStorage.removeItem(OPPORTUNITY_DRAFT_KEY);
+        } catch (err) {
+            console.warn('Could not load AI opportunity draft:', err);
+            sessionStorage.removeItem(OPPORTUNITY_DRAFT_KEY);
+            localStorage.removeItem(OPPORTUNITY_DRAFT_KEY);
+        }
+    }
+
+    loadAIDraftIfPresent();
 
     document.querySelectorAll('.time-chip').forEach((chip) => {
         chip.addEventListener('click', () => {
@@ -236,7 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function buildPayload() {
         const title = document.getElementById('title').value.trim();
         const description = document.getElementById('description').value.trim();
-        const type = document.getElementById('opportunityType').value;
+        const type = 'Opportunity';
         const location = document.getElementById('location').value.trim();
         const schedule = document.getElementById('schedule').value.trim();
         const points = Number(document.getElementById('bounty').value);

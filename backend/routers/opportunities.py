@@ -71,6 +71,19 @@ def get_my_opportunities(current_user: orm_models.User = Depends(auth.get_curren
     ).all()
 
 
+def ensure_admin_can_manage_opportunity(opportunity: orm_models.Opportunity, current_user: orm_models.User) -> None:
+    if current_user.role != "admin":
+        return
+
+    admin_org = (current_user.organisation or "").strip()
+    author_org = (opportunity.author.organisation or "").strip() if opportunity.author else ""
+    if admin_org:
+        if author_org != admin_org:
+            raise HTTPException(status_code=404, detail="Opportunity not found")
+    elif opportunity.author_id != current_user.id:
+        raise HTTPException(status_code=404, detail="Opportunity not found")
+
+
 @router.delete("/opportunities/{id}")
 def delete_opportunity(
     id: str,
@@ -80,6 +93,7 @@ def delete_opportunity(
     opp = db.query(orm_models.Opportunity).filter(orm_models.Opportunity.id == id).first()
     if not opp:
         raise HTTPException(status_code=404, detail="Opportunity not found")
+    ensure_admin_can_manage_opportunity(opp, current_user)
 
     if current_user.role != "admin" and current_user.id != opp.author_id:
         raise HTTPException(status_code=403, detail="Not authorized")

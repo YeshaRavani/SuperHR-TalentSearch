@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const addUserBtn = document.getElementById('addUserBtn');
 
     let users = [];
+    let currentAdmin = null;
     let state = { mode: 'points', hoursPerLeave: 8 };
     let pendingMode = state.mode;
 
@@ -218,7 +219,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!email) return;
         const role = window.prompt('Role (admin, contributors, head_of_department)', 'contributors');
         if (!role) return;
-        const organisation = window.prompt('Organisation', 'SuperHR') || 'SuperHR';
+        const adminOrganisation = currentAdmin?.organisation || 'Plaksha University';
+        const organisation = window.prompt('Organisation', adminOrganisation) || adminOrganisation;
         const departmentTeam = window.prompt('Department / Team', 'Operations') || 'Operations';
         const password = window.prompt('Temporary password', 'user123') || 'user123';
 
@@ -275,6 +277,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     initChrome();
+
+    currentAdmin = await window.api.get('/user').catch(() => null);
 
     await loadPolicy();
 

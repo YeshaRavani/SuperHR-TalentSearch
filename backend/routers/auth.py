@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
-from sqlalchemy import or_
+from sqlalchemy import func, or_
 from sqlalchemy.orm import Session
 from .. import database, orm_models, models
 from ..utils import auth
@@ -8,11 +8,50 @@ import uuid
 
 router = APIRouter()
 
+
+def get_admin_organisations(db: Session) -> list[str]:
+    rows = (
+        db.query(func.trim(orm_models.User.organisation))
+        .filter(
+            orm_models.User.role == "admin",
+            orm_models.User.organisation.isnot(None),
+            func.trim(orm_models.User.organisation) != "",
+        )
+        .distinct()
+        .order_by(func.trim(orm_models.User.organisation))
+        .all()
+    )
+    return [row[0] for row in rows if row[0]]
+
+
+def admin_org_filter(current_user: orm_models.User):
+    org = (current_user.organisation or "").strip()
+    if not org:
+        return orm_models.User.id == current_user.id
+    return func.trim(orm_models.User.organisation) == org
+
+
+def admin_org_opportunity_filter(current_user: orm_models.User):
+    org = (current_user.organisation or "").strip()
+    if not org:
+        return orm_models.Opportunity.author_id == current_user.id
+    return orm_models.Opportunity.author.has(func.trim(orm_models.User.organisation) == org)
+
+
+@router.get("/organisations", response_model=list[str])
+def list_organisations(db: Session = Depends(database.get_db)):
+    return get_admin_organisations(db)
+
 @router.post("/signup", response_model=models.UserResponse)
 def signup(user: models.UserCreate, db: Session = Depends(database.get_db)):
     db_user = db.query(orm_models.User).filter(orm_models.User.username == user.username).first()
     if db_user:
         raise HTTPException(status_code=400, detail="Username already registered")
+
+    if user.role != "admin":
+        allowed_organisations = get_admin_organisations(db)
+        if not user.organisation or user.organisation not in allowed_organisations:
+            raise HTTPException(status_code=400, detail="Please select an approved organization or university")
     
     hashed_password = auth.get_password_hash(user.password)
     new_user = orm_models.User(
@@ -106,12 +145,14 @@ def get_notifications(
 
     if current_user.role == "admin":
         pending_invitations = db.query(orm_models.Invitation).filter(
-            orm_models.Invitation.status == "pending"
+            orm_models.Invitation.status == "pending",
+            orm_models.Invitation.receiver.has(admin_org_filter(current_user)),
         ).count()
         active_opportunities = db.query(orm_models.Opportunity).filter(
-            orm_models.Opportunity.status != "removed"
+            orm_models.Opportunity.status != "removed",
+            admin_org_opportunity_filter(current_user),
         ).count()
-        total_users = db.query(orm_models.User).count()
+        total_users = db.query(orm_models.User).filter(admin_org_filter(current_user)).count()
 
         notifications.extend([
             models.NotificationResponse(

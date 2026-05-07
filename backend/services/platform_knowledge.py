@@ -3,17 +3,18 @@ from typing import Dict, List
 
 PLATFORM_OVERVIEW = (
     "SuperHR Talent Search helps users discover opportunities, mark interest, apply, "
-    "track rewards, collaborate in community chat, and manage profile progress."
+    "post opportunities, track rewards, collaborate in community chat, and manage profile progress. "
+    "Admins manage only the users, opportunities, applicants, notifications, and dashboard data for their own organisation."
 )
 
 
 PAGES: List[Dict[str, object]] = [
     {
         "name": "Home",
-        "path": "home.html",
-        "description": "Landing area that introduces the platform and links users into login and opportunities.",
-        "keywords": ["home", "landing", "start", "main page"],
-        "actions": ["Browse opportunities"],
+        "path": "index (1).html",
+        "description": "Public landing page with Login and Get Involved options. Logged-in users are redirected to their role-specific home.",
+        "keywords": ["home", "landing", "start", "main page", "get involved", "public page"],
+        "actions": ["Open home page", "Open login page"],
     },
     {
         "name": "Login",
@@ -21,6 +22,20 @@ PAGES: List[Dict[str, object]] = [
         "description": "Sign-in page for returning users and the gateway to the authenticated experience.",
         "keywords": ["login", "sign in", "account access", "authentication"],
         "actions": ["Open login page"],
+    },
+    {
+        "name": "Contributor Signup",
+        "path": "contributor-details.html",
+        "description": "Contributor signup form. Contributors must select an approved organisation/university from the organisations created by admins.",
+        "keywords": ["user signup", "contributor signup", "register user", "organization dropdown", "university dropdown"],
+        "actions": ["Open contributor signup"],
+    },
+    {
+        "name": "Admin Signup",
+        "path": "admin-details.html",
+        "description": "Admin signup form. Admins can enter their organisation/university freely; that organisation becomes available to contributors.",
+        "keywords": ["admin signup", "register admin", "admin organisation", "admin organization"],
+        "actions": ["Open admin signup"],
     },
     {
         "name": "Dashboard",
@@ -39,9 +54,16 @@ PAGES: List[Dict[str, object]] = [
     {
         "name": "Opportunities",
         "path": "opportunities.html",
-        "description": "Main browsing page for initiatives, workshops, and events, with filtering by skill areas.",
-        "keywords": ["opportunities", "browse", "discover", "initiatives", "workshops", "events"],
+        "description": "Main browsing page for opportunities, with filtering by skill areas. Contributors cannot apply to their own posted opportunities.",
+        "keywords": ["opportunities", "browse", "discover", "skills", "apply", "interested"],
         "actions": ["Open opportunities page", "Browse opportunities"],
+    },
+    {
+        "name": "Add Opportunity",
+        "path": "add-opportunity.html",
+        "description": "Authenticated page for creating a new opportunity. The AI assistant can parse a natural language posting request, open this page, and prefill editable fields before the user posts with one button. The form no longer separates opportunity type into event, initiative, or workshop.",
+        "keywords": ["add opportunity", "post opportunity", "create opportunity", "new opportunity"],
+        "actions": ["Open add opportunity page", "Open posted opportunities page"],
     },
     {
         "name": "Interested Opportunities",
@@ -82,7 +104,7 @@ PAGES: List[Dict[str, object]] = [
     {
         "name": "Admin Manage Users",
         "path": "admin-manage-users.html",
-        "description": "Admin-only page for viewing users, changing roles, and reward policy controls.",
+        "description": "Admin-only page for viewing and removing users in the admin's organisation, plus reward policy controls.",
         "keywords": ["manage users", "admin users", "roles", "reward policy"],
         "actions": ["Open admin manage users"],
         "roles": ["admin"],
@@ -90,7 +112,7 @@ PAGES: List[Dict[str, object]] = [
     {
         "name": "Admin Manage Opportunities",
         "path": "admin-manage-opportunities.html",
-        "description": "Admin-only page for reviewing and managing opportunities across the platform.",
+        "description": "Admin-only page for reviewing and removing opportunities posted by people in the admin's organisation.",
         "keywords": ["manage opportunities", "admin opportunities", "remove opportunity"],
         "actions": ["Open admin manage opportunities"],
         "roles": ["admin"],
@@ -103,6 +125,14 @@ PAGES: List[Dict[str, object]] = [
         "actions": ["Open admin system settings"],
         "roles": ["admin"],
     },
+    {
+        "name": "Admin Profile",
+        "path": "admin-user-profile.html",
+        "description": "Admin profile page with backend-loaded admin details, organisation-scoped governance metrics, system logs link, and logout.",
+        "keywords": ["admin profile", "logout", "system logs", "admin user profile"],
+        "actions": ["Open admin profile"],
+        "roles": ["admin"],
+    },
 ]
 
 
@@ -111,6 +141,8 @@ ROLE_CAPABILITIES: Dict[str, List[str]] = {
         "browse opportunities",
         "mark interest",
         "apply to opportunities",
+        "post opportunities",
+        "review applicants on own posted opportunities",
         "track rewards and points",
         "use community channels and messages",
         "manage profile skills and preferences",
@@ -119,16 +151,19 @@ ROLE_CAPABILITIES: Dict[str, List[str]] = {
         "browse opportunities",
         "mark interest",
         "apply to opportunities",
+        "post opportunities",
+        "review applicants on own posted opportunities",
         "track rewards and points",
         "use community channels and messages",
         "manage profile skills and preferences",
     ],
     "admin": [
         "browse and post opportunities",
-        "manage users and roles",
+        "manage users and roles within their organisation",
         "review reward policy",
-        "manage opportunities",
+        "manage opportunities within their organisation",
         "access system settings",
+        "view organisation-scoped dashboard and notifications",
         "use community and dashboard features",
     ],
     "head_of_department": [
@@ -140,8 +175,10 @@ ROLE_CAPABILITIES: Dict[str, List[str]] = {
 
 
 SAFE_ACTIONS = [
+    "Open home page",
     "Open opportunities page",
     "Browse opportunities",
+    "Open add opportunity page",
     "Review expectations before applying",
     "Update your profile",
     "Refresh AI matches",
@@ -155,10 +192,13 @@ SAFE_ACTIONS = [
     "Open posted opportunities page",
     "Open appointment page",
     "Open login page",
+    "Open contributor signup",
+    "Open admin signup",
     "Open admin home",
     "Open admin manage users",
     "Open admin manage opportunities",
     "Open admin system settings",
+    "Open admin profile",
 ]
 
 

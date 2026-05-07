@@ -29,10 +29,42 @@
 document.addEventListener('DOMContentLoaded', function () {
     const role = localStorage.getItem('userRole');
     const form = document.querySelector('.form');
+    loadApprovedOrganisations();
     if (form) {
         form.addEventListener('submit', handleSignupNext);
     }
 });
+
+async function loadApprovedOrganisations() {
+    const orgSelect = document.getElementById('organization');
+    if (!orgSelect) return;
+
+    try {
+        const organisations = await api.get('/organisations');
+        if (!organisations.length) {
+            orgSelect.innerHTML = '<option value="">No approved organizations available</option>';
+            orgSelect.disabled = true;
+            return;
+        }
+
+        orgSelect.disabled = false;
+        orgSelect.innerHTML = '<option value="">Select your organization or university</option>' +
+            organisations.map((org) => `<option value="${escapeHtml(org)}">${escapeHtml(org)}</option>`).join('');
+    } catch (err) {
+        console.error('Failed to load approved organizations:', err);
+        orgSelect.innerHTML = '<option value="">Could not load organizations</option>';
+        orgSelect.disabled = true;
+    }
+}
+
+function escapeHtml(value) {
+    return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
 
 async function handleSignupNext(e) {
     e.preventDefault();
@@ -45,6 +77,11 @@ async function handleSignupNext(e) {
 
     if (pass !== confirmPass) {
         alert("Passwords do not match!");
+        return;
+    }
+
+    if (!org) {
+        alert("Please select your organization or university.");
         return;
     }
 

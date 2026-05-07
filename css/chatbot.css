@@ -100,6 +100,42 @@
     align-self: flex-end;
 }
 
+.chat-sources {
+    align-self: flex-start;
+    max-width: 85%;
+    color: var(--ink-500, #647b8f);
+    font-size: 0.76rem;
+    line-height: 1.35;
+    padding: 0 4px;
+}
+
+.chat-actions {
+    align-self: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    max-width: 100%;
+}
+
+.chat-action-btn {
+    border: 1px solid rgba(126, 179, 206, 0.45);
+    background: var(--white, #ffffff);
+    color: var(--ink-800, #1b2f40);
+    border-radius: 999px;
+    padding: 8px 12px;
+    font: inherit;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.chat-action-btn:hover {
+    background: var(--sky-100, #eaf6fb);
+    border-color: var(--sky-500, #9ecae1);
+    transform: translateY(-1px);
+}
+
 @keyframes chat-fade-in {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
@@ -133,6 +169,7 @@
     color: var(--ink-400, #8c9fae);
 }
 
+.chatbot-voice-btn,
 .chatbot-send-btn {
     background: var(--sky-600, #7eb3ce);
     color: white;
@@ -147,9 +184,46 @@
     transition: transform 0.2s, background 0.2s;
 }
 
+.chatbot-voice-btn {
+    background: var(--white, #ffffff);
+    color: var(--sky-600, #7eb3ce);
+    border: 1px solid rgba(126, 179, 206, 0.45);
+}
+
+.chatbot-voice-btn.listening {
+    background: #fee2e2;
+    color: #ef4444;
+    border-color: #fca5a5;
+    animation: voice-pulse 1.2s ease-in-out infinite;
+}
+
+.chatbot-voice-btn.unsupported,
+.chatbot-voice-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+    transform: none;
+}
+
+.chatbot-voice-btn:hover:not(:disabled) {
+    background: var(--sky-100, #eaf6fb);
+    transform: scale(1.05);
+}
+
 .chatbot-send-btn:hover {
     background: var(--sky-500, #9ecae1);
     transform: scale(1.05);
+}
+
+@keyframes voice-pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.28);
+    }
+    70% {
+        box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    }
 }
 
 /* Adjusting FAB slightly to ensure it stays above popup toggle triggers */
