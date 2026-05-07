@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const list = document.getElementById('opportunities-master-container');
-    const skillCards = document.querySelectorAll('.skill-card');
     if (!list) return;
 
     // This page should remain visible even if shared reveal bootstrapping lags.
@@ -27,12 +26,28 @@ document.addEventListener('DOMContentLoaded', async () => {
         const filterContainer = document.getElementById('skillsFilter');
         if (!filterContainer) return;
 
-        // Keep "All Skills" and "Interested"
+        // Context-aware "All" count
+        const currentContextOpps = getBasePageFilter(allOpportunities);
+        const contextCount = currentContextOpps.length;
+        const totalPlatform = allOpportunities.length;
+        const isHub = window.location.pathname.includes('opportunities.html') || window.location.pathname.endsWith('/');
+
+        // Navbar always shows total platform opportunities
+        const oppLink = document.querySelector('.menu a[href="opportunities.html"]');
+        if (oppLink) {
+            oppLink.innerHTML = `Opportunities <span style="font-size: 0.8em; opacity: 0.7;">(${totalPlatform})</span>`;
+        }
+
+        // "All" button logic: If on hub, it's a filter div. If on specific page, it's a link to hub.
+        const allBtn = isHub 
+            ? `<div class="skill-card ${activeSkill === 'all' ? 'active' : ''}" data-skill="all">All <span class="skill-count">(${contextCount})</span></div>`
+            : `<a href="opportunities.html" class="skill-card" style="text-decoration:none; color:inherit;">All <span class="skill-count">(${totalPlatform})</span></a>`;
+
         const initialHtml = `
-            <div class="skill-card ${activeSkill === 'all' ? 'active' : ''}" data-skill="all">All Skills</div>
-            <a href="interested.html" class="skill-card" data-skill="Interested" 
+            ${allBtn}
+            <a href="interested.html" class="skill-card ${window.location.pathname.includes('interested.html') ? 'active' : ''}" data-skill="Interested" 
                style="text-decoration: none; color: inherit; border: 1.5px solid var(--sky-400); background: #f0f9ff;">Interested 
-               <span class="skill-count" id="count-interested">(0)</span></a>
+               <span class="skill-count" id="count-interested">(${interestedList.length})</span></a>
         `;
 
         // Get top matching skills from user's profile
@@ -108,14 +123,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function getActiveFilteredOpportunities() {
         let opportunities = getBasePageFilter(allOpportunities);
-        if (activeSkill === 'all' || activeSkill === 'Interested' || activeSkill === 'Python') {
+        if (activeSkill === 'all') {
+            return opportunities;
+        }
+        if (activeSkill === 'Interested') {
             return opportunities;
         }
 
         return opportunities.filter(o => {
             const skills = Array.isArray(o.skills) ? o.skills : [];
-            return skills.some(s => s.toLowerCase() === activeSkill.toLowerCase()) ||
-                o.title.toLowerCase().includes(activeSkill.toLowerCase());
+            const search = activeSkill.toLowerCase();
+            return skills.some(s => s.toLowerCase() === search) ||
+                o.title.toLowerCase().includes(search);
         });
     }
 
@@ -158,15 +177,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function updateSkillCounts(opportunities) {
-        skillCards.forEach(card => {
+        // Use the context-filtered list for counting (Hub vs Interested page)
+        const activeContextList = getBasePageFilter(opportunities);
+        
+        // Query current dynamic elements
+        const currentSkillCards = document.querySelectorAll('.skill-card');
+        currentSkillCards.forEach(card => {
             const skill = card.dataset.skill;
-            if (skill === 'all') return;
+            if (!skill) return;
 
             let count;
-            if (skill === 'Interested') {
-                count = opportunities.filter(o => interestedList.includes(o.id)).length;
+            if (skill === 'all') {
+                count = activeContextList.length;
+            } else if (skill === 'Interested') {
+                count = interestedList.length;
             } else {
-                count = opportunities.filter(o => {
+                count = activeContextList.filter(o => {
                     const skills = Array.isArray(o.skills) ? o.skills : [];
                     return skills.some(s => s.toLowerCase() === skill.toLowerCase()) || 
                            o.title.toLowerCase().includes(skill.toLowerCase());
@@ -176,21 +202,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             const countSpan = card.querySelector('.skill-count');
             if (countSpan) countSpan.textContent = `(${count})`;
         });
+
+        // Ensure the standalone count-interested span is updated
+        const interestedSpan = document.getElementById('count-interested');
+        if (interestedSpan) {
+            interestedSpan.textContent = `(${interestedList.length})`;
+        }
     }
 
-    // Wiring filter buttons
-    skillCards.forEach(card => {
-        card.addEventListener('click', () => {
-            const skill = card.dataset.skill;
-            if (skill === 'Interested' || skill === 'Python') return; // Handled by href natively on some pages
-
-            // UI feedback
-            skillCards.forEach(c => c.classList.remove('active'));
-            card.classList.add('active');
-            activeSkill = skill;
-            renderOpportunities(getActiveFilteredOpportunities());
-        });
-    });
+    // Initial wiring handled by renderSkillFilters() dynamically.
 
     // ── Click Handling for Interest & Remove ──
 

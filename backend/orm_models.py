@@ -65,6 +65,7 @@ class Opportunity(Base):
     tag_icon = Column(Text)
     bg_gradient = Column(Text)
     icon_color = Column(Text)
+    is_broadcast = Column(Boolean, default=True)
     status = Column(String, default="active")
     author_id = Column(String, ForeignKey("Users.id", ondelete="CASCADE"))
     created_at = Column(DateTime, server_default=func.now())
@@ -99,6 +100,10 @@ class Channel(Base):
     id = Column(String, primary_key=True, index=True)
     name = Column(String, unique=True)
     description = Column(String)
+    opportunity_id = Column(String, ForeignKey("Opportunities.id", ondelete="CASCADE"), nullable=True)
+    is_broadcast = Column(Boolean, default=False)
+    author_id = Column(String, ForeignKey("Users.id", ondelete="SET NULL"), nullable=True)
+
     messages = relationship("Message", back_populates="channel")
 
 class Message(Base):
@@ -109,6 +114,7 @@ class Message(Base):
     receiver_id = Column(String, ForeignKey("Users.id", ondelete="CASCADE"), nullable=True)
     content = Column(Text)
     is_voice_record = Column(Boolean, default=False)
+    is_read = Column(Boolean, default=False)
     created_at = Column(DateTime, server_default=func.now())
 
     sender = relationship("User", foreign_keys=[sender_id], back_populates="sent_messages")

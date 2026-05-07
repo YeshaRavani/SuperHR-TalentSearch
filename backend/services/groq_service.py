@@ -64,9 +64,42 @@ class GroqService:
             )
             
             content = chat_completion.choices[0].message.content
-            return json.loads(content)
+            
+            # Robust JSON extraction
+            if "```json" in content:
+                content = content.split("```json")[1].split("```")[0].strip()
+            elif "```" in content:
+                content = content.split("```")[1].split("```")[0].strip()
+            
+            try:
+                return json.loads(content)
+            except json.JSONDecodeError:
+                # If it's still not valid JSON, try to find the first '{' and last '}'
+                start = content.find('{')
+                end = content.rfind('}')
+                if start != -1 and end != -1:
+                    return json.loads(content[start:end+1])
+                raise
         except Exception as e:
             logger.error(f"Groq API call failed: {e}")
             raise
+
+    def create_transcription(self, file_path: str):
+        self._ensure_client()
+        if not self.client:
+            logger.warning("Groq client not available for transcription")
+            return "Transcription service currently unavailable (API key missing)."
+        
+        try:
+            with open(file_path, "rb") as file:
+                transcription = self.client.audio.transcriptions.create(
+                    file=(file_path, file.read()),
+                    model="distil-whisper-large-v3-en",
+                    response_format="verbose_json",
+                )
+                return transcription.text
+        except Exception as e:
+            logger.error(f"Groq transcription failed: {e}")
+            return f"Error during transcription: {str(e)}"
 
 groq_service = GroqService()

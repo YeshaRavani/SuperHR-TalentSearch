@@ -1,6 +1,7 @@
 const API_BASE_URL = 'http://127.0.0.1:8000/api';
 
 const api = {
+    baseUrl: API_BASE_URL,
     async request(endpoint, options = {}) {
         const token = localStorage.getItem('access_token');
         const isFormData = options.body instanceof FormData;
@@ -69,6 +70,14 @@ const api = {
         const body = data instanceof FormData ? data : JSON.stringify(data);
         return this.request(endpoint, {
             method: 'PUT',
+            body: body,
+        });
+    },
+
+    async patch(endpoint, data = {}) {
+        const body = data instanceof FormData ? data : JSON.stringify(data);
+        return this.request(endpoint, {
+            method: 'PATCH',
             body: body,
         });
     },

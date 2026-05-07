@@ -170,6 +170,27 @@
             </div>
           </div>
 
+          <div class="form-group" style="margin-bottom: 32px;">
+            <label>Community Chat Mode</label>
+            <p style="font-size: 0.85rem; color: var(--ink-500); margin-top: -4px; margin-bottom: 12px;">Choose how you want to interact with applicants in the automated community channel.</p>
+            <div style="display: flex; gap: 16px;">
+              <label style="flex: 1; border: 1.5px solid var(--ink-100); padding: 16px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 12px; background: white; transition: all 0.2s;" class="chat-mode-option">
+                <input type="radio" name="chatMode" value="broadcast" checked style="width: 18px; height: 18px;">
+                <div>
+                  <strong style="display: block; font-size: 0.95rem; color: var(--ink-900);">Broadcast Only</strong>
+                  <small style="color: var(--ink-500);">Only you can send messages to all applicants.</small>
+                </div>
+              </label>
+              <label style="flex: 1; border: 1.5px solid var(--ink-100); padding: 16px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 12px; background: white; transition: all 0.2s;" class="chat-mode-option">
+                <input type="radio" name="chatMode" value="discussion" style="width: 18px; height: 18px;">
+                <div>
+                  <strong style="display: block; font-size: 0.95rem; color: var(--ink-900);">Open Discussion</strong>
+                  <small style="color: var(--ink-500);">Allow all applicants to chat and ask questions.</small>
+                </div>
+              </label>
+            </div>
+          </div>
+
           <div class="form-actions">
             <a href="index (1).html" class="btn btn-secondary"
               style="height: 48px; font-size: 1.05rem; display: flex;">Cancel</a>

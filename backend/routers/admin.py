@@ -7,6 +7,7 @@ from sqlalchemy.orm import Session
 from typing import List
 from .. import database, orm_models, models
 from ..utils import auth
+from ..services import ai_logic
 
 router = APIRouter()
 
@@ -165,10 +166,17 @@ def serialize_user_opportunity_summary(record: orm_models.UserOpportunity) -> di
 
 def serialize_applicant_overview(record: orm_models.UserOpportunity) -> dict:
     user = record.user
+    opportunity = record.opportunity
+    
+    match_score = 0
+    if user and opportunity:
+        match_score = ai_logic.score_opportunity_match(user, opportunity)
+
     return {
         "id": record.id,
         "opportunity_id": record.opportunity_id,
         "status": record.status,
+        "match_score": match_score,
         "created_at": serialize_datetime(record.created_at),
         "updated_at": serialize_datetime(record.updated_at),
         "user": {

@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const user = record.user;
         if (!user) return '';
 
-        const score = matchScore(user, opportunity);
+        const score = record.match_score || 0;
         const skills = (user.skills || []).map(escapeHtml).join('|');
         const bullets = [
             `${user.full_name || user.username} is currently marked as ${statusLabel(record.status)} for this opportunity.`,

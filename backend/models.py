@@ -83,6 +83,7 @@ class OpportunityBase(BaseModel):
     tag_icon: Optional[str] = None
     bg_gradient: Optional[str] = None
     icon_color: Optional[str] = None
+    is_broadcast: bool = True
 
     @field_validator('expectations', 'responsibilities', 'benefits', 'prerequisites', 'skills', mode='before')
     @classmethod
@@ -136,6 +137,9 @@ class ChannelBase(BaseModel):
 
 class ChannelResponse(ChannelBase):
     id: str
+    opportunity_id: Optional[str] = None
+    is_broadcast: bool = False
+    author_id: Optional[str] = None
     class Config:
         from_attributes = True
 
@@ -152,6 +156,7 @@ class MessageResponse(MessageBase):
     sender_id: str
     channel_id: Optional[str]
     receiver_id: Optional[str]
+    is_read: bool = False
     created_at: datetime
 
     class Config:

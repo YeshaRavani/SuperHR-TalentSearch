@@ -296,3 +296,28 @@ async def extract_skills(
         return {"skills": result.get("skills", [])}
     except Exception as e:
         return {"error": f"AI extraction failed: {str(e)}", "skills": []}
+
+@router.post("/ai/transcribe")
+async def transcribe_audio(
+    file: UploadFile = File(...),
+    current_user: orm_models.User = Depends(auth.get_current_user)
+):
+    import os
+    import tempfile
+    
+    # Save uploaded file to temp
+    extension = os.path.splitext(file.filename)[1] or ".webm"
+    with tempfile.NamedTemporaryFile(delete=False, suffix=extension) as tmp:
+        content = await file.read()
+        tmp.write(content)
+        tmp_path = tmp.name
+
+    try:
+        from ..services.groq_service import groq_service
+        text = groq_service.create_transcription(tmp_path)
+        return {"text": text}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Transcription failed: {str(e)}")
+    finally:
+        if os.path.exists(tmp_path):
+            os.remove(tmp_path)

@@ -317,6 +317,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tag_icon: '<circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>',
             bg_gradient: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)',
             icon_color: '#0ea5e9',
+            is_broadcast: document.querySelector('input[name="chatMode"]:checked')?.value === 'broadcast'
         };
     }
 

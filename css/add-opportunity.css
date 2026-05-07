@@ -668,6 +668,21 @@
       color: #ef4444;
     }
 
+    .chat-mode-option:has(input:checked) {
+        border-color: var(--sky-500) !important;
+        background: var(--sky-50) !important;
+        box-shadow: 0 0 0 1px var(--sky-500);
+    }
+
+    .chat-mode-option input:checked + div strong {
+        color: var(--sky-700) !important;
+    }
+
+    .chat-mode-option:hover {
+        border-color: var(--sky-400);
+        background: var(--sky-50);
+    }
+
     .form-actions {
       display: flex;
       justify-content: flex-end;

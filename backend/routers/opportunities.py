@@ -59,6 +59,18 @@ def create_opportunity(opp: models.OpportunityCreate, db: Session = Depends(data
         **opp_data
     )
     db.add(new_opp)
+    
+    # 4. Create broadcast channel
+    new_channel = orm_models.Channel(
+        id=str(uuid.uuid4()),
+        name=new_opp.title,
+        description=f"Official channel for {new_opp.title}",
+        opportunity_id=new_opp.id,
+        is_broadcast=new_opp.is_broadcast, # Use the preference
+        author_id=current_user.id
+    )
+    db.add(new_channel)
+    
     db.commit()
     db.refresh(new_opp)
     return new_opp
