@@ -8,8 +8,7 @@ Talent Search is a role-based opportunity discovery and contribution platform fo
 | --- | --- |
 | Admin profile and organisation metrics | ![Admin profile](docs/screenshots/admin-profile.png) |
 | Admin manage opportunities | ![Admin manage opportunities](docs/screenshots/admin-manage-opportunities.png) |
-| Signup form layout | ![Signup form](docs/screenshots/signup-form.png) |
-| Signup single-column flow | ![Signup single-column flow](docs/screenshots/signup-single-column.png) |
+| Signup form | ![Signup single-column flow](docs/screenshots/signup-single-column.png) |
 
 ## Core User Features
 
