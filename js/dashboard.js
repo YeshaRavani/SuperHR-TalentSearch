@@ -101,14 +101,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         const receivedPendingInvites = invitations.filter((invite) => (
             invite.receiver_id === user.id && invite.status === 'pending'
         ));
-        const activeUserRecords = [...interested, ...applications].filter((record) => record.opportunity_id);
+        
+        // Accurate Personal Stats
+        const enrolledProjects = applications.filter(a => a.status === 'enrolled');
         const workshops = opportunities.filter((opp) => String(opp.type || '').toLowerCase() === 'workshop');
         const eventsThisMonth = opportunities.filter((opp) => (
             String(opp.type || '').toLowerCase() === 'event' && isThisMonth(opp.schedule_time)
         ));
 
         setText(inviteCountEl, receivedPendingInvites.length);
-        setText(activeProjectCountEl, activeUserRecords.length);
+        setText(activeProjectCountEl, enrolledProjects.length);
         setText(workshopCountEl, workshops.length);
         setText(eventCountEl, eventsThisMonth.length);
 

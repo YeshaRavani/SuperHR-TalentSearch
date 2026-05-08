@@ -1,7 +1,7 @@
-// Unified Data Source for SuperHR-TalentSearch Opportunities
+// Unified Data Source for Plaksha University Talent Search Opportunities
 // This feeds the opportunity detail and listing pages.
 
-window.superHrOpportunities = [];
+window.plakshaOpportunities = [];
 
 // Helper method to generate the HTML string for a single card based on the defined data format
 window.generateOpportunityCardHTML = function (opp, indexDelay = 0, inInterestedSection = false, isInterestedPage = false) {

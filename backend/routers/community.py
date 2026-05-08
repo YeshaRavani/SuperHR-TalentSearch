@@ -132,6 +132,10 @@ def post_message(id: str, content: str, current_user: orm_models.User = Depends(
         content=content
     )
     db.add(new_msg)
+    
+    # Reward 1 point for active community participation
+    current_user.total_points += 1
+    
     db.commit()
     db.refresh(new_msg)
     return new_msg
@@ -223,6 +227,10 @@ def send_direct_message(
         is_voice_record=message.is_voice_record,
     )
     db.add(new_msg)
+    
+    # Reward 1 point for active community participation
+    current_user.total_points += 1
+    
     db.commit()
     db.refresh(new_msg)
     return new_msg

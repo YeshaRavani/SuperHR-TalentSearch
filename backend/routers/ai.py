@@ -157,7 +157,16 @@ def fallback_opportunity_parse(description: str) -> dict:
         schedule = schedule_match.group(1).strip().capitalize()
 
     time_commitment = "1-2 hours / week"
-    if re.search(r"less than\s+1|<\s*1|under\s+1", lower):
+    # Helper to convert daily to weekly (assuming 5 days)
+    daily_match = re.search(r"(\d+)\s*(?:hrs?|hours?)\s*(?:per day|daily|a day)", lower)
+    if daily_match:
+        daily_hrs = int(daily_match.group(1))
+        weekly_hrs = daily_hrs * 5
+        if weekly_hrs < 1: time_commitment = "Less than 1 hour"
+        elif weekly_hrs <= 2: time_commitment = "1-2 hours / week"
+        elif weekly_hrs < 5: time_commitment = "3-5 hours / week"
+        else: time_commitment = "5-10 hours / week"
+    elif re.search(r"less than\s+1|<\s*1|under\s+1", lower):
         time_commitment = "Less than 1 hour"
     elif re.search(r"3\s*[-–]\s*5|three\s+to\s+five", lower):
         time_commitment = "3-5 hours / week"
@@ -196,7 +205,8 @@ async def parse_opportunity(
         "4. description: A clear, multi-sentence professional description.\n"
         "5. schedule: Timeline or date info (e.g. 'Next 2 weeks', 'Every Monday').\n"
         "6. bounty: Integer value representing XP points reward. Default to 100 if not clear.\n"
-        "7. time_commitment: Choose the closest match from: 'Less than 1 hour', '1-2 hours / week', '3-5 hours / week', '5-10 hours / week'.\n"
+        "7. time_commitment: Choose the closest match from: 'Less than 1 hour', '1-2 hours / week', '3-5 hours / week', '5-10 hours / week'. "
+        "If the user specifies daily hours, convert them to weekly (e.g. 1 hour per day = 5 hours / week).\n"
         "8. skills: List of relevant professional skills required.\n"
         "Return ONLY the JSON object matching the requested schema."
     )
@@ -276,7 +286,11 @@ async def extract_skills(
     # 1. Parse text from PDF
     try:
         text = await resume_parser.parse_resume_text(file)
+        if not text.strip():
+            print("DEBUG: Resume parsing returned empty text")
+            return {"error": "Failed to extract text from PDF. Is it a scanned image?", "skills": []}
     except Exception as e:
+        print(f"DEBUG: Resume parsing failed: {str(e)}")
         return {"error": f"Failed to parse resume: {str(e)}", "skills": []}
 
     # 2. Use Groq to extract skills
@@ -290,11 +304,15 @@ async def extract_skills(
     )
     prompt = f"Resume text:\n{text[:6000]}" # Slightly increased limit
     
+    print(f"DEBUG: Extracting skills from text of length {len(text)}")
     try:
         from ..services.groq_service import groq_service
         result = groq_service.get_chat_completion(prompt, system_prompt)
-        return {"skills": result.get("skills", [])}
+        skills = result.get("skills", [])
+        print(f"DEBUG: Extracted {len(skills)} skills")
+        return {"skills": skills}
     except Exception as e:
+        print(f"DEBUG: AI extraction failed: {str(e)}")
         return {"error": f"AI extraction failed: {str(e)}", "skills": []}
 
 @router.post("/ai/transcribe")

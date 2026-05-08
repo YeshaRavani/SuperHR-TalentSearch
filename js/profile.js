@@ -89,6 +89,137 @@ document.addEventListener('DOMContentLoaded', async function () {
       }
     }
 
+    // Load Stats
+    try {
+      const stats = await api.get('/user/stats');
+      const pointsValue = document.getElementById('pointsValue');
+      if (pointsValue) pointsValue.textContent = (stats.points_earned || 0).toLocaleString();
+
+      const oppsJoinedValue = document.getElementById('oppsJoinedValue');
+      if (oppsJoinedValue) oppsJoinedValue.textContent = (stats.opportunities_joined || 0).toLocaleString();
+
+      const interestsValue = document.getElementById('interestsValue');
+      if (interestsValue) interestsValue.textContent = (stats.interests_shown || 0).toLocaleString();
+
+      const messagesValue = document.getElementById('messagesValue');
+      if (messagesValue) messagesValue.textContent = (stats.community_messages || 0).toLocaleString();
+
+      const rewardPointsValue = document.getElementById('rewardPointsValue');
+      if (rewardPointsValue) rewardPointsValue.textContent = (stats.reward_points || 0).toLocaleString();
+
+      const rankValue = document.getElementById('rankValue');
+      if (rankValue) rankValue.textContent = stats.leaderboard_rank ? `#${stats.leaderboard_rank}` : '—';
+    } catch (e) {
+      console.warn('Could not load user stats:', e.message);
+    }
+
+    // Load Contributions & Activity
+    try {
+      const [
+        opportunities,
+        interested,
+        applications,
+        invitations
+      ] = await Promise.all([
+        api.get('/opportunities'),
+        api.get('/interested-opportunities').catch(() => []),
+        api.get('/applications').catch(() => []),
+        api.get('/invitations').catch(() => [])
+      ]);
+
+      const oppById = new Map(opportunities.map(o => [o.id, o]));
+
+      // 1. Render Contributions (Only applications that are NOT 'interested')
+      const contributionsGrid = document.getElementById('contributionsGrid');
+      if (contributionsGrid) {
+        const contributedApps = applications.filter(a => a.status !== 'interested' && a.opportunity_id);
+        if (contributedApps.length === 0) {
+          contributionsGrid.innerHTML = '<div style="padding: 28px; text-align: center; color: var(--ink-400); grid-column: 1 / -1; width: 100%; white-space: nowrap;">No contributions yet. Join an opportunity to get started!</div>';
+        } else {
+          contributionsGrid.innerHTML = contributedApps.map(app => {
+            const opp = oppById.get(app.opportunity_id);
+            if (!opp) return '';
+            const typeClass = `badge-${(opp.type || 'initiative').toLowerCase()}`;
+            return `
+              <div class="opportunity-card">
+                <div class="card-header">
+                  <h4 class="opportunity-title">${opp.title}</h4>
+                  <span class="category-badge ${typeClass}">${opp.type || 'Initiative'}</span>
+                </div>
+                <div class="opportunity-meta">
+                  <div class="meta-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    Status: ${app.status.charAt(0).toUpperCase() + app.status.slice(1)}
+                  </div>
+                  <div class="meta-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                      <line x1="16" y1="2" x2="16" y2="6"></line>
+                      <line x1="8" y1="2" x2="8" y2="6"></line>
+                      <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    ${opp.schedule_time || 'Ongoing'}
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+      }
+
+      // 2. Render Recent Activity (Aligned with Dashboard)
+      const activityGrid = document.getElementById('profileActivityGrid');
+      if (activityGrid) {
+        const activities = [];
+        
+        // Applications
+        applications.slice(0, 3).forEach(app => {
+          const opp = oppById.get(app.opportunity_id);
+          activities.push({
+            icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`,
+            bg: 'var(--sky-100)',
+            title: `Joined <span style="color:var(--sky-500);">${opp?.title || 'Opportunity'}</span>`,
+            meta: app.updated_at ? new Date(app.updated_at).toLocaleDateString() : 'Recently'
+          });
+        });
+
+        // Invitations
+        invitations.filter(i => i.receiver_id === user.id).slice(0, 2).forEach(inv => {
+          activities.push({
+            icon: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>`,
+            bg: 'var(--sky-100)',
+            title: `Invited to <span style="color:var(--sky-500);">${inv.topic}</span>`,
+            meta: new Date(inv.created_at).toLocaleDateString()
+          });
+        });
+
+        if (activities.length === 0) {
+          activityGrid.innerHTML = '<div style="padding: 28px; text-align: center; color: var(--ink-400);">No recent activity yet.</div>';
+        } else {
+          activityGrid.innerHTML = `
+            <div style="display:flex; flex-direction:column; gap:16px;">
+              ${activities.map((act, idx) => `
+                <div style="display:flex; gap:12px; align-items:flex-start; ${idx < activities.length - 1 ? 'padding-bottom:16px; border-bottom:1px solid rgba(16,30,43,0.05);' : ''}">
+                  <div style="width:36px; height:36px; border-radius:50%; background:${act.bg}; color:var(--sky-600); display:grid; place-items:center;">
+                    ${act.icon}
+                  </div>
+                  <div>
+                    <div style="font-weight:600; color:var(--ink-900);">${act.title}</div>
+                    <div style="font-size:0.8rem; color:var(--ink-400); margin-top:4px;">${act.meta}</div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          `;
+        }
+      }
+
+    } catch (e) {
+      console.warn('Could not load user contributions/activity:', e.message);
+    }
   } catch (e) {
     console.warn('Could not load profile data:', e.message);
   }

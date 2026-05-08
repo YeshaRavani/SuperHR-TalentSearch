@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Load initial data
     let allOpportunities = [];
     let interestedList = [];
+    let enrolledList = [];
     let userSkills = [];
     let activeSkill = 'all';
 
@@ -32,20 +33,33 @@ document.addEventListener('DOMContentLoaded', async () => {
             oppLink.innerHTML = `Opportunities <span style="font-size: 0.8em; opacity: 0.7;">(${totalPlatform})</span>`;
         }
 
-        // "All" button logic: If on hub, it's a filter div. If on specific page, it's a link to hub.
+        // Filters list
+        const activeCount = enrolledList.length;
+        const interestedCount = interestedList.length;
+
         const allBtn = isHub 
             ? `<div class="skill-card ${activeSkill === 'all' ? 'active' : ''}" data-skill="all">All <span class="skill-count">(${contextCount})</span></div>`
             : `<a href="opportunities.html" class="skill-card" style="text-decoration:none; color:inherit;">All <span class="skill-count">(${totalPlatform})</span></a>`;
 
+        const activeBtn = isHub
+            ? `<div class="skill-card ${activeSkill === 'Active' ? 'active' : ''}" data-skill="Active" 
+                 style="background: #ecfdf5; border: 1.5px solid #10b981; color: #065f46;">
+                 Active <span class="skill-count" id="count-active">(${activeCount})</span>
+               </div>`
+            : `<a href="opportunities.html?filter=Active" class="skill-card" 
+                 style="text-decoration:none; color:inherit; background: #ecfdf5; border: 1.5px solid #10b981;">
+                 Active <span class="skill-count" id="count-active">(${activeCount})</span>
+               </a>`;
+
         const initialHtml = `
             ${allBtn}
+            ${activeBtn}
             <a href="interested.html" class="skill-card ${window.location.pathname.includes('interested.html') ? 'active' : ''}" data-skill="Interested" 
                style="text-decoration: none; color: inherit; border: 1.5px solid var(--sky-400); background: #f0f9ff;">Interested 
-               <span class="skill-count" id="count-interested">(${interestedList.length})</span></a>
+               <span class="skill-count" id="count-interested">(${interestedCount})</span></a>
         `;
 
         // Get top matching skills from user's profile
-        // Only show skills that have at least one opportunity match
         const skillCounts = {};
         allOpportunities.forEach(opp => {
             const oppSkills = Array.isArray(opp.skills) ? opp.skills : [];
@@ -87,9 +101,18 @@ document.addEventListener('DOMContentLoaded', async () => {
                 userSkills = user.skills || [];
                 const interests = await api.get('/interested-opportunities');
                 interestedList = interests.map(i => i.opportunity_id);
+                const applications = await api.get('/applications');
+                enrolledList = applications.filter(a => a.status === 'enrolled').map(a => a.opportunity_id);
             } catch (e) {
                 console.warn("Could not fetch user data", e);
             }
+        }
+
+        // Handle deep-linking from other pages (e.g., ?filter=Active)
+        const urlParams = new URLSearchParams(window.location.search);
+        const filterParam = urlParams.get('filter');
+        if (filterParam && ['all', 'Active'].includes(filterParam)) {
+            activeSkill = filterParam;
         }
 
         renderSkillFilters();
@@ -116,12 +139,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function getActiveFilteredOpportunities() {
+        const isHub = window.location.pathname.includes('opportunities.html') || window.location.pathname.endsWith('/');
         let opportunities = getBasePageFilter(allOpportunities);
+        
         if (activeSkill === 'all') {
+            // Exclude items already in Interested or Active lists ONLY on the "All" explore hub view
+            if (isHub) {
+                return opportunities.filter(o => !interestedList.includes(o.id) && !enrolledList.includes(o.id));
+            }
             return opportunities;
         }
         if (activeSkill === 'Interested') {
-            return opportunities;
+            return opportunities.filter(o => interestedList.includes(o.id));
+        }
+        if (activeSkill === 'Active') {
+            return opportunities.filter(o => enrolledList.includes(o.id));
         }
 
         return opportunities.filter(o => {
@@ -185,6 +217,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 count = activeContextList.length;
             } else if (skill === 'Interested') {
                 count = interestedList.length;
+            } else if (skill === 'Active') {
+                count = enrolledList.length;
             } else {
                 count = activeContextList.filter(o => {
                     const skills = Array.isArray(o.skills) ? o.skills : [];
@@ -201,6 +235,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         const interestedSpan = document.getElementById('count-interested');
         if (interestedSpan) {
             interestedSpan.textContent = `(${interestedList.length})`;
+        }
+        const activeSpan = document.getElementById('count-active');
+        if (activeSpan) {
+            activeSpan.textContent = `(${enrolledList.length})`;
         }
     }
 

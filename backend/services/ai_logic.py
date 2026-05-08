@@ -293,7 +293,7 @@ def answer_platform_question(
 
     if any(keyword in prompt for keyword in ["capital of", "weather", "stock price", "who won", "define ", "translate "]):
         reply = (
-            "I am a platform assistant for SuperHR Talent Search, so I can help with opportunities, rewards, and community features."
+            "I am a platform assistant for Plaksha University Talent Search, so I can help with opportunities, rewards, and community features."
         )
         actions = ["Ask about recommended opportunities", "Ask about rewards", "Ask how to use community chat"]
         return reply, sources, actions
@@ -474,7 +474,7 @@ def groq_aided_chat(
     contextual_platform_knowledge = build_platform_context(message, role)
     recent_history = build_recent_history(history)
     system_prompt = f"""
-You are the SuperHR Talent Search Assistant. Your goal is to help users find opportunities, explain platform rewards, and navigate community features naturally.
+You are the Plaksha University Talent Search Assistant. Your goal is to help users find opportunities, explain platform rewards, and navigate community features naturally.
 
 Grounded context:
 {context}

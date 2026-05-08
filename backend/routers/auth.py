@@ -97,6 +97,43 @@ def get_user(current_user: orm_models.User = Depends(auth.get_current_user)):
     return current_user
 
 
+@router.get("/user/stats", response_model=models.UserStatsResponse)
+def get_user_stats(
+    current_user: orm_models.User = Depends(auth.get_current_user),
+    db: Session = Depends(database.get_db),
+):
+    # Calculate opportunities joined (excluding 'interested')
+    opps_joined = db.query(orm_models.UserOpportunity).filter(
+        orm_models.UserOpportunity.user_id == current_user.id,
+        orm_models.UserOpportunity.status != "interested"
+    ).count()
+
+    # Calculate interests shown
+    interests_shown = db.query(orm_models.UserOpportunity).filter(
+        orm_models.UserOpportunity.user_id == current_user.id,
+        orm_models.UserOpportunity.status == "interested"
+    ).count()
+
+    # Calculate community messages sent
+    msg_count = db.query(orm_models.Message).filter(
+        orm_models.Message.sender_id == current_user.id
+    ).count()
+
+    # Calculate leaderboard rank
+    rank = db.query(orm_models.User).filter(
+        orm_models.User.total_points > current_user.total_points
+    ).count() + 1
+
+    return models.UserStatsResponse(
+        points_earned=current_user.total_points,
+        opportunities_joined=opps_joined,
+        interests_shown=interests_shown,
+        community_messages=msg_count,
+        reward_points=current_user.total_points,  # Using same value for now
+        leaderboard_rank=rank
+    )
+
+
 @router.put("/user", response_model=models.UserResponse)
 def update_current_user(
     user_update: models.UserUpdate,

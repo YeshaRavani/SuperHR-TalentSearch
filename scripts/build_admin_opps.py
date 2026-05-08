@@ -74,7 +74,7 @@ def main():
           }
 
           function renderAll(filter = 'all') {
-            if (!container || !window.superHrOpportunities) return;
+            if (!container || !window.plakshaOpportunities) return;
             let html = '';
             const categories = [
               { key: 'Event', title: 'Events', viewKey: 'events' },
@@ -85,7 +85,7 @@ def main():
             categories.forEach(cat => {
               if (filter !== 'all' && filter !== cat.key.toLowerCase()) return;
               
-              const items = window.superHrOpportunities.filter(o => o.category === cat.key);
+              const items = window.plakshaOpportunities.filter(o => o.category === cat.key);
               if (items.length > 0) {
                 html += `
                   <div class="category-section" style="margin-bottom: 60px;">

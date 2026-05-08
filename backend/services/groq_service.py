@@ -64,6 +64,7 @@ class GroqService:
             )
             
             content = chat_completion.choices[0].message.content
+            print(f"DEBUG: Groq raw response: {content[:200]}...")
             
             # Robust JSON extraction
             if "```json" in content:

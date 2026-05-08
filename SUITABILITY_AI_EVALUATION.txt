@@ -1,133 +1,152 @@
 # AI Suitability Explanation Evaluation: Single vs. Agentic
 
-Average Single AI Grade: 3.75/10
-Average Agentic AI Grade: 7.35/10
+Average Single AI Grade: 6.85/10
+Average Agentic AI Grade: 7.45/10
 
-## Comparative Results
+## 1. Comparative Results Table
 
-| ID | Scenario | Single AI Reasoning | S-Grade | Agentic AI Reasoning | A-Grade |
+| ID | Scenario | Single AI Reasoning | S-Grade | Agentic AI (Reflected) Reasoning | A-Grade |
 | :--- | :--- | :--- | :---: | :--- | :---: |
-| 1 | Technical Depth | Strong DevOps background with AWS and Python skills makes the user a suitable candidate for the Cloud Infrastructure Engineer role, which requires AWS expertise and Terraform knowledge. | 4 | The suitability explanation over-generalizes the user's skills. While the user has a DevOps background and AWS skills, their skills are not directly applicable to the Cloud Infrastructure Engineer role. The explanation misses a domain mismatch between the user's skills in 'Python' and 'Docker' and the role's requirements. A more precise explanation would be: 'The user's DevOps background and AWS skills are a good fit for the Cloud Infrastructure Engineer role, but their lack of Terraform experience and limited relevance of their 'Python' and 'Docker' skills to the role's requirements make them a less-than-ideal candidate.' | 9 |
-| 2 | Cross-Functional Design | Good alignment with your professional background. | 2 | The explanation is too vague and does not address the domain mismatch between UX and Product Architecture. A more precise explanation is needed to justify the candidate's suitability for the role. | 9 |
-| 3 | Industry Pivot (Healthcare) | While the user has medical knowledge, the opportunity requires building workflow apps, which is a technical skillset that doesn't align with the user's background in patient care. | 2 | The suitability explanation appears to over-generalize the technical skillset required for building workflow apps. It fails to consider the possibility that a nurse with medical knowledge may still possess relevant technical skills or experience in workflow management, especially in a patient care context. A more precise explanation would be: 'While the user has medical knowledge, the opportunity requires building workflow apps that involve complex technical infrastructure, which may be outside of their nursing background and experience.' | 9 |
-| 4 | Developer to Lead | Strong technical match, but domain expertise in software engineering is required for this Team Lead opportunity. | 9 | The user's Java and Spring skills demonstrate a strong technical foundation, but their suitability for the Team Lead role requires further evaluation. Their experience in the Eng team may provide some transferable skills, such as communication and problem-solving, but a more detailed assessment of their leadership and team management abilities is needed to confirm their fit for the role. | 9 |
-| 5 | Data Analytics | The user's SQL skills and marketing background partially align with the Growth Analyst opportunity, but the lack of Python expertise and unclear domain relevance lowers the match score. | 8 | The user has relevant SQL skills, but the opportunity's requirement for Python is not matched, and the domain (Growth Analyst) seems to be more aligned with marketing analysis rather than technical analysis. | 8 |
-| 6 | Semantic Tools (NLP) | The user's background in NLP and Transformers, combined with their team's focus on AI, provides a strong semantic fit for the LLM Engineer opportunity, which involves fine-tuning language models. | 9 | The suitability explanation over-generalizes the user's background in NLP and Transformers to the LLM Engineer opportunity. While the overlap in keywords such as 'llms' and 'fine-tune models' is noted, it does not address potential domain mismatches. For instance, the user's background may be more focused on natural language processing for text analysis, whereas the LLM Engineer opportunity may involve more complex tasks such as multimodal LLMs or large-scale model deployment. A more precise explanation would be: 'The user's background in NLP and Transformers demonstrates a strong semantic fit for the LLM Engineer opportunity, particularly given the overlap in keywords such as 'llms' and 'fine-tune models'. However, further evaluation is needed to assess the user's experience with domain-specific tasks and technologies relevant to the opportunity.' | 9 |
-| 7 | Domain Mismatch (Route) | The user's logistics background and route planning skills do not directly apply to the technical requirements of a Network Router Spec, which involves Cisco technology and optimizing data flow in a software context. | 0 | The explanation appears to over-generalize the domain mismatch. While it's true that route planning skills may not directly apply to optimizing data flow with Cisco network routers, it's possible that the user's logistics background could still be relevant in certain aspects, such as understanding network topology or optimizing network resource allocation. A more precise explanation would be: 'The user's logistics background and route planning skills may not directly translate to the technical requirements of optimizing data flow with Cisco network routers, as the latter involves specific knowledge of network protocols, router configurations, and data packet transmission. However, the user's experience in planning and optimizing routes could potentially be applied to network path optimization or resource allocation, but further analysis is required to determine the extent of this applicability.' | 9 |
-| 8 | Creative Crossover | While the user has experience in copywriting, the opportunity for a UX Writer in a technical domain may require additional skills and knowledge, but the user's background in content creation could be transferable with proper training. | 0 | The suitability explanation may over-generalize the skills required for a UX Writer role. While it's true that UX Writers need a deeper understanding of user interface design and technical communication, it's possible for a copywriter with a strong understanding of user interface design principles and technical communication to be suitable for the role. The explanation should be more precise and consider the specific domain and requirements of the opportunity. A rewritten explanation could be: 'The user has copywriting skills, but the opportunity for a UX Writer in a technical domain requires a deeper understanding of user interface design and technical communication specific to this domain, which may not be directly applicable from a copywriting background in the Content team.' | 9 |
-| 9 | Automation/QA | Excellent match! Your skills are a near-perfect fit for this role. | 0 | Your skills in Selenium and Python are relevant to the Automation Engineer role, but a more detailed analysis is required to confirm a perfect fit. The skills are primarily related to software testing automation, which is a subset of automation engineering. Further evaluation is needed to determine if your experience and expertise align with the specific requirements of the role. | 8 |
-| 10 | Marketing/Discord | The user's social media skills are somewhat relevant to community management, but the opportunity's requirement for Discord expertise is a significant mismatch with the user's background. | 8 | The suitability explanation appears to over-generalize by stating 'community management for gaming or technical communities.' This could encompass a broad range of domains, potentially missing a domain mismatch. A more precise explanation would be: 'While the user has social media skills, the opportunity requires Discord management, which is a specific platform, and the user's background does not indicate expertise in managing online communities for the gaming industry.' | 9 |
-| 11 | Finance/CPA | The user's background as a CPA in finance aligns well with the opportunity's requirement for budgeting, suggesting a strong fit for a financial analyst role. | 0 | The explanation over-generalizes the user's background as a CPA in finance. While it's true that a CPA in finance has experience with budgeting, it doesn't necessarily mean they have expertise in the specific domain of the opportunity. A more precise explanation would be: 'The user's background as a CPA in finance suggests a strong fit for budgeting tasks, but further analysis is needed to determine their expertise in the specific domain of the opportunity.' | 8 |
-| 12 | Support to Sales | While the user has customer support experience, the opportunity in Tech Sales requires a different domain expertise, specifically sales and product pitching, which is not directly related to customer support. | 8 | The explanation over-generalizes the domain mismatch. Customer support experience may still be relevant in Tech Sales, especially in areas such as communication, problem-solving, and customer relationship management. A more precise explanation would be: 'While the user has customer support experience, the opportunity in Tech Sales requires a different domain expertise, specifically sales and product pitching, which may not leverage the user's existing knowledge of customer support software and processes.' | 9 |
-| 13 | Research | The user's background in scientific research partially aligns with the opportunity's requirement for research, but the domains of science and market research are distinct. | 2 | The explanation partially addresses the domain mismatch, but it over-generalizes by implying that all domains of science are distinct from market research. A more precise explanation would be: 'The user's background in scientific research partially aligns with the opportunity's requirement for research, but there is a domain mismatch between the user's experience in laboratory-based research and the market research required for this opportunity.' | 9 |
-| 14 | Frontend Pivot | User's background in HTML and CSS does not directly translate to React development, requiring a significant domain shift from frontend development to a specific framework. | 0 | Although the user has HTML and CSS skills, the opportunity is for a React Dev in a specific domain (e.g., web development, mobile app development) that may require additional skills and expertise not covered by the user's current skills. A more detailed analysis of the opportunity's requirements and the user's skills in the relevant domain is needed to determine suitability. | 8 |
-| 15 | Agile/Scrum | While the user has experience as a Scrum Master in Ops, the opportunity for a Coordinator requires planning skills, which is a broad requirement and may not directly align with the user's technical expertise. | 8 | The suitability explanation is partially accurate but over-generalizes. While it's true that planning skills are required for a Coordinator role, it's unclear if the user's experience as a Scrum Master in the Ops team is directly applicable. A more precise explanation would be: 'The user has experience as a Scrum Master in the Ops team, but the Coordinator role requires planning skills, which may not be directly transferable. Additionally, the domain is not explicitly mentioned, so it's unclear if it's a technical or non-technical role, and if the user's experience is relevant to the specific domain.' | 0 |
-| 16 | Hardware/Arduino | The user's hardware background and Arduino skills show some relevance to the IoT sensors opportunity, but the lack of explicit mention of programming languages like C makes the match uncertain. | 0 | The explanation partially identifies a domain mismatch between Arduino and Embedded Engineering, but over-generalizes by implying that the lack of explicit mention of programming languages (e.g., C) is a significant limitation. In reality, Arduino is often used in conjunction with C/C++ programming languages, and the explanation fails to consider the potential relevance of the user's experience with Arduino's C/C++-based framework. A more precise explanation would focus on the domain mismatch and provide specific examples of how the user's experience may not directly translate to Embedded Engineering. | 8 |
-| 17 | Legal/GDPR | The user's corporate law background provides a foundation for understanding privacy regulations, but the opportunity's focus on global standards suggests a need for technical expertise, which may not be directly applicable. | 4 | The suitability explanation may have missed a domain mismatch by assuming a corporate law background is sufficient for understanding privacy regulations. Corporate law primarily deals with company formation, governance, and operations, whereas privacy regulations, such as GDPR, involve data protection and compliance. The explanation also over-generalizes by stating 'global standards' without specifying which standards or regulations are relevant. A more precise explanation would be: 'The user's corporate law background may not directly translate to expertise in data protection and compliance, particularly in the context of GDPR. Additional training or expertise in data protection and compliance may be necessary to ensure suitability for this opportunity.' | 0 |
-| 18 | Video Editor | User's experience with Adobe Premiere aligns well with the editing requirements for social clips in the Media domain. | 2 | The suitability explanation may have over-generalized the user's experience with Adobe Premiere. The explanation assumes that Adobe Premiere is suitable for editing social clips in the Media domain, but it does not consider other domains where Adobe Premiere might be used. Additionally, it does not provide any specific details about the user's experience with Adobe Premiere, such as their level of proficiency or the types of projects they have worked on. A more precise explanation would be: 'User has experience editing social clips in the Media domain using Adobe Premiere, which aligns with the editing requirements for this specific type of content.' | 0 |
-| 19 | HR/People | The user's background in recruitment and people management does not directly align with the technical aspects of improving journeys, which may involve software or logistics, making it a moderate match. | 0 | The user's background in recruitment and people management shows some overlap with onboarding, but the opportunity's focus on improving journeys in a broader sense is not directly related to the user's expertise. | 8 |
-| 20 | Security/IT | While the user has pentesting skills, the opportunity for IT Support in a non-security context is not a strong semantic fit due to the lack of overlap in domains and specific requirements. | 9 | The user's profile as 'PenTesting' does not align with the requirements of the 'IT Support' role, which typically involves general technical support and troubleshooting, rather than specialized security testing and penetration analysis. | 9 |
+| 1 | Technical Depth | Strong DevOps background with AWS and Docker skills makes the user a suitable candidate for the Cloud Infrastructure Engineer role, which requires AWS expertise and Terraform knowledge. | 0 | The user's DevOps background and AWS skills make them a strong fit for the Cloud Infrastructure Engineer role, with the only mismatch being the lack of Terraform experience. | 9 |
+| 2 | Cross-Functional Design | Good alignment with your professional background. | 2 | The statement 'Good alignment with your professional background' is overly generic and lacks specific details about how the user's skills in Figma and UX design align with the responsibilities of a Product Architect. A more accurate assessment would consider the user's ability to design and develop product architectures, facilitate cross-functional collaboration, and drive product vision. While Figma and UX skills are valuable, they may not directly translate to the technical and strategic demands of a Product Architect role, which typically requires expertise in areas like product roadmap development, technical requirements gathering, and stakeholder management. Therefore, a more nuanced evaluation is necessary to determine the user's true fit for the position. | 9 |
+| 3 | Industry Pivot (Healthcare) | While the user has medical knowledge, the opportunity requires building workflow apps, which is a technical skillset outside of their nursing background. | 8 | The statement is partially incorrect. While it is true that building workflow apps requires technical skills, a nurse's background in patient care can be highly relevant to a Healthcare Consultant role. Nurses often have a deep understanding of clinical workflows and patient care processes, which can be valuable in designing and implementing workflow apps. Additionally, many nurses have experience with electronic health records and other healthcare technology, which can translate to building workflow apps. The key skill gap may be in programming or software development, but this can be addressed through training or collaboration with technical team members. Therefore, the user's background in patient care can be an asset in a Healthcare Consultant role, particularly if the focus is on clinical workflow improvement or healthcare technology implementation. | 8 |
+| 4 | Developer to Lead | Strong technical background in Java and Spring, with a team lead role in the same domain, makes the user a suitable candidate for the Team Lead position. | 2 | While the user possesses strong technical skills in Java and Spring, the Team Lead position requires more than just technical expertise. It demands leadership experience, strategic thinking, and the ability to manage and motivate team members. Although the user's experience in a development team is a plus, it is unclear whether they have had opportunities to demonstrate leadership skills, such as mentoring, project management, or conflict resolution. Therefore, the user's suitability for the Team Lead position is questionable, and additional evaluation of their leadership abilities is necessary to determine their readiness for this role. | 9 |
+| 5 | Data Analytics | The user's SQL skills and marketing background partially align with the Growth Analyst opportunity, but the lack of Python expertise and unclear domain context limits the match. | 9 | The user's SQL skills and marketing background provide a foundational alignment with the Growth Analyst opportunity. However, the absence of Python expertise significantly limits the user's ability to perform advanced data analysis, a critical component of the role. Furthermore, the unclear domain context raises concerns about the user's ability to apply their skills effectively within the specific industry or domain of the Growth Analyst position. | 9 |
+| 6 | Semantic Tools (NLP) | The user's background in NLP and Transformers, combined with their team's focus on AI, demonstrates a strong semantic fit for the LLM Engineer opportunity, which involves fine-tuning language models. | 9 | While the user's background in NLP and Transformers is relevant to the LLM Engineer role, a more nuanced evaluation is required. The user's skills in NLP and Transformers are a good foundation, but LLM Engineer roles often require expertise in large language models, model fine-tuning, and deployment. The mention of 'fine-tune models' is a positive indicator, but it is unclear if the user has hands-on experience with large language models or just a theoretical understanding. Furthermore, the term 'strong semantic fit' is overly broad and does not provide specific examples of how the user's skills align with the job requirements. A more detailed analysis of the user's experience with LLMs, their proficiency in programming languages such as Python, and their understanding of deep learning frameworks like TensorFlow or PyTorch is necessary to determine their true fit for the LLM Engineer opportunity. | 9 |
+| 7 | Domain Mismatch (Route) | The user's logistics background and route planning skills do not directly apply to the technical requirements of optimizing data flow in a Network Router Spec, which involves Cisco technology. | 9 | The statement attempts to distinguish between the user's existing skill in 'Route Planning' and the requirements of the 'Network Router Spec' job. However, it seems to conflate 'network routing' with the job title 'Network Router Spec', which may imply a focus on hardware or network infrastructure rather than the planning or optimization of routes within a network. A more precise distinction would be that 'Route Planning' typically involves determining the most efficient path between two points, often in a physical or logistical context, whereas 'Network Routing' in the context of the job might involve configuring and optimizing the paths data packets take through a computer network. The opportunity might indeed lie in the user acquiring skills in network protocols, network architecture, and routing algorithms, which are distinct from traditional route planning skills. Thus, the statement could be clarified to reflect that the user's route planning skills, while valuable, do not directly translate to the technical requirements of a Network Router Spec role, which includes knowledge of networking fundamentals, router configuration, and potentially network security and management. | 2 |
+| 8 | Creative Crossover | The user's background in copywriting for the Content team shows some overlap with the UX Writer opportunity, but the domains are not identical, as UX Writing is a specialized field that requires a deeper understanding of user experience and design principles. | 9 | The statement is partially correct in highlighting the difference between copywriting and UX writing, but it oversimplifies the skills transferability. A copywriter, with their expertise in crafting compelling content, can adapt to UX writing with training on user interface design principles. The key gap lies not in the fundamental ability to write, but in understanding how users interact with digital products and applying that knowledge to create intuitive, user-centered content. The critique should focus on the need for the copywriter to acquire specific UX design knowledge and experience, rather than implying a direct inapplicability of their skills. Therefore, the opportunity for growth into a UX Writer role exists, provided the individual is willing to learn and apply UX design principles to their writing. | 9 |
+| 9 | Automation/QA | Excellent match! Your skills are a near-perfect fit for this role. | 8 | The statement 'Excellent match! Your skills are a near-perfect fit for this role.' may be overly optimistic. While the user's skills in 'Selenium' and 'Python' are relevant to the role of an Automation Engineer, it is unclear whether they possess all the necessary skills, experience, and qualifications required for the position. A more nuanced assessment would consider additional factors such as the user's experience with automation frameworks, testing methodologies, and collaboration tools. Furthermore, the term 'near-perfect fit' is subjective and lacks concrete evidence to support the claim. A more accurate statement might be: 'Your skills in Selenium and Python are a good starting point for the Automation Engineer role, but further evaluation is needed to determine the overall fit.' | 9 |
+| 10 | Marketing/Discord | While the user has social media skills, the opportunity requires Discord expertise, which is a specific platform that may not directly relate to the user's background in general social media. | 8 | While the user demonstrates proficiency in social media, the Community Manager role requires specific expertise in Discord community management, including technical skills such as server setup, bot integration, and moderation tool usage. Additionally, experience in managing technical discussions, developing community guidelines, and proficiency in Discord-specific community engagement strategies are essential. The user's background in social media does not adequately prepare them for these technical and platform-specific demands. | 9 |
+| 11 | Finance/CPA | The user's background as a CPA in finance aligns well with the opportunity's requirement for budgeting planning, suggesting a strong semantic fit. | 9 | The statement overemphasizes the relevance of the user's CPA background in finance for an Analyst role, which may not necessarily require budgeting planning expertise. A more nuanced assessment would consider the specific skills and responsibilities associated with the Analyst position, such as data analysis, reporting, and problem-solving. While the CPA certification demonstrates expertise in financial accounting, it may not directly translate to the analytical skills required for the role. A more thorough evaluation of the user's skills and experience in data analysis, financial modeling, and business acumen would be necessary to determine a strong fit for the Analyst position. | 8 |
+| 12 | Support to Sales | While the user has customer support experience, the opportunity in Tech Sales requires a different domain expertise, specifically sales and product pitching, which is not directly related to customer support. | 8 | The user's customer support experience provides a foundation in communication and problem-solving, but Tech Sales requires distinct skills including sales methodologies, product knowledge, negotiation, and pitching. Acquiring these specific competencies is crucial for success in the role. | 8 |
+| 13 | Research | The user's background in scientific research partially aligns with the opportunity's requirement for research, but the domains of science and market research are distinct. | 8 | The user's scientific research background lacks direct relevance to market research, requiring additional training or experience to develop necessary skills in consumer behavior, market trends, and marketing-specific data analysis. | 8 |
+| 14 | Frontend Pivot | User's background in HTML and CSS is not directly applicable to React development, which requires a different set of skills and domain expertise. | 8 | The statement is partially correct, but it oversimplifies the relationship between HTML, CSS, and React. While it's true that HTML and CSS skills don't directly translate to React development, they do provide a foundational understanding of web development principles, such as structuring and styling content. React builds upon these fundamentals, using JavaScript to create dynamic, interactive user interfaces. A user with a background in HTML and CSS may still be a strong candidate for a React development role, as they can leverage their existing knowledge to learn React more quickly. However, additional training or experience in JavaScript and React-specific concepts, such as components, state, and props, would be necessary to fully align with the job requirements. Therefore, the semantic fit is not necessarily 'low', but rather 'indirect', requiring additional skill acquisition to meet the opportunity's requirements. | 8 |
+| 15 | Agile/Scrum | While the user has experience as a Scrum Master in the Ops team, the opportunity for a Coordinator role requires planning skills, but lacks clear domain alignment, resulting in a moderate match. | 6 | The user's experience as a Scrum Master provides a foundation in team management and facilitation, but the Coordinator role requires distinct planning skills. Without explicit domain mention, the transferability of skills is uncertain, making the match moderate. A more detailed analysis considering the specific domain and required planning skills for the Coordinator role is necessary for a precise assessment. | 8 |
+| 16 | Hardware/Arduino | The user's hardware background and Arduino skills show some relevance to the IoT sensors opportunity, but the lack of explicit mention of C programming language requirements makes the match uncertain. | 8 | The user's background in Arduino, a microcontroller platform, demonstrates some relevance to the Embedded Engineer role, as Arduino is often used in embedded systems development. However, the absence of explicit proficiency in programming languages commonly used in embedded systems, such as C or C++, raises concerns about the user's ability to perform the job's requirements. Additionally, while Arduino skills are valuable, they may not be sufficient to guarantee success in an Embedded Engineer position, which often demands a deeper understanding of computer architecture, firmware development, and low-level programming. Therefore, the match between the user's skills and the job is uncertain and warrants further evaluation. | 0 |
+| 17 | Legal/GDPR | The user's background in corporate law partially aligns with the opportunity's focus on privacy, but the domains of law and data protection are distinct and require specialized knowledge. | 8 | The user's background in corporate law provides a foundational legal understanding, but the role of a GDPR Officer requires specialized knowledge of privacy standards and GDPR. This represents a distinct domain within the legal field, indicating a need for the user to acquire or demonstrate expertise in data protection and privacy law to fulfill the role effectively. | 8 |
+| 18 | Video Editor | This might be a stretch based on your current profile. | 2 | This might be a stretch based on your current profile. | 2 |
+| 19 | HR/People | The user's background in recruitment and people management shows some overlap with onboarding, but the opportunity's focus on improving journeys in a broader sense suggests a need for a more specialized skillset, possibly in a service-oriented domain. | 8 | While the candidate's background in recruitment and people management may not directly align with the technical aspects of improving journeys, it is overly simplistic to conclude this as merely a moderate match. The role of an Experience Lead benefits from a blend of technical, analytical, and interpersonal skills. The candidate's experience could provide a strong foundation in understanding user needs and managing processes, with the potential for growth into the technical aspects of the role. A more nuanced assessment considering transferable skills and the candidate's ability to learn and adapt is necessary. | 9 |
+| 20 | Security/IT | The user's pentesting background in the Security domain does not directly align with the IT Support opportunity, which focuses on networking and server management. | 8 | The user's background in pentesting, a security-focused skill, does not directly align with the requirements of an IT Support role, which demands a broader set of skills including server management, network administration, and hardware/software troubleshooting. While security skills are valuable, the user may need to acquire additional competencies to be fully qualified for IT Support. | 8 |
 
 
-## Full Ground Truth Dataset Details
+## 2. Detailed Ground Truths & Inputs
 
 ### Case 1: Technical Depth
-- **User Profile**: ['Python', 'Docker', 'AWS'] (DevOps)
-- **Opportunity**: Cloud Infrastructure Engineer - Scale our cloud clusters.
-- **Expectation (Ground Truth)**: Strong AWS fit, slight gap in Terraform.
+- **User Skills**: ['Python', 'Docker', 'AWS']
+- **User Team**: DevOps
+- **Opportunity**: Cloud Infrastructure Engineer
+- **Ground Truth Expectation**: Strong AWS fit, slight gap in Terraform.
 
 ### Case 2: Cross-Functional Design
-- **User Profile**: ['Figma', 'UX'] (Design)
-- **Opportunity**: Product Architect - Design mobile apps.
-- **Expectation (Ground Truth)**: Excellent design alignment and Figma expertise.
+- **User Skills**: ['Figma', 'UX']
+- **User Team**: Design
+- **Opportunity**: Product Architect
+- **Ground Truth Expectation**: Excellent design alignment and Figma expertise.
 
 ### Case 3: Industry Pivot (Healthcare)
-- **User Profile**: ['Nurse', 'Patient Care'] (Medical)
-- **Opportunity**: Healthcare Consultant - Build workflow apps.
-- **Expectation (Ground Truth)**: Deep domain expertise for medical workflows.
+- **User Skills**: ['Nurse', 'Patient Care']
+- **User Team**: Medical
+- **Opportunity**: Healthcare Consultant
+- **Ground Truth Expectation**: Deep domain expertise for medical workflows.
 
 ### Case 4: Developer to Lead
-- **User Profile**: ['Java', 'Spring'] (Eng)
-- **Opportunity**: Team Lead - Lead 5 devs.
-- **Expectation (Ground Truth)**: Solid tech base but lacks leadership evidence.
+- **User Skills**: ['Java', 'Spring']
+- **User Team**: Eng
+- **Opportunity**: Team Lead
+- **Ground Truth Expectation**: Solid tech base but lacks leadership evidence.
 
 ### Case 5: Data Analytics
-- **User Profile**: ['SQL', 'Tableau'] (Mkt)
-- **Opportunity**: Growth Analyst - Analyze campaigns.
-- **Expectation (Ground Truth)**: SQL and Mkt context are strong; Python is a gap.
+- **User Skills**: ['SQL', 'Tableau']
+- **User Team**: Mkt
+- **Opportunity**: Growth Analyst
+- **Ground Truth Expectation**: SQL and Mkt context are strong; Python is a gap.
 
 ### Case 6: Semantic Tools (NLP)
-- **User Profile**: ['NLP', 'Transformers'] (AI)
-- **Opportunity**: LLM Engineer - Fine-tune models.
-- **Expectation (Ground Truth)**: Perfect semantic fit for model engineering.
+- **User Skills**: ['NLP', 'Transformers']
+- **User Team**: AI
+- **Opportunity**: LLM Engineer
+- **Ground Truth Expectation**: Perfect semantic fit for model engineering.
 
 ### Case 7: Domain Mismatch (Route)
-- **User Profile**: ['Route Planning'] (Logistics)
-- **Opportunity**: Network Router Spec - Optimize data flow.
-- **Expectation (Ground Truth)**: Poor match; Logistics route planning is not IT routing.
+- **User Skills**: ['Route Planning']
+- **User Team**: Logistics
+- **Opportunity**: Network Router Spec
+- **Ground Truth Expectation**: Poor match; Logistics route planning is not IT routing.
 
 ### Case 8: Creative Crossover
-- **User Profile**: ['Copywriting'] (Content)
-- **Opportunity**: UX Writer - Craft UI microcopy.
-- **Expectation (Ground Truth)**: Natural transition into UX writing.
+- **User Skills**: ['Copywriting']
+- **User Team**: Content
+- **Opportunity**: UX Writer
+- **Ground Truth Expectation**: Natural transition into UX writing.
 
 ### Case 9: Automation/QA
-- **User Profile**: ['Selenium', 'Python'] (QA)
-- **Opportunity**: Automation Engineer - Automate pipelines.
-- **Expectation (Ground Truth)**: Excellent fit for Python automation tasks.
+- **User Skills**: ['Selenium', 'Python']
+- **User Team**: QA
+- **Opportunity**: Automation Engineer
+- **Ground Truth Expectation**: Excellent fit for Python automation tasks.
 
 ### Case 10: Marketing/Discord
-- **User Profile**: ['Social Media'] (Mkt)
-- **Opportunity**: Community Manager - Grow community.
-- **Expectation (Ground Truth)**: Strong engagement alignment.
+- **User Skills**: ['Social Media']
+- **User Team**: Mkt
+- **Opportunity**: Community Manager
+- **Ground Truth Expectation**: Strong engagement alignment.
 
 ### Case 11: Finance/CPA
-- **User Profile**: ['CPA'] (Finance)
-- **Opportunity**: Analyst - Plan budgets.
-- **Expectation (Ground Truth)**: Highly suited Finance background.
+- **User Skills**: ['CPA']
+- **User Team**: Finance
+- **Opportunity**: Analyst
+- **Ground Truth Expectation**: Highly suited Finance background.
 
 ### Case 12: Support to Sales
-- **User Profile**: ['Customer Support'] (Support)
-- **Opportunity**: Tech Sales - Pitch products.
-- **Expectation (Ground Truth)**: Product knowledge is good for technical pitching.
+- **User Skills**: ['Customer Support']
+- **User Team**: Support
+- **Opportunity**: Tech Sales
+- **Ground Truth Expectation**: Product knowledge is good for technical pitching.
 
 ### Case 13: Research
-- **User Profile**: ['Scientific Research'] (Science)
-- **Opportunity**: Market Researcher - Gather insights.
-- **Expectation (Ground Truth)**: Research methodology translates well.
+- **User Skills**: ['Scientific Research']
+- **User Team**: Science
+- **Opportunity**: Market Researcher
+- **Ground Truth Expectation**: Research methodology translates well.
 
 ### Case 14: Frontend Pivot
-- **User Profile**: ['HTML', 'CSS'] (Eng)
-- **Opportunity**: React Dev - Modernize frontend.
-- **Expectation (Ground Truth)**: Partial match; lacks React specific experience.
+- **User Skills**: ['HTML', 'CSS']
+- **User Team**: Eng
+- **Opportunity**: React Dev
+- **Ground Truth Expectation**: Partial match; lacks React specific experience.
 
 ### Case 15: Agile/Scrum
-- **User Profile**: ['Scrum Master'] (Ops)
-- **Opportunity**: Coordinator - Coordinate teams.
-- **Expectation (Ground Truth)**: Perfect fit for team coordination.
+- **User Skills**: ['Scrum Master']
+- **User Team**: Ops
+- **Opportunity**: Coordinator
+- **Ground Truth Expectation**: Perfect fit for team coordination.
 
 ### Case 16: Hardware/Arduino
-- **User Profile**: ['Arduino'] (Hardware)
-- **Opportunity**: Embedded Eng - IoT sensors.
-- **Expectation (Ground Truth)**: Good hardware base but needs deeper C coding.
+- **User Skills**: ['Arduino']
+- **User Team**: Hardware
+- **Opportunity**: Embedded Eng
+- **Ground Truth Expectation**: Good hardware base but needs deeper C coding.
 
 ### Case 17: Legal/GDPR
-- **User Profile**: ['Corporate Law'] (Legal)
-- **Opportunity**: GDPR Officer - Global standards.
-- **Expectation (Ground Truth)**: Critical legal foundation for compliance.
+- **User Skills**: ['Corporate Law']
+- **User Team**: Legal
+- **Opportunity**: GDPR Officer
+- **Ground Truth Expectation**: Critical legal foundation for compliance.
 
 ### Case 18: Video Editor
-- **User Profile**: ['Adobe Premiere'] (Media)
-- **Opportunity**: Content Creator - Social clips.
-- **Expectation (Ground Truth)**: Direct video editing skill translation.
+- **User Skills**: ['Adobe Premiere']
+- **User Team**: Media
+- **Opportunity**: Content Creator
+- **Ground Truth Expectation**: Direct video editing skill translation.
 
 ### Case 19: HR/People
-- **User Profile**: ['Recruitment'] (People)
-- **Opportunity**: Experience Lead - Improve journeys.
-- **Expectation (Ground Truth)**: Strong insight into hire-to-onboard flow.
+- **User Skills**: ['Recruitment']
+- **User Team**: People
+- **Opportunity**: Experience Lead
+- **Ground Truth Expectation**: Strong insight into hire-to-onboard flow.
 
 ### Case 20: Security/IT
-- **User Profile**: ['PenTesting'] (Security)
-- **Opportunity**: IT Support - Manage servers.
-- **Expectation (Ground Truth)**: Excellent security expertise for server management.
-
+- **User Skills**: ['PenTesting']
+- **User Team**: Security
+- **Opportunity**: IT Support
+- **Ground Truth Expectation**: Excellent security expertise for server management.

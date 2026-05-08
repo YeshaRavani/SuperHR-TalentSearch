@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const user = await api.get('/user');
         if (profileName) profileName.textContent = user.full_name;
         if (profileEmail) profileEmail.textContent = user.email;
-        if (profileOrg) profileOrg.textContent = user.organisation || 'SuperHR';
+        if (profileOrg) profileOrg.textContent = user.organisation || 'Plaksha University';
         if (profileRole) profileRole.textContent = user.role.charAt(0).toUpperCase() + user.role.slice(1);
         
         if (user.skills && user.skills.length > 0) {

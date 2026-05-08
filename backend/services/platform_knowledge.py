@@ -2,7 +2,7 @@ from typing import Dict, List
 
 
 PLATFORM_OVERVIEW = (
-    "SuperHR Talent Search helps users discover opportunities, mark interest, apply, "
+    "Plaksha University Talent Search helps users discover opportunities, mark interest, apply, "
     "post opportunities, track rewards, collaborate in community chat, and manage profile progress. "
     "Admins manage only the users, opportunities, applicants, notifications, and dashboard data for their own organisation."
 )

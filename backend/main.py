@@ -8,7 +8,7 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="Talent Search API",
-    description="Backend API for the SuperHR Talent Search platform",
+    description="Backend API for the Plaksha University Talent Search platform",
     version="1.0.0"
 )
 

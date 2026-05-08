@@ -47,6 +47,15 @@ class UserResponse(UserBase):
         from_attributes = True
 
 
+class UserStatsResponse(BaseModel):
+    points_earned: int
+    opportunities_joined: int
+    interests_shown: int
+    community_messages: int
+    reward_points: int
+    leaderboard_rank: int
+
+
 class RewardsSummaryResponse(BaseModel):
     user_id: str
     total_points: int

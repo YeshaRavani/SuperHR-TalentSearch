@@ -49,7 +49,7 @@ async function handleAdminSignup(e) {
     submitBtn.innerText = "Creating Account...";
 
     try {
-        const sanitizedEmail = user.toLowerCase().replace(/\s+/g, '.') + '@superhr.com';
+        const sanitizedEmail = user.toLowerCase().replace(/\s+/g, '.') + '@plaksha.edu';
         await api.post('/signup', {
             username: user,
             email: sanitizedEmail, // Mock email if not provided

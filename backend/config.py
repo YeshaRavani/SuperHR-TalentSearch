@@ -5,6 +5,6 @@ class Config:
     GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.1-8b-instant")
     
     # Platform specific defaults
-    PLATFORM_NAME = "SuperHR Talent Search"
+    PLATFORM_NAME = "Plaksha University Talent Search"
     
 settings = Config()

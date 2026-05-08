@@ -26,6 +26,9 @@ def mark_interested(opp_id: str, current_user: orm_models.User = Depends(auth.ge
         orm_models.UserOpportunity.opportunity_id == opp_id
     ).first()
     if existing:
+        if existing.status in ["applied", "enrolled", "completed"]:
+            # Do not downgrade an active application back to 'interested'
+            return existing
         existing.status = "interested"
         db.commit()
         return existing
@@ -80,11 +83,16 @@ def apply_to_opportunity(opp_id: str, current_user: orm_models.User = Depends(au
     ).first()
     
     if existing:
-        existing.status = "applied"
+        if existing.status != "applied":
+            # Small reward for applying (once)
+            current_user.total_points += 10
+            existing.status = "applied"
         existing.updated_at = datetime.now()
         db.commit()
         return existing
     
+    # First time applying
+    current_user.total_points += 10
     new_app = orm_models.UserOpportunity(
         id=str(uuid.uuid4()),
         user_id=current_user.id,
@@ -115,6 +123,12 @@ def update_application_status(id: str, status: str, db: Session = Depends(databa
     if current_user.id != opp.author_id and current_user.role != "admin":
         raise HTTPException(status_code=403, detail="Not authorized")
     
+    # Reward points if status changed to 'completed'
+    if status == "completed" and app.status != "completed":
+        target_user = db.query(orm_models.User).filter(orm_models.User.id == app.user_id).first()
+        if target_user:
+            target_user.total_points += (opp.points_reward or 0)
+
     app.status = status
     app.updated_at = datetime.now()
     db.commit()

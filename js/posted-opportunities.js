@@ -72,7 +72,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <div class="match">
                     <div class="match-score">${score}% match</div>
                     <div class="match-bar"><span style="width:${score}%"></span></div>
-                    <div style="font-size: 0.8rem; color: var(--ink-400); margin-top: 6px; margin-bottom: 8px; line-height: 1.3;">${escapeHtml(reasoning)}</div>
+                    <div class="match-reasoning">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-top:2px;">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        <span>${escapeHtml(reasoning)}</span>
+                    </div>
                     <div class="actions">
                         ${canEnroll ? `<button class="btn btn-sky applicant-status-btn" data-record-id="${escapeHtml(record.id)}" data-status="enrolled">Enroll</button>` : ''}
                         ${canReject ? `<button class="btn btn-secondary applicant-status-btn" data-record-id="${escapeHtml(record.id)}" data-status="rejected">Reject</button>` : ''}
