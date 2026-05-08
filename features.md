@@ -84,7 +84,7 @@ The detail forms were compacted and converted into a single-column layout so tha
 
 ![Signup form](docs/screenshots/signup.png)
 
-![Signup single-column layout](docs/screenshots/signup-deatils.png)
+![Signup single-column layout](docs/screenshots/signup-details.png)
 
 ## 5. Contributor Experience
 
