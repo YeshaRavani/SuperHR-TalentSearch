@@ -1,177 +1,399 @@
-# Talent Search Features
+# Talent Search
 
-Talent Search is a role-based opportunity discovery and contribution platform for campus or organisation communities. It helps contributors find work, post opportunities, track engagement, collaborate through chat, and lets admins manage their organisation's users and opportunities.
+Talent Search is a role-based opportunity discovery and collaboration platform built for universities and organisations. It connects contributors with short-term work, lets users post and manage opportunities, gives admins organisation-scoped oversight, and adds an AI layer for navigation, assistance, and opportunity drafting.
 
-## Product Screenshots
+This document is structured as a submission-ready feature overview of the current product.
 
-| Area | Screenshot |
-| --- | --- |
-| Admin profile and organisation metrics | ![Admin profile](docs/screenshots/admin-profile.png) |
-| Admin manage opportunities | ![Admin manage opportunities](docs/screenshots/admin-manage-opportunities.png) |
-| Signup form | ![Signup single-column flow](docs/screenshots/signup-single-column.png) |
+## 1. Product Overview
 
-## Core User Features
+Talent Search solves a common campus and organisation problem: meaningful work exists, but the right people often do not discover it early enough, and the people managing those opportunities do not have a clean system for visibility, coordination, and follow-through.
 
-### Authentication and Role Routing
+The product brings these workflows into one platform:
 
-Users can sign up and log in as contributors or admins. After login, the header and home logo route the user to the correct role-specific experience.
+- onboarding and authentication,
+- role-based dashboards,
+- opportunity discovery,
+- opportunity posting and applicant handling,
+- community discussion,
+- rewards and participation tracking,
+- admin governance,
+- and AI-assisted user support.
 
-- Contributors land in the contributor dashboard.
-- Admins land in the admin dashboard.
-- Logged-out users see the public home page with Login and Get Involved paths.
-- Contributor signup restricts organisation selection to organisations created by admins.
-- Admin signup allows free-entry organisation/university names.
+The platform currently supports three main roles in the backend:
 
-### Opportunities Hub
+- `contributors`
+- `admin`
+- `head_of_department`
 
-The opportunities hub lists active opportunities and supports skill-based browsing. Event, workshop, and initiative segregation has been removed so users interact with a simpler general opportunity model.
+The implemented user-facing experience is centered primarily around contributor and admin flows.
 
-- Browse active opportunities.
-- Filter by skill areas.
-- View details before applying.
-- Mark an opportunity as interested.
-- Apply to opportunities.
-- Prevent users from applying to their own posted opportunities.
-- Hide the “Interested” action when the user already saved that opportunity.
+## 2. Problem Statement
 
-### AI-Assisted Opportunity Posting
+In most universities and internal organisations, opportunities are shared through fragmented systems such as WhatsApp groups, spreadsheets, email threads, and informal referrals. That causes predictable issues:
 
-The AI assistant can turn a natural language posting request into an editable opportunity draft.
+- contributors miss opportunities relevant to their skills,
+- opportunity owners cannot easily track interest and applications,
+- collaboration stays disconnected from the opportunity itself,
+- and admins do not get clean visibility into activity within their own organisation.
 
-Flow:
+Talent Search addresses this by centralising the full lifecycle:
 
-1. User asks the assistant to post/create/draft an opportunity.
-2. Assistant parses title, description, skills, points, schedule, location, and time commitment.
-3. Assistant opens the Post Opportunity page.
-4. The form loads with editable prefilled fields.
-5. User reviews and clicks one `Post Opportunity` button.
+1. users join the platform,
+2. discover opportunities matched to their profile,
+3. express interest or apply,
+4. collaborate through community messaging,
+5. post their own opportunities,
+6. and let admins manage the ecosystem for their organisation.
 
-The parser has a fallback path, so draft creation still works when the Groq API is unavailable.
+## 3. Public Experience and Authentication
 
-### Post Opportunity Form
+The platform supports both a public entry state and an authenticated role-based experience.
 
-The posting page supports both manual and AI-assisted creation.
+### Public homepage
 
-- Natural language description box.
-- AI Generate Details button.
-- Voice input for the description field.
-- Editable title, description, location, schedule, points, time commitment, and skills.
-- One-button final post submission.
-- General `Opportunity` type used internally.
+Logged-out users land on a clean public homepage with a `Get Involved` path and role-aware login entry.
 
-### Posted Opportunities
+![Public homepage](docs/screenshots/public-home.png)
 
-Users can manage opportunities they authored.
+### Login entry point
 
-- View own posted opportunities.
-- Review interested users and applicants.
-- See skill-match context for applicant review.
-- Remove posted opportunities.
+The login page provides a simple gateway into the authenticated experience. Once authenticated, users are redirected according to role:
 
-### Contributor Dashboard and Profile
+- contributors go to the contributor dashboard,
+- admins go to the admin dashboard.
 
-The contributor experience focuses on progress and participation.
+Logout returns the user to the public homepage rather than leaving them inside role-specific routes.
 
-- Dashboard summarizes activity and rewards.
-- Profile manages user details and skills.
-- AI recommendations use profile and opportunity context.
-- Rewards are shown as points and can be interpreted through admin reward policy.
+![Login page](docs/screenshots/login-page.png)
 
-## AI Assistant Features
+## 4. Signup System
 
-The AI assistant is available across the site through the floating chat button.
+The signup flow is intentionally different for contributors and admins because the platform uses organisation-aware access.
 
-- Platform-aware answers for both user and admin flows.
-- Context includes role, organisation, visible opportunities, interests, applications, posted opportunities, invitations, community channels, and admin metrics.
-- Suggested action buttons can open relevant pages.
-- Voice typing support through browser speech recognition.
-- Direct opportunity draft creation from chat.
-- Fallback responses when model access is unavailable.
+### Contributor signup
 
-## Community Features
+Contributor signup does **not** allow arbitrary organisation entry. Contributors must select their university or organisation from approved organisations already created through admin accounts. This ensures contributors join a valid organisation context instead of creating inconsistent free-form records.
 
-Talent Search includes community communication tools.
+### Admin signup
 
-- Channel-based chat.
-- Direct messages.
-- Member discovery.
-- Collaboration invitations.
-- Appointment/invitation flow for scheduling or follow-up.
+Admin signup keeps organisation entry flexible. An admin can create a new organisation or university name during signup, and that organisation later becomes available in the contributor dropdown.
 
-## Admin Features
+### Form usability improvements
 
-Admins operate within their own organisation scope. Admin pages should not show unrelated organisation data.
+The detail forms were compacted and converted into a single-column layout so that the signup flow is easier to complete and more consistent across roles.
 
-### Admin Dashboard
+![Signup form](docs/screenshots/signup-form.png)
 
-The admin dashboard summarizes organisation-specific activity.
+![Signup single-column layout](docs/screenshots/signup-single-column.png)
 
-- Total users in the admin organisation.
-- Active opportunities from that organisation.
-- Removed opportunity count.
-- Applications and interests.
-- Skill and department activity insights.
-- Notification data scoped to organisation.
+## 5. Contributor Experience
 
-### Manage Users
+The contributor side of the platform is designed around discovery, participation, collaboration, and profile-based relevance.
 
-Admins can manage users from their organisation.
+### Contributor dashboard
 
-- View organisation users.
-- Create users under the admin organisation.
-- Update users without moving them outside the admin organisation.
-- Remove users.
-- Manage reward policy controls.
+The contributor dashboard is the primary logged-in landing page. It is backend-connected and surfaces user-facing activity instead of acting as a static mock screen.
 
-### Manage Opportunities
+It highlights:
 
-Admins can review and remove organisation opportunities.
+- welcome state tied to the authenticated user,
+- overview cards,
+- engagement signals,
+- entry points into opportunities and collaboration,
+- and notification-driven follow-up actions.
 
-- View opportunities posted by users in the admin organisation.
-- Review engagement counts.
-- Remove opportunities when needed.
-- No event/workshop/initiative tabs.
+![Contributor dashboard](docs/screenshots/contributor-dashboard.png)
 
-### Admin Profile
+### Contributor profile
 
-The admin profile is backend-driven.
+The contributor profile acts as both a personal record and a matching signal for the rest of the system.
 
-- Loads authenticated admin user details.
-- Shows organisation-scoped governance metrics.
-- Includes logout.
-- Links to system logs/activity section.
+It includes:
 
-### System Settings
+- user identity and organisation information,
+- profile completion visibility,
+- editable skills,
+- preferred domains,
+- rewards and performance summaries,
+- and profile data that can support opportunity matching and AI context.
 
-Admins can manage platform-level toggles.
+![Contributor profile](docs/screenshots/contributor-profile.png)
 
-- Maintenance mode.
-- Auto-approve opportunities.
-- Public profile setting.
-- 2FA requirement flag.
-- Session timeout.
+## 6. Opportunity Discovery
 
-## Backend/API Coverage
+One of the core product goals is to make opportunity discovery structured, relevant, and easy to act on.
 
-Implemented API areas include:
+### Simplified opportunity model
 
-- Auth: signup, login, logout, current user.
-- Opportunities: browse, detail, create, delete, my posted opportunities.
-- Engagement: interested opportunities, applications, status updates.
-- Invitations: create, list, update.
-- Community: channels, messages, direct messages, members, user search.
-- Rewards: reward summary and reward policy.
-- Admin: users, profiles, opportunities, dashboard, settings.
-- AI: chat, opportunity parsing, matching, suggestions, skill extraction.
+The platform previously had separate segmentation for `Events`, `Initiatives`, and `Workshops`. That segregation has been removed from the user and admin experience. The current product treats posts as general opportunities and uses skills as the main user-facing grouping logic.
 
-See [IMPLEMENTATION_PROGRESS.md](IMPLEMENTATION_PROGRESS.md) for endpoint-level status.
+This makes the browsing model cleaner:
 
-## Demo Media To Add Next
+- users explore opportunities from one hub,
+- filtering is based on skill relevance rather than post-type silos,
+- and admin moderation no longer has to mirror artificial type buckets.
 
-The repository now includes screenshots under `docs/screenshots`. Useful GIFs to add next:
+### Opportunities hub
 
-- `docs/gifs/ai-opportunity-draft.gif`: Assistant creates and opens a prefilled opportunity form.
-- `docs/gifs/user-apply-flow.gif`: Contributor browses, marks interest, and applies.
-- `docs/gifs/admin-org-scope.gif`: Admin dashboard and manage pages showing organisation-scoped data.
-- `docs/gifs/community-chat.gif`: Channel chat and direct message flow.
+The opportunities hub is the main discovery page. It shows:
 
+- available opportunities,
+- skill-based grouping,
+- skill match indicators,
+- and direct access into detail pages.
+
+![Opportunities hub](docs/screenshots/opportunities-hub.png)
+
+### Opportunity detail page
+
+The detail page is where a user evaluates whether to engage with an opportunity. It surfaces core structured information such as:
+
+- title,
+- description,
+- schedule,
+- reward points,
+- time commitment,
+- location,
+- and required skills.
+
+The page is backend-driven and reflects the current state of the opportunity rather than static hardcoded text.
+
+![Opportunity detail](docs/screenshots/opportunity-detail.png)
+
+### Interested opportunities
+
+Users can mark opportunities they want to revisit. The interested view collects those opportunities into a dedicated page so that interest can act as a meaningful shortlist rather than a cosmetic toggle.
+
+The logic also includes product guardrails:
+
+- users should not be able to apply to their own opportunities,
+- users should not be able to mark their own opportunity as interested,
+- and already-interested opportunities should not continue to behave like untouched opportunities.
+
+![Interested opportunities](docs/screenshots/interested-opportunities.png)
+
+## 7. Opportunity Posting and Management
+
+Talent Search is not only for discovering work. It also supports full opportunity creation and follow-through.
+
+### Posted opportunities
+
+Users who create opportunities can manage them from a dedicated posted opportunities page.
+
+This page supports:
+
+- reviewing each post,
+- seeing interested users,
+- seeing applicant state,
+- acting on candidate engagement,
+- and removing opportunities when appropriate.
+
+This closes the loop between posting work and actually staffing or coordinating it.
+
+![Posted opportunities](docs/screenshots/posted-opportunities.png)
+
+## 8. Community and Collaboration
+
+The platform includes an integrated collaboration layer rather than outsourcing all communication to external apps.
+
+### Community chat
+
+The community module supports:
+
+- broadcast-style channels,
+- opportunity-linked or shared discussion spaces,
+- direct messages,
+- searchable members,
+- and ongoing team coordination after opportunity discovery.
+
+The experience is designed to keep users inside the same system once an opportunity leads to collaboration.
+
+![Community chat](docs/screenshots/community-chat.png)
+
+## 9. AI Features
+
+The AI layer is one of the strongest differentiators in the current product. It is intended to be platform-aware rather than a generic disconnected chatbot.
+
+### AI assistant
+
+The assistant is available through the floating chat entry point across the platform. It is designed to answer questions using live product context such as:
+
+- user role,
+- organisation,
+- visible opportunities,
+- applications and interests,
+- posted opportunities,
+- invitation state,
+- community context,
+- and admin-facing metrics where relevant.
+
+It can help users with:
+
+- navigation,
+- product understanding,
+- reward and participation questions,
+- opportunity guidance,
+- and action suggestions inside the platform.
+
+![AI assistant](docs/screenshots/ai-assistant.png)
+
+### Voice input
+
+The assistant also supports browser speech-to-text so a user can speak instead of typing. The voice input transcribes into chat and then flows into the same assistant logic.
+
+### AI-assisted opportunity drafting
+
+The most important AI workflow in the product is direct opportunity drafting through natural language.
+
+The intended flow is:
+
+1. the user describes an opportunity in plain language,
+2. the system interprets the intent to post an opportunity,
+3. the description is parsed into structured fields,
+4. the posting page opens with editable prefilled inputs,
+5. and the user reviews and publishes through the normal final submission flow.
+
+This reduces friction for non-technical users who know what work needs to be done but do not want to manually structure every form field from scratch.
+
+## 10. Rewards and Participation Tracking
+
+Talent Search includes a reward layer that is part of the working product, not just visual decoration.
+
+Implemented reward-related behavior includes:
+
+- contributor-facing reward visibility,
+- dashboard summaries,
+- admin-configurable reward policy behavior,
+- and support for points-based or other organisational incentive models.
+
+This matters because short-term contribution systems work better when engagement is visible, measurable, and acknowledged.
+
+## 11. Admin Experience
+
+The admin side is designed as an operational layer for organisation oversight rather than a cosmetic second theme.
+
+### Organisation-scoped visibility
+
+One of the most important implementation decisions is admin scoping. An admin should only see data for their own organisation, not the entire global dataset across unrelated organisations.
+
+That organisation scoping now applies across:
+
+- admin dashboard metrics,
+- manage users,
+- manage opportunities,
+- applicant and profile inspection,
+- notification counts,
+- and related moderation actions.
+
+This is a substantial product feature because it turns the admin model from a global mock admin into an organisation-aware management system.
+
+### Admin dashboard
+
+The admin dashboard provides a backend-connected overview of operational health within the admin's organisation.
+
+It surfaces metrics such as:
+
+- total users,
+- active opportunities,
+- removed opportunities,
+- system health,
+- and broader organisation-level activity signals.
+
+### Manage users
+
+The admin manage users experience supports organisation-specific administration. Admins can:
+
+- review users in their organisation,
+- create users,
+- remove users,
+- and manage policy-related views tied to incentives and rewards.
+
+This page is part of the working governance flow rather than static sample content.
+
+### Manage opportunities
+
+Admins can also review and moderate opportunities created within their organisation.
+
+The admin manage opportunities page focuses on:
+
+- reviewing active opportunities,
+- seeing engagement context,
+- removing opportunities where needed,
+- and managing platform quality from the admin side.
+
+The older separation into events, initiatives, and workshops has been removed here too, keeping the system consistent with the simplified opportunity model.
+
+![Admin manage opportunities](docs/screenshots/admin-manage-opportunities.png)
+
+### Admin profile
+
+The admin profile is backend-linked and reflects authenticated admin data instead of placeholder-only content. It includes:
+
+- admin identity,
+- organisation-linked information,
+- summary cards,
+- profile actions,
+- system log access,
+- and logout behavior tied to correct public routing.
+
+![Admin profile view](docs/screenshots/admin-profile.png)
+
+## 12. Backend and Technical Scope
+
+The product is not a frontend-only prototype. A large part of the value lies in the backend wiring that supports the visible flows.
+
+### Backend stack
+
+The current implementation uses:
+
+- FastAPI,
+- SQLAlchemy ORM,
+- SQLite for local persistence,
+- token-based authentication,
+- role-aware routing,
+- and backend services for AI parsing and assistant logic.
+
+### Backend-covered feature areas
+
+The implemented API surface includes:
+
+- authentication,
+- contributor and admin profile retrieval,
+- organisation listing for contributor signup,
+- opportunities browse/create/manage flows,
+- interested opportunities,
+- application and invitation flows,
+- reward summaries and policy support,
+- admin dashboards and admin management pages,
+- community chat and direct message support,
+- AI chat,
+- AI opportunity parsing,
+- AI suggestions,
+- skill-related flows,
+- and voice or transcription-related assistance paths.
+
+For endpoint-level implementation tracking, see [IMPLEMENTATION_PROGRESS.md](/Users/yesharavani/AI_prod/Talent%20search/SuperHR-TalentSearch/IMPLEMENTATION_PROGRESS.md).
+
+## 13. Current Submission Strengths
+
+From a submission perspective, the strongest aspects of Talent Search are:
+
+1. it covers both contributor and admin journeys in one coherent product,
+2. the admin side is organisation-scoped rather than unrealistically global,
+3. opportunity posting is supported by AI-assisted drafting,
+4. discovery is tied to skills rather than only browsing random cards,
+5. collaboration is integrated through community chat,
+6. rewards and participation are reflected in the experience,
+7. and the system is backed by a working API layer rather than static page transitions alone.
+
+## 14. Remaining Screenshots Worth Adding
+
+The document is now populated with the main contributor and public flow screenshots. The most useful remaining captures for a final polished submission would be:
+
+1. admin dashboard screenshot after the current compact redesign,
+2. admin manage users page,
+3. admin system settings page,
+4. add opportunity page with AI-prefilled fields visible,
+5. and ideally a short GIF of the AI assistant taking a natural language prompt and opening a prefilled opportunity form.
+
+Those additions would strengthen the submission further, but the current document already covers the main implemented experience with embedded visuals.
