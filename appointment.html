@@ -140,12 +140,48 @@
 
     <main class="page">
       <section class="page-head">
-        <h1>Appointment</h1>
-        <p>Find the right mentor or guide, pick a time, and send an invite — all in one place.</p>
+        <h1>Appointments</h1>
+        <p>Track meeting requests, scheduled sessions, and invite a member when you need one.</p>
+      </section>
+
+      <section class="appointments-section">
+        <div class="section-title-row">
+          <div>
+            <h2>My Appointments</h2>
+            <p>Pending requests and confirmed meetings appear here.</p>
+          </div>
+        </div>
+
+        <div class="appointment-grid">
+          <div class="appointment-panel">
+            <h3>Pending</h3>
+            <div id="pending-appointments-container">
+              <div class="invite-log-card">
+                <div class="invite-log-info">
+                  <strong>Loading pending requests...</strong>
+                  <span>Requests waiting for a response will appear here.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="appointment-panel">
+            <h3>Scheduled</h3>
+            <div id="scheduled-appointments-container">
+              <div class="invite-log-card">
+                <div class="invite-log-info">
+                  <strong>Loading scheduled meetings...</strong>
+                  <span>Accepted meetings will appear here.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       <section class="form-card">
-        <h2>Invite Details</h2>
+        <h2>Invite Someone</h2>
+        <p class="form-subtitle">Search for a person, then choose a date and topic.</p>
 
         <div class="form-group" style="margin-bottom:0;">
           <label for="person-search">Search person</label>
@@ -159,18 +195,6 @@
             </svg>
           </div>
           <div class="people-list" id="people-list"></div>
-        </div>
-      </section>
-
-      <section class="sent-invites-section">
-        <h3>My Meetings</h3>
-        <div id="sent-invites-container">
-          <div class="invite-log-card">
-            <div class="invite-log-info">
-              <strong>Loading meetings...</strong>
-              <span>Your invitations will appear here.</span>
-            </div>
-          </div>
         </div>
       </section>
     </main>
