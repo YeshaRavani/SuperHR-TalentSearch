@@ -12,6 +12,38 @@ document.addEventListener('DOMContentLoaded', async () => {
     let userSkills = [];
     let activeSkill = 'all';
 
+    // Toast functionality
+    function showToast(message) {
+        let container = document.querySelector('.toast-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.className = 'toast-container';
+            document.body.appendChild(container);
+        }
+
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = `
+            <div class="toast-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            <span>${message}</span>
+        `;
+
+        container.appendChild(toast);
+        
+        // Trigger animation
+        setTimeout(() => toast.classList.add('active'), 10);
+
+        // Remove after delay
+        setTimeout(() => {
+            toast.classList.remove('active');
+            setTimeout(() => toast.remove(), 500);
+        }, 3000);
+    }
+
     function isLoggedIn() {
         return Boolean(localStorage.getItem('access_token'));
     }
@@ -39,7 +71,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const allBtn = isHub 
             ? `<div class="skill-card ${activeSkill === 'all' ? 'active' : ''}" data-skill="all">All <span class="skill-count">(${contextCount})</span></div>`
-            : `<a href="opportunities.html" class="skill-card" style="text-decoration:none; color:inherit;">All <span class="skill-count">(${totalPlatform})</span></a>`;
+            : `<a href="opportunities.html" class="skill-card" data-skill="all" style="text-decoration:none; color:inherit;">All <span class="skill-count">(${totalPlatform})</span></a>`;
 
         const activeBtn = isHub
             ? `<div class="skill-card ${activeSkill === 'Active' ? 'active' : ''}" data-skill="Active" 
@@ -214,7 +246,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             let count;
             if (skill === 'all') {
-                count = activeContextList.length;
+                // Consistent "New Opportunities" count across the entire platform
+                // (Total Platform - Interested - Enrolled)
+                count = opportunities.filter(o => !interestedList.includes(o.id) && !enrolledList.includes(o.id)).length;
             } else if (skill === 'Interested') {
                 count = interestedList.length;
             } else if (skill === 'Active') {
@@ -266,9 +300,27 @@ document.addEventListener('DOMContentLoaded', async () => {
                     intBtn.disabled = true;
                     intBtn.textContent = 'Adding...';
                     await api.post(`/interested-opportunities?opp_id=${id}`);
+                    
+                    // Visual Success Feedback
+                    const card = intBtn.closest('.initiative-card');
+                    if (card) card.classList.add('success-pop');
+                    intBtn.classList.add('success');
+                    intBtn.innerHTML = `
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="margin-right:4px;">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        Saved!
+                    `;
+                    
+                    showToast("Opportunity added to Interested!");
                     interestedList.push(id);
-                    updateSkillCounts(allOpportunities);
-                    renderOpportunities(getActiveFilteredOpportunities());
+                    
+                    // Delay re-render so user sees the success state
+                    setTimeout(() => {
+                        updateSkillCounts(allOpportunities);
+                        renderOpportunities(getActiveFilteredOpportunities());
+                    }, 700);
+
                 } catch(err) {
                     intBtn.disabled = false;
                     intBtn.textContent = 'Interested';
