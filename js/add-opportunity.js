@@ -215,6 +215,15 @@ document.addEventListener('DOMContentLoaded', () => {
         formHeader.insertAdjacentElement('afterend', notice);
     }
 
+    function scrollDraftToReviewStart() {
+        const card = document.querySelector('.form-card');
+        if (!card) return;
+
+        const navbarOffset = (navbar?.offsetHeight || 80) + 24;
+        const targetTop = Math.max(0, card.getBoundingClientRect().top + window.scrollY - navbarOffset);
+        window.scrollTo({ top: targetTop, behavior: 'auto' });
+    }
+
     function loadAIDraftIfPresent() {
         const rawDraft = sessionStorage.getItem(OPPORTUNITY_DRAFT_KEY) || localStorage.getItem(OPPORTUNITY_DRAFT_KEY);
         if (!rawDraft) return;
@@ -231,11 +240,13 @@ document.addEventListener('DOMContentLoaded', () => {
             renderSkills();
             populateOpportunityForm(draft);
             showDraftLoadedNotice();
+            document.querySelector('.form-card')?.classList.add('ai-draft-mode');
 
             if (postBtn) {
-                postBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 postBtn.classList.add('draft-ready');
             }
+
+            requestAnimationFrame(scrollDraftToReviewStart);
 
             sessionStorage.removeItem(OPPORTUNITY_DRAFT_KEY);
             localStorage.removeItem(OPPORTUNITY_DRAFT_KEY);
