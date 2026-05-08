@@ -53,7 +53,7 @@ The platform supports both a public entry state and an authenticated role-based 
 
 Logged-out users land on a clean public homepage with a `Get Involved` path and role-aware login entry.
 
-![Public homepage](docs/screenshots/public-home.png)
+![Public homepage](docs/screenshots/public-homepage.png)
 
 ### Login entry point
 
@@ -64,7 +64,7 @@ The login page provides a simple gateway into the authenticated experience. Once
 
 Logout returns the user to the public homepage rather than leaving them inside role-specific routes.
 
-![Login page](docs/screenshots/login-page.png)
+![Login page](docs/screenshots/login.png)
 
 ## 4. Signup System
 
@@ -82,9 +82,9 @@ Admin signup keeps organisation entry flexible. An admin can create a new organi
 
 The detail forms were compacted and converted into a single-column layout so that the signup flow is easier to complete and more consistent across roles.
 
-![Signup form](docs/screenshots/signup-form.png)
+![Signup form](docs/screenshots/signup.png)
 
-![Signup single-column layout](docs/screenshots/signup-single-column.png)
+![Signup single-column layout](docs/screenshots/signup-deatils.png)
 
 ## 5. Contributor Experience
 
@@ -102,7 +102,7 @@ It highlights:
 - entry points into opportunities and collaboration,
 - and notification-driven follow-up actions.
 
-![Contributor dashboard](docs/screenshots/contributor-dashboard.png)
+![Contributor dashboard](docs/screenshots/user-dashboard.png)
 
 ### Contributor profile
 
@@ -117,7 +117,7 @@ It includes:
 - rewards and performance summaries,
 - and profile data that can support opportunity matching and AI context.
 
-![Contributor profile](docs/screenshots/contributor-profile.png)
+![Contributor profile](docs/screenshots/user-profile.png)
 
 ## 6. Opportunity Discovery
 
@@ -142,7 +142,7 @@ The opportunities hub is the main discovery page. It shows:
 - skill match indicators,
 - and direct access into detail pages.
 
-![Opportunities hub](docs/screenshots/opportunities-hub.png)
+![Opportunities hub](docs/screenshots/opportunity-hub.png)
 
 ### Opportunity detail page
 
@@ -158,7 +158,7 @@ The detail page is where a user evaluates whether to engage with an opportunity.
 
 The page is backend-driven and reflects the current state of the opportunity rather than static hardcoded text.
 
-![Opportunity detail](docs/screenshots/opportunity-detail.png)
+![Opportunity detail](docs/screenshots/opportunity-detailed.png)
 
 ### Interested opportunities
 
@@ -170,7 +170,7 @@ The logic also includes product guardrails:
 - users should not be able to mark their own opportunity as interested,
 - and already-interested opportunities should not continue to behave like untouched opportunities.
 
-![Interested opportunities](docs/screenshots/interested-opportunities.png)
+![Interested opportunities](docs/screenshots/interested-opportunity.png)
 
 ## 7. Opportunity Posting and Management
 
@@ -190,7 +190,7 @@ This page supports:
 
 This closes the loop between posting work and actually staffing or coordinating it.
 
-![Posted opportunities](docs/screenshots/posted-opportunities.png)
+![Posted opportunities](docs/screenshots/posted-opportunity.png)
 
 ## 8. Community and Collaboration
 
@@ -377,25 +377,3 @@ The implemented API surface includes:
 - and voice or transcription-related assistance paths.
 
 For endpoint-level implementation tracking, see [IMPLEMENTATION_PROGRESS.md](/Users/yesharavani/AI_prod/Talent%20search/SuperHR-TalentSearch/IMPLEMENTATION_PROGRESS.md).
-
-## 13. Current Submission Strengths
-
-From a submission perspective, the strongest aspects of Talent Search are:
-
-1. it covers both contributor and admin journeys in one coherent product,
-2. the admin side is organisation-scoped rather than unrealistically global,
-3. opportunity posting is supported by AI-assisted drafting,
-4. discovery is tied to skills rather than only browsing random cards,
-5. collaboration is integrated through community chat,
-6. rewards and participation are reflected in the experience,
-7. and the system is backed by a working API layer rather than static page transitions alone.
-
-## 14. Remaining Screenshots Worth Adding
-
-The document is now populated with the main contributor, public, AI, community, and admin flow screenshots. The most useful remaining captures for a final polished submission would be:
-
-1. admin system settings page,
-2. add opportunity page with AI-prefilled fields visible,
-3. and ideally a short GIF of the AI assistant taking a natural language prompt and opening a prefilled opportunity form.
-
-Those additions would strengthen the submission further, but the current document already covers the main implemented experience with embedded visuals.
