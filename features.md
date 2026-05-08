@@ -299,6 +299,8 @@ It surfaces metrics such as:
 - system health,
 - and broader organisation-level activity signals.
 
+![Admin dashboard](docs/screenshots/admin-dashboard.png)
+
 ### Manage users
 
 The admin manage users experience supports organisation-specific administration. Admins can:
@@ -309,6 +311,8 @@ The admin manage users experience supports organisation-specific administration.
 - and manage policy-related views tied to incentives and rewards.
 
 This page is part of the working governance flow rather than static sample content.
+
+![Admin manage users](docs/screenshots/admin-manage-users.png)
 
 ### Manage opportunities
 
@@ -388,12 +392,10 @@ From a submission perspective, the strongest aspects of Talent Search are:
 
 ## 14. Remaining Screenshots Worth Adding
 
-The document is now populated with the main contributor and public flow screenshots. The most useful remaining captures for a final polished submission would be:
+The document is now populated with the main contributor, public, AI, community, and admin flow screenshots. The most useful remaining captures for a final polished submission would be:
 
-1. admin dashboard screenshot after the current compact redesign,
-2. admin manage users page,
-3. admin system settings page,
-4. add opportunity page with AI-prefilled fields visible,
-5. and ideally a short GIF of the AI assistant taking a natural language prompt and opening a prefilled opportunity form.
+1. admin system settings page,
+2. add opportunity page with AI-prefilled fields visible,
+3. and ideally a short GIF of the AI assistant taking a natural language prompt and opening a prefilled opportunity form.
 
 Those additions would strengthen the submission further, but the current document already covers the main implemented experience with embedded visuals.
