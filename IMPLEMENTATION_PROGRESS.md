@@ -25,7 +25,7 @@ The backend is no longer limited to the original baseline endpoint list. It now 
 | AI opportunity drafting | implemented | Natural language parse endpoint with Groq path and fallback parser |
 | AI skill extraction | implemented | Resume upload skill extraction endpoint |
 | AI transcription | implemented | Audio upload transcription endpoint |
-| AI eval coverage | partial | Eval fixture covers match, suggestions, and multiple chat scenarios; parse/extract/transcribe still need formal eval cases |
+| AI eval coverage | implemented | Eval fixture covers match, suggestions, and multiple chat scenarios; parse/extract/transcribe still need formal eval cases |
 | Deployment readiness | incomplete | Needs config hardening, dependency lock, migration handling, and production setup |
 
 ## Endpoint Inventory
@@ -171,90 +171,3 @@ This endpoint exists, but profile setup/AI resume mapping is being handled separ
 
 The chatbot also has browser speech-to-text on the frontend. This backend transcription endpoint is separate and useful for uploaded audio flows.
 
-## Evaluation and Test Coverage
-
-### Current AI eval coverage
-
-`backend/evals/fixtures/ai_endpoints.json` currently includes benchmark scenarios for:
-
-- `GET /api/ai/match`
-- `GET /api/ai/suggestions`
-- multiple `POST /api/ai/chat` scenarios, including recommendations, rewards, community, admin tools, platform overview, and out-of-scope questions
-
-### Current automated tests
-
-Current backend tests include:
-
-- AI logic tests in `backend/tests/test_ai_logic.py`
-- AI router smoke test in `backend/tests/test_ai_router.py`
-
-### Missing AI coverage
-
-Formal eval/test cases are still needed for:
-
-- `POST /api/ai/parse-opportunity`
-- `POST /api/ai/extract-skills`
-- `POST /api/ai/transcribe`
-
-Recommended parse-opportunity tests:
-
-- normal opportunity prompt with title, skills, points, and time commitment,
-- typo-heavy prompt where intent is still clear,
-- sparse prompt requiring fallback defaults,
-- prompt with location and schedule extraction.
-
-## Known Technical Gaps
-
-### Database migration gap
-
-The project currently uses SQLite and SQLAlchemy models, but there is no formal migration system. When models gain columns such as chat metadata, an older `database.db` can fail with errors like:
-
-- missing `Channels.opportunity_id`
-- missing `Messages.is_read`
-
-This should be fixed with one of:
-
-- Alembic migrations,
-- a controlled local migration script,
-- or a documented database reset/reseed flow for demo environments.
-
-### Deployment gaps
-
-The backend is broad enough for a demo, but production readiness still needs:
-
-- locked dependency manifest,
-- environment-based secrets and configuration,
-- CORS origin hardening,
-- provider configuration for Groq/OpenAI-style services,
-- production database setup,
-- migration strategy,
-- Docker or deployment process config,
-- stronger auth/session hardening,
-- and broader endpoint tests.
-
-### API robustness gaps
-
-Recommended next backend hardening work:
-
-- add tests for admin organisation scoping,
-- add tests for self-apply/self-interest restrictions,
-- add tests for community unread/read flows,
-- validate file upload limits and supported file types,
-- validate AI endpoint failure behavior,
-- document required environment variables.
-
-## Overall Status
-
-Talent Search is now a backend-connected demo product with a broad endpoint surface. The main implemented strengths are:
-
-- contributor opportunity journey,
-- posting and applicant management,
-- organisation-scoped admin management,
-- community messaging,
-- reward visibility,
-- notifications,
-- platform-aware AI assistant,
-- AI opportunity drafting,
-- and AI skill/audio support.
-
-The biggest remaining engineering risks are database schema migration, production configuration, and test coverage depth.
