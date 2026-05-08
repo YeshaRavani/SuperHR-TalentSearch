@@ -39,20 +39,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         return String(status || 'active').replaceAll('_', ' ');
     }
 
-    function matchScore(user, opportunity) {
-        const userSkills = new Set((user.skills || []).map((skill) => skill.toLowerCase()));
-        const oppSkills = Array.isArray(opportunity.skills) ? opportunity.skills : [];
-        if (!oppSkills.length) return 65;
-
-        const matched = oppSkills.filter((skill) => userSkills.has(String(skill).toLowerCase())).length;
-        return Math.max(45, Math.round((matched / oppSkills.length) * 100));
-    }
 
     function renderPerson(record, opportunity) {
         const user = record.user;
         if (!user) return '';
 
         const score = record.match_score || 0;
+        const reasoning = record.match_reasoning || "No matching logic available.";
         const skills = (user.skills || []).map(escapeHtml).join('|');
         const bullets = [
             `${user.full_name || user.username} is currently marked as ${statusLabel(record.status)} for this opportunity.`,
@@ -79,6 +72,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <div class="match">
                     <div class="match-score">${score}% match</div>
                     <div class="match-bar"><span style="width:${score}%"></span></div>
+                    <div style="font-size: 0.8rem; color: var(--ink-400); margin-top: 6px; margin-bottom: 8px; line-height: 1.3;">${escapeHtml(reasoning)}</div>
                     <div class="actions">
                         ${canEnroll ? `<button class="btn btn-sky applicant-status-btn" data-record-id="${escapeHtml(record.id)}" data-status="enrolled">Enroll</button>` : ''}
                         ${canReject ? `<button class="btn btn-secondary applicant-status-btn" data-record-id="${escapeHtml(record.id)}" data-status="rejected">Reject</button>` : ''}

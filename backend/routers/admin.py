@@ -169,14 +169,18 @@ def serialize_applicant_overview(record: orm_models.UserOpportunity) -> dict:
     opportunity = record.opportunity
     
     match_score = 0
+    match_reasoning = ""
     if user and opportunity:
-        match_score = ai_logic.score_opportunity_match(user, opportunity)
+        match_data = ai_logic.score_opportunity_match(user, opportunity)
+        match_score = match_data["score"]
+        match_reasoning = match_data.get("reasoning", "")
 
     return {
         "id": record.id,
         "opportunity_id": record.opportunity_id,
         "status": record.status,
         "match_score": match_score,
+        "match_reasoning": match_reasoning,
         "created_at": serialize_datetime(record.created_at),
         "updated_at": serialize_datetime(record.updated_at),
         "user": {

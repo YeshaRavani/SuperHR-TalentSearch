@@ -1,0 +1,25 @@
+# 20-Scenario AI Match Evaluation Report
+
+| Scenario | Deterministic | Single AI (Hybrid) | Agentic |
+| :--- | :---: | :---: | :---: |
+| Perfect Skill Match | 0 | 0 | 0 |
+| Semantic Match (Dev vs Eng) | 0 | 0 | 9 |
+| Partial Match (50%) | 0 | 0 | 4 |
+| No Match | 0 | 0 | 2 |
+| Team Match Only | 0 | 0 | 2 |
+| Misleading Keyword (Route) | 0 | 0 | 0 |
+| Skill in Desc, not List | 2 | 0 | 0 |
+| Seniority Mismatch | 0 | 0 | 0 |
+| Niche Tool Match | 0 | 0 | 0 |
+| Soft Skill Dominance | 0 | 9 | 0 |
+| Technical Cross-over | 0 | 0 | 6 |
+| Vague Profile | 0 | 0 | 4 |
+| Over-qualified | 0 | 2 | 0 |
+| Acronym Match (LLM) | 0 | 0 | 0 |
+| Industry Switch (Medical) | 0 | 0 | 0 |
+| Tooling Synonym (React.js) | 0 | 0 | 0 |
+| Wrong Framework | 0 | 0 | 0 |
+| Leadership vs Management | 2 | 0 | 0 |
+| Zero Context (Dance/Acc) | 10 | 0 | 0 |
+| Geospatial Match | 0 | 0 | 0 |
+| **AVERAGE** | **0.70** | **0.55** | **1.35** |

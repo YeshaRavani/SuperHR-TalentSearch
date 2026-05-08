@@ -136,6 +136,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
             `).join('')}
         `;
+        
+        if (currentId && currentMode) {
+            setActiveItem(currentId, currentMode);
+        }
     }
 
     async function loadCurrentUser() {
@@ -375,7 +379,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     searchResults?.addEventListener('click', (event) => {
         const item = event.target.closest('.search-result-item');
         if (!item) return;
-        const member = members.find((entry) => entry.id === item.dataset.id);
+        const member = allUsers.find((entry) => entry.id === item.dataset.id);
         if (member) {
             searchInput.value = '';
             searchResults.innerHTML = '';

@@ -15,12 +15,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         return Boolean(localStorage.getItem('access_token'));
     }
 
-    function calculateMatchScore(oppSkills) {
-        if (!userSkills.length || !oppSkills.length) return 0;
-        const normalizedUserSkills = userSkills.map(s => s.toLowerCase());
-        const matches = oppSkills.filter(s => normalizedUserSkills.includes(s.toLowerCase()));
-        return Math.round((matches.length / oppSkills.length) * 100);
-    }
 
     function renderSkillFilters() {
         const filterContainer = document.getElementById('skillsFilter');
@@ -149,7 +143,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Map backend opportunities to rich frontend format
         const richOpps = opportunities.map(o => {
             const base = window.OpportunityMapper.map(o);
-            const matchScore = calculateMatchScore(o.skills || []);
+            const matchScore = o.match_score || 0;
             return {
                 ...base,
                 isInterested: interestedList.includes(o.id),

@@ -1,0 +1,182 @@
+[
+    {
+        "id": 1,
+        "industry": "Software Engineering",
+        "input": "\n        Alex Rivers\n        Full Stack Engineer with 4 years of experience.\n        Proficient in Python, Django, and PostgreSQL. \n        Highly skilled in frontend development using React and Redux.\n        Familiar with AWS (EC2, S3) and Docker for deployment.\n        Experience with CI/CD pipelines using GitHub Actions.\n        ",
+        "ground_truth": [
+            "Python",
+            "Django",
+            "PostgreSQL",
+            "React",
+            "Redux",
+            "AWS",
+            "EC2",
+            "S3",
+            "Docker",
+            "CI/CD",
+            "GitHub Actions"
+        ],
+        "baselines": {
+            "single_prompt": {
+                "output": [
+                    "Python",
+                    "Django",
+                    "PostgreSQL",
+                    "React",
+                    "Redux",
+                    "AWS",
+                    "EC2",
+                    "S3",
+                    "Docker",
+                    "GitHub Actions"
+                ],
+                "latency": 0.21,
+                "eval": {
+                    "score": 4,
+                    "reasoning": "The extracted skills match most of the ground truth skills, with only one minor omission (CI/CD). The extracted skills are mostly accurate and relevant, with no hallucinations.",
+                    "missing_skills": [
+                        "CI/CD"
+                    ],
+                    "hallucinations": []
+                }
+            },
+            "agentic": {
+                "output": [
+                    "After reviewing the resume text and the initial skills list, I have identified a few additional technical skills that were missed. Here is the consolidated, final list of all skills as a JSON list:\n\n```\n[\n  {\n    \"category\": \"Programming languages\",\n    \"skills\": [\n      \"Python\"\n    ]\n  },\n  {\n    \"category\": \"Frameworks\",\n    \"skills\": [\n      \"Django\",\n      \"React\",\n      \"Redux\"\n    ]\n  },\n  {\n    \"category\": \"Databases\",\n    \"skills\": [\n      \"PostgreSQL\"\n    ]\n  },\n  {\n    \"category\": \"Cloud platforms\",\n    \"skills\": [\n      \"AWS\",\n      \"EC2\",\n      \"S3\"\n    ]\n  },\n  {\n    \"category\": \"Containerization\",\n    \"skills\": [\n      \"Docker\"\n    ]\n  },\n  {\n    \"category\": \"Deployment tools\",\n    \"skills\": [\n      \"GitHub Actions\"\n    ]\n  },\n  {\n    \"category\": \"Operating System\",\n    \"skills\": [\n      \"Linux\"\n    ]\n  },\n  {\n    \"category\": \"CI/CD\",\n    \"skills\": [\n      \"CI/CD pipelines\"\n    ]\n  },\n  {\n    \"category\": \"Frontend development\",\n    \"skills\": [\n      \"Frontend development\"\n    ]\n  },\n  {\n    \"category\": \"Full stack development\",\n    \"skills\": [\n      \"Full stack development\"\n    ]\n  }\n]\n```\n\nHowever, a more simplified and condensed version of the JSON list could be:\n\n```\n[\n  \"Python\",\n  \"Django\",\n  \"React\",\n  \"Redux\",\n  \"PostgreSQL\",\n  \"AWS\",\n  \"EC2\",\n  \"S3\",\n  \"Docker\",\n  \"GitHub Actions\",\n  \"Linux\",\n  \"CI/CD pipelines\",\n  \"Frontend development\",\n  \"Full stack development\"\n]\n```\n\nNote that I added the following skills that were missed:\n- Linux (as the operating system, although not explicitly mentioned)\n- CI/CD pipelines (as a separate category)\n- Frontend development (as a category, since the candidate is highly skilled in it)\n- Full stack development (as a category, since the candidate is a full stack engineer)"
+                ],
+                "latency": 1.48,
+                "eval": {
+                    "score": 4,
+                    "reasoning": "The extracted skills list includes most of the ground truth skills, but misses 'CI/CD' and includes some extra skills that are not present in the ground truth, such as 'Linux', 'CI/CD pipelines', 'Frontend development', and 'Full stack development'. The extra skills are related to the candidate's experience, but are not exact matches to the ground truth skills.",
+                    "missing_skills": [
+                        "CI/CD"
+                    ],
+                    "hallucinations": [
+                        "Linux",
+                        "CI/CD pipelines",
+                        "Frontend development",
+                        "Full stack development"
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "id": 2,
+        "industry": "Data Science",
+        "input": "\n        Jordan Smith\n        Data Scientist focused on Machine Learning and NLP.\n        Expert in Python (Pandas, NumPy, Scikit-learn).\n        Experience building LLM applications using LangChain and OpenAI API.\n        Database management with MongoDB and SQL.\n        Visualizations created in Tableau and Matplotlib.\n        ",
+        "ground_truth": [
+            "Python",
+            "Machine Learning",
+            "NLP",
+            "Pandas",
+            "NumPy",
+            "Scikit-learn",
+            "LLM",
+            "LangChain",
+            "OpenAI API",
+            "MongoDB",
+            "SQL",
+            "Tableau",
+            "Matplotlib"
+        ],
+        "baselines": {
+            "single_prompt": {
+                "output": [
+                    "Python",
+                    "Pandas",
+                    "NumPy",
+                    "Scikit-learn",
+                    "LangChain",
+                    "OpenAI API",
+                    "MongoDB",
+                    "SQL",
+                    "Tableau",
+                    "Matplotlib"
+                ],
+                "latency": 0.21,
+                "eval": {
+                    "score": 3,
+                    "reasoning": "The extracted skills match most of the major skills and tools found in the ground truth, but missed several important skills and frameworks such as 'Machine Learning', 'NLP', and 'LLM'.",
+                    "missing_skills": [
+                        "Machine Learning",
+                        "NLP",
+                        "LLM"
+                    ],
+                    "hallucinations": []
+                }
+            },
+            "agentic": {
+                "output": [
+                    "After reviewing the resume text, I have identified some additional technical skills that were missed. Here is the consolidated list of skills in JSON format:\n\n```json\n[\n  {\n    \"category\": \"Programming languages\",\n    \"skills\": [\n      \"Python\"\n    ]\n  },\n  {\n    \"category\": \"Data Science libraries\",\n    \"skills\": [\n      \"Pandas\",\n      \"NumPy\",\n      \"Scikit-learn\"\n    ]\n  },\n  {\n    \"category\": \"Machine Learning libraries\",\n    \"skills\": [\n      \"LangChain\",\n      \"OpenAI API\"\n    ]\n  },\n  {\n    \"category\": \"Natural Language Processing (NLP)\",\n    \"skills\": [\n      \"LLM applications\"\n    ]\n  },\n  {\n    \"category\": \"Database management\",\n    \"skills\": [\n      \"MongoDB\",\n      \"SQL\"\n    ]\n  },\n  {\n    \"category\": \"Data Visualization tools\",\n    \"skills\": [\n      \"Tableau\",\n      \"Matplotlib\"\n    ]\n  }\n]\n```\n\nNote that I added a new category for Natural Language Processing (NLP) to include the skill \"LLM applications\", which was mentioned in the resume text but not included in the initial list of skills. I did not add any new skills to the existing categories, as the initial list seemed to be comprehensive. However, it's worth noting that the resume text mentions \"Machine Learning\" as a focus area, but this is not explicitly included as a skill. If you would like to include it, I can add it as a separate category or under a broader \"Machine Learning\" category that encompasses the existing \"Machine Learning libraries\" category. Let me know!"
+                ],
+                "latency": 1.47,
+                "eval": {
+                    "score": 4,
+                    "reasoning": "The extracted skills are mostly accurate and well-organized, with clear categorization. However, the extraction missed the skill 'Machine Learning' and 'NLP' as separate entities, instead including 'LLM applications' under NLP and 'LangChain' and 'OpenAI API' under Machine Learning libraries. This minor omission prevents a perfect score.",
+                    "missing_skills": [
+                        "Machine Learning",
+                        "NLP"
+                    ],
+                    "hallucinations": [
+                        "LLM applications"
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "id": 3,
+        "industry": "Design",
+        "input": "\n        Casey Lane\n        UI/UX Designer with a passion for user-centric interfaces.\n        Expert in Figma, Adobe XD, and Photoshop.\n        Strong understanding of HTML/CSS for prototyping.\n        Experience with Design Systems and Accessibility (WCAG).\n        ",
+        "ground_truth": [
+            "UI/UX Design",
+            "Figma",
+            "Adobe XD",
+            "Photoshop",
+            "HTML",
+            "CSS",
+            "Design Systems",
+            "Accessibility",
+            "WCAG"
+        ],
+        "baselines": {
+            "single_prompt": {
+                "output": [
+                    "Figma",
+                    "Adobe XD",
+                    "Photoshop",
+                    "HTML",
+                    "CSS",
+                    "Design Systems",
+                    "Accessibility (WCAG)"
+                ],
+                "latency": 0.24,
+                "eval": {
+                    "score": 4,
+                    "reasoning": "The extracted skills match most of the ground truth skills, with only 'UI/UX Design' and 'WCAG' (as a separate entity) missing. 'Accessibility (WCAG)' in the extracted skills implies knowledge of WCAG, but it's combined with Accessibility, which is why it's not considered a perfect match.",
+                    "missing_skills": [
+                        "UI/UX Design"
+                    ],
+                    "hallucinations": []
+                }
+            },
+            "agentic": {
+                "output": [
+                    "After reviewing the resume text, I have identified some additional technical skills that were missed. Here is the consolidated list of skills in JSON format:\n\n```\n[\n  \"Figma\",\n  \"Adobe XD\",\n  \"Photoshop\",\n  \"HTML\",\n  \"CSS\",\n  \"Design Systems\",\n  \"Accessibility (WCAG)\",\n  \"Prototyping\"\n]\n```\n\nThe additional skill I extracted was \"Prototyping\", which is mentioned in the context of using HTML/CSS. This skill is relevant to the candidate's experience and expertise as a UI/UX designer."
+                ],
+                "latency": 0.76,
+                "eval": {
+                    "score": 4,
+                    "reasoning": "The extracted skills match most of the ground truth skills, with the exception of 'UI/UX Design' which is not explicitly mentioned in the extracted list. However, the context of the extracted skills implies UI/UX design expertise. The extracted list also includes 'Prototyping' which is not in the ground truth, but it is a relevant skill in the context of UI/UX design.",
+                    "missing_skills": [
+                        "UI/UX Design"
+                    ],
+                    "hallucinations": [
+                        "Prototyping"
+                    ]
+                }
+            }
+        }
+    }
+]

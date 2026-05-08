@@ -1,0 +1,174 @@
+AI BENCHMARK EVALUATION REPORT: 20-RESUME COMPREHENSIVE AUDIT
+================================================================================
+
+ID  | Industry             | Single Score | Agentic Score
+----------------------------------------------------------
+1   | Software Engineering | 5            | 4            
+2   | Data Science         | 4            | 4            
+3   | Design               | 4            | 4            
+4   | Cybersecurity        | 4            | 4            
+5   | DevOps               | 4            | 4            
+6   | Marketing            | 4            | 4            
+7   | Healthcare           | 4            | 4            
+8   | Finance              | 4            | 4            
+9   | Sales                | 4            | 4            
+10  | Product Management   | 4            | 4            
+11  | Mobile Dev           | 5            | 4            
+12  | Cloud Architect      | 4            | 2            
+13  | AI Research          | 5            | 5            
+14  | HR Tech              | 3            | 4            
+15  | Game Dev             | 4            | 4            
+16  | E-commerce           | 5            | 4            
+17  | Network Engineering  | 4            | 4            
+18  | Data Engineering     | 4            | 4            
+19  | Embedded Systems     | 4            | 4            
+20  | QA Automation        | 5            | 4            
+----------------------------------------------------------
+AVG |                      | 4.20         | 3.95         
+
+FINAL PLATFORM BENCHMARK SCORE: 3.95/5.0
+================================================================================
+
+DETAILED EVALUATION LOGS (ALL 20 CASES)
+----------------------------------------
+
+CASE ID: 1 (Software Engineering)
+INPUT TEXT: Alex Rivers. Full Stack Engineer. Python, Django, PostgreSQL, React, Redux, AWS (EC2, S3), Docker, CI/CD, GitHub Actions.
+GROUND TRUTH: Python, Django, PostgreSQL, React, Redux, AWS, EC2, S3, Docker, CI/CD, GitHub Actions
+SINGLE PROMPT JUDGE: 5/5 - The extracted list is identical to the ground truth list, indicating perfect accuracy and a complete match between the two sets.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted list includes all the skills mentioned in the ground truth, but it also contains additional skills such as 'Full Stack Engineering' which is not present in the ground truth. However, the extracted list does not miss any skills from the ground truth, hence a score of 4.
+................................................................................
+
+CASE ID: 2 (Data Science)
+INPUT TEXT: Jordan Smith. Data Scientist. Machine Learning, NLP, Python (Pandas, NumPy, Scikit-learn), LangChain, OpenAI API, MongoDB, SQL, Tableau, Matplotlib.
+GROUND TRUTH: Python, Machine Learning, NLP, Pandas, NumPy, Scikit-learn, LLM, LangChain, OpenAI API, MongoDB, SQL, Tableau, Matplotlib
+SINGLE PROMPT JUDGE: 4/5 - The extracted list is very similar to the ground truth, with 11 out of 12 items matching, but it incorrectly includes 'SQL' in the same form as the ground truth and is missing 'LLM', while having 'NLP' which is related but not the exact match.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted list is mostly accurate, but it includes 'Data Science' which is not in the ground truth, and it does not include 'LLM' which is in the ground truth. Also, 'Natural Language Processing (NLP)' in the extracted list is a more detailed version of 'NLP' in the ground truth.
+................................................................................
+
+CASE ID: 3 (Design)
+INPUT TEXT: Casey Lane. UI/UX Designer. Figma, Adobe XD, Photoshop, HTML, CSS, Design Systems, Accessibility (WCAG).
+GROUND TRUTH: UI/UX Design, Figma, Adobe XD, Photoshop, HTML, CSS, Design Systems, Accessibility, WCAG
+SINGLE PROMPT JUDGE: 4/5 - The extracted list is mostly accurate, but it separates 'Accessibility' and 'WCAG' whereas in the ground truth they are together, and 'UI/UX Design' is missing from the extracted list.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted list is almost identical to the ground truth, with the only difference being that 'Accessibility' and 'WCAG' are separate items in the ground truth, but combined as 'Accessibility (WCAG)' in the extracted list.
+................................................................................
+
+CASE ID: 4 (Cybersecurity)
+INPUT TEXT: Morgan Reed. Security Analyst. Penetration Testing, Kali Linux, Wireshark, Metasploit, Nmap, SIEM (Splunk), Firewall configuration, CompTIA Security+.
+GROUND TRUTH: Penetration Testing, Kali Linux, Wireshark, Metasploit, Nmap, SIEM, Splunk, Firewall, Security+
+SINGLE PROMPT JUDGE: 4/5 - The extracted list is mostly accurate, but there are minor discrepancies in the formatting of 'SIEM (Splunk)' which should be separate entities as in the ground truth, and 'Firewall configuration' which should be 'Firewall' and 'CompTIA Security+' which should be 'Security+'.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted list is mostly accurate, but there are minor discrepancies in the formatting of 'SIEM (Splunk)' and 'CompTIA Security+' which are listed as separate entities 'SIEM' and 'Splunk' and 'Security+' in the ground truth, and 'Firewall configuration' is listed as 'Firewall' in the ground truth.
+................................................................................
+
+CASE ID: 5 (DevOps)
+INPUT TEXT: Riley Vance. DevOps Engineer. Kubernetes, Terraform, Ansible, Jenkins, Azure, CloudFormation, Bash Scripting, Prometheus, Grafana.
+GROUND TRUTH: Kubernetes, Terraform, Ansible, Jenkins, Azure, CloudFormation, Bash, Prometheus, Grafana
+SINGLE PROMPT JUDGE: 4/5 - The extracted list is very similar to the ground truth, with the only difference being 'Bash Scripting' in the extracted list versus 'Bash' in the ground truth, indicating a minor discrepancy in terminology but overall high accuracy.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted list is very similar to the ground truth, with all elements present in both lists. However, 'Bash Scripting' in the extracted list does not exactly match 'Bash' in the ground truth, resulting in a minor discrepancy.
+................................................................................
+
+CASE ID: 6 (Marketing)
+INPUT TEXT: Taylor Brooks. Digital Marketer. Google Analytics, SEO (Semrush), HubSpot, Mailchimp, Content Strategy, PPC, Meta Ads Manager, Copywriting.
+GROUND TRUTH: Google Analytics, SEO, Semrush, HubSpot, Mailchimp, PPC, Meta Ads, Copywriting
+SINGLE PROMPT JUDGE: 4/5 - The extracted list is mostly accurate, but it contains 'Content Strategy' which is not in the ground truth, and 'Meta Ads Manager' which is a slightly different term than 'Meta Ads' in the ground truth.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted list includes all items from the ground truth, but also contains additional relevant skills such as 'Digital Marketing', 'Content Strategy', and potentially 'Digital Marketer'. The only issue is that some items in the extracted list have more detailed descriptions than their counterparts in the ground truth.
+................................................................................
+
+CASE ID: 7 (Healthcare)
+INPUT TEXT: Drew Parker. Medical Record Admin. Epic Systems, EHR Management, HIPAA Compliance, Medical Coding (ICD-10), Microsoft Excel, Patient Privacy.
+GROUND TRUTH: Epic Systems, EHR, HIPAA, Medical Coding, ICD-10, Excel, Patient Privacy
+SINGLE PROMPT JUDGE: 4/5 - The extracted list correctly identifies key terms such as 'Epic Systems', 'HIPAA Compliance', and 'Medical Coding', but lacks specificity in 'EHR Management' compared to 'EHR' and includes 'Microsoft Excel' instead of just 'Excel', also 'ICD-10' is partially correct but not fully matched as in ground truth, and 'Patient Privacy' is missing.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted list is mostly accurate, but some terms are more specific or detailed than the ground truth, such as 'Electronic Health Record (EHR) Management' instead of 'EHR', and 'Medical Coding (specifically ICD-10)' instead of 'Medical Coding' and 'ICD-10' as separate items. 'Medical Record Administration' is not present in the ground truth, and 'Microsoft Excel' is more detailed than 'Excel' in the ground truth.
+................................................................................
+
+CASE ID: 8 (Finance)
+INPUT TEXT: Sidney Gray. Financial Analyst. Financial Modeling, Bloomberg Terminal, SQL, Python for Finance, QuickBooks, Risk Management, ERP (SAP).
+GROUND TRUTH: Financial Modeling, Bloomberg Terminal, SQL, Python, QuickBooks, Risk Management, ERP, SAP
+SINGLE PROMPT JUDGE: 4/5 - The extracted list is mostly accurate, but it contains 'Python for Finance' instead of the more general 'Python', and 'ERP (SAP)' is listed as a single item instead of two separate items 'ERP' and 'SAP'.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted list is mostly accurate, but there are some minor discrepancies and additions, such as 'Financial Analysis' and the specification of 'Python for Finance', which are not present in the Ground Truth. However, the overall skills and categories align well with the Ground Truth, with the exception of 'SAP' being separated from 'ERP' in the Ground Truth.
+................................................................................
+
+CASE ID: 9 (Sales)
+INPUT TEXT: Jamie Quinn. Sales Exec. Salesforce CRM, B2B Sales, Cold Calling, Negotiation, Lead Generation (LinkedIn Sales Navigator), Pitching.
+GROUND TRUTH: Salesforce, CRM, B2B Sales, Lead Generation, LinkedIn Sales Navigator, Negotiation
+SINGLE PROMPT JUDGE: 4/5 - The extracted list is mostly accurate, but it includes 'Cold Calling' and 'Pitching' which are not in the ground truth, and 'Salesforce CRM' is split into 'Salesforce' and 'CRM' in the ground truth. However, the majority of the extracted skills are present in the ground truth, hence a score of 4.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted list contains most of the ground truth elements, but with some variations in wording, such as 'Salesforce CRM' instead of separate 'Salesforce' and 'CRM' entries, and includes additional relevant sales terms like 'Cold Calling', 'Pitching', and 'Sales Exec' that are not present in the ground truth.
+................................................................................
+
+CASE ID: 10 (Product Management)
+INPUT TEXT: Skyler West. Product Manager. Jira, Confluence, Agile/Scrum, Product Roadmap, User Stories, A/B Testing, Mixpanel, Roadmunk.
+GROUND TRUTH: Jira, Confluence, Agile, Scrum, Product Roadmap, User Stories, A/B Testing, Mixpanel, Roadmunk
+SINGLE PROMPT JUDGE: 4/5 - The extracted list is mostly accurate, but it combines 'Agile' and 'Scrum' into a single item 'Agile/Scrum', whereas the ground truth lists them as separate items.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted list is mostly accurate, but it includes some extra skills like 'Product Management', 'Project Management', and 'Data Analysis' that are not present in the Ground Truth. However, it does capture most of the key skills from the Ground Truth, such as 'Jira', 'Confluence', 'Agile/Scrum', 'Product Roadmap', 'User Stories', 'A/B Testing', 'Mixpanel', and 'Roadmunk'.
+................................................................................
+
+CASE ID: 11 (Mobile Dev)
+INPUT TEXT: Parker Lee. iOS Developer. Swift, SwiftUI, Objective-C, Xcode, Core Data, Combine, Firebase, App Store Connect.
+GROUND TRUTH: Swift, SwiftUI, Objective-C, Xcode, Core Data, Combine, Firebase, App Store Connect
+SINGLE PROMPT JUDGE: 5/5 - The extracted list is identical to the ground truth list, indicating perfect accuracy and a complete match between the two sets.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted list covers all the information provided in the Ground Truth, but it includes additional items ('iOS') and categorizes them, which is not present in the Ground Truth. However, all items in the Ground Truth are present in the extracted list.
+................................................................................
+
+CASE ID: 12 (Cloud Architect)
+INPUT TEXT: Logan Miles. Cloud Architect. AWS Solutions Architect, GCP, Multi-cloud strategy, Serverless (Lambda), IAM, VPC, Route 53, CloudFront.
+GROUND TRUTH: AWS, GCP, Multi-cloud, Serverless, Lambda, IAM, VC, Route 53, CloudFront
+SINGLE PROMPT JUDGE: 4/5 - The extracted list is mostly accurate, but it contains some extra information like 'Cloud Architect' and 'AWS Solutions Architect' which are not present in the ground truth. Also, 'VPC' in the extracted list is similar to 'VC' in the ground truth, but not exactly the same. However, most of the key terms like 'Multi-cloud strategy', 'Serverless (Lambda)', 'IAM', 'Route 53', and 'CloudFront' are correctly extracted.
+AGENTIC BASELINE JUDGE: 2/5 - The extracted list contains more detailed and specific skills, but it does not match the ground truth list. The ground truth list is more concise and uses abbreviations, while the extracted list uses full names and descriptions. There are also some skills in the extracted list that are not present in the ground truth list, such as 'Cloud Architecture' and 'Cloud Architect'.
+................................................................................
+
+CASE ID: 13 (AI Research)
+INPUT TEXT: Quinn Taylor. AI Researcher. PyTorch, TensorFlow, Deep Learning, Computer Vision, Reinforcement Learning, CUDA, LaTeX.
+GROUND TRUTH: PyTorch, TensorFlow, Deep Learning, Computer Vision, Reinforcement Learning, CUDA, LaTeX
+SINGLE PROMPT JUDGE: 5/5 - The extracted list is identical to the ground truth list, indicating perfect accuracy and a complete match between the two sets.
+AGENTIC BASELINE JUDGE: 5/5 - The extracted list matches the ground truth exactly, with all items present and no extra items.
+................................................................................
+
+CASE ID: 14 (HR Tech)
+INPUT TEXT: Cameron Blair. HR Specialist. Workday, Greenhouse ATS, Talent Acquisition, Payroll Systems, Employee Engagement, Employee Relations.
+GROUND TRUTH: Workday, Greenhouse ATS, Talent Acquisition, Payroll Systems, Employee Engagement, Employee Relations
+SINGLE PROMPT JUDGE: 3/5 - The extracted list correctly includes 'Workday', 'Greenhouse ATS', and 'Payroll Systems' which are present in the ground truth, but it misses 'Talent Acquisition', 'Employee Engagement', and 'Employee Relations' and does not include any incorrect items.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted list contains all the elements from the ground truth except for 'HR Specialist' which is an extra item, and it also expanded 'Greenhouse ATS' to 'Greenhouse ATS (Applicant Tracking System)' which is a minor variation but still conveys the same information.
+................................................................................
+
+CASE ID: 15 (Game Dev)
+INPUT TEXT: Avery Moss. Game Developer. Unity, C#, C++, Unreal Engine, Shaders, 3D Modeling (Blender), Physics Engines.
+GROUND TRUTH: Unity, C#, C++, Unreal Engine, Shaders, Blender, 3D Modeling, Physics Engines
+SINGLE PROMPT JUDGE: 4/5 - The extracted list is mostly accurate, but it contains a minor inconsistency in '3D Modeling (Blender)' which should be separated into 'Blender' and '3D Modeling' as in the ground truth.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted list is mostly accurate, but it does not include '3D Modeling' which is present in the ground truth. However, 'Blender' is included which can be related to '3D Modeling', and 'Physics Engines' is correctly identified. The categorization suggestions are also reasonable and provide more detail, but the base extracted list lacks one key item.
+................................................................................
+
+CASE ID: 16 (E-commerce)
+INPUT TEXT: Blake Jordan. E-commerce Manager. Shopify, Magento, Inventory Management, Google Shopping, Amazon Seller Central, Conversion Rate Optimization (CRO).
+GROUND TRUTH: Shopify, Magento, Inventory Management, Google Shopping, Amazon Seller Central, CRO
+SINGLE PROMPT JUDGE: 5/5 - The 'Extracted' list is almost identical to the 'Ground Truth' list, with the only difference being the abbreviation 'CRO' in the Ground Truth versus the full term 'Conversion Rate Optimization (CRO)' in the Extracted list. However, they refer to the same concept, so the lists can be considered a perfect match.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted list contains most of the ground truth elements, but includes extra items 'E-commerce' and 'E-commerce Management' which are not present in the ground truth, and 'Conversion Rate Optimization (CRO)' is partially matched as 'CRO' in the ground truth.
+................................................................................
+
+CASE ID: 17 (Network Engineering)
+INPUT TEXT: Reese Hunter. Network Engineer. Cisco (CCNA), Routing/Switching, BGP, OSPF, VPN, Network Security, Wi-Fi 6, SDN.
+GROUND TRUTH: Cisco, CCNA, Routing, Switching, BGP, OSPF, VPN, Network Security, SDN
+SINGLE PROMPT JUDGE: 4/5 - The extracted list is mostly accurate, but it includes 'Wi-Fi 6' which is not present in the Ground Truth, resulting in a minor error.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted list is mostly accurate, but it includes 'Network Engineering' and 'Wi-Fi 6' which are not present in the ground truth, and also expands some abbreviations like 'CCNA' to 'Cisco (CCNA)' and 'BGP' to 'BGP (Border Gateway Protocol)', which may or may not be desirable depending on the context. However, all the key terms from the ground truth are present in the extracted list.
+................................................................................
+
+CASE ID: 18 (Data Engineering)
+INPUT TEXT: Hayden Cross. Data Engineer. Apache Spark, Kafka, ETL Pipelines, Hadoop, Snowflake, Airflow, BigQuery, Data Warehousing.
+GROUND TRUTH: Apache Spark, Kafka, ETL, Hadoop, Snowflake, Airflow, BigQuery, Data Warehousing
+SINGLE PROMPT JUDGE: 4/5 - The extracted list is very similar to the ground truth, with the only difference being 'ETL Pipelines' in the extracted list versus 'ETL' in the ground truth, which can be considered a minor variation in terminology.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted list is very similar to the ground truth, with all major elements present. However, 'ETL Pipelines' in the extracted list is slightly different from 'ETL' in the ground truth, which is the only discrepancy.
+................................................................................
+
+CASE ID: 19 (Embedded Systems)
+INPUT TEXT: Dakota Sky. Embedded Engineer. C, Embedded C, RTOS, Microcontrollers (STM32), I2C, SPI, UART, Firmware Dev.
+GROUND TRUTH: C, Embedded C, RTOS, Microcontrollers, STM32, I2C, SPI, UART, Firmware Development
+SINGLE PROMPT JUDGE: 4/5 - The extracted list is mostly accurate, but it contains minor discrepancies, such as 'Microcontrollers (STM32)' instead of separate 'Microcontrollers' and 'STM32' entries, and 'Firmware Dev' instead of 'Firmware Development'.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted list is mostly accurate, but it includes 'Embedded Engineering' which is not in the ground truth. It also correctly identifies 'RTOS', 'STM32', 'I2C', 'SPI', 'UART', and 'Firmware Development' as skills. However, 'Microcontrollers' is a category in the ground truth, but 'STM32' is a specific type of microcontroller, so it is correctly included. The extracted list does not include 'Programming languages' as a category, but it does include 'C' and 'Embedded C' which are the programming languages mentioned in the ground truth.
+................................................................................
+
+CASE ID: 20 (QA Automation)
+INPUT TEXT: River Song. QA Engineer. Selenium, Cypress, Automated Testing, TestRail, Bugzilla, Regression Testing, Load Testing (JMeter).
+GROUND TRUTH: Selenium, Cypress, Automated Testing, TestRail, Bugzilla, Regression Testing, Load Testing, JMeter
+SINGLE PROMPT JUDGE: 5/5 - The 'Extracted' list is identical to the 'Ground Truth' list, indicating perfect accuracy and a complete match between the two sets.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted list is mostly accurate, but it includes 'Automation Testing' instead of 'Automated Testing' and 'Load Testing (JMeter)' which is partially correct but 'JMeter' is a separate item in the ground truth. 'QA Engineer' or 'QA Engineering' is correctly excluded as it's not a skill.
+................................................................................
+

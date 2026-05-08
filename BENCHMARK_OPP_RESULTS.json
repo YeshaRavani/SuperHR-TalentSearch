@@ -1,0 +1,995 @@
+[
+    {
+        "id": 1,
+        "industry": "Software Dev",
+        "input": "Hey we need a Python dev for the next two weeks to build an API. Remote work, probably 5 to 10 hours a week. Will give 200 points for it. Looking for someone with Fast API experience.",
+        "ground_truth": {
+            "title": "Python API Developer",
+            "type": "Opportunity",
+            "location": "Remote",
+            "description": "Build an API using FastAPI.",
+            "schedule": "Next 2 weeks",
+            "bounty": 200,
+            "time_commitment": "5-10 hours / week",
+            "skills": [
+                "Python",
+                "FastAPI"
+            ]
+        },
+        "single": {
+            "score": 4,
+            "reasoning": "The extracted JSON captures the main intent and details of the opportunity posting, but differs slightly in wording and specificity, such as 'Python dev' vs 'Python API Developer' and 'Fast API' vs 'FastAPI' and 'Python'.",
+            "output": {
+                "title": "Python dev for API build",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "Build an API",
+                "schedule": "2 weeks",
+                "bounty": 200,
+                "time_commitment": "5-10 hours / week",
+                "skills": [
+                    "Fast API"
+                ]
+            }
+        },
+        "agentic": {
+            "score": 4,
+            "reasoning": "The extracted JSON captures the essential details and semantic intent of the ground truth, but with some minor differences in wording and detail, such as the title and description.",
+            "output": {
+                "title": "Remote API Developer for Next 2 Weeks",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "We are seeking a skilled Python developer to build an API for the next two weeks. The ideal candidate will have experience with Fast API and be able to work independently.",
+                "schedule": "TBD",
+                "bounty": 200,
+                "time_commitment": "5-10 hours/week",
+                "skills": [
+                    "Python",
+                    "Fast API"
+                ]
+            }
+        }
+    },
+    {
+        "id": 2,
+        "industry": "Design",
+        "input": "Looking for a graphic designer to make a logo for our new project. Need it done by this Friday. We're based in New York but remote is fine. Offering 150 points. Takes less than an hour.",
+        "ground_truth": {
+            "title": "Graphic Designer for Logo",
+            "type": "Opportunity",
+            "location": "Remote",
+            "description": "Create a logo for a new project.",
+            "schedule": "By this Friday",
+            "bounty": 150,
+            "time_commitment": "Less than 1 hour",
+            "skills": [
+                "Design"
+            ]
+        },
+        "single": {
+            "score": 4,
+            "reasoning": "The extracted JSON captures the essential details and semantic intent of the ground truth, but with minor discrepancies in wording and location specificity.",
+            "output": {
+                "title": "Graphic Designer for New Project Logo",
+                "type": "Opportunity",
+                "location": "New York (remote fine)",
+                "description": "Make a logo for our new project",
+                "schedule": "This Friday",
+                "bounty": 150,
+                "time_commitment": "less than 1 hour",
+                "skills": [
+                    "Graphic Design"
+                ]
+            }
+        },
+        "agentic": {
+            "score": 4,
+            "reasoning": "The extracted JSON captures the semantic intent of the ground truth JSON, but there are minor differences in wording and location specificity.",
+            "output": {
+                "title": "Graphic Designer Wanted for Logo Creation",
+                "type": "Opportunity",
+                "location": "New York/Remote",
+                "description": "Looking for a graphic designer to make a logo for our new project.",
+                "schedule": "By this Friday",
+                "bounty": 150,
+                "time_commitment": "Less than 1 hour",
+                "skills": [
+                    "Graphic Design",
+                    "Logo Design"
+                ]
+            }
+        }
+    },
+    {
+        "id": 3,
+        "industry": "Marketing",
+        "input": "We need help running our social media for the next month. Every Monday and Wednesday. Just basic posting and engaging. It's a remote gig. I can do 300 points. Expect 3 to 5 hours a week.",
+        "ground_truth": {
+            "title": "Social Media Manager",
+            "type": "Opportunity",
+            "location": "Remote",
+            "description": "Run social media, post and engage.",
+            "schedule": "Every Monday and Wednesday",
+            "bounty": 300,
+            "time_commitment": "3-5 hours / week",
+            "skills": [
+                "Social Media",
+                "Marketing"
+            ]
+        },
+        "single": {
+            "score": 4,
+            "reasoning": "The extracted JSON captures the core details of the opportunity, including location, schedule, bounty, and time commitment, but differs in title and description, and lacks specific skills required for the opportunity.",
+            "output": {
+                "title": "Social Media Help",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "Basic posting and engaging on social media",
+                "schedule": "Every Monday and Wednesday",
+                "bounty": 300,
+                "time_commitment": "3-5 hours / week",
+                "skills": []
+            }
+        },
+        "agentic": {
+            "score": 4,
+            "reasoning": "The extracted JSON captures the core details of the opportunity, but differs in title and description wording, and lacks specific skills listed in the ground truth.",
+            "output": {
+                "title": "Social Media Assistant",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "We need help running our social media for the next month. Just basic posting and engaging.",
+                "schedule": "Every Monday and Wednesday",
+                "bounty": 300,
+                "time_commitment": "3-5 hours/week",
+                "skills": []
+            }
+        }
+    },
+    {
+        "id": 4,
+        "industry": "Writing",
+        "input": "Looking for a content writer to write a blog post about AI in healthcare. 500 words. Need it by tomorrow. Remote. Offering 100 points. Probably 1 to 2 hours of work.",
+        "ground_truth": {
+            "title": "Content Writer for AI Blog",
+            "type": "Opportunity",
+            "location": "Remote",
+            "description": "Write a 500-word blog post about AI in healthcare.",
+            "schedule": "Tomorrow",
+            "bounty": 100,
+            "time_commitment": "1-2 hours / week",
+            "skills": [
+                "Writing"
+            ]
+        },
+        "single": {
+            "score": 4,
+            "reasoning": "The extracted title differs slightly from the ground truth, and the skills listed are more specific in the extracted JSON, but the overall semantic intent matches.",
+            "output": {
+                "title": "Content Writer for AI in Healthcare Blog Post",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "Write a 500-word blog post about AI in healthcare",
+                "schedule": "Tomorrow",
+                "bounty": 100,
+                "time_commitment": "1-2 hours / week",
+                "skills": [
+                    "Content Writing",
+                    "Blog Writing",
+                    "AI in Healthcare"
+                ]
+            }
+        },
+        "agentic": {
+            "score": 4,
+            "reasoning": "The extracted JSON mostly matches the ground truth, but there are some differences in the title, schedule, and skills, which slightly affect the semantic intent.",
+            "output": {
+                "title": "Content Writer for AI in Healthcare Blog Post",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "Write a 500-word blog post about AI in healthcare",
+                "schedule": "TBD",
+                "bounty": 100,
+                "time_commitment": "1-2 hours",
+                "skills": [
+                    "Content Writing",
+                    "Healthcare",
+                    "AI"
+                ]
+            }
+        }
+    },
+    {
+        "id": 5,
+        "industry": "Video Editing",
+        "input": "Hey, looking for someone to edit a short promo video. Raw footage is ready. Deadline is next week. Should take less than 1 hour. Remote. 150 points reward.",
+        "ground_truth": {
+            "title": "Promo Video Editor",
+            "type": "Opportunity",
+            "location": "Remote",
+            "description": "Edit a short promo video from raw footage.",
+            "schedule": "Next week",
+            "bounty": 150,
+            "time_commitment": "Less than 1 hour",
+            "skills": [
+                "Video Editing"
+            ]
+        },
+        "single": {
+            "score": 4,
+            "reasoning": "The extracted JSON is very similar to the ground truth JSON, with minor differences in title and skills formatting, but the semantic intent is almost identical.",
+            "output": {
+                "title": "Edit a short promo video",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "Edit a short promo video from raw footage",
+                "schedule": "Next week",
+                "bounty": 150,
+                "time_commitment": "less than 1 hour",
+                "skills": [
+                    "Video editing"
+                ]
+            }
+        },
+        "agentic": {
+            "score": 4,
+            "reasoning": "The extracted JSON captures the main intent and details of the opportunity posting, but there are some minor differences in wording and detail, such as the title and description being slightly rephrased, and an extra skill listed.",
+            "output": {
+                "title": "Video Editor for Promo Video Project",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "We are seeking a skilled video editor to edit a short promo video using the provided raw footage. The ideal candidate will have experience with video editing software and be able to deliver a high-quality final product.",
+                "schedule": "Next week",
+                "bounty": 150,
+                "time_commitment": "Less than 1 hour",
+                "skills": [
+                    "Video Editing",
+                    "Video Editing Software"
+                ]
+            }
+        }
+    },
+    {
+        "id": 6,
+        "industry": "Data Analysis",
+        "input": "Need a data analyst to clean up a spreadsheet and make some charts. Remote work. Next 2 weeks. Offering 250 points. About 3-5 hours per week. Must know Excel.",
+        "ground_truth": {
+            "title": "Data Analyst for Spreadsheets",
+            "type": "Opportunity",
+            "location": "Remote",
+            "description": "Clean up a spreadsheet and create charts.",
+            "schedule": "Next 2 weeks",
+            "bounty": 250,
+            "time_commitment": "3-5 hours / week",
+            "skills": [
+                "Data Analysis",
+                "Excel"
+            ]
+        },
+        "single": {
+            "score": 4,
+            "reasoning": "The extracted JSON captures the main intent and details of the opportunity posting, but differs slightly in the title and skills, with 'Data Analyst' vs 'Data Analyst for Spreadsheets' and 'Excel' vs 'Data Analysis' and 'Excel'.",
+            "output": {
+                "title": "Data Analyst",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "Clean up a spreadsheet and make some charts",
+                "schedule": "Next 2 weeks",
+                "bounty": 250,
+                "time_commitment": "3-5 hours / week",
+                "skills": [
+                    "Excel"
+                ]
+            }
+        },
+        "agentic": {
+            "score": 4,
+            "reasoning": "The extracted JSON captures the essential details and semantic intent of the ground truth JSON, but there are minor differences in wording and skills listed.",
+            "output": {
+                "title": "Remote Data Analyst Opportunity",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "Need a data analyst to clean up a spreadsheet and make some charts.",
+                "schedule": "Next 2 weeks",
+                "bounty": 250,
+                "time_commitment": "3-5 hours per week",
+                "skills": [
+                    "Excel"
+                ]
+            }
+        }
+    },
+    {
+        "id": 7,
+        "industry": "Event Planning",
+        "input": "Need an event coordinator for an in-person meetup in London next Saturday. On-site required. Offering 400 points. Expect 5-10 hours this week preparing.",
+        "ground_truth": {
+            "title": "Event Coordinator for Meetup",
+            "type": "Opportunity",
+            "location": "London",
+            "description": "Coordinate an in-person meetup.",
+            "schedule": "Next Saturday",
+            "bounty": 400,
+            "time_commitment": "5-10 hours / week",
+            "skills": [
+                "Event Management",
+                "Coordination"
+            ]
+        },
+        "single": {
+            "score": 4,
+            "reasoning": "The extracted JSON matches the ground truth JSON in most fields, but differs slightly in the title and description. The skills field is also empty in the extracted JSON, which is a significant difference. However, the semantic intent of the opportunity posting is still largely preserved.",
+            "output": {
+                "title": "Event Coordinator for In-Person Meetup",
+                "type": "Opportunity",
+                "location": "London",
+                "description": "Event coordinator for an in-person meetup",
+                "schedule": "Next Saturday",
+                "bounty": 400,
+                "time_commitment": "5-10 hours / week",
+                "skills": []
+            }
+        },
+        "agentic": {
+            "score": 4,
+            "reasoning": "The extracted JSON captures the main intent and details of the opportunity posting, but differs slightly in the title, description, time commitment, and skills, which reduces the score from a perfect match.",
+            "output": {
+                "title": "Event Coordinator for London Meetup",
+                "type": "Opportunity",
+                "location": "London",
+                "description": "We are seeking an event coordinator to assist with an in-person meetup in London next Saturday. The coordinator will be responsible for ensuring the smooth execution of the event, including setup, registration, and logistics. This is a great opportunity to gain experience in event planning and coordination.",
+                "schedule": "Next Saturday",
+                "bounty": 400,
+                "time_commitment": "5-10 hours this week",
+                "skills": [
+                    "Event Planning",
+                    "Coordination",
+                    "Logistics"
+                ]
+            }
+        }
+    },
+    {
+        "id": 8,
+        "industry": "Research",
+        "input": "Looking for a researcher to find 50 contact leads for our sales team. Remote. 100 points. Need it by Monday. 1-2 hours of work max.",
+        "ground_truth": {
+            "title": "Lead Generation Researcher",
+            "type": "Opportunity",
+            "location": "Remote",
+            "description": "Find 50 contact leads for the sales team.",
+            "schedule": "By Monday",
+            "bounty": 100,
+            "time_commitment": "1-2 hours / week",
+            "skills": [
+                "Research"
+            ]
+        },
+        "single": {
+            "score": 4,
+            "reasoning": "The extracted JSON captures the essential details and semantic intent of the ground truth, but with minor discrepancies in title and schedule wording.",
+            "output": {
+                "title": "Researcher for Sales Team",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "Find 50 contact leads for our sales team",
+                "schedule": "Need it by Monday",
+                "bounty": 100,
+                "time_commitment": "1-2 hours / week",
+                "skills": []
+            }
+        },
+        "agentic": {
+            "score": 4,
+            "reasoning": "The extracted JSON captures the main intent and details of the opportunity posting, but there are some minor discrepancies in the title, description, schedule, time commitment, and skills compared to the ground truth JSON.",
+            "output": {
+                "title": "Researcher for Sales Lead Generation",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "Looking for a researcher to find 50 contact leads for our sales team",
+                "schedule": "TBD",
+                "bounty": 100,
+                "time_commitment": "1-2 hours",
+                "skills": [
+                    "Research",
+                    "Lead Generation",
+                    "Sales"
+                ]
+            }
+        }
+    },
+    {
+        "id": 9,
+        "industry": "Public Speaking",
+        "input": "Seeking a guest speaker for our online webinar this Friday on leadership. Remote via Zoom. 500 points. Less than 1 hour time commitment.",
+        "ground_truth": {
+            "title": "Guest Speaker on Leadership",
+            "type": "Opportunity",
+            "location": "Remote",
+            "description": "Speak at an online webinar about leadership.",
+            "schedule": "This Friday",
+            "bounty": 500,
+            "time_commitment": "Less than 1 hour",
+            "skills": [
+                "Public Speaking",
+                "Leadership"
+            ]
+        },
+        "single": {
+            "score": 4,
+            "reasoning": "The extracted JSON captures the main intent and details of the opportunity, but differs slightly in title and description, and misses the required skills.",
+            "output": {
+                "title": "Guest Speaker for Online Webinar",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "Guest speaker for online webinar on leadership via Zoom",
+                "schedule": "This Friday",
+                "bounty": 500,
+                "time_commitment": "Less than 1 hour",
+                "skills": []
+            }
+        },
+        "agentic": {
+            "score": 4,
+            "reasoning": "The extracted JSON captures the main intent and details of the opportunity posting, but differs slightly in title and description, and includes an additional skill 'Webinar Presentation' not present in the ground truth.",
+            "output": {
+                "title": "Guest Speaker for Online Leadership Webinar",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "We are seeking a guest speaker to present on leadership during our online webinar this Friday. The webinar will be held via Zoom and will be a great opportunity to share your expertise with our audience.",
+                "schedule": "This Friday",
+                "bounty": 500,
+                "time_commitment": "Less than 1 hour",
+                "skills": [
+                    "Public Speaking",
+                    "Leadership",
+                    "Webinar Presentation"
+                ]
+            }
+        }
+    },
+    {
+        "id": 10,
+        "industry": "Frontend Dev",
+        "input": "Need a React developer to fix some UI bugs on our homepage. Remote. Next week. 200 points. Should take 3-5 hours.",
+        "ground_truth": {
+            "title": "React UI Bug Fixer",
+            "type": "Opportunity",
+            "location": "Remote",
+            "description": "Fix UI bugs on the homepage.",
+            "schedule": "Next week",
+            "bounty": 200,
+            "time_commitment": "3-5 hours / week",
+            "skills": [
+                "React",
+                "JavaScript",
+                "CSS"
+            ]
+        },
+        "single": {
+            "score": 4,
+            "reasoning": "The extracted JSON captures the core details of the opportunity, including type, location, schedule, bounty, time commitment, and primary skill, but differs in title and description wording, and is missing two skills (JavaScript, CSS) present in the ground truth.",
+            "output": {
+                "title": "Fix UI bugs on homepage",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "Fix some UI bugs on our homepage",
+                "schedule": "Next week",
+                "bounty": 200,
+                "time_commitment": "3-5 hours / week",
+                "skills": [
+                    "React"
+                ]
+            }
+        },
+        "agentic": {
+            "score": 4,
+            "reasoning": "The extracted JSON captures the core intent of the ground truth, including the job title, location, schedule, bounty, time commitment, and required skills, but differs slightly in wording and includes 'UI Development' and 'Bug Fixing' instead of 'JavaScript' and 'CSS'.",
+            "output": {
+                "title": "UI Bug Fixer for Homepage",
+                "type": "Job",
+                "location": "Remote",
+                "description": "Need a React developer to fix some UI bugs on our homepage",
+                "schedule": "Next week",
+                "bounty": 200,
+                "time_commitment": "3-5 hours",
+                "skills": [
+                    "React",
+                    "UI Development",
+                    "Bug Fixing"
+                ]
+            }
+        }
+    },
+    {
+        "id": 11,
+        "industry": "Photography",
+        "input": "Looking for a photographer in San Francisco for a corporate event next Thursday. 5-10 hours of work. Paying 600 points. In-person obviously.",
+        "ground_truth": {
+            "title": "Corporate Event Photographer",
+            "type": "Opportunity",
+            "location": "San Francisco",
+            "description": "Photograph a corporate event.",
+            "schedule": "Next Thursday",
+            "bounty": 600,
+            "time_commitment": "5-10 hours / week",
+            "skills": [
+                "Photography"
+            ]
+        },
+        "single": {
+            "score": 4,
+            "reasoning": "The extracted JSON is very similar to the ground truth, with minor differences in wording for the title and description, and a slight difference in the time_commitment field, but the semantic intent is largely preserved.",
+            "output": {
+                "title": "Photographer for Corporate Event",
+                "type": "Opportunity",
+                "location": "San Francisco",
+                "description": "Photographer needed for corporate event",
+                "schedule": "Next Thursday",
+                "bounty": 600,
+                "time_commitment": "5-10 hours",
+                "skills": [
+                    "Photography"
+                ]
+            }
+        },
+        "agentic": {
+            "score": 4,
+            "reasoning": "The extracted JSON captures the essential details of the opportunity posting, but differs slightly in wording and categorization, with 'Job' instead of 'Opportunity' and 'Event Photography' as an additional skill.",
+            "output": {
+                "title": "Corporate Event Photographer Wanted in San Francisco",
+                "type": "Job",
+                "location": "San Francisco",
+                "description": "Looking for a photographer for a corporate event",
+                "schedule": "Next Thursday",
+                "bounty": 600,
+                "time_commitment": "5-10 hours",
+                "skills": [
+                    "Photography",
+                    "Event Photography"
+                ]
+            }
+        }
+    },
+    {
+        "id": 12,
+        "industry": "Database",
+        "input": "Need SQL expert to optimize some slow queries. Remote. ASAP. Offering 300 points. Time commitment 1-2 hours.",
+        "ground_truth": {
+            "title": "SQL Query Optimization",
+            "type": "Opportunity",
+            "location": "Remote",
+            "description": "Optimize slow database queries.",
+            "schedule": "ASAP",
+            "bounty": 300,
+            "time_commitment": "1-2 hours / week",
+            "skills": [
+                "SQL"
+            ]
+        },
+        "single": {
+            "score": 4,
+            "reasoning": "The extracted JSON captures the same semantic intent as the ground truth, but with slight differences in wording, such as 'SQL expert to optimize slow queries' vs 'SQL Query Optimization' and 'Need SQL expert to optimize some slow queries' vs 'Optimize slow database queries'.",
+            "output": {
+                "title": "SQL expert to optimize slow queries",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "Need SQL expert to optimize some slow queries",
+                "schedule": "ASAP",
+                "bounty": 300,
+                "time_commitment": "1-2 hours / week",
+                "skills": [
+                    "SQL"
+                ]
+            }
+        },
+        "agentic": {
+            "score": 4,
+            "reasoning": "The extracted JSON captures the main intent and details of the opportunity posting, but differs slightly in title, description, and skills, with the extracted version including 'Query Optimization' as a skill and the ground truth not including it, and the time commitment description also differs slightly.",
+            "output": {
+                "title": "Optimize Slow Queries - SQL Expert Needed",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "Need SQL expert to optimize some slow queries",
+                "schedule": "ASAP",
+                "bounty": 300,
+                "time_commitment": "1-2 hours",
+                "skills": [
+                    "SQL",
+                    "Query Optimization"
+                ]
+            }
+        }
+    },
+    {
+        "id": 13,
+        "industry": "Machine Learning",
+        "input": "Need help training a basic classification model in Python. Remote. Next 2 weeks. 400 points. 5-10 hours per week. Must know Scikit-Learn.",
+        "ground_truth": {
+            "title": "Machine Learning Model Trainer",
+            "type": "Opportunity",
+            "location": "Remote",
+            "description": "Train a basic classification model.",
+            "schedule": "Next 2 weeks",
+            "bounty": 400,
+            "time_commitment": "5-10 hours / week",
+            "skills": [
+                "Python",
+                "Machine Learning"
+            ]
+        },
+        "single": {
+            "score": 4,
+            "reasoning": "The extracted JSON captures the core elements of the opportunity posting, including type, location, schedule, bounty, and time commitment, but differs in title, description, and skills, indicating a close but not perfect semantic match.",
+            "output": {
+                "title": "Basic Classification Model Training",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "Training a basic classification model in Python",
+                "schedule": "Next 2 weeks",
+                "bounty": 400,
+                "time_commitment": "5-10 hours / week",
+                "skills": [
+                    "Scikit-Learn"
+                ]
+            }
+        },
+        "agentic": {
+            "score": 4,
+            "reasoning": "The extracted JSON captures the main intent and details of the opportunity, but differs in title and skills, with 'Help Training' instead of 'Machine Learning Model Trainer', and 'Scikit-Learn' instead of 'Python' and 'Machine Learning'.",
+            "output": {
+                "title": "Help Training",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "Need help training a basic classification model in Python. Remote. Next 2 weeks. 400 points. 5-10 hours per week. Must know Scikit-Learn.",
+                "schedule": "Next 2",
+                "bounty": 400,
+                "time_commitment": "5-10 hours / week",
+                "skills": [
+                    "Scikit-Learn"
+                ]
+            }
+        }
+    },
+    {
+        "id": 14,
+        "industry": "Project Management",
+        "input": "Looking for a project manager to help organize our Trello board and set up agile sprints. Remote, 3-5 hours a week for the next month. 250 points.",
+        "ground_truth": {
+            "title": "Agile Project Manager",
+            "type": "Opportunity",
+            "location": "Remote",
+            "description": "Organize Trello board and set up agile sprints.",
+            "schedule": "Next month",
+            "bounty": 250,
+            "time_commitment": "3-5 hours / week",
+            "skills": [
+                "Project Management",
+                "Coordination"
+            ]
+        },
+        "single": {
+            "score": 4,
+            "reasoning": "The extracted JSON closely matches the ground truth, but there are minor differences in the title and schedule fields, and the skills field is empty in the extracted JSON.",
+            "output": {
+                "title": "Project Manager",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "Organize Trello board and set up agile sprints",
+                "schedule": "3-5 hours / week for the next month",
+                "bounty": 250,
+                "time_commitment": "3-5 hours / week",
+                "skills": []
+            }
+        },
+        "agentic": {
+            "score": 4,
+            "reasoning": "The extracted JSON captures the main intent and details of the opportunity posting, but differs slightly in title, description, schedule, and skills, indicating a close but not perfect match with the ground truth.",
+            "output": {
+                "title": "Project Manager Opportunity",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "Looking for a project manager to help organize our Trello board and set up agile sprints.",
+                "schedule": "TBD",
+                "bounty": 250,
+                "time_commitment": "3-5 hours/week",
+                "skills": [
+                    "Project Management",
+                    "Trello",
+                    "Agile"
+                ]
+            }
+        }
+    },
+    {
+        "id": 15,
+        "industry": "UI Design",
+        "input": "Need someone to make a Figma prototype for an app idea. Remote. 350 points. Expect 5-10 hours of work. Deadline is end of the month.",
+        "ground_truth": {
+            "title": "Figma App Prototyper",
+            "type": "Opportunity",
+            "location": "Remote",
+            "description": "Create a Figma prototype for a new app idea.",
+            "schedule": "End of the month",
+            "bounty": 350,
+            "time_commitment": "5-10 hours / week",
+            "skills": [
+                "Figma",
+                "Design"
+            ]
+        },
+        "single": {
+            "score": 4,
+            "reasoning": "The extracted JSON closely matches the ground truth JSON in terms of semantic intent, but there are some minor differences in wording and skills listed.",
+            "output": {
+                "title": "Figma prototype for an app idea",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "Make a Figma prototype for an app idea",
+                "schedule": "End of the month",
+                "bounty": 350,
+                "time_commitment": "5-10 hours",
+                "skills": [
+                    "Figma",
+                    "Prototyping"
+                ]
+            }
+        },
+        "agentic": {
+            "score": 4,
+            "reasoning": "The extracted JSON captures the main intent and details of the opportunity posting, but there are some minor discrepancies in the title, description, schedule, and skills.",
+            "output": {
+                "title": "Figma Prototype Designer",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "Need someone to make a Figma prototype for an app idea",
+                "schedule": "TBD",
+                "bounty": 350,
+                "time_commitment": "5-10 hours",
+                "skills": []
+            }
+        }
+    },
+    {
+        "id": 16,
+        "industry": "Writing",
+        "input": "Need a proofreader for a 10 page document. Remote. 100 points. Need it by tomorrow night. Less than 1 hour.",
+        "ground_truth": {
+            "title": "Document Proofreader",
+            "type": "Opportunity",
+            "location": "Remote",
+            "description": "Proofread a 10-page document.",
+            "schedule": "Tomorrow night",
+            "bounty": 100,
+            "time_commitment": "Less than 1 hour",
+            "skills": [
+                "Writing"
+            ]
+        },
+        "single": {
+            "score": 4,
+            "reasoning": "The extracted JSON matches the ground truth JSON in most fields, but differs in title and skills, with the extracted JSON missing the 'Writing' skill and having a slightly different title.",
+            "output": {
+                "title": "Proofreader Needed",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "Proofread a 10 page document",
+                "schedule": "Tomorrow night",
+                "bounty": 100,
+                "time_commitment": "Less than 1 hour",
+                "skills": []
+            }
+        },
+        "agentic": {
+            "score": 4,
+            "reasoning": "The extracted JSON captures the main intent and details of the opportunity posting, but differs slightly in title and skills, with 'Proofreading' and 'Attention to detail' in the extracted JSON versus 'Writing' in the ground truth.",
+            "output": {
+                "title": "Proofreader Needed for 10-Page Document",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "Need a proofreader for a 10 page document",
+                "schedule": "Tomorrow night",
+                "bounty": 100,
+                "time_commitment": "Less than 1 hour",
+                "skills": [
+                    "Proofreading",
+                    "Attention to detail"
+                ]
+            }
+        }
+    },
+    {
+        "id": 17,
+        "industry": "Presentation",
+        "input": "Can someone help me design a Canva presentation for my pitch? Remote, by Wednesday. 1-2 hours of work. 150 points.",
+        "ground_truth": {
+            "title": "Canva Presentation Designer",
+            "type": "Opportunity",
+            "location": "Remote",
+            "description": "Design a pitch presentation using Canva.",
+            "schedule": "By Wednesday",
+            "bounty": 150,
+            "time_commitment": "1-2 hours / week",
+            "skills": [
+                "Canva",
+                "Design"
+            ]
+        },
+        "single": {
+            "score": 4,
+            "reasoning": "The extracted JSON captures the main intent and details of the opportunity posting, but differs slightly in title and description wording, and lacks specific skills required.",
+            "output": {
+                "title": "Design a Canva presentation for pitch",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "Design a Canva presentation for pitch",
+                "schedule": "Wednesday",
+                "bounty": 150,
+                "time_commitment": "1-2 hours / week",
+                "skills": []
+            }
+        },
+        "agentic": {
+            "score": 4,
+            "reasoning": "The extracted JSON captures the essential details of the opportunity posting, including the task, location, schedule, bounty, time commitment, and required skills. However, there are minor discrepancies in the title, type, and description, which prevent it from being a perfect match.",
+            "output": {
+                "title": "Pitch Presentation Design Opportunity",
+                "type": "Design",
+                "location": "Remote",
+                "description": "Can someone help me design a Canva presentation for my pitch?",
+                "schedule": "By Wednesday",
+                "bounty": 150,
+                "time_commitment": "1-2 hours",
+                "skills": [
+                    "Canva",
+                    "Design",
+                    "Presentation"
+                ]
+            }
+        }
+    },
+    {
+        "id": 18,
+        "industry": "Community",
+        "input": "Looking for a moderator for our Discord community. Remote. 200 points. 3-5 hours a week for the next 3 weeks.",
+        "ground_truth": {
+            "title": "Discord Community Moderator",
+            "type": "Opportunity",
+            "location": "Remote",
+            "description": "Moderate the Discord community.",
+            "schedule": "Next 3 weeks",
+            "bounty": 200,
+            "time_commitment": "3-5 hours / week",
+            "skills": [
+                "Communication",
+                "Coordination"
+            ]
+        },
+        "single": {
+            "score": 4,
+            "reasoning": "The extracted JSON captures the main intent and details of the opportunity posting, but differs slightly in title and description wording, and misses the skills required for the opportunity.",
+            "output": {
+                "title": "Moderator for Discord Community",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "Looking for a moderator for our Discord community",
+                "schedule": "3-5 hours a week for the next 3 weeks",
+                "bounty": 200,
+                "time_commitment": "3-5 hours / week",
+                "skills": []
+            }
+        },
+        "agentic": {
+            "score": 4,
+            "reasoning": "The extracted JSON matches the ground truth in most fields, but there are slight differences in the description, schedule, time_commitment, and skills fields, indicating a close but not perfect semantic match.",
+            "output": {
+                "title": "Discord Community Moderator",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "Looking for a moderator for our Discord community",
+                "schedule": "TBD, for the next 3 weeks",
+                "bounty": 200,
+                "time_commitment": "3-5 hours a week",
+                "skills": [
+                    "Communication",
+                    "Community Management",
+                    "Moderation"
+                ]
+            }
+        }
+    },
+    {
+        "id": 19,
+        "industry": "Marketing",
+        "input": "Need an SEO specialist to audit our website. Remote, 300 points. Next week. Should take 1-2 hours.",
+        "ground_truth": {
+            "title": "SEO Website Auditor",
+            "type": "Opportunity",
+            "location": "Remote",
+            "description": "Perform an SEO audit on the website.",
+            "schedule": "Next week",
+            "bounty": 300,
+            "time_commitment": "1-2 hours / week",
+            "skills": [
+                "Marketing"
+            ]
+        },
+        "single": {
+            "score": 4,
+            "reasoning": "The extracted JSON captures the main intent and details of the opportunity posting, but differs slightly in title and description wording, and misses the 'Marketing' skill.",
+            "output": {
+                "title": "SEO specialist",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "Audit our website",
+                "schedule": "Next week",
+                "bounty": 300,
+                "time_commitment": "1-2 hours / week",
+                "skills": []
+            }
+        },
+        "agentic": {
+            "score": 4,
+            "reasoning": "The extracted JSON captures the main intent and details of the opportunity posting, but differs slightly in title, description, and time commitment, and misses the required skill 'Marketing'",
+            "output": {
+                "title": "SEO Specialist Opportunity",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "Need an SEO specialist to audit our website",
+                "schedule": "Next week",
+                "bounty": 300,
+                "time_commitment": "1-2 hours",
+                "skills": []
+            }
+        }
+    },
+    {
+        "id": 20,
+        "industry": "Customer Support",
+        "input": "Need someone to reply to customer emails. Remote. 5-10 hours a week for the next month. 400 points.",
+        "ground_truth": {
+            "title": "Customer Email Support",
+            "type": "Opportunity",
+            "location": "Remote",
+            "description": "Reply to customer support emails.",
+            "schedule": "Next month",
+            "bounty": 400,
+            "time_commitment": "5-10 hours / week",
+            "skills": [
+                "Communication"
+            ]
+        },
+        "single": {
+            "score": 4,
+            "reasoning": "The extracted JSON captures the main intent and details of the opportunity, but differs slightly in title, description, and schedule. The skills section is also incomplete.",
+            "output": {
+                "title": "Reply to customer emails",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "Reply to customer emails",
+                "schedule": "5-10 hours a week for the next month",
+                "bounty": 400,
+                "time_commitment": "5-10 hours / week",
+                "skills": []
+            }
+        },
+        "agentic": {
+            "score": 4,
+            "reasoning": "The extracted JSON captures the essential details and semantic intent of the ground truth JSON, but there are minor discrepancies in wording and skill listing.",
+            "output": {
+                "title": "Customer Support Representative",
+                "type": "Opportunity",
+                "location": "Remote",
+                "description": "Need someone to reply to customer emails",
+                "schedule": "TBD",
+                "bounty": 400,
+                "time_commitment": "5-10 hours/week for the next month",
+                "skills": [
+                    "Customer Service",
+                    "Email Response",
+                    "Communication"
+                ]
+            }
+        }
+    }
+]

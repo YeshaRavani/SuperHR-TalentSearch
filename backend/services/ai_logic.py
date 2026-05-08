@@ -1,3 +1,4 @@
+import logging
 from typing import Any, Dict, Iterable, List
 
 from .. import orm_models
@@ -11,6 +12,8 @@ from .platform_knowledge import (
 )
 
 
+
+logger = logging.getLogger(__name__)
 ALLOWED_ACTIONS = {action.lower(): action for action in get_allowed_actions()}
 EMOTIONAL_KEYWORDS = {
     "depressed", "sad", "stressed", "anxious", "anxiety", "overwhelmed", "burned out", "burnt out",
@@ -70,46 +73,90 @@ def normalize_terms(raw_text: str | None) -> List[str]:
     return [term.strip().lower() for term in normalized.split(",") if term.strip()]
 
 
-def score_opportunity_match(user: orm_models.User, opportunity: orm_models.Opportunity) -> int:
+def score_opportunity_match(user: orm_models.User, opportunity: orm_models.Opportunity, skip_ai: bool = False) -> dict:
     # 1. Deterministic scoring
-    user_skills = [s.name for s in user.skills]
-    opp_skills = [s.name for s in opportunity.skills]
+    user_skills = [s.name.lower().strip() for s in user.skills]
+    opp_skills = [s.name.lower().strip() for s in opportunity.skills]
     
     score = 0
     opp_text = ((opportunity.title or "") + " " + (opportunity.full_description or "") + " " + (opportunity.expectations or "")).lower()
     
-    # Improved intersection: Check if skill words appear in opportunity
-    matches = 0
-    user_skill_words = set()
-    for s in user_skills:
-        for word in s.lower().split():
-            if len(word) > 2: user_skill_words.add(word)
-            
-    opp_skill_words = set()
-    for s in opp_skills:
-        for word in s.lower().split():
-            if len(word) > 2: opp_skill_words.add(word)
-    
-    # Word-level overlap
-    shared_words = user_skill_words.intersection(opp_skill_words)
-    if opp_skill_words:
-        score += int((len(shared_words) / len(opp_skill_words)) * 40)
-    
-    # Check if user skills appear as substrings in text
-    for s in user_skills:
-        if s.lower() in opp_text:
-            score += 10
-            break
+    # helper for word-level overlap
+    def get_words(s):
+        return set(w for w in s.split() if len(w) > 2)
 
-    # Team alignment
+    # a) Direct Skill Matching (Weighted 85%)
+    if opp_skills:
+        matches = 0
+        for s in opp_skills:
+            if s in user_skills:
+                matches += 1
+            else:
+                # Word-level fuzzy check
+                opp_words = get_words(s)
+                best_partial = 0
+                for us in user_skills:
+                    user_words = get_words(us)
+                    if opp_words and user_words:
+                        overlap = len(opp_words.intersection(user_words))
+                        ratio = overlap / max(len(opp_words), len(user_words))
+                        best_partial = max(best_partial, ratio)
+                
+                if best_partial > 0.4:
+                    matches += best_partial
+        
+        # High satisfaction curve: 100% skills should feel like 90-100% match
+        match_ratio = matches / len(opp_skills)
+        score += int(match_ratio * 90)
+        
+        # Perfection bonuses
+        if match_ratio >= 0.99: score += 10
+        elif match_ratio >= 0.75: score += 5
+
+    
+    # b) Keyword presence in text (Weighted 10%)
+    if user_skills:
+        text_matches = 0
+        for s in user_skills:
+            if s in opp_text:
+                text_matches += 1
+            else:
+                words = get_words(s)
+                if any(w in opp_text for w in words):
+                    text_matches += 0.5
+        
+        score += min(10, int(text_matches * 3))
+
+    # c) Team alignment (Weighted 5%)
     if user.department_team and user.department_team.lower() in opp_text:
-        score += 20
+        score += 5
+
+    # d) Baseline floors
+    if not user_skills and not user.department_team:
+        score = max(score, 5)
+    
+    # Clamp score
+    score = min(100, score)
+    
+    # Reasoning fallback
+    if score >= 85:
+        reasoning = "Excellent match! Your skills are a near-perfect fit for this role."
+    elif score >= 65:
+        reasoning = "Strong match based on your technical expertise."
+    elif score >= 40:
+        reasoning = "Good alignment with your professional background."
+    elif score >= 15:
+        reasoning = "Some shared interests, worth exploring."
+    else:
+        reasoning = "This might be a stretch based on your current profile."
+
+
     
     # 2. AI Fallback for deep semantic matching
-    if score < 50 and (user_skills or user.department_team) and groq_service.is_available():
+    if not skip_ai and score < 50 and (user_skills or user.department_team) and groq_service.is_available():
         try:
             prompt = f"""
-            Task: Provide a recruitment match score (0-100).
+            Task: Provide a recruitment match score (0-100) and a short 1-sentence reasoning.
             User: {user.full_name or user.username}
             User Skills: {", ".join(user_skills)}
             User Team: {user.department_team}
@@ -118,27 +165,32 @@ def score_opportunity_match(user: orm_models.User, opportunity: orm_models.Oppor
             Opportunity Requirements: {", ".join(opp_skills)}
             Opportunity Description: {opportunity.short_description}
             
-            Rule: Technical users (with skills like APIs, Python, Automation) are highly valuable for development projects.
-            Even if keywords don't match exactly, evaluate the semantic fit.
-            Return JSON: {{"score": <integer>}}
+            Rule: Evaluate the semantic fit between the user's background and the opportunity. 
+            Crucial: Distinguish between different domains. For example, a 'Route Planner' in logistics is NOT a match for an 'API Route Planner' in software engineering.
+            If the domains are completely different (e.g., physical service vs technical engineering), keep the score low even if some keywords overlap.
+            Return JSON: {{"score": <integer>, "reasoning": "<string>"}}
             """
-            ai_response = groq_service.get_chat_completion(prompt, "You are a senior recruitment AI. Be generous with technical cross-overs.")
-            
-            if isinstance(ai_response, dict) and "score" in ai_response:
-                ai_score = int(ai_response["score"])
-                score = max(score, ai_score)
-        except Exception as e:
-            logger.error(f"AI match scoring failed: {e}")
+            ai_response = groq_service.get_chat_completion(prompt, "You are a senior recruitment AI. Be precise and distinguish between different professional domains (e.g. logistics vs software).")
 
-    # Final clamping: 40% floor for technical users to avoid "poor fit" perception
-    min_floor = 40 if user_skills else 15
-    return min(100, max(min_floor, score))
+            
+            if isinstance(ai_response, dict):
+                if "score" in ai_response:
+                    ai_score = int(ai_response["score"])
+                    score = max(score, ai_score)
+                if "reasoning" in ai_response:
+                    reasoning = ai_response["reasoning"]
+        except Exception as e:
+            try: logger.error(f"AI match scoring failed: {e}")
+            except: pass
+
+    return {"score": score, "reasoning": reasoning}
 
 
 def get_ranked_matches(user: orm_models.User, opportunities: Iterable[orm_models.Opportunity], limit: int = 5) -> List[orm_models.Opportunity]:
     scored = []
     for opportunity in opportunities:
-        score = score_opportunity_match(user, opportunity)
+        match_data = score_opportunity_match(user, opportunity)
+        score = match_data["score"]
         if score > 0:
             scored.append((score, opportunity.created_at, opportunity))
 

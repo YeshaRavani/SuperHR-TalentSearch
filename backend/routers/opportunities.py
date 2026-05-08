@@ -19,7 +19,30 @@ def get_opportunities(
     if current_user and current_user.role != "admin":
         query = query.filter(orm_models.Opportunity.author_id != current_user.id)
     
-    return query.all()
+    opps = query.all()
+    
+    response_opps = []
+    if current_user:
+        from ..services.ai_logic import score_opportunity_match
+        
+    for opp in opps:
+        # Get deterministic match data
+        m_score = 0
+        m_reasoning = ""
+        if current_user:
+            match_data = score_opportunity_match(current_user, opp, skip_ai=True)
+            m_score = match_data["score"]
+            m_reasoning = match_data.get("reasoning", "")
+        
+        # Explicitly create the response model
+        opp_resp = models.OpportunityResponse(
+            **models.OpportunityResponse.from_orm(opp).dict(exclude={"match_score", "match_reasoning"}),
+            match_score=m_score,
+            match_reasoning=m_reasoning
+        )
+        response_opps.append(opp_resp)
+            
+    return response_opps
 
 @router.get("/opportunities/{id}", response_model=models.OpportunityResponse)
 def get_opportunity(id: str, db: Session = Depends(database.get_db)):

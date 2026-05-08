@@ -1,0 +1,129 @@
+{
+    "timestamp": "2026-05-08 03:56:35",
+    "metrics": {
+        "average_grade": 8.0,
+        "test_cases": 8
+    },
+    "details": [
+        {
+            "case_id": 1,
+            "scenario": "Perfect Skill Match",
+            "output": {
+                "score": 100,
+                "reasoning": "Excellent match! Your skills are a near-perfect fit for this role."
+            },
+            "evaluation": {
+                "suitability_score": 4,
+                "reasoning_score": 5,
+                "overall_grade": 9,
+                "comments": "The AI-generated match score is high, but the user's skills are not a perfect match for the opportunity since 'PostgreSQL' is not required. The reasoning is accurate and professional, but could be more detailed."
+            },
+            "duration": 1.71661376953125e-05
+        },
+        {
+            "case_id": 2,
+            "scenario": "Semantic Match (Developer vs Engineering)",
+            "output": {
+                "score": 72,
+                "reasoning": "Strong match based on your technical expertise."
+            },
+            "evaluation": {
+                "suitability_score": 4,
+                "reasoning_score": 3,
+                "overall_grade": 6,
+                "comments": "The score is slightly lower than expected, considering the strong overlap between the user's skills and the opportunity's requirements. The reasoning is brief and lacks specific details about the match, which reduces its accuracy and professionalism."
+            },
+            "duration": 4.601478576660156e-05
+        },
+        {
+            "case_id": 3,
+            "scenario": "Partial Match (50%)",
+            "output": {
+                "score": 40,
+                "reasoning": "Data_guy has some relevant technical skills in python, but the opportunity requires machine learning and statistics, and the team is in a different domain (Data Science) than the user's team (Analytics)"
+            },
+            "evaluation": {
+                "suitability_score": 4,
+                "reasoning_score": 5,
+                "overall_grade": 8,
+                "comments": "The AI-generated score of 40% aligns with the expected match quality of Medium (40-60%). The reasoning provided is accurate, professional, and clearly explains the partial match, highlighting both the relevant skills (Python) and the missing requirements (Machine Learning, Statistics, and team domain difference)."
+            },
+            "duration": 0.5958740711212158
+        },
+        {
+            "case_id": 4,
+            "scenario": "No Match",
+            "output": {
+                "score": 0,
+                "reasoning": "Writer's background in content writing and copywriting is unrelated to the technical requirements of a Database Administrator role."
+            },
+            "evaluation": {
+                "suitability_score": 5,
+                "reasoning_score": 5,
+                "overall_grade": 10,
+                "comments": "The AI-generated match score and reasoning accurately reflect the low suitability of the user profile for the Database Administrator role, demonstrating a strong understanding of the technical requirements and the user's skills."
+            },
+            "duration": 0.21005725860595703
+        },
+        {
+            "case_id": 5,
+            "scenario": "Team Alignment Boost",
+            "output": {
+                "score": 80,
+                "reasoning": "The hr_recruiter's background in recruiting and sourcing aligns well with the opportunity to help the Talent Acquisition team coordinate interviews, leveraging their communication skills."
+            },
+            "evaluation": {
+                "suitability_score": 2,
+                "reasoning_score": 4,
+                "overall_grade": 6,
+                "comments": "The AI-generated score of 80% seems too high given the user's skills in recruiting and sourcing do not directly align with the opportunity's required skill of communication. The reasoning provided is mostly accurate and professional but could be improved by acknowledging the gap in skills."
+            },
+            "duration": 0.26742100715637207
+        },
+        {
+            "case_id": 6,
+            "scenario": "Complex Semantic Match (RAG vs Generative AI)",
+            "output": {
+                "score": 85,
+                "reasoning": "The AI researcher's background in AI-related skills such as RAG, vector databases, and embeddings, combined with their experience in the AI Lab, makes them a strong fit for the Generative AI Engineer role, which involves implementing advanced search and generation workflows using large language models in Python."
+            },
+            "evaluation": {
+                "suitability_score": 4,
+                "reasoning_score": 5,
+                "overall_grade": 8,
+                "comments": "The AI-generated match score and reasoning demonstrate a good understanding of the semantic link between the user's skills and the opportunity. However, the score could be adjusted to reflect the fact that the user's skills do not perfectly match the required skills for the role."
+            },
+            "duration": 0.398007869720459
+        },
+        {
+            "case_id": 7,
+            "scenario": "Skills in Description but not in Skill List",
+            "output": {
+                "score": 90,
+                "reasoning": "Strong match due to direct overlap in skills and domain expertise in UI/UX design with proficiency in Figma."
+            },
+            "evaluation": {
+                "suitability_score": 4,
+                "reasoning_score": 5,
+                "overall_grade": 8,
+                "comments": "The AI-generated score is slightly high considering the skills listed in the opportunity do not match the user's skills. However, the reasoning is accurate and professional, considering the skills mentioned in the opportunity description."
+            },
+            "duration": 0.1741480827331543
+        },
+        {
+            "case_id": 8,
+            "scenario": "Misleading Keyword (Same word, different context)",
+            "output": {
+                "score": 20,
+                "reasoning": "Although the user has experience with route planning, the opportunity requires technical expertise in Python and algorithms, which is a significant departure from the user's logistics background."
+            },
+            "evaluation": {
+                "suitability_score": 5,
+                "reasoning_score": 5,
+                "overall_grade": 9,
+                "comments": "The AI-generated match score and reasoning accurately reflect the low suitability of the user for the opportunity due to the significant difference in required skills and expertise."
+            },
+            "duration": 0.18884706497192383
+        }
+    ]
+}

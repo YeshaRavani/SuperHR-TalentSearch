@@ -1,0 +1,82 @@
+AI BENCHMARK EVALUATION REPORT: RESUME SKILLS EXTRACTION
+================================================================================
+
+ID  | Industry             | Single Score | Agentic Score
+----------------------------------------------------------
+1   | Software Engineering | 4            | 4            
+2   | Data Science         | 3            | 4            
+3   | Design               | 4            | 4            
+----------------------------------------------------------
+AVG |                      | 3.67         | 4.00         
+
+FINAL BENCHMARK SCORE: 4.0/5.0
+================================================================================
+
+DETAILED DATASET (INPUT & GROUND TRUTH)
+----------------------------------------
+
+CASE ID: 1 (Software Engineering)
+INPUT TEXT:
+Alex Rivers
+        Full Stack Engineer with 4 years of experience.
+        Proficient in Python, Django, and PostgreSQL. 
+        Highly skilled in frontend development using React and Redux.
+        Familiar with AWS (EC2, S3) and Docker for deployment.
+        Experience with CI/CD pipelines using GitHub Actions.
+
+GROUND TRUTH SKILLS:
+Python, Django, PostgreSQL, React, Redux, AWS, EC2, S3, Docker, CI/CD, GitHub Actions
+
+EVALUATION FEEDBACK (SINGLE PROMPT):
+Score: 4/5
+Judge Reasoning: The extracted skills match most of the ground truth skills, with only one minor omission (CI/CD). The extracted skills are mostly accurate and relevant, with no hallucinations.
+
+EVALUATION FEEDBACK (AGENTIC BASELINE):
+Score: 4/5
+Judge Reasoning: The extracted skills list includes most of the ground truth skills, but misses 'CI/CD' and includes some extra skills that are not present in the ground truth, such as 'Linux', 'CI/CD pipelines', 'Frontend development', and 'Full stack development'. The extra skills are related to the candidate's experience, but are not exact matches to the ground truth skills.
+
+................................................................................
+
+CASE ID: 2 (Data Science)
+INPUT TEXT:
+Jordan Smith
+        Data Scientist focused on Machine Learning and NLP.
+        Expert in Python (Pandas, NumPy, Scikit-learn).
+        Experience building LLM applications using LangChain and OpenAI API.
+        Database management with MongoDB and SQL.
+        Visualizations created in Tableau and Matplotlib.
+
+GROUND TRUTH SKILLS:
+Python, Machine Learning, NLP, Pandas, NumPy, Scikit-learn, LLM, LangChain, OpenAI API, MongoDB, SQL, Tableau, Matplotlib
+
+EVALUATION FEEDBACK (SINGLE PROMPT):
+Score: 3/5
+Judge Reasoning: The extracted skills match most of the major skills and tools found in the ground truth, but missed several important skills and frameworks such as 'Machine Learning', 'NLP', and 'LLM'.
+
+EVALUATION FEEDBACK (AGENTIC BASELINE):
+Score: 4/5
+Judge Reasoning: The extracted skills are mostly accurate and well-organized, with clear categorization. However, the extraction missed the skill 'Machine Learning' and 'NLP' as separate entities, instead including 'LLM applications' under NLP and 'LangChain' and 'OpenAI API' under Machine Learning libraries. This minor omission prevents a perfect score.
+
+................................................................................
+
+CASE ID: 3 (Design)
+INPUT TEXT:
+Casey Lane
+        UI/UX Designer with a passion for user-centric interfaces.
+        Expert in Figma, Adobe XD, and Photoshop.
+        Strong understanding of HTML/CSS for prototyping.
+        Experience with Design Systems and Accessibility (WCAG).
+
+GROUND TRUTH SKILLS:
+UI/UX Design, Figma, Adobe XD, Photoshop, HTML, CSS, Design Systems, Accessibility, WCAG
+
+EVALUATION FEEDBACK (SINGLE PROMPT):
+Score: 4/5
+Judge Reasoning: The extracted skills match most of the ground truth skills, with only 'UI/UX Design' and 'WCAG' (as a separate entity) missing. 'Accessibility (WCAG)' in the extracted skills implies knowledge of WCAG, but it's combined with Accessibility, which is why it's not considered a perfect match.
+
+EVALUATION FEEDBACK (AGENTIC BASELINE):
+Score: 4/5
+Judge Reasoning: The extracted skills match most of the ground truth skills, with the exception of 'UI/UX Design' which is not explicitly mentioned in the extracted list. However, the context of the extracted skills implies UI/UX design expertise. The extracted list also includes 'Prototyping' which is not in the ground truth, but it is a relevant skill in the context of UI/UX design.
+
+................................................................................
+

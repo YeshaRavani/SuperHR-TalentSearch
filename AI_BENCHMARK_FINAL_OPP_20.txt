@@ -1,0 +1,154 @@
+AI BENCHMARK EVALUATION REPORT: 20-OPPORTUNITY COMPREHENSIVE AUDIT
+================================================================================
+
+ID  | Industry           | Single Score | Agentic Score
+--------------------------------------------------------
+1   | Software Dev       | 4            | 4            
+2   | Design             | 4            | 4            
+3   | Marketing          | 4            | 4            
+4   | Writing            | 4            | 4            
+5   | Video Editing      | 4            | 4            
+6   | Data Analysis      | 4            | 4            
+7   | Event Planning     | 4            | 4            
+8   | Research           | 4            | 4            
+9   | Public Speaking    | 4            | 4            
+10  | Frontend Dev       | 4            | 4            
+11  | Photography        | 4            | 4            
+12  | Database           | 4            | 4            
+13  | Machine Learning   | 4            | 4            
+14  | Project Management | 4            | 4            
+15  | UI Design          | 4            | 4            
+16  | Writing            | 4            | 4            
+17  | Presentation       | 4            | 4            
+18  | Community          | 4            | 4            
+19  | Marketing          | 4            | 4            
+20  | Customer Support   | 4            | 4            
+--------------------------------------------------------
+AVG |                    | 4.00         | 4.00         
+
+FINAL PLATFORM BENCHMARK SCORE: 4.0/5.0
+================================================================================
+
+DETAILED EVALUATION LOGS (ALL 20 CASES)
+--------------------------------------------------------------------------------
+
+CASE ID: 1 (Software Dev)
+INPUT TEXT: Hey we need a Python dev for the next two weeks to build an API. Remote work, probably 5 to 10 hours a week. Will give 200 points for it. Looking for someone with Fast API experience.
+SINGLE PROMPT JUDGE: 4/5 - The extracted JSON captures the main intent and details of the opportunity posting, but differs slightly in wording and specificity, such as 'Python dev' vs 'Python API Developer' and 'Fast API' vs 'FastAPI' and 'Python'.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted JSON captures the essential details and semantic intent of the ground truth, but with some minor differences in wording and detail, such as the title and description.
+................................................................................
+
+CASE ID: 2 (Design)
+INPUT TEXT: Looking for a graphic designer to make a logo for our new project. Need it done by this Friday. We're based in New York but remote is fine. Offering 150 points. Takes less than an hour.
+SINGLE PROMPT JUDGE: 4/5 - The extracted JSON captures the essential details and semantic intent of the ground truth, but with minor discrepancies in wording and location specificity.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted JSON captures the semantic intent of the ground truth JSON, but there are minor differences in wording and location specificity.
+................................................................................
+
+CASE ID: 3 (Marketing)
+INPUT TEXT: We need help running our social media for the next month. Every Monday and Wednesday. Just basic posting and engaging. It's a remote gig. I can do 300 points. Expect 3 to 5 hours a week.
+SINGLE PROMPT JUDGE: 4/5 - The extracted JSON captures the core details of the opportunity, including location, schedule, bounty, and time commitment, but differs in title and description, and lacks specific skills required for the opportunity.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted JSON captures the core details of the opportunity, but differs in title and description wording, and lacks specific skills listed in the ground truth.
+................................................................................
+
+CASE ID: 4 (Writing)
+INPUT TEXT: Looking for a content writer to write a blog post about AI in healthcare. 500 words. Need it by tomorrow. Remote. Offering 100 points. Probably 1 to 2 hours of work.
+SINGLE PROMPT JUDGE: 4/5 - The extracted title differs slightly from the ground truth, and the skills listed are more specific in the extracted JSON, but the overall semantic intent matches.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted JSON mostly matches the ground truth, but there are some differences in the title, schedule, and skills, which slightly affect the semantic intent.
+................................................................................
+
+CASE ID: 5 (Video Editing)
+INPUT TEXT: Hey, looking for someone to edit a short promo video. Raw footage is ready. Deadline is next week. Should take less than 1 hour. Remote. 150 points reward.
+SINGLE PROMPT JUDGE: 4/5 - The extracted JSON is very similar to the ground truth JSON, with minor differences in title and skills formatting, but the semantic intent is almost identical.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted JSON captures the main intent and details of the opportunity posting, but there are some minor differences in wording and detail, such as the title and description being slightly rephrased, and an extra skill listed.
+................................................................................
+
+CASE ID: 6 (Data Analysis)
+INPUT TEXT: Need a data analyst to clean up a spreadsheet and make some charts. Remote work. Next 2 weeks. Offering 250 points. About 3-5 hours per week. Must know Excel.
+SINGLE PROMPT JUDGE: 4/5 - The extracted JSON captures the main intent and details of the opportunity posting, but differs slightly in the title and skills, with 'Data Analyst' vs 'Data Analyst for Spreadsheets' and 'Excel' vs 'Data Analysis' and 'Excel'.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted JSON captures the essential details and semantic intent of the ground truth JSON, but there are minor differences in wording and skills listed.
+................................................................................
+
+CASE ID: 7 (Event Planning)
+INPUT TEXT: Need an event coordinator for an in-person meetup in London next Saturday. On-site required. Offering 400 points. Expect 5-10 hours this week preparing.
+SINGLE PROMPT JUDGE: 4/5 - The extracted JSON matches the ground truth JSON in most fields, but differs slightly in the title and description. The skills field is also empty in the extracted JSON, which is a significant difference. However, the semantic intent of the opportunity posting is still largely preserved.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted JSON captures the main intent and details of the opportunity posting, but differs slightly in the title, description, time commitment, and skills, which reduces the score from a perfect match.
+................................................................................
+
+CASE ID: 8 (Research)
+INPUT TEXT: Looking for a researcher to find 50 contact leads for our sales team. Remote. 100 points. Need it by Monday. 1-2 hours of work max.
+SINGLE PROMPT JUDGE: 4/5 - The extracted JSON captures the essential details and semantic intent of the ground truth, but with minor discrepancies in title and schedule wording.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted JSON captures the main intent and details of the opportunity posting, but there are some minor discrepancies in the title, description, schedule, time commitment, and skills compared to the ground truth JSON.
+................................................................................
+
+CASE ID: 9 (Public Speaking)
+INPUT TEXT: Seeking a guest speaker for our online webinar this Friday on leadership. Remote via Zoom. 500 points. Less than 1 hour time commitment.
+SINGLE PROMPT JUDGE: 4/5 - The extracted JSON captures the main intent and details of the opportunity, but differs slightly in title and description, and misses the required skills.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted JSON captures the main intent and details of the opportunity posting, but differs slightly in title and description, and includes an additional skill 'Webinar Presentation' not present in the ground truth.
+................................................................................
+
+CASE ID: 10 (Frontend Dev)
+INPUT TEXT: Need a React developer to fix some UI bugs on our homepage. Remote. Next week. 200 points. Should take 3-5 hours.
+SINGLE PROMPT JUDGE: 4/5 - The extracted JSON captures the core details of the opportunity, including type, location, schedule, bounty, time commitment, and primary skill, but differs in title and description wording, and is missing two skills (JavaScript, CSS) present in the ground truth.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted JSON captures the core intent of the ground truth, including the job title, location, schedule, bounty, time commitment, and required skills, but differs slightly in wording and includes 'UI Development' and 'Bug Fixing' instead of 'JavaScript' and 'CSS'.
+................................................................................
+
+CASE ID: 11 (Photography)
+INPUT TEXT: Looking for a photographer in San Francisco for a corporate event next Thursday. 5-10 hours of work. Paying 600 points. In-person obviously.
+SINGLE PROMPT JUDGE: 4/5 - The extracted JSON is very similar to the ground truth, with minor differences in wording for the title and description, and a slight difference in the time_commitment field, but the semantic intent is largely preserved.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted JSON captures the essential details of the opportunity posting, but differs slightly in wording and categorization, with 'Job' instead of 'Opportunity' and 'Event Photography' as an additional skill.
+................................................................................
+
+CASE ID: 12 (Database)
+INPUT TEXT: Need SQL expert to optimize some slow queries. Remote. ASAP. Offering 300 points. Time commitment 1-2 hours.
+SINGLE PROMPT JUDGE: 4/5 - The extracted JSON captures the same semantic intent as the ground truth, but with slight differences in wording, such as 'SQL expert to optimize slow queries' vs 'SQL Query Optimization' and 'Need SQL expert to optimize some slow queries' vs 'Optimize slow database queries'.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted JSON captures the main intent and details of the opportunity posting, but differs slightly in title, description, and skills, with the extracted version including 'Query Optimization' as a skill and the ground truth not including it, and the time commitment description also differs slightly.
+................................................................................
+
+CASE ID: 13 (Machine Learning)
+INPUT TEXT: Need help training a basic classification model in Python. Remote. Next 2 weeks. 400 points. 5-10 hours per week. Must know Scikit-Learn.
+SINGLE PROMPT JUDGE: 4/5 - The extracted JSON captures the core elements of the opportunity posting, including type, location, schedule, bounty, and time commitment, but differs in title, description, and skills, indicating a close but not perfect semantic match.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted JSON captures the main intent and details of the opportunity, but differs in title and skills, with 'Help Training' instead of 'Machine Learning Model Trainer', and 'Scikit-Learn' instead of 'Python' and 'Machine Learning'.
+................................................................................
+
+CASE ID: 14 (Project Management)
+INPUT TEXT: Looking for a project manager to help organize our Trello board and set up agile sprints. Remote, 3-5 hours a week for the next month. 250 points.
+SINGLE PROMPT JUDGE: 4/5 - The extracted JSON closely matches the ground truth, but there are minor differences in the title and schedule fields, and the skills field is empty in the extracted JSON.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted JSON captures the main intent and details of the opportunity posting, but differs slightly in title, description, schedule, and skills, indicating a close but not perfect match with the ground truth.
+................................................................................
+
+CASE ID: 15 (UI Design)
+INPUT TEXT: Need someone to make a Figma prototype for an app idea. Remote. 350 points. Expect 5-10 hours of work. Deadline is end of the month.
+SINGLE PROMPT JUDGE: 4/5 - The extracted JSON closely matches the ground truth JSON in terms of semantic intent, but there are some minor differences in wording and skills listed.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted JSON captures the main intent and details of the opportunity posting, but there are some minor discrepancies in the title, description, schedule, and skills.
+................................................................................
+
+CASE ID: 16 (Writing)
+INPUT TEXT: Need a proofreader for a 10 page document. Remote. 100 points. Need it by tomorrow night. Less than 1 hour.
+SINGLE PROMPT JUDGE: 4/5 - The extracted JSON matches the ground truth JSON in most fields, but differs in title and skills, with the extracted JSON missing the 'Writing' skill and having a slightly different title.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted JSON captures the main intent and details of the opportunity posting, but differs slightly in title and skills, with 'Proofreading' and 'Attention to detail' in the extracted JSON versus 'Writing' in the ground truth.
+................................................................................
+
+CASE ID: 17 (Presentation)
+INPUT TEXT: Can someone help me design a Canva presentation for my pitch? Remote, by Wednesday. 1-2 hours of work. 150 points.
+SINGLE PROMPT JUDGE: 4/5 - The extracted JSON captures the main intent and details of the opportunity posting, but differs slightly in title and description wording, and lacks specific skills required.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted JSON captures the essential details of the opportunity posting, including the task, location, schedule, bounty, time commitment, and required skills. However, there are minor discrepancies in the title, type, and description, which prevent it from being a perfect match.
+................................................................................
+
+CASE ID: 18 (Community)
+INPUT TEXT: Looking for a moderator for our Discord community. Remote. 200 points. 3-5 hours a week for the next 3 weeks.
+SINGLE PROMPT JUDGE: 4/5 - The extracted JSON captures the main intent and details of the opportunity posting, but differs slightly in title and description wording, and misses the skills required for the opportunity.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted JSON matches the ground truth in most fields, but there are slight differences in the description, schedule, time_commitment, and skills fields, indicating a close but not perfect semantic match.
+................................................................................
+
+CASE ID: 19 (Marketing)
+INPUT TEXT: Need an SEO specialist to audit our website. Remote, 300 points. Next week. Should take 1-2 hours.
+SINGLE PROMPT JUDGE: 4/5 - The extracted JSON captures the main intent and details of the opportunity posting, but differs slightly in title and description wording, and misses the 'Marketing' skill.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted JSON captures the main intent and details of the opportunity posting, but differs slightly in title, description, and time commitment, and misses the required skill 'Marketing'
+................................................................................
+
+CASE ID: 20 (Customer Support)
+INPUT TEXT: Need someone to reply to customer emails. Remote. 5-10 hours a week for the next month. 400 points.
+SINGLE PROMPT JUDGE: 4/5 - The extracted JSON captures the main intent and details of the opportunity, but differs slightly in title, description, and schedule. The skills section is also incomplete.
+AGENTIC BASELINE JUDGE: 4/5 - The extracted JSON captures the essential details and semantic intent of the ground truth JSON, but there are minor discrepancies in wording and skill listing.
+................................................................................
+

@@ -70,10 +70,10 @@ class OpportunityBase(BaseModel):
     short_description: str
     full_description: str
     image_url: Optional[str] = None
-    schedule_time: str
-    location: str
+    schedule_time: Optional[str] = None
+    location: Optional[str] = None
     points_reward: int = 0
-    time_required: str
+    time_required: Optional[str] = None
     expectations: List[str] = []
     responsibilities: List[str] = []
     benefits: List[str] = []
@@ -83,7 +83,7 @@ class OpportunityBase(BaseModel):
     tag_icon: Optional[str] = None
     bg_gradient: Optional[str] = None
     icon_color: Optional[str] = None
-    is_broadcast: bool = True
+    is_broadcast: Optional[bool] = True
 
     @field_validator('expectations', 'responsibilities', 'benefits', 'prerequisites', 'skills', mode='before')
     @classmethod
@@ -109,6 +109,8 @@ class OpportunityResponse(OpportunityBase):
     status: str
     author_id: str
     created_at: datetime
+    match_score: Optional[int] = 0
+    match_reasoning: Optional[str] = ""
 
     class Config:
         from_attributes = True

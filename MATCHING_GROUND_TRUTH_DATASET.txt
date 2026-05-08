@@ -1,0 +1,125 @@
+# AI Matching Benchmark: Full Ground Truth Dataset (20 Scenarios)
+
+This document contains the complete set of test cases used to evaluate the AI Matching and Suitability Explanations. Each case consists of a User Profile, an Opportunity, and the Human "Ground Truth" (GT) expectations.
+
+---
+
+### Case 1: Technical Depth
+- **User**: Python, Docker, AWS (Team: DevOps)
+- **Opp**: Cloud Infrastructure Engineer (AWS, Terraform)
+- **GT Score**: 90-100%
+- **GT Reasoning**: Strong AWS fit, slight gap in Terraform.
+
+### Case 2: Semantic Match (Dev vs Eng)
+- **User**: Developer, React (Team: Product)
+- **Opp**: Frontend Engineer (React)
+- **GT Score**: 85-95%
+- **GT Reasoning**: Excellent design alignment and Figma expertise.
+
+### Case 3: Partial Match (50%)
+- **User**: Python (Team: Data)
+- **Opp**: DS Internship (Python, ML)
+- **GT Score**: 40-60%
+- **GT Reasoning**: Solid Python foundation but lacks Machine Learning experience.
+
+### Case 4: No Match
+- **User**: Writing (Team: Marketing)
+- **Opp**: DBA (SQL, Azure)
+- **GT Score**: 0-10%
+- **GT Reasoning**: No correlation between writing and database administration.
+
+### Case 5: Team Match Only
+- **User**: Admin (Team: HR)
+- **Opp**: HR Event (Coordination)
+- **GT Score**: 20-40%
+- **GT Reasoning**: Highly suited HR team context, even if specific skills differ.
+
+### Case 6: Misleading Keyword (Route)
+- **User**: Driver, Route Planning (Team: Logistics)
+- **Opp**: API Route Planner (Python)
+- **GT Score**: 0-15%
+- **GT Reasoning**: Poor match; Logistics route planning is not IT routing.
+
+### Case 7: Skill in Description, not List
+- **User**: Figma (Team: Design)
+- **Opp**: Designer (Tag: Art, Desc: "Needs Figma pro")
+- **GT Score**: 70-90%
+- **GT Reasoning**: Strong match due to specific tool mention in the description.
+
+### Case 8: Seniority Mismatch
+- **User**: Junior Python (Team: Eng)
+- **Opp**: Principal Architect (10+ years exp)
+- **GT Score**: 20-40%
+- **GT Reasoning**: Solid tech base but significantly lacks the required seniority.
+
+### Case 9: Niche Tool Match
+- **User**: Nilearn (Team: Science)
+- **Opp**: Neuro Researcher (fMRI Analysis using Nilearn)
+- **GT Score**: 80-100%
+- **GT Reasoning**: Highly specialized tool match for a research role.
+
+### Case 10: Soft Skill Dominance
+- **User**: Public Speaking (Team: Comm)
+- **Opp**: Webinar Host (Presentation skills)
+- **GT Score**: 70-90%
+- **GT Reasoning**: Excellent soft skill alignment for a public-facing role.
+
+### Case 11: Technical Cross-over
+- **User**: C++ (Team: Gaming)
+- **Opp**: Embedded Systems (C, Firmware)
+- **GT Score**: 60-80%
+- **GT Reasoning**: Strong low-level coding crossover between gaming and embedded systems.
+
+### Case 12: Vague Profile
+- **User**: Communication (Team: General)
+- **Opp**: AI Researcher (PyTorch, Deep Learning)
+- **GT Score**: 0-10%
+- **GT Reasoning**: Vague skills do not meet the highly technical research requirements.
+
+### Case 13: Over-qualified
+- **User**: PhD Data Science (Team: Data)
+- **Opp**: Excel Data Entry (Typing records)
+- **GT Score**: 40-60%
+- **GT Reasoning**: User is overqualified; technically capable but likely a poor long-term fit.
+
+### Case 14: Acronym Match (LLM)
+- **User**: LLM (Team: AI)
+- **Opp**: AI Engineer (Large Language Models)
+- **GT Score**: 80-100%
+- **GT Reasoning**: Correct semantic linkage between the acronym and full term.
+
+### Case 15: Industry Switch (Medical)
+- **User**: Medical Doctor (Team: Health)
+- **Opp**: Health App Consultant (Product Advice)
+- **GT Score**: 70-90%
+- **GT Reasoning**: Critical domain expertise for building healthcare products.
+
+### Case 16: Tooling Synonym (React.js)
+- **User**: React.js (Team: Eng)
+- **Opp**: Web Dev (React)
+- **GT Score**: 90-100%
+- **GT Reasoning**: Recognizes synonymity between React.js and React.
+
+### Case 17: Wrong Framework
+- **User**: Angular (Team: Eng)
+- **Opp**: React Role (Strict React requirement)
+- **GT Score**: 10-30%
+- **GT Reasoning**: Familiar with frontend concepts but lacks the required framework.
+
+### Case 18: Leadership vs Management
+- **User**: Team Lead (Team: Ops)
+- **Opp**: Project Manager (Scrum)
+- **GT Score**: 50-70%
+- **GT Reasoning**: Leadership experience translates well to management tasks.
+
+### Case 19: Zero Context (Dance/Acc)
+- **User**: Dance (Team: Arts)
+- **Opp**: Tax Accountant (CPA)
+- **GT Score**: 0-5%
+- **GT Reasoning**: Zero professional correlation.
+
+### Case 20: Geospatial Match
+- **User**: Geospatial AI (Team: GIS)
+- **Opp**: Flood Mapping (Satellite Imagery)
+- **GT Score**: 70-90%
+- **GT Reasoning**: Strong alignment in niche mapping and imagery analysis.
