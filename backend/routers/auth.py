@@ -38,6 +38,22 @@ def admin_org_opportunity_filter(current_user: orm_models.User):
     return orm_models.Opportunity.author.has(func.trim(orm_models.User.organisation) == org)
 
 
+def display_user_name(user: orm_models.User | None, fallback: str) -> str:
+    if not user:
+        return fallback
+    return user.full_name or user.username or fallback
+
+
+def extract_schedule_text(message: str | None) -> str:
+    if not message:
+        return ""
+    for part in message.split(" | "):
+        part = part.strip()
+        if part.lower().startswith("schedule:"):
+            return part.split(":", 1)[1].strip()
+    return ""
+
+
 @router.get("/organisations", response_model=list[str])
 def list_organisations(db: Session = Depends(database.get_db)):
     return get_admin_organisations(db)
@@ -179,6 +195,38 @@ def get_notifications(
     db: Session = Depends(database.get_db),
 ):
     notifications = []
+    pending_appointment_requests = db.query(orm_models.Invitation).filter(
+        orm_models.Invitation.receiver_id == current_user.id,
+        orm_models.Invitation.status == "pending",
+    ).order_by(orm_models.Invitation.created_at.desc()).limit(2).all()
+    accepted_appointment_requests = db.query(orm_models.Invitation).filter(
+        orm_models.Invitation.sender_id == current_user.id,
+        orm_models.Invitation.status == "accepted",
+    ).order_by(orm_models.Invitation.created_at.desc()).limit(2).all()
+
+    for invitation in pending_appointment_requests:
+        sender_name = display_user_name(invitation.sender, "Someone")
+        notifications.append(models.NotificationResponse(
+            id=f"appointment-request-{invitation.id}",
+            title="Appointment Request",
+            message=f"{sender_name} sent you an appointment request for {invitation.topic}.",
+            category="community",
+            action_label="Respond",
+            action_url="appointment.html",
+        ))
+
+    for invitation in accepted_appointment_requests:
+        receiver_name = display_user_name(invitation.receiver, "the recipient")
+        schedule_text = extract_schedule_text(invitation.message)
+        schedule_sentence = f" The meeting is scheduled for {schedule_text}." if schedule_text else " A meeting is scheduled."
+        notifications.append(models.NotificationResponse(
+            id=f"appointment-accepted-{invitation.id}",
+            title="Appointment Accepted",
+            message=f"Your request for {invitation.topic} with {receiver_name} was accepted.{schedule_sentence}",
+            category="community",
+            action_label="Open appointments",
+            action_url="appointment.html",
+        ))
 
     if current_user.role == "admin":
         pending_invitations = db.query(orm_models.Invitation).filter(
@@ -232,6 +280,22 @@ def get_notifications(
             orm_models.Invitation.receiver_id == current_user.id,
             orm_models.Invitation.status == "pending",
         ).count()
+        enrolled_records = db.query(orm_models.UserOpportunity).filter(
+            orm_models.UserOpportunity.user_id == current_user.id,
+            orm_models.UserOpportunity.status == "enrolled",
+            orm_models.UserOpportunity.opportunity_id.isnot(None),
+        ).order_by(orm_models.UserOpportunity.updated_at.desc()).limit(2).all()
+
+        for record in enrolled_records:
+            title = record.opportunity.title if record.opportunity else "this opportunity"
+            notifications.append(models.NotificationResponse(
+                id=f"user-enrolled-{record.id}",
+                title="Successfully Enrolled",
+                message=f"You have been successfully enrolled in {title}.",
+                category="engagement",
+                action_label="View dashboard",
+                action_url="dashboard.html",
+            ))
 
         notifications.extend([
             models.NotificationResponse(

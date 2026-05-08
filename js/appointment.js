@@ -3,7 +3,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   const scrollProgress = document.getElementById('scrollProgress');
   const peopleList = document.getElementById('people-list');
   const searchInput = document.getElementById('person-search');
-  const invitesContainer = document.getElementById('sent-invites-container');
+  const pendingAppointmentsContainer = document.getElementById('pending-appointments-container');
+  const scheduledAppointmentsContainer = document.getElementById('scheduled-appointments-container');
   const modal = document.getElementById('inviteModal');
   const modalPersonName = document.getElementById('modal-person-name');
   const submitBtn = document.getElementById('modal-submit-btn');
@@ -59,6 +60,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!peopleList) return;
 
     const normalized = filter.trim().toLowerCase();
+    if (normalized.length < 2) {
+      peopleList.innerHTML = '<div class="search-empty">Type at least 2 characters to search members.</div>';
+      return;
+    }
+
     const filtered = people.filter((person) => {
       const haystack = [
         person.full_name,
@@ -73,14 +79,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (!filtered.length) {
       peopleList.innerHTML = `
-        <div style="color:var(--ink-500); padding:10px 16px; font-size:0.9rem;">
-          ${normalized ? 'No matches found.' : 'No other platform members available.'}
-        </div>
+        <div class="search-empty">No matches found.</div>
       `;
       return;
     }
 
-    peopleList.innerHTML = filtered.map((person) => {
+    peopleList.innerHTML = filtered.slice(0, 6).map((person) => {
       const invite = getInviteForPerson(person);
       const inviteStatus = invite ? invite.status : '';
       const disabled = inviteStatus === 'pending';
@@ -107,7 +111,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           </div>
         </div>
       `;
-    }).join('');
+    }).join('') + (filtered.length > 6 ? '<div class="search-empty">Keep typing to narrow the results.</div>' : '');
   }
 
   function invitationPerson(invite) {
@@ -121,48 +125,71 @@ document.addEventListener('DOMContentLoaded', async () => {
     return 'background:#ecfdf5; color:#10b981; border-color:#d1fae5;';
   }
 
-  function renderInvitations() {
-    if (!invitesContainer) return;
+  function scheduleText(invite) {
+    const schedulePart = String(invite.message || '')
+      .split(' | ')
+      .find((part) => part.trim().toLowerCase().startsWith('schedule:'));
+    return schedulePart ? schedulePart.split(':').slice(1).join(':').trim() : '';
+  }
 
-    if (!invitations.length) {
-      invitesContainer.innerHTML = `
+  function renderEmptyAppointment(container, title, message) {
+    if (!container) return;
+    container.innerHTML = `
         <div id="empty-invites-msg" class="invite-log-card">
           <div class="invite-log-info">
-            <strong>No meetings yet</strong>
-            <span>Send an invite to a platform member to start scheduling.</span>
+            <strong>${escapeHtml(title)}</strong>
+            <span>${escapeHtml(message)}</span>
           </div>
         </div>
       `;
+  }
+
+  function renderAppointmentCard(invite) {
+    const person = invitationPerson(invite);
+    const isSent = invite.sender_id === currentUser.id;
+    const personName = person ? (person.full_name || person.username) : (isSent ? invite.receiver_id : invite.sender_id);
+    const direction = isSent ? 'Sent to' : 'Received from';
+    const schedule = scheduleText(invite);
+    const actionControls = !isSent && invite.status === 'pending'
+      ? `
+        <div class="appointment-actions">
+          <button class="btn btn-sky invitation-status-btn" data-id="${escapeHtml(invite.id)}" data-status="accepted">Accept</button>
+          <button class="btn btn-secondary invitation-status-btn" data-id="${escapeHtml(invite.id)}" data-status="declined">Decline</button>
+        </div>
+      `
+      : `<span class="badge" style="${statusStyle(invite.status)} flex-shrink:0;">${escapeHtml(invite.status)}</span>`;
+
+    return `
+      <div class="invite-log-card">
+        <div class="invite-log-info">
+          <strong>${escapeHtml(direction)} ${escapeHtml(personName)}</strong>
+          <span>${escapeHtml(invite.topic)}</span>
+          ${schedule ? `<span class="meeting-time">${escapeHtml(schedule)}</span>` : ''}
+          <span style="font-size:0.82rem; color:var(--ink-400); margin-top:4px; display:block;">
+            ${escapeHtml(invite.message || 'No additional notes.')}
+          </span>
+        </div>
+        ${actionControls}
+      </div>
+    `;
+  }
+
+  function renderInvitations() {
+    const pending = invitations.filter((invite) => invite.status === 'pending');
+    const scheduled = invitations.filter((invite) => invite.status === 'accepted');
+
+    if (!pending.length) {
+      renderEmptyAppointment(pendingAppointmentsContainer, 'No pending requests', 'New meeting requests will appear here.');
+    } else {
+      pendingAppointmentsContainer.innerHTML = pending.map(renderAppointmentCard).join('');
+    }
+
+    if (!scheduled.length) {
+      renderEmptyAppointment(scheduledAppointmentsContainer, 'No scheduled meetings', 'Accepted appointments will appear here.');
       return;
     }
 
-    invitesContainer.innerHTML = invitations.map((invite) => {
-      const person = invitationPerson(invite);
-      const isSent = invite.sender_id === currentUser.id;
-      const personName = person ? (person.full_name || person.username) : (isSent ? invite.receiver_id : invite.sender_id);
-      const direction = isSent ? 'Sent to' : 'Received from';
-      const actionControls = !isSent && invite.status === 'pending'
-        ? `
-          <div style="display:flex; gap:8px; flex-shrink:0;">
-            <button class="btn btn-sky invitation-status-btn" data-id="${escapeHtml(invite.id)}" data-status="accepted" style="height:32px; padding:0 12px; font-size:0.8rem;">Accept</button>
-            <button class="btn btn-secondary invitation-status-btn" data-id="${escapeHtml(invite.id)}" data-status="declined" style="height:32px; padding:0 12px; font-size:0.8rem;">Decline</button>
-          </div>
-        `
-        : `<span class="badge" style="${statusStyle(invite.status)} flex-shrink:0;">${escapeHtml(invite.status)}</span>`;
-
-      return `
-        <div class="invite-log-card">
-          <div class="invite-log-info">
-            <strong>${escapeHtml(direction)} ${escapeHtml(personName)}</strong>
-            <span>${escapeHtml(invite.topic)}</span>
-            <span style="font-size:0.82rem; color:var(--ink-400); margin-top:4px; display:block;">
-              ${escapeHtml(invite.message || 'No additional notes.')}
-            </span>
-          </div>
-          ${actionControls}
-        </div>
-      `;
-    }).join('');
+    scheduledAppointmentsContainer.innerHTML = scheduled.map(renderAppointmentCard).join('');
   }
 
   window.openInviteModal = function (userId) {
@@ -235,7 +262,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   };
 
   async function loadPeople() {
-    peopleList.innerHTML = '<div style="color:var(--ink-500); padding:10px 16px; font-size:0.9rem;">Loading members...</div>';
+    peopleList.innerHTML = '<div class="search-empty">Search by name, email, role, organization, or team.</div>';
     const members = await api.get('/community/members');
     people = members.filter((member) => member.id !== currentUser.id);
   }
@@ -251,7 +278,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.openInviteModal(button.dataset.userId);
   });
 
-  invitesContainer?.addEventListener('click', async (event) => {
+  document.querySelector('.appointments-section')?.addEventListener('click', async (event) => {
     const button = event.target.closest('.invitation-status-btn');
     if (!button) return;
 
@@ -277,8 +304,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (peopleList) {
       peopleList.innerHTML = '<div style="color:#ef4444; padding:10px 16px; font-size:0.9rem;">Please log in to schedule appointments.</div>';
     }
-    if (invitesContainer) {
-      invitesContainer.innerHTML = '';
-    }
+    renderEmptyAppointment(pendingAppointmentsContainer, 'Unable to load appointments', 'Please log in to view requests.');
+    renderEmptyAppointment(scheduledAppointmentsContainer, 'Unable to load appointments', 'Please log in to view scheduled meetings.');
   }
 });
